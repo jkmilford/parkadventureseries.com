@@ -23,13 +23,6 @@
       --white:        #ffffff;
       --text:         #2a2a2a;
       --text-muted:   #666;
-
-      /* Park accent colors */
-      --smokies:      #2a4a2a;
-      --yellowstone:  #b8722a;
-      --grandcanyon:  #a0442a;
-      --yosemite:     #3a5a7a;
-      --rockymtn:     #2a3a5a;
     }
 
     html { scroll-behavior: smooth; }
@@ -80,29 +73,34 @@
 
     .nav-links a:hover { color: var(--white); }
 
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+    }
+
     /* ── HERO ───────────────────────────────────── */
     .hero {
       background: var(--forest);
       position: relative;
       overflow: hidden;
-      padding: 5rem 2rem 4rem;
+      padding: 5rem 2rem 6rem;
       text-align: center;
     }
 
     .hero-mountains {
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      height: 200px;
-      opacity: 0.15;
+      height: 220px;
+      opacity: 0.12;
     }
 
     .hero-eyebrow {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--cream-dark);
       margin-bottom: 1rem;
+      position: relative;
     }
 
     .hero h1 {
@@ -113,6 +111,7 @@
       line-height: 1.1;
       max-width: 700px;
       margin: 0 auto 1.25rem;
+      position: relative;
     }
 
     .hero h1 em {
@@ -125,6 +124,7 @@
       color: var(--cream-dark);
       max-width: 520px;
       margin: 0 auto 2rem;
+      position: relative;
     }
 
     .hero-cta {
@@ -138,6 +138,7 @@
       text-decoration: none;
       padding: 0.85em 2.2em;
       border-radius: 3px;
+      position: relative;
       transition: background 0.2s, transform 0.15s;
     }
 
@@ -146,7 +147,7 @@
       transform: translateY(-2px);
     }
 
-    /* ── SECTION HEADINGS ───────────────────────── */
+    /* ── SECTION HELPERS ────────────────────────── */
     .section-header {
       text-align: center;
       padding: 4rem 2rem 2rem;
@@ -178,7 +179,7 @@
 
     /* ── BOOK GRID ──────────────────────────────── */
     .books-section {
-      padding: 1rem 2rem 4rem;
+      padding: 1rem 2rem 5rem;
     }
 
     .book-grid {
@@ -187,6 +188,10 @@
       gap: 1.75rem;
       max-width: 1100px;
       margin: 0 auto;
+    }
+
+    @media (max-width: 600px) {
+      .book-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
     }
 
     .book-card {
@@ -206,8 +211,6 @@
       position: relative;
       aspect-ratio: 3/4;
       overflow: hidden;
-      display: flex;
-      align-items: stretch;
     }
 
     .book-cover img {
@@ -217,7 +220,7 @@
       display: block;
     }
 
-    /* Placeholder covers for books without images */
+    /* Placeholder covers for books without images yet */
     .book-cover-placeholder {
       width: 100%;
       height: 100%;
@@ -229,18 +232,24 @@
       position: relative;
     }
 
-    .park-yellowstone .book-cover-placeholder { background: linear-gradient(160deg, #c4832a 0%, #8a5418 100%); }
     .park-grandcanyon .book-cover-placeholder { background: linear-gradient(160deg, #b04830 0%, #7a2c18 100%); }
     .park-yosemite   .book-cover-placeholder { background: linear-gradient(160deg, #3a6890 0%, #1e3f5a 100%); }
     .park-rockymtn   .book-cover-placeholder { background: linear-gradient(160deg, #2a4070 0%, #162240 100%); }
 
+    .placeholder-mountain {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      opacity: 0.2;
+    }
+
     .placeholder-label {
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 700;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.7);
       margin-bottom: 0.5rem;
+      position: relative;
     }
 
     .placeholder-title {
@@ -250,12 +259,7 @@
       color: var(--white);
       text-align: center;
       line-height: 1.15;
-    }
-
-    .placeholder-mountain {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      opacity: 0.2;
+      position: relative;
     }
 
     .book-info {
@@ -301,207 +305,30 @@
       color: var(--text-muted);
       border: 1px solid var(--cream-dark);
       cursor: default;
+      pointer-events: none;
     }
 
-    /* ── EXPLORER PACK SIGNUP ───────────────────── */
+    /* ── EXPLORER PACK / KIT FORM SECTION ──────── */
+    /*
+      The Kit Charlotte theme is a self-contained white card — book cover on
+      the left, form on the right. We do NOT override any of Kit's styles.
+      We simply give it a clean, light background and enough breathing room
+      so it floats naturally on the page with no color clash.
+    */
     .signup-section {
-      background: var(--forest);
+      background: var(--cream);
       padding: 5rem 2rem;
+      border-top: 1px solid var(--cream-dark);
+      border-bottom: 1px solid var(--cream-dark);
     }
 
-    .signup-inner {
+    .signup-section .section-header {
+      padding-top: 0;
+    }
+
+    .kit-form-container {
       max-width: 900px;
       margin: 0 auto;
-    }
-
-    .signup-section-header {
-      text-align: center;
-      margin-bottom: 2.5rem;
-    }
-
-    .signup-section-header .section-eyebrow {
-      color: var(--cream-dark);
-      opacity: 0.8;
-    }
-
-    .signup-section-header h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 4vw, 2.4rem);
-      color: var(--white);
-      line-height: 1.2;
-    }
-
-    .signup-section-header h2 em {
-      font-style: normal;
-      color: var(--cream-dark);
-    }
-
-    /* White card that holds book cover + form side by side */
-    .signup-card {
-      background: var(--white);
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
-      display: flex;
-      align-items: stretch;
-    }
-
-    .signup-card-cover {
-      width: 340px;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-
-    .signup-card-cover img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .signup-card-form {
-      flex: 1;
-      padding: 2.5rem 2.5rem 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .signup-card-form h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      color: var(--brown-dark);
-      line-height: 1.2;
-      margin-bottom: 0.5rem;
-    }
-
-    .signup-card-form p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-    }
-
-    /* ── KIT FORM OVERRIDES ─────────────────────── */
-    /*
-      Kit's Charlotte theme injects its own full wrapper with background colors,
-      header image block, and layout. These overrides strip all of that so the
-      form renders as clean inputs inside our white card — matching the Kit
-      standalone landing page look (the "good" reference image).
-    */
-
-    /* Nuke the outer wrapper Kit injects */
-    .signup-card-form .formkit-form,
-    .signup-card-form [data-sv-form] {
-      background: transparent !important;
-      border: none !important;
-      padding: 0 !important;
-      box-shadow: none !important;
-      max-width: 100% !important;
-      width: 100% !important;
-    }
-
-    /* Hide Kit's injected header / hero image block */
-    .signup-card-form .formkit-header,
-    .signup-card-form .formkit-image,
-    .signup-card-form [data-element="header"],
-    .signup-card-form [data-element="image"],
-    .signup-card-form .formkit-powered-by-convertkit-container {
-      display: none !important;
-    }
-
-    /* Strip inner containers */
-    .signup-card-form .formkit-form > div,
-    .signup-card-form .seva-fields,
-    .signup-card-form .formkit-fields,
-    .signup-card-form [data-element="fields"],
-    .signup-card-form .formkit-column,
-    .signup-card-form .formkit-background {
-      background: transparent !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      box-shadow: none !important;
-      border: none !important;
-    }
-
-    /* Email input */
-    .signup-card-form input[type="email"],
-    .signup-card-form .formkit-input {
-      display: block !important;
-      width: 100% !important;
-      padding: 0.8em 1em !important;
-      font-family: 'Source Sans 3', sans-serif !important;
-      font-size: 1rem !important;
-      color: var(--text) !important;
-      background: var(--white) !important;
-      border: 1.5px solid #ccc !important;
-      border-radius: 4px !important;
-      box-shadow: none !important;
-      box-sizing: border-box !important;
-      margin-bottom: 0.75rem !important;
-      transition: border-color 0.2s !important;
-    }
-
-    .signup-card-form input[type="email"]:focus,
-    .signup-card-form .formkit-input:focus {
-      outline: none !important;
-      border-color: var(--forest-light) !important;
-    }
-
-    /* Submit button */
-    .signup-card-form button[type="submit"],
-    .signup-card-form .formkit-submit,
-    .signup-card-form [data-element="submit"] button {
-      display: block !important;
-      width: 100% !important;
-      padding: 0.9em !important;
-      font-family: 'Source Sans 3', sans-serif !important;
-      font-weight: 700 !important;
-      font-size: 1rem !important;
-      letter-spacing: 0.04em !important;
-      color: var(--white) !important;
-      background: #2d8a2d !important;
-      border: none !important;
-      border-radius: 4px !important;
-      cursor: pointer !important;
-      transition: background 0.2s, transform 0.15s !important;
-    }
-
-    .signup-card-form button[type="submit"]:hover,
-    .signup-card-form .formkit-submit:hover {
-      background: #256825 !important;
-      transform: translateY(-1px) !important;
-    }
-
-    /* Privacy / guarantee text */
-    .signup-card-form .formkit-guarantee,
-    .signup-card-form [data-element="guarantee"],
-    .signup-card-form .formkit-disclaimer {
-      font-size: 0.78rem !important;
-      color: #999 !important;
-      background: transparent !important;
-      padding: 0.6rem 0 0 !important;
-      margin: 0 !important;
-      text-align: center !important;
-    }
-
-    /* "Built with Kit" badge — keep it subtle */
-    .signup-card-form .formkit-powered-by-convertkit {
-      opacity: 0.4 !important;
-      font-size: 0.7rem !important;
-    }
-
-    /* Mobile: stack the card */
-    @media (max-width: 680px) {
-      .signup-card {
-        flex-direction: column;
-      }
-      .signup-card-cover {
-        width: 100%;
-        max-height: 280px;
-      }
-      .signup-card-form {
-        padding: 1.75rem 1.5rem;
-      }
     }
 
     /* ── ABOUT ──────────────────────────────────── */
@@ -511,9 +338,13 @@
     }
 
     .about-inner {
-      max-width: 700px;
+      max-width: 680px;
       margin: 0 auto;
       text-align: center;
+    }
+
+    .about-inner .section-eyebrow {
+      margin-bottom: 0.75rem;
     }
 
     .about-inner h2 {
@@ -526,7 +357,7 @@
     .about-inner p {
       color: var(--text-muted);
       font-size: 1rem;
-      line-height: 1.75;
+      line-height: 1.8;
       margin-bottom: 1rem;
     }
 
@@ -591,12 +422,6 @@
       color: var(--white);
       margin-bottom: 0.4rem;
     }
-
-    /* ── RESPONSIVE NAV ─────────────────────────── */
-    @media (max-width: 600px) {
-      .nav-links { display: none; }
-      .book-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-    }
   </style>
 </head>
 <body>
@@ -613,8 +438,8 @@
 
   <!-- HERO -->
   <section class="hero">
-    <svg class="hero-mountains" viewBox="0 0 1200 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path d="M0,200 L0,120 L120,40 L240,120 L360,60 L480,140 L600,30 L720,120 L840,70 L960,150 L1080,50 L1200,130 L1200,200 Z" fill="var(--cream)"/>
+    <svg class="hero-mountains" viewBox="0 0 1200 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,220 L0,140 L100,60 L200,130 L340,40 L460,130 L580,20 L700,120 L820,55 L940,140 L1060,40 L1200,110 L1200,220 Z" fill="var(--cream)"/>
     </svg>
     <p class="hero-eyebrow">Signal Press · National Park Adventure Series</p>
     <h1>Adventure Starts <em>Before</em> You Arrive</h1>
@@ -632,7 +457,7 @@
 
     <div class="book-grid">
 
-      <!-- Smokies — has real cover -->
+      <!-- Smokies -->
       <div class="book-card">
         <div class="book-cover">
           <img src="smokies-cover.png" alt="Great Smoky Mountains Trivia & Activities book cover">
@@ -644,7 +469,7 @@
         </div>
       </div>
 
-      <!-- Yellowstone — has real cover -->
+      <!-- Yellowstone -->
       <div class="book-card">
         <div class="book-cover">
           <img src="yellowstone-cover.jpg" alt="Yellowstone Trivia & Activities book cover">
@@ -656,7 +481,7 @@
         </div>
       </div>
 
-      <!-- Grand Canyon — placeholder -->
+      <!-- Grand Canyon -->
       <div class="book-card">
         <div class="book-cover park-grandcanyon">
           <div class="book-cover-placeholder">
@@ -670,11 +495,11 @@
         <div class="book-info">
           <h3>Grand Canyon Trivia &amp; Activities</h3>
           <p>One mile deep, 277 miles long — and full of surprises waiting to be discovered by young explorers.</p>
-          <a href="#" class="book-link coming">Coming Soon →</a>
+          <a href="#" class="book-link coming">Coming Soon</a>
         </div>
       </div>
 
-      <!-- Yosemite — placeholder -->
+      <!-- Yosemite -->
       <div class="book-card">
         <div class="book-cover park-yosemite">
           <div class="book-cover-placeholder">
@@ -689,11 +514,11 @@
         <div class="book-info">
           <h3>Yosemite Trivia &amp; Activities</h3>
           <p>Half Dome, El Capitan, and ancient sequoias — the iconic valley comes alive in this activity book.</p>
-          <a href="#" class="book-link coming">Coming Soon →</a>
+          <a href="#" class="book-link coming">Coming Soon</a>
         </div>
       </div>
 
-      <!-- Rocky Mountain — placeholder -->
+      <!-- Rocky Mountain -->
       <div class="book-card">
         <div class="book-cover park-rockymtn">
           <div class="book-cover-placeholder">
@@ -707,44 +532,29 @@
         <div class="book-info">
           <h3>Rocky Mountain Trivia &amp; Activities</h3>
           <p>Elk, tundra, and towering peaks — Colorado's crown jewel is full of family adventure and discovery.</p>
-          <a href="#" class="book-link coming">Coming Soon →</a>
+          <a href="#" class="book-link coming">Coming Soon</a>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- EXPLORER PACK SIGNUP -->
+  <!-- EXPLORER PACK / KIT FORM -->
   <section class="signup-section" id="explorer-pack">
-    <div class="signup-inner">
-
-      <div class="signup-section-header">
-        <p class="section-eyebrow">Free Download</p>
-        <h2>Get Your Free <em>Smokies Explorer Pack</em></h2>
-      </div>
-
-      <!-- White card: cover on left, form on right -->
-      <div class="signup-card">
-
-        <div class="signup-card-cover">
-          <img src="smokies-cover.png" alt="Great Smoky Mountains Trivia & Activities book cover">
-        </div>
-
-        <div class="signup-card-form">
-          <h3>Get Your Free Smokies Explorer Pack</h3>
-          <p>Bonus activity pages, a family scavenger hunt checklist, and a printable Junior Explorer certificate — free for readers.</p>
-          <!-- Kit embed — Charlotte theme overrides above will strip its injected styling -->
-          <script async data-uid="b858650751" src="https://national-park-adventure-series.kit.com/b858650751/index.js"></script>
-        </div>
-
-      </div>
+    <div class="section-header">
+      <p class="section-eyebrow">Free Download</p>
+      <h2>Get Your Free Smokies Explorer Pack</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="kit-form-container">
+      <script async data-uid="b858650751" src="https://national-park-adventure-series.kit.com/b858650751/index.js"></script>
     </div>
   </section>
 
   <!-- ABOUT -->
   <section class="about-section" id="about">
     <div class="about-inner">
-      <div class="section-eyebrow">About the Series</div>
+      <p class="section-eyebrow">About the Series</p>
       <h2>Books That Make the Trip</h2>
       <p>The National Park Adventure Series is published by Signal Press and designed for families who want to go deeper than the scenic overlook. Each book is packed with park-specific trivia, word games, puzzles, and activity pages built for kids and curious adults alike.</p>
       <p>Whether you're driving in on arrival day or sitting around the campfire, these books turn downtime into discovery time.</p>
