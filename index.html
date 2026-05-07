@@ -43,7 +43,7 @@
     }
     .nav-logo { color: var(--cream); font-family: 'Playfair Display', serif; font-size: 1.1rem; letter-spacing: .02em; text-decoration: none; }
     .nav-logo span { color: var(--amber); }
-    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links { display: flex; gap: 1.5rem; list-: none; }
     .nav-links a { color: #ccc; text-decoration: none; font-size: .9rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; transition: color .2s; }
     .nav-links a:hover { color: var(--amber); }
 
@@ -264,7 +264,7 @@
     }
     .explorer-left h2 span { color: var(--amber); }
     .explorer-left p { color: #c0bdb5; margin-bottom: 1.25rem; }
-    .pack-items { list-style: none; }
+    .pack-items { list-: none; }
     .pack-items li {
       display: flex;
       align-items: center;
@@ -437,10 +437,79 @@
     }
     .footer-logo span { color: var(--amber); }
     .footer-tagline { font-size: .8rem; margin-bottom: 1rem; color: #555; }
-    .footer-links { list-style: none; display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
+    .footer-links { list-: none; display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
     .footer-links a { color: #666; text-decoration: none; font-size: .8rem; letter-spacing: .05em; text-transform: uppercase; }
     .footer-links a:hover { color: var(--amber); }
     .footer-copy { font-size: .75rem; color: #444; }
+    .formkit-form {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  max-width: 100% !important;
+}
+
+.formkit-form[data-uid] > div,
+.formkit-form .seva-fields,
+.formkit-form .formkit-fields {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* Hide Kit's injected header/image section (the Charlotte theme image block) */
+.formkit-form .formkit-header,
+.formkit-form .formkit-image,
+.formkit-form [data-element="header"],
+.formkit-form [data-element="image"] {
+  display: none !important;
+}
+
+/* Style the email input to match your site */
+.formkit-form input[type="email"],
+.formkit-form .formkit-input {
+  width: 100% !important;
+  padding: 0.85em 1.1em !important;
+  font-size: 1rem !important;
+  border: 1.5px solid #ccc !important;
+  border-radius: 4px !important;
+  background: #fff !important;
+  color: #333 !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  margin-bottom: 0.75rem !important;
+}
+
+/* Style the submit button to match your Smokies green */
+.formkit-form button[type="submit"],
+.formkit-form .formkit-submit,
+.formkit-form [data-element="submit"] button {
+  width: 100% !important;
+  padding: 0.9em !important;
+  background: #2d6a2d !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  font-weight: 700 !important;
+  font-size: 1.05rem !important;
+  cursor: pointer !important;
+  letter-spacing: 0.02em !important;
+}
+
+.formkit-form button[type="submit"]:hover,
+.formkit-form .formkit-submit:hover {
+  background: #245224 !important;
+}
+
+/* Privacy text */
+.formkit-form .formkit-guarantee,
+.formkit-form [data-element="guarantee"] {
+  font-size: 0.8rem !important;
+  color: #888 !important;
+  background: transparent !important;
+  padding: 0.5rem 0 0 0 !important;
+}
+
+
   </style>
 </head>
 <body>
