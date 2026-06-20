@@ -49,6 +49,10 @@ header.game-header{display:flex;align-items:center;gap:14px;padding:14px 18px;ba
 h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.34rem;line-height:1.05;margin:0;letter-spacing:.2px;}
 .subtitle{margin:3px 0 0;font-family:'Space Mono',monospace;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--steam-dim);}
 
+.top-affiliate-btn{display:flex;align-items:center;justify-content:center;gap:.4em;flex-wrap:wrap;margin:14px 0 0;text-align:center;text-decoration:none;font-family:'Space Mono',monospace;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;padding:14px 26px;border-radius:999px;color:var(--obsidian);background:linear-gradient(180deg,var(--mat-gold),var(--mat-orange));box-shadow:0 8px 20px -8px rgba(221,122,46,.7);}
+.top-affiliate-highlight{color:#fff;font-weight:700;}
+.top-affiliate-arrow{font-size:1.9em;line-height:0;margin-left:.1em;transform:translateY(-.1em);}
+
 .controls-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:16px 0 12px;}
 .seg-group{display:inline-flex;gap:4px;padding:4px;border-radius:11px;background:var(--obsidian-2);border:1px solid var(--line);}
 .seg-btn{appearance:none;border:0;cursor:pointer;color:var(--steam-dim);font-family:'Space Mono',monospace;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;padding:7px 13px;border-radius:8px;background:transparent;box-shadow:none;transition:background .15s, color .15s;}
@@ -89,9 +93,10 @@ h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.34re
 .win-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;text-align:center;font-size:1.8rem;margin:0;line-height:1.05;}
 .win-rank{text-align:center;font-family:'Space Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--mat-gold);font-size:.84rem;margin:6px 0 2px;}
 .win-runline{text-align:center;color:var(--steam-dim);font-size:.92rem;margin:0 0 18px;}
-.win-affiliate-btn{display:block;text-align:center;text-decoration:none;font-family:'Space Mono',monospace;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;padding:12px 18px;border-radius:11px;color:var(--obsidian);background:linear-gradient(180deg,var(--mat-gold),var(--mat-orange));box-shadow:0 8px 20px -8px rgba(221,122,46,.7);margin:0 0 8px;}
+.win-affiliate-btn{display:flex;align-items:center;justify-content:center;gap:.4em;flex-wrap:wrap;text-align:center;text-decoration:none;font-family:'Space Mono',monospace;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;padding:14px 26px;border-radius:999px;color:var(--obsidian);background:linear-gradient(180deg,var(--mat-gold),var(--mat-orange));box-shadow:0 8px 20px -8px rgba(221,122,46,.7);margin:0 0 20px;}
 .win-affiliate-highlight{color:#fff;font-weight:700;}
-.win-affiliate-disclosure{text-align:center;font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.04em;color:var(--steam-dim);margin:0 0 22px;}
+.win-affiliate-arrow{font-size:2.85em;line-height:0;margin-left:.1em;transform:translateY(-.12em);}
+.win-affiliate-disclosure{text-align:center;font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.04em;color:var(--steam-dim);margin:16px 0 0;}
 .win-guide-label{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--steam-dim);margin:0 0 10px;}
 .win-guide-list{display:flex;flex-direction:column;gap:10px;}
 .win-guide-item{display:flex;gap:14px;align-items:center;background:linear-gradient(160deg,var(--card-cream),var(--card-cream2));border-radius:13px;padding:12px 14px;color:var(--ink);box-shadow:inset 0 0 0 3px rgba(245,237,217,.5);}
@@ -107,7 +112,7 @@ footer.site-footer{margin-top:28px;padding-top:18px;border-top:1px solid var(--l
 .site-footer a{color:var(--steam);text-decoration:none;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:.92rem;}
 .site-footer a .highlight{color:var(--mat-gold);}
 .site-footer .disclosure,.site-footer .copyright{margin:8px 0 0;font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.04em;color:var(--steam-dim);}
-.site-footer .copyright{margin-top:14px;}
+.site-footer .disclosure{margin-top:14px;}
 
 button:focus-visible,a:focus-visible{outline:2px solid var(--mat-gold);outline-offset:2px;}
 </style>
@@ -124,6 +129,8 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--mat-gold);outline-o
       <p class="subtitle">Flip the cards · match the pair · log the fact</p>
     </div>
   </header>
+
+  <a href="https://amzn.to/4w45Umk" target="_blank" rel="noopener noreferrer sponsored" class="top-affiliate-btn">Explore <strong class="top-affiliate-highlight">Park Adventure Series</strong> on Amazon <span class="top-affiliate-arrow">→</span></a>
 
   <div class="controls-row">
     <div role="group" aria-label="Difficulty" class="seg-group">
@@ -159,9 +166,8 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--mat-gold);outline-o
   <div class="fx-layer" id="fxLayer"></div>
 
   <footer class="site-footer">
-    <a href="https://amzn.to/4w45Umk" target="_blank" rel="noopener noreferrer sponsored">Explore <span class="highlight">the Park Adventure Series</span> on Amazon →</a>
-    <p class="disclosure">As an Amazon Associate, I earn from qualifying purchases.</p>
     <p class="copyright">© 2026 Signal Press. All rights reserved.</p>
+    <p class="disclosure">As an Amazon Associate, I earn from qualifying purchases.</p>
   </footer>
 </div>
 
@@ -171,10 +177,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--mat-gold);outline-o
     <h2 class="win-title">Expedition complete</h2>
     <div class="win-rank" id="winRank"></div>
     <p class="win-runline" id="winRunLine"></p>
-    <a href="https://amzn.to/4w45Umk" target="_blank" rel="noopener noreferrer sponsored" class="win-affiliate-btn">Explore <strong class="win-affiliate-highlight">Park Adventure Series</strong> on Amazon →</a>
-    <p class="win-affiliate-disclosure">As an Amazon Associate, I earn from qualifying purchases.</p>
+    <a href="https://amzn.to/4w45Umk" target="_blank" rel="noopener noreferrer sponsored" class="win-affiliate-btn">Explore <strong class="win-affiliate-highlight">Park Adventure Series</strong> on Amazon <span class="win-affiliate-arrow">→</span></a>
     <p class="win-guide-label">Field guide — what you logged</p>
     <div class="win-guide-list" id="winGuideList"></div>
+    <p class="win-affiliate-disclosure">As an Amazon Associate, I earn from qualifying purchases.</p>
     <div class="win-actions">
       <button type="button" class="again-btn" id="againBtn">Play again</button>
     </div>
