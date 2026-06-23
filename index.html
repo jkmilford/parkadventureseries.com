@@ -3,15 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Park Adventure Series – Trivia &amp; Activity Books for the Whole Family</title>
-<meta name="description" content="Trivia and activity books for America's greatest national parks. Puzzles, games, and adventures for the whole family.">
+<title>Park Adventure Series – Activity Books for the Whole Family</title>
+<meta name="description" content="Fun and educational activity books for America's greatest national parks. Puzzles, games, and adventures for the whole family.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 /* ── RESET & BASE ───────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 
 :root {
 --forest: #2a4a2a;
@@ -27,9 +26,7 @@
 --gold: #c9a84c;
 }
 
-
 html { scroll-behavior: smooth; }
-
 
 body {
 font-family: 'Source Sans 3', sans-serif;
@@ -37,7 +34,6 @@ background: var(--cream);
 color: var(--text);
 line-height: 1.6;
 }
-
 
 /* ── NAV ────────────────────────────────────── */
 nav {
@@ -52,7 +48,6 @@ z-index: 100;
 box-shadow: 0 2px 12px rgba(0,0,0,0.25);
 }
 
-
 .nav-brand {
 font-family: 'Playfair Display', serif;
 font-size: 1.05rem;
@@ -61,13 +56,11 @@ text-decoration: none;
 letter-spacing: 0.03em;
 }
 
-
 .nav-links {
 display: flex;
 gap: 1.75rem;
 list-style: none;
 }
-
 
 .nav-links a {
 color: var(--cream-dark);
@@ -79,14 +72,11 @@ text-transform: uppercase;
 transition: color 0.2s;
 }
 
-
 .nav-links a:hover { color: var(--white); }
-
 
 @media (max-width: 600px) {
 .nav-links { display: none; }
 }
-
 
 /* ── HERO ───────────────────────────────────── */
 .hero {
@@ -95,7 +85,6 @@ position: relative;
 padding: 5rem 2rem 6rem;
 text-align: center;
 }
-
 
 .hero-mountains {
 position: absolute;
@@ -106,7 +95,6 @@ opacity: 0.12;
 display: block;
 }
 
-
 .hero-eyebrow {
 font-size: 0.78rem;
 font-weight: 700;
@@ -116,7 +104,6 @@ color: var(--cream-dark);
 margin-bottom: 1rem;
 position: relative;
 }
-
 
 .hero h1 {
 font-family: 'Playfair Display', serif;
@@ -129,12 +116,10 @@ margin: 0 auto 1.25rem;
 position: relative;
 }
 
-
 .hero h1 em {
 font-style: normal;
 color: var(--cream-dark);
 }
-
 
 .hero-sub {
 font-size: 1.1rem;
@@ -143,7 +128,6 @@ max-width: 520px;
 margin: 0 auto 2rem;
 position: relative;
 }
-
 
 .hero-cta {
 display: inline-block;
@@ -160,19 +144,16 @@ position: relative;
 transition: background 0.2s, transform 0.15s;
 }
 
-
 .hero-cta:hover {
 background: var(--white);
 transform: translateY(-2px);
 }
-
 
 /* ── SECTION HELPERS ────────────────────────── */
 .section-header {
 text-align: center;
 padding: 4rem 2rem 2rem;
 }
-
 
 .section-eyebrow {
 font-size: 0.75rem;
@@ -183,14 +164,12 @@ color: var(--forest-light);
 margin-bottom: 0.6rem;
 }
 
-
 .section-header h2 {
 font-family: 'Playfair Display', serif;
 font-size: clamp(1.8rem, 4vw, 2.6rem);
 color: var(--brown-dark);
 line-height: 1.2;
 }
-
 
 .section-divider {
 width: 60px;
@@ -200,12 +179,10 @@ margin: 1rem auto 0;
 border-radius: 2px;
 }
 
-
 /* ── BOOK GRID ──────────────────────────────── */
 .books-section {
 padding: 1rem 2rem 5rem;
 }
-
 
 .book-grid {
 display: grid;
@@ -215,11 +192,9 @@ max-width: 1100px;
 margin: 0 auto;
 }
 
-
 @media (max-width: 600px) {
 .book-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 }
-
 
 .book-card {
 background: var(--white);
@@ -229,19 +204,16 @@ box-shadow: 0 3px 16px rgba(0,0,0,0.1);
 transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-
 .book-card:hover {
 transform: translateY(-5px);
 box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
-
 
 .book-cover {
 position: relative;
 aspect-ratio: 3/4;
 overflow: hidden;
 }
-
 
 .book-cover img {
 width: 100%;
@@ -250,57 +222,9 @@ object-fit: cover;
 display: block;
 }
 
-
-/* Placeholder covers for books without images yet */
-.book-cover-placeholder {
-width: 100%;
-height: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-padding: 1.5rem;
-position: relative;
-}
-
-
-.park-grandcanyon .book-cover-placeholder { background: linear-gradient(160deg, #b04830 0%, #7a2c18 100%); }
-.park-rockymtn .book-cover-placeholder { background: linear-gradient(160deg, #2a4070 0%, #162240 100%); }
-
-
-.placeholder-mountain {
-position: absolute;
-bottom: 0; left: 0; right: 0;
-opacity: 0.2;
-}
-
-
-.placeholder-label {
-font-size: 0.62rem;
-font-weight: 700;
-letter-spacing: 0.18em;
-text-transform: uppercase;
-color: rgba(255,255,255,0.7);
-margin-bottom: 0.5rem;
-position: relative;
-}
-
-
-.placeholder-title {
-font-family: 'Playfair Display', serif;
-font-size: 1.3rem;
-font-weight: 900;
-color: var(--white);
-text-align: center;
-line-height: 1.15;
-position: relative;
-}
-
-
 .book-info {
 padding: 1.1rem 1.2rem 1.3rem;
 }
-
 
 .book-info h3 {
 font-family: 'Playfair Display', serif;
@@ -310,14 +234,12 @@ margin-bottom: 0.4rem;
 line-height: 1.3;
 }
 
-
 .book-info p {
 font-size: 0.83rem;
 color: var(--text-muted);
 line-height: 1.5;
 margin-bottom: 0.9rem;
 }
-
 
 .book-link {
 display: inline-block;
@@ -331,24 +253,12 @@ border-radius: 3px;
 transition: background 0.2s, color 0.2s;
 }
 
-
 .book-link.available {
 background: var(--forest);
 color: var(--white);
 }
 
-
 .book-link.available:hover { background: var(--forest-mid); }
-
-
-.book-link.coming {
-background: var(--cream);
-color: var(--text-muted);
-border: 1px solid var(--cream-dark);
-cursor: default;
-pointer-events: none;
-}
-
 
 /* ── EXPLORER PACK / KIT FORM SECTION ──────── */
 .signup-section {
@@ -358,17 +268,14 @@ border-top: 1px solid var(--cream-dark);
 border-bottom: 1px solid var(--cream-dark);
 }
 
-
 .signup-section .section-header {
 padding-top: 0;
 }
-
 
 .kit-form-container {
 max-width: 900px;
 margin: 0 auto;
 }
-
 
 /* ── ABOUT ──────────────────────────────────── */
 .about-section {
@@ -376,18 +283,15 @@ padding: 5rem 2rem;
 background: var(--white);
 }
 
-
 .about-inner {
 max-width: 680px;
 margin: 0 auto;
 text-align: center;
 }
 
-
 .about-inner .section-eyebrow {
 margin-bottom: 0.75rem;
 }
-
 
 .about-inner h2 {
 font-family: 'Playfair Display', serif;
@@ -396,7 +300,6 @@ color: var(--brown-dark);
 margin-bottom: 1.25rem;
 }
 
-
 .about-inner p {
 color: var(--text-muted);
 font-size: 1rem;
@@ -404,9 +307,7 @@ line-height: 1.8;
 margin-bottom: 1rem;
 }
 
-
 .about-inner p:last-child { margin-bottom: 0; }
-
 
 /* ── NEWSLETTER BANNER ──────────────────────── */
 .newsletter-section {
@@ -415,7 +316,6 @@ padding: 3.5rem 2rem;
 text-align: center;
 }
 
-
 .newsletter-section h2 {
 font-family: 'Playfair Display', serif;
 font-size: clamp(1.4rem, 3vw, 2rem);
@@ -423,13 +323,11 @@ color: var(--cream);
 margin-bottom: 0.5rem;
 }
 
-
 .newsletter-section p {
 color: var(--cream-dark);
 font-size: 0.95rem;
 margin-bottom: 1.75rem;
 }
-
 
 .newsletter-cta {
 display: inline-block;
@@ -445,9 +343,7 @@ border-radius: 3px;
 transition: background 0.2s;
 }
 
-
 .newsletter-cta:hover { background: var(--white); }
-
 
 /* ── FOOTER ─────────────────────────────────── */
 footer {
@@ -458,16 +354,13 @@ color: var(--cream-dark);
 font-size: 0.85rem;
 }
 
-
 footer a {
 color: var(--cream-dark);
 text-decoration: underline;
 text-underline-offset: 2px;
 }
 
-
 footer a:hover { color: var(--white); }
-
 
 .footer-brand {
 font-family: 'Playfair Display', serif;
@@ -478,7 +371,6 @@ margin-bottom: 0.4rem;
 </style>
 </head>
 <body>
-
 
 <!-- NAV -->
 <nav>
@@ -491,7 +383,6 @@ margin-bottom: 0.4rem;
 </ul>
 </nav>
 
-
 <!-- HERO -->
 <section class="hero">
 <svg class="hero-mountains" viewBox="0 0 1200 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
@@ -499,10 +390,9 @@ margin-bottom: 0.4rem;
 </svg>
 <p class="hero-eyebrow">Signal Press &middot; <span style="color:var(--gold)">Park</span> Adventure Series</p>
 <h1>Adventure Starts <em>Before</em> You Arrive</h1>
-<p class="hero-sub">Trivia, puzzles, and family activities for America's greatest national parks — from the trailhead to the campfire.</p>
+<p class="hero-sub">Activity books packed with puzzles, games &amp; discovery for America's greatest national parks.</p>
 <a href="#books" class="hero-cta">Explore the Series</a>
 </section>
-
 
 <!-- BOOKS -->
 <section class="books-section" id="books">
@@ -512,129 +402,14 @@ margin-bottom: 0.4rem;
 <div class="section-divider"></div>
 </div>
 
-
 <div class="book-grid">
-
 
 <!-- Smokies -->
 <div class="book-card">
 <div class="book-cover">
-<img src="smoky-cover.png" alt="Great Smoky Mountains Trivia &amp; Activities book cover">
+<img src="smoky-cover.png" alt="Great Smoky Mountains Activity Book cover">
 </div>
 <div class="book-info">
-<h3>Great Smoky Mountains Trivia &amp; Activities</h3>
+<h3>Great Smoky Mountains Activity Book</h3>
 <p>America's most visited park, packed into 30+ puzzles, games, and adventures for the whole family.</p>
-<a href="https://www.amazon.com/dp/B0GWZNDH1C" class="book-link available" target="_blank" rel="noopener">Buy on Amazon &rarr;</a>
-</div>
-</div>
-
-
-<!-- Yellowstone -->
-<div class="book-card">
-<div class="book-cover">
-<img src="yellowstone-cover.jpg" alt="Yellowstone Trivia &amp; Activities book cover">
-</div>
-<div class="book-info">
-<h3>Yellowstone Trivia &amp; Activities</h3>
-<p>Geysers, grizzlies, and geothermal wonders — explore America's first national park through trivia and family fun.</p>
-<a href="https://www.amazon.com/dp/B0H1M6QQBL" class="book-link available" target="_blank" rel="noopener">Buy on Amazon &rarr;</a>
-</div>
-</div>
-
-
-<!-- Yosemite -->
-<div class="book-card">
-<div class="book-cover">
-<img src="yosemite-cover.jpg" alt="Yosemite Trivia &amp; Activities book cover">
-</div>
-<div class="book-info">
-<h3>Yosemite Trivia &amp; Activities</h3>
-<p>Half Dome, El Capitan, and ancient sequoias — the iconic valley comes alive in this activity book.</p>
-<a href="https://www.amazon.com/dp/B0H3TSSVCS" class="book-link available" target="_blank" rel="noopener">Buy on Amazon &rarr;</a>
-</div>
-</div>
-
-
-<!-- Grand Canyon -->
-<div class="book-card">
-<div class="book-cover park-grandcanyon">
-<div class="book-cover-placeholder">
-<svg class="placeholder-mountain" viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-<path d="M0,120 L0,60 L75,20 L150,70 L225,10 L300,60 L300,120 Z" fill="rgba(0,0,0,0.2)"/>
-</svg>
-<span class="placeholder-label"><span style="color:var(--gold)">Park</span> Adventure Series</span>
-<span class="placeholder-title">Grand Canyon</span>
-</div>
-</div>
-<div class="book-info">
-<h3>Grand Canyon Trivia &amp; Activities</h3>
-<p>One mile deep, 277 miles long — and full of surprises waiting to be discovered by young explorers.</p>
-<a href="#" class="book-link coming">Coming Soon</a>
-</div>
-</div>
-
-
-<!-- Rocky Mountain -->
-<div class="book-card">
-<div class="book-cover park-rockymtn">
-<div class="book-cover-placeholder">
-<svg class="placeholder-mountain" viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-<path d="M0,120 L0,70 L60,30 L120,80 L180,20 L240,70 L300,40 L300,120 Z" fill="rgba(0,0,0,0.2)"/>
-</svg>
-<span class="placeholder-label"><span style="color:var(--gold)">Park</span> Adventure Series</span>
-<span class="placeholder-title">Zion</span>
-</div>
-</div>
-<div class="book-info">
-<h3>Zion Trivia &amp; Activities</h3>
-<p>Sheep, cliffs, and canyons — Utah's crown jewel is full of family adventure and discovery.</p>
-<a href="#" class="book-link coming">Coming Soon</a>
-</div>
-</div>
-
-
-</div>
-</section>
-
-
-<!-- EXPLORER PACK / KIT FORM -->
-<section class="signup-section" id="explorer-pack">
-<div class="section-header">
-<p class="section-eyebrow">Free Download</p>
-<h2>Get Your Free Bonus Smokies Explorer Pack</h2>
-<div class="section-divider"></div>
-</div>
-<div class="kit-form-container">
-<script async data-uid="b858650751" src="https://national-park-adventure-series.kit.com/b858650751/index.js"></script>
-</div>
-</section>
-
-
-<!-- ABOUT -->
-<section class="about-section" id="about">
-<div class="about-inner">
-<p class="section-eyebrow">About the Series</p>
-<h2>Books That Make the Trip</h2>
-<p>The <span style="color:var(--gold)">Park</span> Adventure Series is published by Signal Press and designed for families who want to go deeper than the scenic overlook. Each book is packed with park-specific trivia, word games, puzzles, and activity pages built for kids and curious adults alike.</p>
-<p>Whether you're driving in on arrival day or sitting around the campfire, these books turn downtime into discovery time.</p>
-</div>
-</section>
-
-
-<!-- NEWSLETTER BANNER -->
-<section class="newsletter-section">
-<h2>Stay on the Trail</h2>
-<p>New parks, new books, and free resources for families — delivered to your inbox.</p>
-<a href="#explorer-pack" class="newsletter-cta">Get the Free Explorer Pack</a>
-</section>
-
-
-<!-- FOOTER -->
-<footer>
-<div class="footer-brand">Signal Press &middot; <span style="color:var(--gold)">Park</span> Adventure Series</div>
-<p><a href="https://parkadventureseries.com">parkadventureseries.com</a> &nbsp;&middot;&nbsp; <a href="https://www.amazon.com/stores/Jeremy-Milford/author/B0GTPQZ24N" target="_blank" rel="noopener">Amazon Author Page</a></p>
-</footer>
-
-
-</body>
-</html>
+<a href="https://www.amazon.com/dp/B0GWZNDH1C
