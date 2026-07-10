@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Yellowstone Bison Trek — Park Adventure Series</title>
+<meta name="description" content="Play as a bison on the great Yellowstone migration. Graze, swim the river, dodge wolves, cross the bison jam, and reach your herd's winter grounds.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Oswald:wght@500;600&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --spruce:#17302a;
+    --spruce-deep:#0f211d;
+    --paper:#f4e9ce;
+    --ink:#22302b;
+    --teal:#1e8e86;
+    --basin:#2b5d73;
+    --gold:#e8a93c;
+    --thermal:#d96c2c;
+    --pine:#3c6b4f;
+    --danger:#b23a2f;
+    --ring:conic-gradient(from 200deg, #2b5d73, #1e8e86, #4f9e63, #cdbb45, #e8a93c, #d96c2c, #b23a2f, #2b5d73);
+    --radius:14px;
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(30,142,134,.18), transparent 60%),
+      radial-gradient(900px 500px at 10% 110%, rgba(217,108,44,.14), transparent 55%),
+      var(--spruce);
+    color:var(--paper);
+    font-family:"Source Sans 3", system-ui, sans-serif;
+    font-size:17px;line-height:1.5;min-height:100vh;
+    -webkit-tap-highlight-color:transparent;
+  }
+  body.playing{overflow:hidden;overscroll-behavior:none;touch-action:none}
+  button{font:inherit;cursor:pointer}
+  :focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:6px}
+  .wrap{max-width:1080px;margin:0 auto;padding:18px 16px 48px}
+
+  header.poster{display:flex;align-items:center;gap:16px;border-bottom:3px solid var(--gold);padding:10px 4px 16px;margin-bottom:18px}
+  .medallion{flex:0 0 auto;width:64px;height:64px;border-radius:50%;background:var(--ring);position:relative;animation:spin 40s linear infinite;box-shadow:0 0 0 4px var(--spruce-deep),0 0 0 6px var(--gold)}
+  .medallion::after{content:"";position:absolute;inset:16px;border-radius:50%;background:var(--basin);box-shadow:inset 0 0 12px rgba(0,0,0,.45)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .masthead .eyebrow{font-family:Oswald,sans-serif;font-weight:600;font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin:0 0 2px}
+  .masthead h1{font-family:"Alfa Slab One",serif;font-weight:400;font-size:clamp(1.4rem,4vw,2.3rem);margin:0;color:var(--paper);text-shadow:0 3px 0 rgba(0,0,0,.35)}
+  .masthead .tagline{margin:2px 0 0;color:#cfe3d6;font-size:.92rem}
+
+  /* ---------- Screens ---------- */
+  .screen{background:var(--paper);color:var(--ink);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;max-width:640px;margin:0 auto;position:relative;overflow:hidden;text-align:center}
+  .screen::before{content:"";position:absolute;top:0;left:0;right:0;height:8px;background:var(--ring)}
+  .screen h2{font-family:"Alfa Slab One",serif;font-weight:400;font-size:1.8rem;margin:.3em 0 .2em}
+  .screen ul{display:inline-block;text-align:left;margin:8px 0 4px;padding-left:22px}
+  .screen .rank{display:inline-block;margin:10px 0;padding:8px 22px;border-radius:999px;background:var(--teal);color:var(--paper);font-family:Oswald,sans-serif;font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-size:.88rem}
+  .kbd{display:inline-block;border:1.5px solid #b7a374;border-bottom-width:3px;border-radius:6px;background:#fbf4e2;padding:0 7px;font-family:Oswald,sans-serif;font-size:.85em}
+  .btn{border:none;border-radius:10px;padding:10px 16px;font-family:Oswald,sans-serif;font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.82rem;background:var(--gold);color:#3a2a10;box-shadow:0 3px 0 #a97a24;transition:transform .08s,box-shadow .08s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn:active{transform:translateY(2px);box-shadow:0 1px 0 #a97a24}
+  .btn.thermal{background:var(--thermal);color:#fff3e6;box-shadow:0 3px 0 #96471a}
+  .hidden{display:none !important}
+  .fade-in{animation:fade .35s ease-out}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* ---------- Game stage ---------- */
+  #stage-wrap{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(232,169,60,.35);touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+  #stage-wrap.fs{position:fixed;inset:0;z-index:100;border-radius:0;border:none;box-shadow:none}
+  #stage-wrap.fs canvas#stage{height:100vh}
+  @supports (height:100dvh){ #stage-wrap.fs canvas#stage{height:100dvh} #stage-wrap canvas#stage{height:min(72dvh,620px)} }
+  canvas#stage{display:block;width:100%;height:min(72vh,620px);background:#7f9662}
+
+  /* HUD */
+  .hud{position:absolute;top:10px;left:10px;right:62px;display:flex;justify-content:space-between;gap:10px;pointer-events:none}
+  .hud-card{background:rgba(15,33,29,.82);border:1px solid rgba(232,169,60,.45);border-radius:10px;padding:8px 12px;backdrop-filter:blur(2px)}
+  .bar-k{font-family:Oswald,sans-serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#a9c4b4;display:block;margin-bottom:3px}
+  .bar{width:150px;height:9px;border-radius:5px;background:rgba(255,255,255,.14);overflow:hidden;margin-bottom:6px}
+  .bar > span{display:block;height:100%;border-radius:5px;transition:width .15s linear}
+  #energy-fill{background:linear-gradient(90deg,#d96c2c,#e8a93c);width:100%}
+  #stamina-fill{background:linear-gradient(90deg,#1e8e86,#4f9e63);width:100%}
+  .hud-right{text-align:right;font-family:Oswald,sans-serif}
+  .hud-right .big{font-size:1.05rem;font-weight:600;letter-spacing:.06em}
+  .hud-right .small{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:#a9c4b4}
+
+  #fs-btn{position:absolute;top:10px;right:10px;z-index:6;width:44px;height:44px;border-radius:10px;border:1px solid rgba(232,169,60,.6);background:rgba(15,33,29,.85);color:var(--paper);font-size:1.2rem;line-height:1;display:grid;place-items:center;touch-action:manipulation}
+
+  #herd-btn{position:absolute;right:18px;bottom:18px;width:66px;height:66px;border-radius:50%;border:2px solid rgba(232,169,60,.8);background:rgba(15,33,29,.88);color:var(--paper);font-size:1.6rem;line-height:1;display:grid;place-items:center;z-index:4;touch-action:manipulation}
+  #herd-btn[data-count="0"]{opacity:.45;border-style:dashed}
+  #herd-btn .cnt{position:absolute;top:-4px;right:-4px;width:24px;height:24px;border-radius:50%;background:var(--gold);color:#3a2a10;font-family:Oswald,sans-serif;font-weight:600;font-size:.8rem;display:grid;place-items:center;border:2px solid var(--spruce-deep)}
+  @media (pointer:coarse){ #herd-btn{bottom:128px} }
+
+  /* Objective banner */
+  #objective{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;background:rgba(15,33,29,.85);border:1px solid rgba(232,169,60,.5);color:var(--paper);border-radius:999px;padding:7px 18px;font-size:.9rem;pointer-events:none;max-width:92%;text-align:center}
+  #objective b{color:var(--gold);font-family:Oswald,sans-serif;letter-spacing:.08em}
+
+  /* Fact card overlay */
+  #fact-card{position:absolute;inset:0;display:grid;place-items:center;background:rgba(15,33,29,.55);padding:16px;z-index:5}
+  #fact-card .inner{background:var(--paper);color:var(--ink);border-radius:var(--radius);max-width:480px;padding:22px 24px;box-shadow:var(--shadow);position:relative;overflow:hidden;text-align:center}
+  #fact-card .inner::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:var(--ring)}
+  #fact-card .loc-eyebrow{font-family:Oswald,sans-serif;font-weight:600;font-size:.7rem;letter-spacing:.26em;text-transform:uppercase;color:var(--thermal);margin:0 0 4px}
+  #fact-card h3{font-family:"Alfa Slab One",serif;font-weight:400;font-size:1.3rem;margin:0 0 8px}
+  #fact-card p{margin:.3em 0 1em;font-size:.97rem}
+
+  /* Touch controls */
+  #joystick{position:absolute;width:128px;height:128px;border-radius:50%;border:2px solid rgba(244,233,206,.5);background:rgba(15,33,29,.35);display:none;z-index:4}
+  #joystick .knob{position:absolute;width:52px;height:52px;border-radius:50%;background:var(--gold);left:38px;top:38px;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+  #sprint-btn{position:absolute;right:18px;bottom:26px;width:88px;height:88px;touch-action:none;border-radius:50%;border:2px solid rgba(232,169,60,.7);background:rgba(217,108,44,.85);color:#fff3e6;font-family:Oswald,sans-serif;font-weight:600;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;display:none;z-index:4}
+  @media (pointer:coarse){ #sprint-btn{display:block} }
+
+  .under-note{margin:12px 4px 0;color:#a9c4b4;font-size:.88rem}
+
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--spruce-deep);border:1.5px solid var(--gold);color:var(--paper);padding:10px 18px;border-radius:999px;font-size:.92rem;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .3s;z-index:50;max-width:90vw;text-align:center}
+  .toast.show{opacity:1}
+
+  @media (prefers-reduced-motion: reduce){
+    .medallion{animation:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="poster">
+    <div class="medallion" aria-hidden="true"></div>
+    <div class="masthead">
+      <p class="eyebrow">Park Adventure Series &middot; No. 01</p>
+      <h1>Yellowstone Bison Trek</h1>
+      <p class="tagline">Lead the migration: graze, swim, and stand your ground across the world's first national park.</p>
+    </div>
+  </header>
+
+  <!-- Title screen -->
+  <section id="title-screen" class="screen fade-in" aria-label="Start screen">
+    <h2>The Great Migration</h2>
+    <p>Winter is coming to the high country. You are a <b>2,000-pound bison bull</b> in Lamar Valley,
+    and your herd has already moved toward the warm geyser basins in the southwest.
+    Cross the whole park to reach them — the way your kind has for thousands of years.</p>
+    <ul>
+      <li><b>Desktop:</b> <span class="kbd">W A S D</span> / <span class="kbd">←↑↓→</span> to move, hold <span class="kbd">Shift</span> to charge.</li>
+      <li><b>Phone &amp; tablet:</b> touch and drag anywhere to steer, hold the <b>Charge</b> button to run. Tap <b>⛶</b> to go fullscreen.</li>
+      <li><b>Graze:</b> stand on the glowing golden grass tufts to refill energy — moving burns it, charging burns it fast.</li>
+      <li><b>Swim</b> the Yellowstone River, cross the road at the bison jam, and skirt the thermal pools.</li>
+      <li>Wolves shadow the route. <b>Stop and face one to stand your ground</b> — wolves rarely test a healthy adult bison — or <b>charge</b> to drive it off.</li>
+      <li>The trail winds through <b>Norris, Fountain Paint Pot, Midway, and Old Faithful</b> — and a <b>grizzly</b> works the last basins. Bears don't bluff: charge or outrun it.</li>
+      <li><b>Herd Call</b> (🦬 button or <span class="kbd">E</span>): once per trek, summon the herd to stampede through and scatter every predator. Old bulls whisper that <b>one more call waits somewhere far off the trail…</b></li>
+    </ul>
+    <p style="margin-top:16px"><button class="btn thermal" id="start-btn">Begin the Migration</button></p>
+  </section>
+
+  <!-- Game -->
+  <div id="game-screen" class="hidden">
+    <div id="stage-wrap">
+      <canvas id="stage"></canvas>
+
+      <div class="hud">
+        <div class="hud-card">
+          <span class="bar-k">Energy</span>
+          <div class="bar"><span id="energy-fill"></span></div>
+          <span class="bar-k">Charge stamina</span>
+          <div class="bar"><span id="stamina-fill"></span></div>
+        </div>
+        <div class="hud-card hud-right">
+          <div class="big" id="hud-score">0</div>
+          <div class="small">points</div>
+          <div class="small" id="hud-dist" style="margin-top:4px">— to waypoint</div>
+        </div>
+      </div>
+
+      <div id="objective"><b>OBJECTIVE</b> <span id="objective-text">Head southwest out of Lamar Valley</span></div>
+
+      <div id="fact-card" class="hidden" role="dialog" aria-modal="true">
+        <div class="inner">
+          <p class="loc-eyebrow" id="fact-eyebrow">Waypoint</p>
+          <h3 id="fact-title">Title</h3>
+          <p id="fact-text">Fact</p>
+          <button class="btn" id="fact-btn">Keep moving</button>
+        </div>
+      </div>
+
+      <button id="fs-btn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+      <button id="herd-btn" data-count="1" aria-label="Call the herd" title="Call the herd (E)">🦬<span class="cnt" id="herd-count">1</span></button>
+      <div id="joystick" aria-hidden="true"><div class="knob"></div></div>
+      <button id="sprint-btn" aria-label="Hold to charge">Charge</button>
+    </div>
+    <p class="under-note">Tip: food is the golden, glowing grass — walk onto a tuft and stand still to graze it. Steam means thin ground — bison know to keep their hooves off the sinter crust.</p>
+  </div>
+
+  <!-- End screen -->
+  <section id="end-screen" class="screen hidden fade-in" aria-label="End of migration"></section>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ============================================================
+   YELLOWSTONE BISON TREK — parkadventureseries.com/yellowstone
+   Orthographic (3/4 top-down) canvas game. Single file, no deps.
+   ============================================================ */
+"use strict";
+
+/* ---------------- World constants ---------------- */
+const WORLD = {w:3600, h:2600};
+const START = {x:3320, y:520};
+
+// The Yellowstone River: a band that snakes across the upper map
+function riverY(x){ return 1010 + 170*Math.sin(x/520) + 60*Math.sin(x/173); }
+const RIVER_HALF = 78;
+// The Grand Loop Road: a band across the lower-middle map
+function roadY(x){ return 1680 + 110*Math.sin(x/700 + 2) ; }
+const ROAD_HALF = 52;
+
+const CHECKPOINTS = [
+  {x:2900, y:760,  r:120, title:"Out of Lamar Valley",
+   fact:"Bison are the largest land mammals in North America — big bulls weigh around 2,000 pounds — yet they can sprint up to 35 mph, three times faster than a person.",
+   next:"Swim the Yellowstone River"},
+  {x:2380, y:1030, r:130, title:"The River Crossing",
+   fact:"Bison are strong swimmers. Herds regularly cross the Yellowstone River on their seasonal migrations, calves paddling alongside their mothers.",
+   next:"Graze through Hayden Valley"},
+  {x:1820, y:1390, r:130, title:"Hayden Valley",
+   fact:"A bison spends 9 to 11 hours a day grazing. In deep winter it swings its huge head like a plow to sweep snow off the buried grass.",
+   next:"Cross the road at the bison jam"},
+  {x:1290, y:1690, r:120, title:"The Bison Jam",
+   fact:"When bison cross the Grand Loop Road, traffic simply waits — bison always have the right of way. Visitors must stay at least 25 yards back; bison injure more people in Yellowstone than any other animal.",
+   next:"Head east to Norris Geyser Basin"},
+  {x:2250, y:2080, r:120, title:"Norris Geyser Basin",
+   fact:"Norris is the hottest, most restless basin in the park — and home to Steamboat, the tallest active geyser on Earth. Its rare major eruptions can top 300 feet, more than twice Old Faithful's.",
+   next:"Follow the steam to Fountain Paint Pot"},
+  {x:1720, y:2360, r:120, title:"Fountain Paint Pot",
+   fact:"These bubbling mud pots are acid hot springs that have dissolved the rock around them into mineral-rich clay. In spring they're thin and splattery; by late summer they thicken into plopping, gurgling mud.",
+   next:"Cross Midway's prismatic pools"},
+  {x:1150, y:2280, r:120, title:"Midway Geyser Basin",
+   fact:"Grand Prismatic Spring — the largest hot spring in the United States, wider than a football field — steams here, ringed in color by heat-loving microbes. The pale sinter crust around every pool can be paper-thin over boiling water: bison and people alike keep to solid ground.",
+   next:"Wait out Old Faithful's eruption"},
+  {x:700,  y:2415, r:120, title:"Old Faithful",
+   fact:"Old Faithful erupts roughly every 90 minutes, throwing up to 8,400 gallons of boiling water as high as 180 feet. It isn't the biggest geyser in the park — but it's the most reliable, which is how it earned its name.",
+   next:"Reach the herd's winter meadow"},
+  {x:330,  y:2140, r:130, title:"The Winter Meadow",
+   fact:"Yellowstone is the only place in the United States where wild bison have lived continuously since prehistoric times. From about two dozen survivors in 1902, the herd has rebounded to thousands.",
+   next:null}
+];
+
+/* ---------------- State ---------------- */
+const S = {
+  running:false, paused:false, over:false,
+  t:0, score:0, grassEaten:0,
+  cpIndex:0, startTime:0,
+  player:{x:START.x, y:START.y, a:Math.PI*0.75, vx:0, vy:0, speed:0, energy:100, stamina:100, swim:false, grazeT:0, hurtT:0, bob:0},
+  input:{up:0,down:0,left:0,right:0,sprint:0,jx:0,jy:0,joy:false},
+  wolves:[], cars:[], grass:[], pools:[], trees:[], puffs:[],
+  wolfHintT:0, grassHintT:0, floaties:[],
+  geysers:[
+    {x:760,  y:2380, timer:6,  period:18, dur:4.5, h:120},           // Old Faithful
+    {x:2300, y:2150, timer:10, period:26, dur:6,   h:195},           // Steamboat
+    {x:1090, y:2210, timer:15, period:22, dur:4,   h:95}             // Midway cone
+  ],
+  bear:null, bearHintT:0,
+  herdCalls:1, herd:[], herdT:0, relic:null, relicHinted:false,
+  shakeT:0
+};
+
+/* ---------------- Utilities ---------------- */
+const $ = s => document.querySelector(s);
+const clamp=(v,a,b)=>v<a?a:(v>b?b:v);
+const dist=(x1,y1,x2,y2)=>Math.hypot(x2-x1,y2-y1);
+const lerp=(a,b,t)=>a+(b-a)*t;
+const angDiff=a=>((a+Math.PI*3)%(Math.PI*2))-Math.PI;
+const rand=(a,b)=>a+Math.random()*(b-a);
+function toast(msg){
+  const t=$("#toast"); t.textContent=msg; t.classList.add("show");
+  clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("show"),2800);
+}
+function inRiver(x,y){ return Math.abs(y-riverY(x))<RIVER_HALF; }
+function onRoad(x,y){ return Math.abs(y-roadY(x))<ROAD_HALF; }
+
+/* ---------------- World generation ---------------- */
+function seedWorld(){
+  S.grass=[]; S.pools=[]; S.trees=[]; S.wolves=[]; S.cars=[]; S.puffs=[];
+  // Grass tufts — dense in valleys, sparse elsewhere, never in river/road/pools
+  let guard=0;
+  while(S.grass.length<150 && guard++<4000){
+    const x=rand(120,WORLD.w-120), y=rand(120,WORLD.h-120);
+    if(inRiver(x,y)||onRoad(x,y)) continue;
+    if(dist(x,y,900,2100)<420) continue; // thermal basin: little grass
+    S.grass.push({x,y,eaten:false,regrow:0,s:rand(.8,1.3)});
+  }
+  // Thermal pools cluster (southwest basin)
+  const poolSpots=[[700,1950],[860,2060],[1010,1930],[930,2210],[760,2170],[620,2080],[1080,2130],[840,1860],
+                   [2350,2200],[2150,2230],[2430,2100],[2270,2280],   // Norris
+                   [600,2330],[850,2480]];                            // Upper basin
+  for(const [x,y] of poolSpots) S.pools.push({x,y,r:rand(46,86)});
+  // Fountain Paint Pot: scalding mud pots (render brown, same thin-crust danger)
+  for(const [x,y] of [[1660,2410],[1740,2440],[1705,2470]]) S.pools.push({x,y,r:rand(26,38),mud:true});
+  // The grizzly that works the upper basin — last stretch of the trek
+  S.bear={x:640,y:2230,hx:640,hy:2230,a:rand(0,6.28),state:"idle",wt:rand(0,3),cool:0,fleeT:0};
+  for(const g of S.geysers){g.timer=rand(4,g.period);g.active=0;}
+  // Hidden area: an old wallowing ground ringed by trees, far off the trail (SE corner).
+  // Holds one extra Herd Call. No waypoint ever points here.
+  S.relic={x:3170,y:2330,taken:false};
+  for(let i=0;i<11;i++){
+    const a=i/11*Math.PI*2;
+    if(a>4.9&&a<5.7)continue; // leave a gap to slip through
+    S.trees.push({x:S.relic.x+Math.cos(a)*185+rand(-14,14), y:S.relic.y+Math.sin(a)*150+rand(-12,12), r:rand(20,30)});
+  }
+  S.trees.sort((a,b)=>a.y-b.y);
+  // Tree clusters
+  const clusters=[[3100,1500],[2600,600],[1500,900],[2200,2100],[1700,2350],[400,1200],[1200,400],[3200,2200],[500,600],[2900,1800]];
+  for(const [cx,cy] of clusters){
+    const n=8+Math.floor(Math.random()*7);
+    for(let i=0;i<n;i++){
+      const x=cx+rand(-220,220), y=cy+rand(-160,160);
+      if(inRiver(x,y)||onRoad(x,y)) continue;
+      if(x<60||y<60||x>WORLD.w-60||y>WORLD.h-60) continue;
+      S.trees.push({x,y,r:rand(16,30)});
+    }
+  }
+  S.trees.sort((a,b)=>a.y-b.y);
+  // Wolves — posted along the middle of the route
+  const dens=[[2500,1350],[2050,1150],[1550,1550],[1150,1350]];
+  for(const [x,y] of dens) S.wolves.push({x,y,hx:x,hy:y,a:rand(0,6.28),state:"idle",wt:rand(0,3),cool:0,fleeT:0,waryT:0,spin:Math.random()<.5?1:-1});
+  // Cars on the road
+  for(let i=0;i<7;i++){
+    S.cars.push({
+      x:rand(100,WORLD.w-100),
+      dir:Math.random()<0.5?1:-1,
+      lane:Math.random()<0.5?-20:20,
+      v:rand(120,170),
+      hue:[["#c8543f"],["#4d7ba8"],["#d9c268"],["#7a8b7f"],["#a05e8f"],["#e0e4d8"],["#3c6b4f"]][i][0],
+      stopped:false
+    });
+  }
+}
+
+/* ---------------- Input ---------------- */
+const KEYMAP={ArrowUp:"up",KeyW:"up",ArrowDown:"down",KeyS:"down",ArrowLeft:"left",KeyA:"left",ArrowRight:"right",KeyD:"right"};
+addEventListener("keydown",e=>{
+  if(KEYMAP[e.code]!==undefined){S.input[KEYMAP[e.code]]=1;e.preventDefault();}
+  if(e.key==="Shift")S.input.sprint=1;
+});
+addEventListener("keyup",e=>{
+  if(KEYMAP[e.code]!==undefined)S.input[KEYMAP[e.code]]=0;
+  if(e.key==="Shift")S.input.sprint=0;
+});
+
+// Touch controls: drag anywhere to spawn a joystick, dedicated charge button.
+// Pointer capture keeps steering alive even when a thumb slides off the stage.
+(function(){
+  const wrapEl=$("#stage-wrap"), joy=$("#joystick"), knob=joy.querySelector(".knob");
+  const HALF=64, KNOB=38, MAX=48; // joystick geometry (px)
+  let jid=null, ox=0, oy=0;
+  wrapEl.addEventListener("pointerdown",e=>{
+    if(e.pointerType==="mouse")return;
+    if(e.target.closest("button")||e.target.closest("#fact-card"))return;
+    if(jid!==null)return;
+    jid=e.pointerId; ox=e.clientX; oy=e.clientY;
+    try{wrapEl.setPointerCapture(jid);}catch(_){}
+    const r=wrapEl.getBoundingClientRect();
+    joy.style.display="block";
+    joy.style.left=(ox-r.left-HALF)+"px"; joy.style.top=(oy-r.top-HALF)+"px";
+    knob.style.left=KNOB+"px"; knob.style.top=KNOB+"px";
+    S.input.joy=true;
+    e.preventDefault();
+  });
+  wrapEl.addEventListener("pointermove",e=>{
+    if(e.pointerId!==jid)return;
+    let dx=e.clientX-ox, dy=e.clientY-oy;
+    const m=Math.hypot(dx,dy);
+    if(m>MAX){dx=dx/m*MAX;dy=dy/m*MAX;}
+    knob.style.left=(KNOB+dx)+"px"; knob.style.top=(KNOB+dy)+"px";
+    S.input.jx=dx/MAX; S.input.jy=dy/MAX;
+    e.preventDefault();
+  });
+  const end=e=>{
+    if(e.pointerId!==jid)return;
+    jid=null; joy.style.display="none";
+    S.input.jx=0;S.input.jy=0;S.input.joy=false;
+  };
+  wrapEl.addEventListener("pointerup",end);
+  wrapEl.addEventListener("pointercancel",end);
+  wrapEl.addEventListener("lostpointercapture",end);
+  wrapEl.addEventListener("contextmenu",e=>e.preventDefault());
+
+  const sb=$("#sprint-btn");
+  sb.addEventListener("pointerdown",e=>{
+    e.preventDefault();
+    try{sb.setPointerCapture(e.pointerId);}catch(_){}
+    S.input.sprint=1;
+  });
+  const sbEnd=()=>{S.input.sprint=0;};
+  sb.addEventListener("pointerup",sbEnd);
+  sb.addEventListener("pointercancel",sbEnd);
+  sb.addEventListener("lostpointercapture",sbEnd);
+
+  // Fullscreen: CSS overlay works everywhere (incl. iPhone Safari, where
+  // native element fullscreen is unavailable); native API used when present.
+  const fsBtn=$("#fs-btn");
+  function setFS(on){
+    wrapEl.classList.toggle("fs",on);
+    fsBtn.textContent=on?"✕":"⛶";
+    fsBtn.setAttribute("aria-label",on?"Exit fullscreen":"Toggle fullscreen");
+    if(on){
+      if(wrapEl.requestFullscreen)wrapEl.requestFullscreen().catch(()=>{});
+      if(screen.orientation&&screen.orientation.lock)screen.orientation.lock("landscape").catch(()=>{});
+    } else if(document.fullscreenElement&&document.exitFullscreen){
+      document.exitFullscreen().catch(()=>{});
+    }
+    setTimeout(resize,60);
+  }
+  fsBtn.addEventListener("click",()=>setFS(!wrapEl.classList.contains("fs")));
+  document.addEventListener("fullscreenchange",()=>{
+    if(!document.fullscreenElement&&wrapEl.classList.contains("fs")){
+      wrapEl.classList.remove("fs");fsBtn.textContent="⛶";setTimeout(resize,60);
+    }
+  });
+  addEventListener("keydown",e=>{
+    if(e.key==="Escape"&&wrapEl.classList.contains("fs"))setFS(false);
+  });
+
+  // Auto-pause when the tab or app is backgrounded
+  document.addEventListener("visibilitychange",()=>{
+    if(document.hidden&&S.running&&!S.over&&$("#fact-card").classList.contains("hidden")){
+      S.autoPaused=true;S.paused=true;
+    } else if(S.autoPaused){
+      S.autoPaused=false;S.paused=false;last=performance.now();
+    }
+  });
+})();
+
+/* ---------------- Update ---------------- */
+function update(dt){
+  const P=S.player;
+  S.t+=dt;
+
+  // --- movement intent
+  let ix=S.input.right-S.input.left + S.input.jx;
+  let iy=S.input.down-S.input.up + S.input.jy;
+  const im=Math.hypot(ix,iy);
+  if(im>1){ix/=im;iy/=im;}
+  const wantSprint=S.input.sprint&&P.stamina>2&&im>0.1;
+  const base=P.swim?88:135;
+  const spd=wantSprint?base*1.85:base;
+
+  // steer heading toward intent (a bison turns, it doesn't strafe)
+  if(im>0.05){
+    const ta=Math.atan2(iy,ix);
+    let da=((ta-P.a+Math.PI*3)%(Math.PI*2))-Math.PI;
+    P.a+=clamp(da, -4.2*dt, 4.2*dt);
+    P.speed=lerp(P.speed, spd*Math.min(im,1), 4*dt);
+  } else {
+    P.speed=lerp(P.speed,0,6*dt);
+  }
+  P.x+=Math.cos(P.a)*P.speed*dt;
+  P.y+=Math.sin(P.a)*P.speed*dt;
+  P.x=clamp(P.x,40,WORLD.w-40); P.y=clamp(P.y,40,WORLD.h-40);
+  P.bob+=P.speed*dt*0.05;
+  P.swim=inRiver(P.x,P.y);
+  if(P.hurtT>0)P.hurtT-=dt;
+
+  // soft tree collision
+  for(const tr of S.trees){
+    const d=dist(P.x,P.y,tr.x,tr.y), min=tr.r*0.55+18;
+    if(d<min&&d>0.01){
+      P.x+=(P.x-tr.x)/d*(min-d); P.y+=(P.y-tr.y)/d*(min-d);
+    }
+  }
+
+  // --- energy & stamina
+  const moving=P.speed>15;
+  let drain=moving?(wantSprint?5.0:1.6):0.18;
+  if(P.swim)drain+=2.2;
+  P.energy-=drain*dt;
+  if(wantSprint&&moving)P.stamina=Math.max(0,P.stamina-26*dt);
+  else P.stamina=Math.min(100,P.stamina+16*dt);
+
+  // --- grazing
+  let grazing=false;
+  P.nearTuft=null;
+  for(const g of S.grass){
+    if(!g.eaten&&dist(P.x,P.y,g.x,g.y)<58){P.nearTuft=g;break;}
+  }
+  if(P.nearTuft&&P.speed<28&&!P.swim){
+    grazing=true;
+    P.grazeT+=dt;
+    if(P.grazeT>0.8){
+      const g=P.nearTuft;
+      g.eaten=true; g.regrow=25;
+      P.grazeT=0; S.grassEaten++;
+      P.energy=Math.min(100,P.energy+12);
+      S.score+=10;
+      puff(g.x,g.y,"#cdbb45",4);
+      S.floaties.push({x:g.x,y:g.y-30,t:0,txt:"+12 energy"});
+    }
+  }
+  if(!grazing)P.grazeT=0;
+  // gentle nudge when running on empty
+  S.grassHintT=Math.max(0,S.grassHintT-dt);
+  if(P.energy<35&&S.grassHintT<=0){
+    S.grassHintT=14;
+    toast("🌾 Energy low! Find a glowing grass tuft and stand on it to graze.");
+  }
+  // floating popups
+  for(let i=S.floaties.length-1;i>=0;i--){
+    const f=S.floaties[i];
+    f.t+=dt; f.y-=34*dt;
+    if(f.t>1.4)S.floaties.splice(i,1);
+  }
+  for(const g of S.grass){ if(g.eaten){g.regrow-=dt; if(g.regrow<=0)g.eaten=false;} }
+
+  // --- thermal pools
+  for(const pl of S.pools){
+    if(dist(P.x,P.y,pl.x,pl.y)<pl.r*0.85){
+      P.energy-=14*dt;
+      if(P.hurtT<=0){P.hurtT=1.2;S.shakeT=0.3;toast("♨️ Scalding ground! The sinter crust is thin — get back to solid earth.");}
+      // push out
+      const d=dist(P.x,P.y,pl.x,pl.y)||1;
+      P.x+=(P.x-pl.x)/d*60*dt*3; P.y+=(P.y-pl.y)/d*60*dt*3;
+    }
+  }
+
+  // --- wolves
+  S.wolfHintT=Math.max(0,S.wolfHintT-dt);
+  for(const w of S.wolves){
+    w.cool=Math.max(0,w.cool-dt);
+    const dp=dist(w.x,w.y,P.x,P.y)||1;
+    const toWolf=Math.atan2(w.y-P.y,w.x-P.x);
+    // DEFENSE 1 — charge: run at a wolf to send it packing
+    const chargingAtWolf = wantSprint && P.speed>60 && dp<270 && Math.abs(angDiff(toWolf-P.a))<0.8;
+    // DEFENSE 2 — stand your ground: stop and face it, like a real bison
+    const standingGround = P.speed<40 && dp<320 && Math.abs(angDiff(toWolf-P.a))<0.9;
+
+    if(chargingAtWolf||w.fleeT>0){
+      if(chargingAtWolf&&w.fleeT<=0){S.score+=15;toast("🦬 You lower your head and charge — the wolf breaks off! (+15)");}
+      w.fleeT=Math.max(w.fleeT,1.6); w.state="flee"; w.waryT=0;
+      w.a=toWolf;
+      w.x+=Math.cos(w.a)*300*dt; w.y+=Math.sin(w.a)*300*dt;
+    } else if(dp<380 && dist(w.x,w.y,w.hx,w.hy)<760 && !P.swim){
+      if(standingGround){
+        // wary: circle at a respectful distance, then think better of it
+        w.state="wary"; w.waryT+=dt;
+        const ux=(w.x-P.x)/dp, uy=(w.y-P.y)/dp;
+        const vx=-uy*w.spin*72 + ux*(215-dp)*1.4;
+        const vy= ux*w.spin*72 + uy*(215-dp)*1.4;
+        w.x+=vx*dt; w.y+=vy*dt;
+        w.a=Math.atan2(P.y-w.y,P.x-w.x); // eyes on the bison
+        if(w.waryT>2.4){
+          w.waryT=0; w.fleeT=1.6; w.cool=3;
+          S.score+=10;
+          toast("🦬 You stand your ground. The wolf thinks better of it and trots off. (+10)");
+        }
+      } else {
+        w.state="chase"; w.waryT=0;
+        if(S.wolfHintT<=0){
+          S.wolfHintT=16;
+          toast("🐺 Wolf on your tail! Stop and turn to face it — or hold Charge and run it off.");
+        }
+        w.a=Math.atan2(P.y-w.y,P.x-w.x);
+        w.x+=Math.cos(w.a)*225*dt; w.y+=Math.sin(w.a)*225*dt;
+        if(dp<42&&w.cool<=0){
+          w.cool=3.0; P.energy-=10; P.hurtT=0.8; S.shakeT=0.35;
+          P.x+=Math.cos(w.a)*40; P.y+=Math.sin(w.a)*40;
+          toast("🐺 A wolf nips at your flank! Face it down or charge. (−10 energy)");
+        }
+      }
+    } else {
+      w.state="idle"; w.waryT=0;
+      w.wt-=dt;
+      if(w.wt<=0){w.wt=rand(1.5,3.5);w.a=rand(0,Math.PI*2);}
+      const dh=dist(w.x,w.y,w.hx,w.hy);
+      if(dh>90){w.a=Math.atan2(w.hy-w.y,w.hx-w.x);}
+      w.x+=Math.cos(w.a)*55*dt; w.y+=Math.sin(w.a)*55*dt;
+    }
+    w.x=clamp(w.x,40,WORLD.w-40); w.y=clamp(w.y,40,WORLD.h-40);
+  }
+
+  // --- the herd (summoned by a Herd Call)
+  for(let i=S.herd.length-1;i>=0;i--){
+    const h=S.herd[i];
+    h.x+=Math.cos(h.a)*h.v*dt; h.y+=Math.sin(h.a)*h.v*dt;
+    h.t+=dt; h.bob+=h.v*dt*0.05;
+    if(Math.random()<0.35)puff(h.x-Math.cos(h.a)*22,h.y+6,"#c9bd9c",1); // kicked-up dust
+    if(h.t>7)S.herd.splice(i,1);
+  }
+  if(S.herdT>0){
+    S.herdT-=dt;
+    for(const w of S.wolves){
+      if(dist(w.x,w.y,P.x,P.y)<620){w.fleeT=Math.max(w.fleeT,1.2);w.cool=Math.max(w.cool,4);}
+    }
+    if(S.bear&&dist(S.bear.x,S.bear.y,P.x,P.y)<620)S.bear.fleeT=Math.max(S.bear.fleeT,1.2);
+  }
+
+  // --- the hidden relic: one extra Herd Call
+  if(S.relic&&!S.relic.taken){
+    const dr=dist(P.x,P.y,S.relic.x,S.relic.y);
+    if(!S.relicHinted&&dr<620){
+      S.relicHinted=true;
+      toast("👃 A familiar scent on the wind… an old wallowing ground is close.");
+    }
+    if(dr<55){
+      S.relic.taken=true;
+      S.herdCalls++; updateHerdBtn();
+      S.score+=25;
+      toast("🦬 The old wallow! You've earned a second Herd Call. (+25)");
+      puff(S.relic.x,S.relic.y,"#e8a93c",6);
+    }
+  }
+
+  // --- cars
+  for(const c of S.cars){
+    c.y=roadY(c.x)+c.lane;
+    // stop for the bison (right of way!)
+    const ahead = (P.x-c.x)*c.dir;
+    c.stopped = onRoad(P.x,P.y)&&ahead>-30&&ahead<300&&Math.abs(P.y-c.y)<140;
+    if(!c.stopped){
+      c.x+=c.v*c.dir*dt;
+      if(c.x>WORLD.w+60)c.x=-60;
+      if(c.x<-60)c.x=WORLD.w+60;
+    }
+  }
+
+  // --- geysers
+  for(const G of S.geysers){
+    G.timer-=dt;
+    if(G.timer<=0){G.active=G.dur;G.timer=G.period;}
+    if(G.active>0){
+      G.active-=dt;
+      if(Math.random()<0.5)puff(G.x+rand(-8,8),G.y-rand(0,G.h*0.8),"#f2efe4",1);
+    }
+  }
+  // ambient steam from pools (brown spatter over the mud pots)
+  if(Math.random()<0.3){
+    const pl=S.pools[Math.floor(Math.random()*S.pools.length)];
+    puff(pl.x+rand(-pl.r*.5,pl.r*.5), pl.y+rand(-pl.r*.4,pl.r*.4), pl.mud?"#b59a7d":"#eef0e6", 1);
+  }
+
+  // --- the grizzly (guards the upper basin — standing still won't bluff a bear)
+  if(S.bear){
+    const b=S.bear;
+    b.cool=Math.max(0,b.cool-dt);
+    S.bearHintT=Math.max(0,S.bearHintT-dt);
+    const dp=dist(b.x,b.y,P.x,P.y)||1;
+    const toBear=Math.atan2(b.y-P.y,b.x-P.x);
+    const chargingAtBear = wantSprint && P.speed>60 && dp<270 && Math.abs(angDiff(toBear-P.a))<0.8;
+    if(chargingAtBear||b.fleeT>0){
+      if(chargingAtBear&&b.fleeT<=0){S.score+=20;toast("🦬 A ton of charging bison changes the bear's mind — for now. (+20)");}
+      b.fleeT=Math.max(b.fleeT,1.2); b.state="flee";
+      b.a=toBear;
+      b.x+=Math.cos(b.a)*260*dt; b.y+=Math.sin(b.a)*260*dt;
+    } else if(dp<330 && dist(b.x,b.y,b.hx,b.hy)<680){
+      b.state="chase";
+      if(S.bearHintT<=0){
+        S.bearHintT=18;
+        toast("🐻 GRIZZLY! Standing your ground won't bluff a bear — charge it or run for open ground!");
+      }
+      b.a=Math.atan2(P.y-b.y,P.x-b.x);
+      b.x+=Math.cos(b.a)*205*dt; b.y+=Math.sin(b.a)*205*dt;
+      if(dp<52&&b.cool<=0){
+        b.cool=3.5; P.energy-=20; P.hurtT=1.0; S.shakeT=0.5;
+        P.x+=Math.cos(b.a)*70; P.y+=Math.sin(b.a)*70;
+        toast("🐻 The grizzly swats you hard! (−20 energy)");
+      }
+    } else {
+      b.state="idle";
+      b.wt-=dt;
+      if(b.wt<=0){b.wt=rand(2,4);b.a=rand(0,Math.PI*2);}
+      const dh=dist(b.x,b.y,b.hx,b.hy);
+      if(dh>120){b.a=Math.atan2(b.hy-b.y,b.hx-b.x);}
+      b.x+=Math.cos(b.a)*45*dt; b.y+=Math.sin(b.a)*45*dt;
+    }
+    b.x=clamp(b.x,40,WORLD.w-40); b.y=clamp(b.y,40,WORLD.h-40);
+  }
+  // puffs
+  for(let i=S.puffs.length-1;i>=0;i--){
+    const p=S.puffs[i];
+    p.t+=dt; p.y-=28*dt; p.x+=Math.sin(p.t*3+p.seed)*10*dt;
+    if(p.t>p.life)S.puffs.splice(i,1);
+  }
+
+  // --- checkpoints
+  const cp=CHECKPOINTS[S.cpIndex];
+  if(cp&&dist(P.x,P.y,cp.x,cp.y)<cp.r){
+    S.score+=100;
+    showFact(cp);
+  }
+
+  // --- fail state
+  if(P.energy<=0){P.energy=0;loseGame();}
+
+  S.shakeT=Math.max(0,S.shakeT-dt);
+  updateHUD();
+}
+
+function puff(x,y,color,n){
+  for(let i=0;i<n;i++)S.puffs.push({x:x+rand(-6,6),y,t:0,life:rand(1.2,2.2),r:rand(4,9),color,seed:rand(0,6)});
+}
+
+/* ---------------- HUD ---------------- */
+function updateHUD(){
+  $("#energy-fill").style.width=S.player.energy+"%";
+  $("#stamina-fill").style.width=S.player.stamina+"%";
+  $("#hud-score").textContent=S.score;
+  const cp=CHECKPOINTS[S.cpIndex];
+  if(cp){
+    const d=Math.round(dist(S.player.x,S.player.y,cp.x,cp.y)/10);
+    $("#hud-dist").textContent=d+"0 yd to waypoint";
+  } else $("#hud-dist").textContent="—";
+}
+
+/* ---------------- Fact card / progression ---------------- */
+function showFact(cp){
+  S.paused=true;
+  $("#fact-eyebrow").textContent="Waypoint "+(S.cpIndex+1)+" of "+CHECKPOINTS.length;
+  $("#fact-title").textContent=cp.title;
+  $("#fact-text").textContent=cp.fact;
+  $("#fact-btn").textContent=cp.next?"Onward — "+cp.next:"Join the herd";
+  $("#fact-card").classList.remove("hidden");
+  $("#fact-btn").focus();
+}
+$("#fact-btn").addEventListener("click",()=>{
+  $("#fact-card").classList.add("hidden");
+  const wasLast=S.cpIndex===CHECKPOINTS.length-1;
+  S.cpIndex++;
+  if(wasLast){winGame();return;}
+  $("#objective-text").textContent=CHECKPOINTS[S.cpIndex-1].next||"";
+  S.paused=false;
+});
+
+/* ---------------- Rendering ---------------- */
+const cv=$("#stage"), ctx=cv.getContext("2d");
+let VW=950; // view width in world units
+function resize(){
+  const r=cv.getBoundingClientRect(), dpr=Math.min(devicePixelRatio||1,2);
+  cv.width=Math.round(r.width*dpr); cv.height=Math.round(r.height*dpr);
+  VW=r.width<440?560:(r.width<640?680:(r.width<900?820:980));
+}
+addEventListener("resize",resize);
+
+const cam={x:START.x,y:START.y};
+function render(){
+  const P=S.player;
+  cam.x=lerp(cam.x,P.x,0.08); cam.y=lerp(cam.y,P.y,0.08);
+  const scale=cv.width/VW;
+  const vh=cv.height/scale;
+  let cx=clamp(cam.x,VW/2,WORLD.w-VW/2);
+  let cy=clamp(cam.y,vh/2,WORLD.h-vh/2);
+  if(S.shakeT>0){cx+=rand(-4,4);cy+=rand(-4,4);}
+
+  ctx.setTransform(scale,0,0,scale,-(cx-VW/2)*scale,-(cy-vh/2)*scale);
+  const L=cx-VW/2, T=cy-vh/2, R=cx+VW/2, B=cy+vh/2;
+
+  // ---- terrain base
+  ctx.fillStyle="#7f9662"; ctx.fillRect(L,T,VW,vh);
+  // valley meadows (lighter)
+  meadow(3100,650,700,420,"#93a768");
+  meadow(1850,1400,760,460,"#98ab6b");
+  meadow(470,2300,520,340,"#a3b070");
+  // thermal sinter apron (pale)
+  ctx.fillStyle="#d8cfb2";
+  ctx.beginPath();ctx.ellipse(880,2060,470,330,0,0,7);ctx.fill();
+  ctx.fillStyle="#cfc3a1";
+  ctx.beginPath();ctx.ellipse(880,2060,340,240,0,0,7);ctx.fill();
+
+  // ---- river
+  drawBand(riverY,RIVER_HALF,"#3f7d8c",L,R);
+  drawBand(riverY,RIVER_HALF-16,"#4f93a2",L,R);
+  // ripples
+  ctx.strokeStyle="rgba(230,240,240,.35)";ctx.lineWidth=2;
+  for(let x=Math.floor(L/140)*140;x<R;x+=140){
+    const y=riverY(x)+Math.sin(S.t*1.5+x)*10;
+    ctx.beginPath();ctx.moveTo(x,y);ctx.quadraticCurveTo(x+22,y-6,x+44,y);ctx.stroke();
+  }
+
+  // ---- road
+  drawBand(roadY,ROAD_HALF,"#5c5f58",L,R);
+  ctx.strokeStyle="rgba(232,215,160,.8)";ctx.lineWidth=3;ctx.setLineDash([26,26]);
+  ctx.beginPath();
+  for(let x=L;x<=R;x+=24){const y=roadY(x);x===L?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();ctx.setLineDash([]);
+
+  // ---- thermal pools (prismatic rings)
+  for(const pl of S.pools){
+    if(pl.x<L-150||pl.x>R+150||pl.y<T-150||pl.y>B+150)continue;
+    if(pl.mud){
+      ring(pl.x,pl.y,pl.r*1.2,"#8a6b4f");
+      ring(pl.x,pl.y,pl.r*0.85,"#6e5138");
+      ring(pl.x,pl.y,pl.r*0.5,"#57402c");
+      // plopping bubble
+      const bub=(S.t*1.3+pl.x)%1;
+      if(bub<0.5){ctx.fillStyle="#7d5f42";ctx.beginPath();ctx.arc(pl.x+Math.sin(pl.y)*6,pl.y-2,pl.r*0.22*(0.5+bub),0,7);ctx.fill();}
+    } else {
+      ring(pl.x,pl.y,pl.r*1.25,"#d96c2c");
+      ring(pl.x,pl.y,pl.r*1.05,"#e8a93c");
+      ring(pl.x,pl.y,pl.r*0.85,"#4f9e63");
+      ring(pl.x,pl.y,pl.r*0.62,"#1e8e86");
+      ring(pl.x,pl.y,pl.r*0.4,"#2b5d73");
+    }
+  }
+
+  // ---- grass tufts
+  for(const g of S.grass){
+    if(g.eaten||g.x<L-40||g.x>R+40||g.y<T-40||g.y>B+40)continue;
+    tuft(g.x,g.y,g.s);
+  }
+
+  // ---- checkpoint marker (current only)
+  const cp=CHECKPOINTS[S.cpIndex];
+  if(cp){
+    const pulse=1+0.08*Math.sin(S.t*4);
+    ctx.strokeStyle="rgba(232,169,60,.9)";ctx.lineWidth=5;ctx.setLineDash([14,12]);
+    ctx.beginPath();ctx.arc(cp.x,cp.y,cp.r*pulse,0,7);ctx.stroke();ctx.setLineDash([]);
+    // flag post
+    ctx.strokeStyle="#3a2a10";ctx.lineWidth=5;
+    ctx.beginPath();ctx.moveTo(cp.x,cp.y);ctx.lineTo(cp.x,cp.y-56);ctx.stroke();
+    ctx.fillStyle="#d96c2c";
+    ctx.beginPath();ctx.moveTo(cp.x,cp.y-56);ctx.lineTo(cp.x+34,cp.y-47);ctx.lineTo(cp.x,cp.y-38);ctx.closePath();ctx.fill();
+  }
+
+  // ---- hidden relic (only drawn if you find the grove)
+  if(S.relic&&!S.relic.taken&&S.relic.x>L-160&&S.relic.x<R+160&&S.relic.y>T-160&&S.relic.y<B+160){
+    const rp=1+0.12*Math.sin(S.t*3.5);
+    ctx.fillStyle="rgba(212,224,130,.45)";
+    ctx.beginPath();ctx.ellipse(S.relic.x,S.relic.y+4,60,30,0,0,7);ctx.fill();
+    ctx.strokeStyle="rgba(232,169,60,.9)";ctx.lineWidth=3.5;
+    ctx.beginPath();ctx.arc(S.relic.x,S.relic.y,30*rp,0,7);ctx.stroke();
+    // sun-bleached skull with horns
+    ctx.fillStyle="#e8dcc0";
+    ctx.beginPath();ctx.ellipse(S.relic.x,S.relic.y,9,11,0,0,7);ctx.fill();
+    ctx.strokeStyle="#e8dcc0";ctx.lineWidth=4.5;ctx.lineCap="round";
+    ctx.beginPath();ctx.moveTo(S.relic.x-8,S.relic.y-4);ctx.quadraticCurveTo(S.relic.x-17,S.relic.y-10,S.relic.x-15,S.relic.y-17);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(S.relic.x+8,S.relic.y-4);ctx.quadraticCurveTo(S.relic.x+17,S.relic.y-10,S.relic.x+15,S.relic.y-17);ctx.stroke();
+    ctx.fillStyle="#4b3a24";
+    ctx.beginPath();ctx.arc(S.relic.x-3,S.relic.y-2,1.8,0,7);ctx.fill();
+    ctx.beginPath();ctx.arc(S.relic.x+3,S.relic.y-2,1.8,0,7);ctx.fill();
+  }
+
+  // ---- geyser cones + eruptions
+  for(const G of S.geysers){
+    if(G.x<L-120||G.x>R+120||G.y<T-250||G.y>B+120)continue;
+    ctx.fillStyle="#c9bd9c";
+    ctx.beginPath();ctx.ellipse(G.x,G.y,34,20,0,0,7);ctx.fill();
+    ctx.fillStyle="#8e8266";
+    ctx.beginPath();ctx.ellipse(G.x,G.y-4,14,8,0,0,7);ctx.fill();
+    if(G.active>0){
+      ctx.fillStyle="rgba(242,239,228,.85)";
+      const h=G.h+Math.sin(S.t*9)*G.h*0.12;
+      ctx.beginPath();
+      ctx.moveTo(G.x-8,G.y-6);
+      ctx.quadraticCurveTo(G.x-16,G.y-h*0.6,G.x-24,G.y-h);
+      ctx.lineTo(G.x+24,G.y-h);
+      ctx.quadraticCurveTo(G.x+16,G.y-h*0.6,G.x+8,G.y-6);
+      ctx.closePath();ctx.fill();
+    }
+  }
+
+  // ---- y-sorted entities: trees, cars, wolves, player
+  const ents=[];
+  for(const tr of S.trees) if(tr.x>L-60&&tr.x<R+60&&tr.y>T-80&&tr.y<B+80) ents.push({y:tr.y,draw:()=>tree(tr)});
+  for(const c of S.cars) if(c.x>L-80&&c.x<R+80) ents.push({y:c.y,draw:()=>car(c)});
+  for(const w of S.wolves) if(w.x>L-60&&w.x<R+60&&w.y>T-60&&w.y<B+60) ents.push({y:w.y,draw:()=>wolf(w)});
+  if(S.bear&&S.bear.x>L-80&&S.bear.x<R+80&&S.bear.y>T-80&&S.bear.y<B+80) ents.push({y:S.bear.y,draw:()=>bear(S.bear)});
+  for(const h of S.herd) if(h.x>L-80&&h.x<R+80&&h.y>T-80&&h.y<B+80) ents.push({y:h.y,draw:()=>herdBison(h)});
+  ents.push({y:P.y,draw:()=>bison(P)});
+  ents.sort((a,b)=>a.y-b.y);
+  for(const e of ents)e.draw();
+
+  // ---- food affordance: ring the nearest tuft, prompt the player
+  if(P.nearTuft&&!P.nearTuft.eaten){
+    const g=P.nearTuft, pu=1+0.12*Math.sin(S.t*6);
+    ctx.strokeStyle="rgba(232,169,60,.95)";ctx.lineWidth=3.5;
+    ctx.beginPath();ctx.arc(g.x,g.y-6,26*pu,0,7);ctx.stroke();
+    ctx.font="600 15px Oswald, sans-serif";ctx.textAlign="center";
+    if(P.grazeT>0){
+      ctx.fillStyle="rgba(244,233,206,.95)";
+      ctx.fillText("Grazing…",P.x,P.y-46);
+    } else if(P.speed>=28){
+      ctx.fillStyle="rgba(244,233,206,.95)";
+      ctx.fillText("Stop to graze",P.x,P.y-46);
+    }
+  }
+  // floating +energy popups
+  ctx.font="600 16px Oswald, sans-serif";ctx.textAlign="center";
+  for(const f of S.floaties){
+    const a=1-f.t/1.4;
+    ctx.fillStyle="rgba(227,200,90,"+a.toFixed(2)+")";
+    ctx.strokeStyle="rgba(34,48,43,"+(a*0.8).toFixed(2)+")";ctx.lineWidth=3;
+    ctx.strokeText(f.txt,f.x,f.y);
+    ctx.fillText(f.txt,f.x,f.y);
+  }
+
+  // ---- steam puffs (above everything)
+  for(const p of S.puffs){
+    const a=1-p.t/p.life;
+    ctx.fillStyle=hexA(p.color,a*0.6);
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r*(1+p.t*0.7),0,7);ctx.fill();
+  }
+
+  // ---- waypoint arrow (screen space)
+  if(cp){
+    ctx.setTransform(1,0,0,1,0,0);
+    const sx=(cp.x-(cx-VW/2))*scale, sy=(cp.y-(cy-vh/2))*scale;
+    const onScreen=sx>40&&sx<cv.width-40&&sy>40&&sy<cv.height-40;
+    if(!onScreen){
+      const ccx=cv.width/2, ccy=cv.height/2;
+      const ang=Math.atan2(sy-ccy,sx-ccx);
+      const as=clamp(Math.min(cv.width,cv.height)/240,1.8,3.2)*(1+0.08*Math.sin(S.t*5));
+      const m=40*as;
+      const ax=clamp(sx,m,cv.width-m), ay=clamp(sy,m,cv.height-m);
+      ctx.save();ctx.translate(ax,ay);ctx.rotate(ang);ctx.scale(as,as);
+      ctx.fillStyle="rgba(232,169,60,.97)";
+      ctx.strokeStyle="rgba(34,48,43,.9)";ctx.lineWidth=2.2;
+      ctx.beginPath();ctx.moveTo(18,0);ctx.lineTo(-11,-12);ctx.lineTo(-4.5,0);ctx.lineTo(-11,12);ctx.closePath();
+      ctx.fill();ctx.stroke();
+      ctx.restore();
+    }
+  }
+}
+
+function meadow(x,y,rx,ry,fill){ctx.fillStyle=fill;ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,7);ctx.fill();}
+function ring(x,y,r,fill){ctx.fillStyle=fill;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();}
+function hexA(hex,a){
+  const n=parseInt(hex.slice(1),16);
+  return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;
+}
+function drawBand(fn,half,fill,L,R){
+  ctx.fillStyle=fill;ctx.beginPath();
+  for(let x=L-20;x<=R+20;x+=26)  {const y=fn(x)-half; x===L-20?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  for(let x=R+20;x>=L-20;x-=26)  {ctx.lineTo(x,fn(x)+half);}
+  ctx.closePath();ctx.fill();
+}
+function tuft(x,y,s){
+  // lit meadow patch so food reads against the terrain
+  ctx.fillStyle="rgba(212,224,130,.5)";
+  ctx.beginPath();ctx.ellipse(x,y+2,15*s,7*s,0,0,7);ctx.fill();
+  ctx.fillStyle="rgba(0,0,0,.10)";
+  ctx.beginPath();ctx.ellipse(x,y+3,8,3,0,0,7);ctx.fill();
+  const sway=Math.sin(S.t*2+x*0.05)*2.2;
+  // bright blades
+  ctx.strokeStyle="#a4c94f";ctx.lineWidth=2.8;
+  ctx.beginPath();
+  for(let i=-2;i<=2;i++){
+    ctx.moveTo(x,y);
+    ctx.quadraticCurveTo(x+i*3+sway*0.4,y-9*s,x+i*5+sway,y-16*s);
+  }
+  ctx.stroke();
+  // golden seed heads at the tips
+  ctx.fillStyle="#e3c85a";
+  for(let i=-2;i<=2;i+=2){
+    ctx.beginPath();ctx.arc(x+i*5+sway,y-16*s,2.2,0,7);ctx.fill();
+  }
+}
+function tree(tr){
+  ctx.fillStyle="rgba(0,0,0,.18)";
+  ctx.beginPath();ctx.ellipse(tr.x+4,tr.y+6,tr.r*0.9,tr.r*0.45,0,0,7);ctx.fill();
+  ctx.fillStyle="#2f5540";
+  ctx.beginPath();ctx.arc(tr.x,tr.y,tr.r,0,7);ctx.fill();
+  ctx.fillStyle="#3c6b4f";
+  ctx.beginPath();ctx.arc(tr.x-tr.r*0.25,tr.y-tr.r*0.25,tr.r*0.62,0,7);ctx.fill();
+}
+function car(c){
+  ctx.save();ctx.translate(c.x,c.y);
+  ctx.fillStyle="rgba(0,0,0,.2)";
+  ctx.beginPath();ctx.ellipse(2,10,24,8,0,0,7);ctx.fill();
+  ctx.scale(c.dir,1);
+  ctx.fillStyle=c.hue;
+  rr(-24,-11,48,22,7);ctx.fill();
+  ctx.fillStyle="rgba(30,40,45,.85)";
+  rr(2,-8,12,16,3);ctx.fill();
+  ctx.restore();
+}
+function rr(x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
+}
+function wolf(w){
+  ctx.save();ctx.translate(w.x,w.y);
+  // shadow
+  ctx.fillStyle="rgba(0,0,0,.2)";
+  ctx.beginPath();ctx.ellipse(0,7,20,6.5,0,0,7);ctx.fill();
+  ctx.rotate(w.a);
+  const hunting=w.state==="chase";
+  const moving=hunting||w.state==="flee";
+  const coat  = hunting?"#6e6862":"#8b8f8c";
+  const coatD = hunting?"#514c47":"#6a6e6b";
+  const trot  = moving?Math.sin(S.t*14+w.hx*0.01)*3:0;
+
+  // legs — four paws, diagonal pairs alternating at a trot
+  ctx.fillStyle=coatD;
+  ctx.beginPath();ctx.ellipse( 10+trot*0.4,-5.5,2.6,2,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse( 10-trot*0.4, 5.5,2.6,2,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-11-trot*0.4,-5.5,2.6,2,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-11+trot*0.4, 5.5,2.6,2,0,0,7);ctx.fill();
+
+  // bushy tail, dark-tipped, with a wag (low and straight when hunting)
+  const wag=Math.sin(S.t*(moving?9:4)+w.hy*0.01)*(hunting?1.5:3.5);
+  ctx.fillStyle=coat;
+  ctx.beginPath();ctx.ellipse(-21,wag*0.5,5.5,4,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-26,wag,4.6,3.4,0,0,7);ctx.fill();
+  ctx.fillStyle=coatD;
+  ctx.beginPath();ctx.ellipse(-30.5,wag*1.4,3.2,2.6,0,0,7);ctx.fill();
+
+  // lean body: haunches, torso, chest
+  ctx.fillStyle=coat;
+  ctx.beginPath();ctx.ellipse(-9,0,10,7,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(0,0,15,6.4,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(8,0,6.2,0,7);ctx.fill();
+  // darker dorsal stripe down the spine
+  ctx.fillStyle=coatD;
+  ctx.beginPath();ctx.ellipse(-2,0,14,2.4,0,0,7);ctx.fill();
+
+  // head: skull, long snout, black nose
+  ctx.fillStyle=coat;
+  ctx.beginPath();ctx.arc(16,0,6,0,7);ctx.fill();
+  ctx.fillStyle=coatD;
+  ctx.beginPath();ctx.ellipse(22.5,0,5,3,0,0,7);ctx.fill();
+  ctx.fillStyle="#1d1a17";
+  ctx.beginPath();ctx.arc(26.6,0,1.7,0,7);ctx.fill();
+
+  // pricked ears, angled forward
+  ctx.fillStyle=coatD;
+  ctx.beginPath();ctx.moveTo(12.5,-3.5);ctx.lineTo(9.5,-9);ctx.lineTo(15.5,-6.5);ctx.closePath();ctx.fill();
+  ctx.beginPath();ctx.moveTo(12.5, 3.5);ctx.lineTo(9.5, 9);ctx.lineTo(15.5, 6.5);ctx.closePath();ctx.fill();
+
+  // amber eyes when it's hunting you
+  if(hunting){
+    ctx.fillStyle="#e8a93c";
+    ctx.beginPath();ctx.arc(17.5,-3,1.4,0,7);ctx.fill();
+    ctx.beginPath();ctx.arc(17.5, 3,1.4,0,7);ctx.fill();
+  }
+  ctx.restore();
+}
+function bear(b){
+  ctx.save();ctx.translate(b.x,b.y);
+  ctx.fillStyle="rgba(0,0,0,.25)";
+  ctx.beginPath();ctx.ellipse(0,9,26,9,0,0,7);ctx.fill();
+  ctx.rotate(b.a);
+  const hunting=b.state==="chase";
+  const lumber=(hunting||b.state==="flee")?Math.sin(S.t*10)*3:0;
+  // big paws
+  ctx.fillStyle="#3f3122";
+  ctx.beginPath();ctx.ellipse( 11+lumber*0.4,-8,3.6,2.8,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse( 11-lumber*0.4, 8,3.6,2.8,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-13-lumber*0.4,-8,3.6,2.8,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-13+lumber*0.4, 8,3.6,2.8,0,0,7);ctx.fill();
+  // bulky body with grizzled (lighter) rump
+  ctx.fillStyle="#7a6142";
+  ctx.beginPath();ctx.ellipse(-8,0,15,11.5,0,0,7);ctx.fill();
+  ctx.fillStyle="#63492f";
+  ctx.beginPath();ctx.ellipse(2,0,17,12,0,0,7);ctx.fill();
+  // the grizzly's signature shoulder hump
+  ctx.fillStyle="#4b3a24";
+  ctx.beginPath();ctx.ellipse(7,0,9,7.5,0,0,7);ctx.fill();
+  // stub tail
+  ctx.fillStyle="#4b3a24";
+  ctx.beginPath();ctx.arc(-23,0,3,0,7);ctx.fill();
+  // round head, small round ears, dished face + tan muzzle
+  ctx.fillStyle="#63492f";
+  ctx.beginPath();ctx.arc(21,0,8.5,0,7);ctx.fill();
+  ctx.fillStyle="#4b3a24";
+  ctx.beginPath();ctx.arc(17,-7.5,3.4,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(17, 7.5,3.4,0,7);ctx.fill();
+  ctx.fillStyle="#b99c72";
+  ctx.beginPath();ctx.ellipse(27,0,4.6,3.2,0,0,7);ctx.fill();
+  ctx.fillStyle="#1d1a17";
+  ctx.beginPath();ctx.arc(30.6,0,1.8,0,7);ctx.fill();
+  if(hunting){
+    ctx.fillStyle="#e8a93c";
+    ctx.beginPath();ctx.arc(23,-3.6,1.5,0,7);ctx.fill();
+    ctx.beginPath();ctx.arc(23, 3.6,1.5,0,7);ctx.fill();
+  }
+  ctx.restore();
+}
+
+function herdBison(h){
+  ctx.save();ctx.translate(h.x,h.y);
+  ctx.fillStyle="rgba(0,0,0,.22)";
+  ctx.beginPath();ctx.ellipse(0,9,26*h.s,9*h.s,0,0,7);ctx.fill();
+  ctx.rotate(h.a);ctx.scale(h.s,h.s);
+  ctx.translate(0,Math.sin(h.bob)*1.6);
+  ctx.fillStyle="#6b4e37";
+  ctx.beginPath();ctx.ellipse(-12,0,17,11,0,0,7);ctx.fill();
+  ctx.fillStyle="#2e2018";
+  const lb=Math.sin(h.bob)*4.5;
+  ctx.beginPath();ctx.ellipse(8,-9+lb*0.3,3.2,2.3,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(8, 9-lb*0.3,3.2,2.3,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-16,-9-lb*0.3,3.2,2.3,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-16, 9+lb*0.3,3.2,2.3,0,0,7);ctx.fill();
+  ctx.fillStyle="#4a3226";
+  ctx.beginPath();ctx.ellipse(4,0,19,13,0,0,7);ctx.fill();
+  ctx.fillStyle="#3d2a1f";
+  ctx.beginPath();ctx.ellipse(4,0,13,9,0,0,7);ctx.fill();
+  ctx.fillStyle="#3a271c";
+  ctx.beginPath();ctx.ellipse(22,0,10,8.5,0,0,7);ctx.fill();
+  ctx.strokeStyle="#d8cdb4";ctx.lineWidth=3.2;ctx.lineCap="round";
+  ctx.beginPath();ctx.moveTo(20,-7);ctx.quadraticCurveTo(24,-14,29,-12);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(20, 7);ctx.quadraticCurveTo(24, 14,29, 12);ctx.stroke();
+  ctx.restore();
+}
+
+function bison(P){
+  const b=Math.sin(P.bob)* (P.speed>15?2.2:0.6);
+  ctx.save();ctx.translate(P.x,P.y);
+  // shadow
+  ctx.fillStyle="rgba(0,0,0,.25)";
+  ctx.beginPath();ctx.ellipse(0,10,30,11,0,0,7);ctx.fill();
+  ctx.rotate(P.a);
+  ctx.translate(0,b*0.4);
+  if(P.hurtT>0&&Math.floor(P.hurtT*12)%2===0)ctx.globalAlpha=0.55;
+  if(P.swim){
+    // swimming: just head + hump above water, wake behind
+    ctx.strokeStyle="rgba(235,245,245,.7)";ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(-18,-10);ctx.quadraticCurveTo(-34,0,-18,10);ctx.stroke();
+    ctx.fillStyle="#4a3226";
+    ctx.beginPath();ctx.ellipse(-2,0,16,10,0,0,7);ctx.fill();     // hump
+    ctx.beginPath();ctx.arc(16,0,8,0,7);ctx.fill();               // head
+  } else {
+    // hindquarters (lighter, shed coat)
+    ctx.fillStyle="#6b4e37";
+    ctx.beginPath();ctx.ellipse(-12,0,17,11,0,0,7);ctx.fill();
+    // tail
+    ctx.strokeStyle="#3d2a1f";ctx.lineWidth=3.5;ctx.lineCap="round";
+    ctx.beginPath();ctx.moveTo(-27,0);ctx.lineTo(-34,Math.sin(S.t*5)*4);ctx.stroke();
+    ctx.fillStyle="#3d2a1f";
+    ctx.beginPath();ctx.arc(-35,Math.sin(S.t*5)*4,3,0,7);ctx.fill();
+    // legs (tiny hooves peeking out, alternate with bob)
+    ctx.fillStyle="#2e2018";
+    const lb=Math.sin(P.bob)*4;
+    ctx.beginPath();ctx.ellipse(8,-9+lb*0.3,3.4,2.4,0,0,7);ctx.fill();
+    ctx.beginPath();ctx.ellipse(8, 9-lb*0.3,3.4,2.4,0,0,7);ctx.fill();
+    ctx.beginPath();ctx.ellipse(-16,-9-lb*0.3,3.4,2.4,0,0,7);ctx.fill();
+    ctx.beginPath();ctx.ellipse(-16, 9+lb*0.3,3.4,2.4,0,0,7);ctx.fill();
+    // shoulders & hump (dark, massive)
+    ctx.fillStyle="#4a3226";
+    ctx.beginPath();ctx.ellipse(4,0,19,13,0,0,7);ctx.fill();
+    ctx.fillStyle="#3d2a1f";
+    ctx.beginPath();ctx.ellipse(4,0,13,9,0,0,7);ctx.fill();       // hump ridge
+    // head (lowered, woolly)
+    ctx.fillStyle="#3a271c";
+    ctx.beginPath();ctx.ellipse(22,0,10,8.5,0,0,7);ctx.fill();
+    // muzzle
+    ctx.fillStyle="#241811";
+    ctx.beginPath();ctx.ellipse(30,0,4.5,3.6,0,0,7);ctx.fill();
+    // horns
+    ctx.strokeStyle="#d8cdb4";ctx.lineWidth=3.4;ctx.lineCap="round";
+    ctx.beginPath();ctx.moveTo(20,-7);ctx.quadraticCurveTo(24,-14,29,-12);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(20, 7);ctx.quadraticCurveTo(24, 14,29, 12);ctx.stroke();
+    // beard hint
+    ctx.strokeStyle="#241811";ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(24,3);ctx.lineTo(23,7);ctx.stroke();
+  }
+  ctx.restore();
+  // grazing indicator
+  if(P.grazeT>0){
+    ctx.strokeStyle="rgba(232,169,60,.95)";ctx.lineWidth=4;
+    ctx.beginPath();ctx.arc(P.x,P.y-34,10,-Math.PI/2,-Math.PI/2+P.grazeT/0.9*Math.PI*2);ctx.stroke();
+  }
+}
+
+/* ---------------- Herd Call ---------------- */
+function updateHerdBtn(){
+  $("#herd-count").textContent=S.herdCalls;
+  $("#herd-btn").dataset.count=S.herdCalls;
+}
+function callHerd(){
+  if(!S.running||S.paused||S.over)return;
+  if(S.herdCalls<=0){
+    toast("No Herd Calls left… though they say one more waits somewhere far off the trail.");
+    return;
+  }
+  S.herdCalls--; updateHerdBtn();
+  const P=S.player;
+  // the herd thunders in from behind and stampedes past in your direction
+  S.herd=[];
+  for(let i=0;i<7;i++){
+    const side=(i-3)*58+rand(-16,16);
+    const back=520+rand(0,260);
+    const px=Math.cos(P.a+Math.PI/2), py=Math.sin(P.a+Math.PI/2);
+    S.herd.push({
+      x:P.x-Math.cos(P.a)*back+px*side,
+      y:P.y-Math.sin(P.a)*back+py*side,
+      a:P.a+rand(-0.12,0.12),
+      v:250+rand(0,70), t:0, bob:rand(0,6), s:rand(0.82,1.04)
+    });
+  }
+  S.herdT=6;
+  // predators bolt immediately
+  for(const w of S.wolves){
+    if(dist(w.x,w.y,P.x,P.y)<800){w.fleeT=5;w.cool=6;w.waryT=0;}
+  }
+  if(S.bear&&dist(S.bear.x,S.bear.y,P.x,P.y)<800)S.bear.fleeT=5;
+  S.shakeT=0.5;
+  S.score+=25;
+  toast("🦬🦬🦬 The ground shakes — the herd answers your call! Predators scatter. (+25)");
+}
+$("#herd-btn").addEventListener("click",callHerd);
+addEventListener("keydown",e=>{
+  if((e.code==="KeyE"||e.code==="Space")&&document.body.classList.contains("playing")){
+    e.preventDefault();
+    callHerd();
+  }
+});
+
+/* ---------------- Game loop ---------------- */
+let last=0, rafId=null;
+function loop(now){
+  rafId=requestAnimationFrame(loop);
+  const dt=Math.min((now-last)/1000,0.05); last=now;
+  if(S.running&&!S.paused&&!S.over)update(dt);
+  if(S.running)render();
+}
+
+/* ---------------- Win / lose / reset ---------------- */
+function rankFor(){
+  const p=S.score;
+  if(p>=1300)return["Herd Leader","You crossed the park with the confidence of an old bull — geyser to geyser, wolf to grizzly. The herd follows where you walk."];
+  if(p>=1050)return["Seasoned Bull","Strong swimming, smart grazing, predators given the horn. A fine migration."];
+  if(p>=800)return["Young Bull","You made it — a little lean, a little wiser. Next season you'll lead from the front."];
+  return["Spring Calf","Every giant of the plains started somewhere. Rest up and trek again."];
+}
+function winGame(){
+  S.over=true;
+  const mins=Math.max(1,Math.round((performance.now()-S.startTime)/1000));
+  S.score+=Math.round(S.player.energy)*2;
+  const [rank,blurb]=rankFor();
+  endScreen(`
+    <h2>You've Reached the Herd</h2>
+    <p>Steam drifts over the winter meadow as the herd closes around you. The migration is complete —
+    the same journey Yellowstone's bison have made for thousands of years.</p>
+    <div class="rank">${rank}</div>
+    <p><b>${S.score} points</b> &middot; ${S.grassEaten} tufts grazed &middot; ${mins}s on the trail &middot; ${Math.round(S.player.energy)} energy to spare</p>
+    <p style="max-width:46ch;margin:10px auto">${blurb}</p>
+    <p style="margin-top:18px"><button class="btn thermal" id="replay-btn">Migrate Again</button></p>
+  `);
+}
+function loseGame(){
+  S.over=true;
+  endScreen(`
+    <h2>Winded on the Trail</h2>
+    <p>Your legs give out and you bed down in the sage. Even a bison has limits — out here,
+    grass is fuel, and the smart traveler grazes before the tank runs dry.</p>
+    <div class="rank" style="background:var(--danger)">Rest &amp; Recover</div>
+    <p><b>${S.score} points</b> &middot; waypoint ${S.cpIndex+1} of ${CHECKPOINTS.length} &middot; ${S.grassEaten} tufts grazed</p>
+    <p style="margin-top:18px"><button class="btn thermal" id="replay-btn">Try the Migration Again</button></p>
+  `);
+}
+function endScreen(html){
+  document.body.classList.remove("playing");
+  document.querySelector("#stage-wrap").classList.remove("fs");
+  $("#fs-btn").textContent="⛶";
+  if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(()=>{});
+  $("#game-screen").classList.add("hidden");
+  const el=$("#end-screen");
+  el.classList.remove("hidden");
+  el.innerHTML=html;
+  $("#replay-btn").addEventListener("click",resetGame);
+  el.scrollIntoView({behavior:"smooth"});
+}
+function resetGame(){
+  document.body.classList.add("playing");
+  Object.assign(S.player,{x:START.x,y:START.y,a:Math.PI*0.75,speed:0,energy:100,stamina:100,swim:false,grazeT:0,hurtT:0,bob:0});
+  S.cpIndex=0;S.score=0;S.grassEaten=0;S.over=false;S.paused=false;S.t=0;S.wolfHintT=0;S.grassHintT=0;S.bearHintT=0;S.floaties=[];
+  S.herdCalls=1;S.herd=[];S.herdT=0;S.relicHinted=false;updateHerdBtn();
+  cam.x=START.x;cam.y=START.y;
+  seedWorld();
+  $("#end-screen").classList.add("hidden");
+  $("#game-screen").classList.remove("hidden");
+  $("#objective-text").textContent="Head southwest out of Lamar Valley";
+  S.startTime=performance.now();
+  toast("🦬 Dawn in Lamar Valley. The herd went southwest — follow the golden flags.");
+}
+
+/* ---------------- Boot ---------------- */
+$("#start-btn").addEventListener("click",()=>{
+  $("#title-screen").classList.add("hidden");
+  $("#game-screen").classList.remove("hidden");
+  document.body.classList.add("playing");
+  resize();
+  seedWorld();
+  S.running=true;S.startTime=performance.now();
+  updateHerdBtn();
+  if(rafId===null){last=performance.now();rafId=requestAnimationFrame(loop);}
+  toast("🦬 Dawn in Lamar Valley. The herd went southwest — follow the golden flags.");
+});
+resize();
+</script>
+</body>
+</html>
