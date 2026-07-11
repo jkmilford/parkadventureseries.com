@@ -73,34 +73,95 @@
 
   /* HUD */
   .hud{position:absolute;top:10px;left:10px;right:62px;display:flex;justify-content:space-between;gap:10px;pointer-events:none}
-  .hud-card{background:rgba(15,33,29,.82);border:1px solid rgba(232,169,60,.45);border-radius:10px;padding:8px 12px;backdrop-filter:blur(2px)}
-  .bar-k{font-family:Oswald,sans-serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:#a9c4b4;display:block;margin-bottom:3px}
-  .bar{width:150px;height:9px;border-radius:5px;background:rgba(255,255,255,.14);overflow:hidden;margin-bottom:6px}
+  .hud-card{background:rgba(15,33,29,.87);border:1px solid rgba(232,169,60,.45);border-radius:12px;padding:13px 17px;backdrop-filter:blur(2px)}
+  .bar-k{font-family:Oswald,sans-serif;font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:#c3d6c8;display:block;margin:11px 0 6px}
+  .bar-k:first-child{margin-top:0}
+  .bar{width:190px;height:16px;border-radius:8px;background:rgba(255,255,255,.14);overflow:hidden}
   .bar > span{display:block;height:100%;border-radius:5px;transition:width .15s linear}
   #energy-fill{background:linear-gradient(90deg,#d96c2c,#e8a93c);width:100%}
-  #stamina-fill{background:linear-gradient(90deg,#1e8e86,#4f9e63);width:100%}
   .hud-right{text-align:right;font-family:Oswald,sans-serif}
-  .hud-right .big{font-size:1.05rem;font-weight:600;letter-spacing:.06em}
-  .hud-right .small{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:#a9c4b4}
+  .hud-right .big{font-size:1.55rem;font-weight:600;letter-spacing:.05em}
+  .hud-right .small{font-size:.86rem;letter-spacing:.14em;text-transform:uppercase;color:#c3d6c8}
 
   #fs-btn{position:absolute;top:10px;right:10px;z-index:6;width:44px;height:44px;border-radius:10px;border:1px solid rgba(232,169,60,.6);background:rgba(15,33,29,.85);color:var(--paper);font-size:1.2rem;line-height:1;display:grid;place-items:center;touch-action:manipulation}
 
+  #map-btn{position:absolute;top:62px;right:10px;z-index:6;width:44px;height:44px;border-radius:10px;border:1px solid rgba(232,169,60,.6);background:rgba(15,33,29,.85);color:var(--paper);font-size:1.15rem;line-height:1;display:grid;place-items:center;touch-action:manipulation}
+  #map-card{position:absolute;inset:0;display:grid;place-items:center;background:rgba(15,33,29,.6);padding:14px;z-index:7}
+  #map-card .inner{background:var(--paper);color:var(--ink);border-radius:var(--radius);max-width:430px;width:100%;padding:16px 18px 14px;box-shadow:var(--shadow);position:relative;overflow:hidden;text-align:center}
+  #map-card .inner::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:var(--ring)}
+  #map-card h3{font-family:"Alfa Slab One",serif;font-weight:400;font-size:1.15rem;margin:2px 0 4px}
+  #map-card svg{width:100%;height:auto;display:block;margin:4px 0 6px;background:#ece3c8;border-radius:10px;border:1.5px solid #c8b68b}
+  #promo-card{position:absolute;inset:0;display:grid;place-items:center;background:rgba(15,33,29,.6);padding:14px;z-index:8}
+  #promo-card .inner{background:var(--paper);color:var(--ink);border-radius:var(--radius);max-width:400px;width:100%;padding:22px 22px 20px;box-shadow:var(--shadow);position:relative;overflow:hidden;text-align:center}
+  #promo-card .inner::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:var(--ring)}
+  #promo-card h3{font-family:"Alfa Slab One",serif;font-weight:400;font-size:1.25rem;margin:8px 0 6px}
+  #promo-card p{margin:0 0 14px;font-size:.93rem}
+  #promo-avatar{width:72px;height:72px;border-radius:50%;border:3px solid var(--gold);background:radial-gradient(circle at 35% 30%, #f7efd8, #dfd2ac)}
+  a.btn{text-decoration:none;display:inline-block}
+  .btn.paper-ghost{background:transparent;color:var(--ink);border:1.5px solid #b7a374;box-shadow:none}
+  .amazon-pill{display:inline-block;border-radius:999px;padding:12px 26px;
+    font-family:Oswald,sans-serif;font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.82rem;
+    color:#181818;background:linear-gradient(180deg,#ffe14d,#f2c40f);text-decoration:none;cursor:pointer;
+    animation:amzGlow 1.8s ease-in-out infinite;transition:transform .1s}
+  .amazon-pill:hover{transform:translateY(-2px)}
+  @keyframes amzGlow{
+    0%,100%{box-shadow:0 0 6px 2px rgba(255,215,60,.4), 0 3px 0 #b8930a}
+    50%{box-shadow:0 0 24px 9px rgba(255,220,80,.7), 0 3px 0 #b8930a}
+  }
+  #promo-card .promo-stack{display:flex;flex-direction:column;align-items:center;gap:12px;max-width:400px;width:100%}
+  #promo-card .inner{max-width:none;width:100%}
+  #affil-bar{position:fixed;left:0;right:0;bottom:6px;text-align:center;font-size:.66rem;letter-spacing:.03em;color:rgba(244,233,206,.7);z-index:55;pointer-events:none;padding:0 12px}
+  #promo-card .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .map-legend{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 16px;font-size:.7rem;font-family:Oswald,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#5c5340;margin:0 0 10px}
+  .map-legend span{display:inline-flex;align-items:center;gap:6px}
+  .lg-route{width:20px;border-top:2.5px dashed #d96c2c}
+  .lg-road{width:20px;height:3px;background:#b98a4e;border-radius:2px}
+  .lg-you{width:9px;height:9px;border-radius:50%;background:#d96c2c;border:2px solid #fff6e6;box-shadow:0 0 0 1.5px #d96c2c}
+  .you-dot{animation:youPulse 1.5s ease-in-out infinite}
+  @keyframes youPulse{0%,100%{opacity:.95}50%{opacity:.35}}
   #herd-btn{position:absolute;right:18px;bottom:18px;width:66px;height:66px;border-radius:50%;border:2px solid rgba(232,169,60,.8);background:rgba(15,33,29,.88);color:var(--paper);font-size:1.6rem;line-height:1;display:grid;place-items:center;z-index:4;touch-action:manipulation}
   #herd-btn[data-count="0"]{opacity:.45;border-style:dashed}
+  #herd-btn canvas,#lick-btn canvas{width:48px;height:48px;pointer-events:none;border-radius:50%;background:radial-gradient(circle at 35% 30%, #f7efd8, #dfd2ac)}
+  #lick-btn{position:absolute;right:18px;bottom:96px;width:66px;height:66px;border-radius:50%;border:2px solid rgba(233,142,160,.85);background:rgba(15,33,29,.88);display:grid;place-items:center;z-index:4;touch-action:manipulation}
+  #lick-btn[data-ok="0"]{opacity:.4;border-style:dashed}
+  #lick-btn[data-ok="cd"]{opacity:.75;border-color:rgba(233,142,160,.6)}
+  #lick-btn[data-ok="1"]{opacity:1;border-color:#e98ea0;animation:lickPulse 1.3s ease-in-out infinite}
+  @keyframes lickPulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(233,142,160,0);transform:scale(1)}
+    50%{box-shadow:0 0 16px 5px rgba(233,142,160,.6);transform:scale(1.06)}
+  }
+  @media (pointer:coarse){ #lick-btn{bottom:206px} }
+  .strikes{display:flex;gap:7px}
+  .strikes i{width:19px;height:19px;border-radius:50%;border:2px solid rgba(244,233,206,.45)}
+  .strikes i.hit{background:var(--danger);border-color:#e07a6a;box-shadow:0 0 6px rgba(178,58,47,.8)}
+  .strikes i.sp{display:none;border-color:rgba(233,142,160,.7)}
+  .strikes i.sp.own{display:block;background:#e98ea0;box-shadow:0 0 6px rgba(233,142,160,.8)}
+  .strikes i.herd{border-color:rgba(232,169,60,.5)}
+  .strikes i.herd.on{background:var(--gold);border-color:#f2c40f;box-shadow:0 0 6px rgba(232,169,60,.85)}
+  .strikes i.heal{border-color:rgba(233,142,160,.5)}
+  .strikes i.heal.ready{background:#e98ea0;border-color:#f4a8b8;box-shadow:0 0 7px rgba(233,142,160,.9);animation:lickPulse 1.3s ease-in-out infinite}
+  .strikes i.heal.cd{background:rgba(233,142,160,.35);border-color:rgba(233,142,160,.6)}
   #herd-btn .cnt{position:absolute;top:-4px;right:-4px;width:24px;height:24px;border-radius:50%;background:var(--gold);color:#3a2a10;font-family:Oswald,sans-serif;font-weight:600;font-size:.8rem;display:grid;place-items:center;border:2px solid var(--spruce-deep)}
   @media (pointer:coarse){ #herd-btn{bottom:128px} }
 
   /* Objective banner */
-  #objective{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;background:rgba(15,33,29,.85);border:1px solid rgba(232,169,60,.5);color:var(--paper);border-radius:999px;padding:7px 18px;font-size:.9rem;pointer-events:none;max-width:92%;text-align:center}
+  #objective{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;background:rgba(15,33,29,.85);border:1px solid rgba(232,169,60,.5);color:var(--paper);border-radius:999px;padding:10px 22px;font-size:1.05rem;pointer-events:none;max-width:92%;text-align:center}
   #objective b{color:var(--gold);font-family:Oswald,sans-serif;letter-spacing:.08em}
 
-  /* Fact card overlay */
-  #fact-card{position:absolute;inset:0;display:grid;place-items:center;background:rgba(15,33,29,.55);padding:16px;z-index:5}
-  #fact-card .inner{background:var(--paper);color:var(--ink);border-radius:var(--radius);max-width:480px;padding:22px 24px;box-shadow:var(--shadow);position:relative;overflow:hidden;text-align:center}
-  #fact-card .inner::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:var(--ring)}
-  #fact-card .loc-eyebrow{font-family:Oswald,sans-serif;font-weight:600;font-size:.7rem;letter-spacing:.26em;text-transform:uppercase;color:var(--thermal);margin:0 0 4px}
-  #fact-card h3{font-family:"Alfa Slab One",serif;font-weight:400;font-size:1.3rem;margin:0 0 8px}
-  #fact-card p{margin:.3em 0 1em;font-size:.97rem}
+  /* Fact banner: slides in near the top, play continues underneath */
+  #fact-card{position:fixed;top:10px;left:50%;transform:translateX(-50%);width:min(530px,94%);z-index:60;
+    display:flex;gap:12px;align-items:flex-start;
+    background:var(--paper);color:var(--ink);border-radius:12px;box-shadow:var(--shadow);
+    padding:12px 30px 12px 12px;overflow:hidden;animation:factIn .3s ease-out}
+  #fact-card::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:var(--ring)}
+  @keyframes factIn{from{opacity:0;transform:translate(-50%,-10px)}to{opacity:1;transform:translate(-50%,0)}}
+  #fact-avatar{width:78px;height:78px;flex:0 0 auto;border-radius:50%;border:2.5px solid var(--teal);background:radial-gradient(circle at 35% 30%,#e9edcf,#cfdab3)}
+  #fact-card .fc-text{min-width:0}
+  #fact-card .loc-eyebrow{font-family:Oswald,sans-serif;font-weight:600;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--thermal);margin:2px 0 2px}
+  #fact-card h3{font-family:"Alfa Slab One",serif;font-weight:400;font-size:1.2rem;margin:0 0 4px}
+  #fact-card p{margin:0;font-size:.96rem;line-height:1.45}
+  #fact-btn{position:absolute;top:5px;right:5px;width:26px;height:26px;border:none;background:none;color:#8b8267;font-size:1rem;line-height:1;border-radius:6px}
+  #fact-btn:hover{color:var(--ink)}
 
   /* Touch controls */
   #joystick{position:absolute;width:128px;height:128px;border-radius:50%;border:2px solid rgba(244,233,206,.5);background:rgba(15,33,29,.35);display:none;z-index:4}
@@ -108,9 +169,9 @@
   #sprint-btn{position:absolute;right:18px;bottom:26px;width:88px;height:88px;touch-action:none;border-radius:50%;border:2px solid rgba(232,169,60,.7);background:rgba(217,108,44,.85);color:#fff3e6;font-family:Oswald,sans-serif;font-weight:600;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;display:none;z-index:4}
   @media (pointer:coarse){ #sprint-btn{display:block} }
 
-  .under-note{margin:12px 4px 0;color:#a9c4b4;font-size:.88rem}
+  .under-note{margin:12px 4px 0;color:#b8cbbd;font-size:.98rem}
 
-  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--spruce-deep);border:1.5px solid var(--gold);color:var(--paper);padding:10px 18px;border-radius:999px;font-size:.92rem;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .3s;z-index:50;max-width:90vw;text-align:center}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--spruce-deep);border:1.5px solid var(--gold);color:var(--paper);padding:13px 24px;border-radius:999px;font-size:1.08rem;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .3s;z-index:50;max-width:92vw;text-align:center}
   .toast.show{opacity:1}
 
   @media (prefers-reduced-motion: reduce){
@@ -138,11 +199,14 @@
     <ul>
       <li><b>Desktop:</b> <span class="kbd">W A S D</span> / <span class="kbd">←↑↓→</span> to move, hold <span class="kbd">Shift</span> to charge.</li>
       <li><b>Phone &amp; tablet:</b> touch and drag anywhere to steer, hold the <b>Charge</b> button to run. Tap <b>⛶</b> to go fullscreen.</li>
-      <li><b>Graze:</b> stand on the glowing golden grass tufts to refill energy — moving burns it, charging burns it fast.</li>
+      <li><b>Graze:</b> stand on the glowing golden grass tufts to refill energy — walking sips it, charging gulps it.</li>
       <li><b>Swim</b> the Yellowstone River, cross the road at the bison jam, and skirt the thermal pools.</li>
-      <li>Wolves shadow the route. <b>Stop and face one to stand your ground</b> — wolves rarely test a healthy adult bison — or <b>charge</b> to drive it off.</li>
-      <li>The trail winds through <b>Norris, Fountain Paint Pot, Midway, and Old Faithful</b> — and a <b>grizzly</b> works the last basins. Bears don't bluff: charge or outrun it.</li>
-      <li><b>Herd Call</b> (🦬 button or <span class="kbd">E</span>): once per trek, summon the herd to stampede through and scatter every predator. Old bulls whisper that <b>one more call waits somewhere far off the trail…</b></li>
+      <li>Wolves shadow the route — and they are deadly: <b>four bites will bring you down</b>. They won't follow you into the river. <b>Stop and face one to stand your ground</b>, <b>charge</b> it, or <b>double-tap the screen</b> to shake it off. Wolves <b>stalk for a moment before they charge</b> — use those seconds.</li>
+      <li>Watch the <b>wolf strike meter</b> — four strikes and it's over. But the herd tends its own: press the <b>❤ button</b> (or <span class="kbd">H</span>) and <b>stand still</b> while a herdmate licks a wound clean. And <b>a single spare heart is hidden somewhere in the park</b> — find it, and it will absorb what would be a killing strike. A hidden <b>herd token</b> banks you a bonus stampede charge, too.</li>
+      <li>You start with <b>one herdmate</b>, and another bison joins your band at every flag. <b>Turn and face a predator</b> and the whole band squares up with you to drive it off — a herd defends as a wall, not with its back turned.</li>
+      <li>The trail winds through <b>Norris, Fountain Paint Pot, Midway, and Old Faithful</b> — and a <b>grizzly</b> works the last basins. Nothing bluffs a bear: <b>three bison facing it shoulder to shoulder</b> will make it back off — but it takes <b>two such stands</b> before it truly gives up. A full <b>Herd Call stampede</b> settles it in one shot. Otherwise, run.</li>
+      <li>Tap <b>🗺️</b> any time to pause and see exactly where you are on a true map of the park.</li>
+      <li><b>Herd Call</b> (the bison button, or <span class="kbd">E</span>): once per trek, summon the herd to stampede through and scatter every predator. Old bulls whisper that <b>one more call waits far to the southeast, off every trail…</b></li>
     </ul>
     <p style="margin-top:16px"><button class="btn thermal" id="start-btn">Begin the Migration</button></p>
   </section>
@@ -156,8 +220,12 @@
         <div class="hud-card">
           <span class="bar-k">Energy</span>
           <div class="bar"><span id="energy-fill"></span></div>
-          <span class="bar-k">Charge stamina</span>
-          <div class="bar"><span id="stamina-fill"></span></div>
+          <span class="bar-k">Predator strikes</span>
+          <div class="strikes" id="strike-pips" title="Four predator strikes and it's over"><i></i><i></i><i></i><i></i><i class="sp"></i></div>
+          <span class="bar-k">Herd call</span>
+          <div class="strikes meter" id="herd-pips" title="Stampede charges available"></div>
+          <span class="bar-k">Lick wounds</span>
+          <div class="strikes meter" id="heal-pips" title="A herdmate heals a wound when this glows"><i class="heal"></i></div>
         </div>
         <div class="hud-card hud-right">
           <div class="big" id="hud-score">0</div>
@@ -168,17 +236,185 @@
 
       <div id="objective"><b>OBJECTIVE</b> <span id="objective-text">Head southwest out of Lamar Valley</span></div>
 
-      <div id="fact-card" class="hidden" role="dialog" aria-modal="true">
-        <div class="inner">
+      <div id="fact-card" class="hidden" role="status" aria-live="polite">
+        <canvas id="fact-avatar" width="132" height="132"></canvas>
+        <div class="fc-text">
           <p class="loc-eyebrow" id="fact-eyebrow">Waypoint</p>
           <h3 id="fact-title">Title</h3>
           <p id="fact-text">Fact</p>
-          <button class="btn" id="fact-btn">Keep moving</button>
         </div>
+        <button id="fact-btn" aria-label="Dismiss">✕</button>
       </div>
 
       <button id="fs-btn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
-      <button id="herd-btn" data-count="1" aria-label="Call the herd" title="Call the herd (E)">🦬<span class="cnt" id="herd-count">1</span></button>
+      <button id="herd-btn" data-count="1" aria-label="Call the herd" title="Call the herd (E)"><canvas id="herd-avatar" width="96" height="96"></canvas><span class="cnt" id="herd-count">1</span></button>
+      <button id="map-btn" aria-label="Open park map" title="Park map">🗺️</button>
+      <button id="lick-btn" data-ok="0" aria-label="Lick wounds — a herdmate heals one wolf strike" title="Lick wounds (H)"><canvas id="lick-avatar" width="96" height="96"></canvas></button>
+
+      <div id="map-card" class="hidden" role="dialog" aria-modal="true">
+        <div class="inner">
+          <p class="loc-eyebrow">Yellowstone National Park</p>
+          <h3>Where You Are</h3>
+          <svg id="park-map" viewBox="0 0 300 350" role="img" aria-label="Map of Yellowstone National Park showing your position">
+            <defs>
+              <radialGradient id="parch" cx="50%" cy="38%" r="80%">
+                <stop offset="0%" stop-color="#f0e8cd"/>
+                <stop offset="100%" stop-color="#e4d9b6"/>
+              </radialGradient>
+            </defs>
+            <rect x="0" y="0" width="300" height="350" fill="url(#parch)"/>
+            <rect x="4" y="4" width="292" height="342" rx="7" fill="none" stroke="#d3c6a2" stroke-width="1"/>
+
+            <!-- park boundary and terrain -->
+            <path d="M46,32 L246,32 L258,50 L254,118 L264,176 L250,258 L244,314 L64,314 L56,250 L42,120 Z"
+                  fill="#dde3c3" stroke="#7a8b7f" stroke-width="1.5" stroke-dasharray="5 3"/>
+            <!-- soft forest washes -->
+            <g fill="#cfdab3" opacity="0.8">
+              <ellipse cx="120" cy="80" rx="46" ry="26"/>
+              <ellipse cx="220" cy="120" rx="30" ry="40"/>
+              <ellipse cx="90" cy="270" rx="34" ry="28"/>
+              <ellipse cx="200" cy="290" rx="36" ry="20"/>
+              <ellipse cx="65" cy="200" rx="20" ry="30"/>
+            </g>
+
+            <!-- lakes -->
+            <path d="M188,194 C206,186 230,192 238,208 C244,220 240,230 230,238
+                     C235,250 233,266 226,270 C221,262 223,251 218,246
+                     C214,254 213,266 206,270 C202,262 205,250 207,242
+                     C196,246 180,242 172,234 C160,230 157,218 165,212 C173,206 180,202 188,194 Z"
+                  fill="#a5c4cd" stroke="#7fa3ad" stroke-width="1"/>
+            <ellipse cx="142" cy="252" rx="12" ry="6" transform="rotate(-18 142 252)" fill="#a5c4cd" stroke="#7fa3ad" stroke-width="0.8"/>
+            <ellipse cx="153" cy="277" rx="5" ry="3.6" fill="#a5c4cd" stroke="#7fa3ad" stroke-width="0.8"/>
+
+            <!-- rivers -->
+            <g fill="none" stroke="#8fb4bf" stroke-width="1.4" stroke-linecap="round" opacity="0.95">
+              <path d="M194,194 C186,166 181,142 176,120 C172,92 168,76 172,60 C172,48 160,40 146,34"/>
+              <path d="M256,58 C238,63 220,66 206,64 C196,63 188,62 180,60"/>
+              <path d="M106,216 C100,206 95,198 92,192 C89,186 88,181 88,176 C85,169 80,164 76,160"/>
+              <path d="M76,160 C66,157 54,155 44,154"/>
+            </g>
+            <!-- the two falls at the canyon head -->
+            <g stroke="#f7fbfb" stroke-width="1.7" stroke-linecap="round">
+              <path d="M179.5,128 l3.6,1.3"/>
+              <path d="M181.5,133.5 l3.6,1.3"/>
+            </g>
+
+            <!-- Grand Loop Road: cased, two-tone -->
+            <g fill="none" stroke-linecap="round">
+              <path id="loop" d="M85,44 C120,38 150,44 168,56 C174,78 177,98 176,120
+                       C182,144 188,168 194,194 C186,206 176,216 164,226
+                       C146,228 126,226 106,216 C92,200 89,186 88,176 C84,169 80,164 76,160
+                       C84,146 94,132 106,122 C130,116 152,116 176,120
+                       M106,122 C97,96 94,68 85,44"
+                    stroke="#8a6136" stroke-width="3.6"/>
+              <use href="#loop" stroke="#d9b070" stroke-width="1.7"/>
+              <!-- entrance roads -->
+              <g stroke="#8a6136" stroke-width="2.2">
+                <path d="M85,44 L84,32"/>
+                <path d="M168,56 C182,60 196,62 210,62 C224,60 240,54 258,50"/>
+                <path d="M76,160 L42,158"/>
+                <path d="M164,226 C162,256 161,286 160,314"/>
+                <path d="M194,194 C210,190 230,186 264,180"/>
+              </g>
+              <g stroke="#d9b070" stroke-width="0.9">
+                <path d="M85,44 L84,32"/>
+                <path d="M168,56 C182,60 196,62 210,62 C224,60 240,54 258,50"/>
+                <path d="M76,160 L42,158"/>
+                <path d="M164,226 C162,256 161,286 160,314"/>
+                <path d="M194,194 C210,190 230,186 264,180"/>
+              </g>
+            </g>
+
+            <!-- the migration route -->
+            <path d="M238,54 C233,57 231,60 228,62 C214,72 200,84 192,96
+                     C186,108 183,118 181,128 C181,140 182,150 182,158
+                     C168,146 154,131 141,121 C129,120 117,120 106,121
+                     C99,141 93,161 90,181 C91,186 92,191 94,196
+                     C97,203 101,210 106,216 C103,222 99,227 96,232"
+                  fill="none" stroke="#d96c2c" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" opacity="0.9"/>
+            <circle cx="238" cy="54" r="2.6" fill="#d96c2c"/>
+
+            <!-- landmark dots -->
+            <g fill="#f7f1de" stroke="#4a4436" stroke-width="1.2">
+              <circle cx="85" cy="44" r="2.6"/><circle cx="168" cy="56" r="2.6"/>
+              <circle cx="106" cy="122" r="2.6"/><circle cx="176" cy="120" r="2.6"/>
+              <circle cx="76" cy="160" r="2.6"/><circle cx="106" cy="216" r="2.6"/>
+              <circle cx="164" cy="226" r="2.6"/><circle cx="194" cy="194" r="2.6"/>
+            </g>
+
+            <!-- labels: haloed so they never fight the linework -->
+            <g font-family="Oswald, sans-serif" font-size="8" fill="#4a4436"
+               style="paint-order:stroke" stroke="#ece3c8" stroke-width="2.6" stroke-linejoin="round">
+              <text x="85" y="39" text-anchor="middle">Mammoth</text>
+              <text x="168" y="51" text-anchor="middle">Tower</text>
+              <text x="101" y="119" text-anchor="end">Norris</text>
+              <text x="181" y="117">Canyon</text>
+              <text x="72" y="157" text-anchor="end">Madison</text>
+              <text x="101" y="227" text-anchor="end">Old Faithful</text>
+              <text x="164" y="238" text-anchor="middle">West Thumb</text>
+              <text x="199" y="191">Lake</text>
+            </g>
+            <!-- area labels -->
+            <g font-family="Oswald, sans-serif" font-size="7" letter-spacing="1.5" fill="#8b9375"
+               style="paint-order:stroke" stroke="#ece3c8" stroke-width="2.4" stroke-linejoin="round">
+              <text x="224" y="54" text-anchor="middle">LAMAR VALLEY</text>
+              <text x="186" y="160">HAYDEN VALLEY</text>
+              <text x="197" y="136">GRAND CANYON</text>
+              <text x="205" y="227" text-anchor="middle" fill="#6b8b95">YELLOWSTONE LAKE</text>
+            </g>
+            <!-- entrances -->
+            <g font-family="Oswald, sans-serif" font-size="6" letter-spacing="1" fill="#7a8b7f">
+              <text x="84" y="27" text-anchor="middle">NORTH</text>
+              <text x="262" y="45" text-anchor="end">NORTHEAST</text>
+              <text x="38" y="152" text-anchor="end">WEST</text>
+              <text x="160" y="323" text-anchor="middle">SOUTH</text>
+              <text x="268" y="176">EAST</text>
+            </g>
+            <text x="150" y="338" text-anchor="middle" font-family="Oswald, sans-serif" font-size="6.5"
+                  letter-spacing="2" fill="#8b8267">YELLOWSTONE NATIONAL PARK · WY / MT / ID</text>
+
+            <!-- compass rose -->
+            <g transform="translate(273,297)">
+              <circle r="10" fill="#f0e8cd" stroke="#8b8267" stroke-width="0.9"/>
+              <path d="M0,-8 L2.4,0 L0,8 L-2.4,0 Z" fill="#8b8267"/>
+              <path d="M0,-8 L2.4,0 L-2.4,0 Z" fill="#d96c2c"/>
+              <text y="-13" text-anchor="middle" font-family="Oswald, sans-serif" font-size="6.5" fill="#8b8267">N</text>
+            </g>
+
+            <!-- current waypoint flag -->
+            <g id="target-marker">
+              <line y2="-11" stroke="#3a2a10" stroke-width="1.2"/>
+              <path d="M0,-11 L9,-8.5 L0,-6 Z" fill="#e8a93c" stroke="#3a2a10" stroke-width="0.7"/>
+            </g>
+            <!-- you are here -->
+            <g id="you-marker">
+              <circle r="8" fill="none" stroke="#d96c2c" stroke-width="1.6" class="you-dot"/>
+              <circle r="4" fill="#d96c2c" stroke="#fff6e6" stroke-width="1.4"/>
+            </g>
+          </svg>
+          <div class="map-legend">
+            <span><i class="lg-route"></i>Migration route</span>
+            <span><i class="lg-road"></i>Grand Loop Road</span>
+            <span><i class="lg-you"></i>You are here</span>
+          </div>
+          <button class="btn" id="map-close">Back to the trek</button>
+        </div>
+      </div>
+      <div id="promo-card" class="hidden" role="dialog" aria-modal="true">
+        <div class="promo-stack">
+          <div class="inner">
+            <canvas id="promo-avatar" width="132" height="132"></canvas>
+            <p class="loc-eyebrow">Park Adventure Series</p>
+            <h3>Halfway There, Ranger!</h3>
+            <p>Loving the trek? Take the adventure home — explore the <b>Park Adventure Series</b> on Amazon.</p>
+            <div class="row">
+              <button class="btn paper-ghost" id="promo-close">Keep Playing</button>
+            </div>
+          </div>
+          <a class="amazon-pill" id="promo-link" href="https://amzn.to/4eXtA5Z" target="_blank" rel="noopener">Explore the Park Adventure Series on Amazon</a>
+        </div>
+      </div>
+
       <div id="joystick" aria-hidden="true"><div class="knob"></div></div>
       <button id="sprint-btn" aria-label="Hold to charge">Charge</button>
     </div>
@@ -187,8 +423,12 @@
 
   <!-- End screen -->
   <section id="end-screen" class="screen hidden fade-in" aria-label="End of migration"></section>
+  <div id="end-extra" class="hidden" style="text-align:center;margin:18px auto 30px">
+    <a class="amazon-pill" href="https://amzn.to/4eXtA5Z" target="_blank" rel="noopener">Explore the Park Adventure Series on Amazon</a>
+  </div>
 </div>
 
+<div id="affil-bar" class="hidden">As an Amazon Associate, Park Adventure Series earns from qualifying purchases.</div>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -199,45 +439,75 @@
 "use strict";
 
 /* ---------------- World constants ---------------- */
-const WORLD = {w:3600, h:2600};
-const START = {x:3320, y:520};
+const WORLD = {w:5900, h:5200};
+const START = {x:4750, y:1080};
 
-// The Yellowstone River: a band that snakes across the upper map
-function riverY(x){ return 1010 + 170*Math.sin(x/520) + 60*Math.sin(x/173); }
+// ================= PARK GEOMETRY (rebuilt to projection) =================
+// One projection for the whole park: 55 game units per km
+// (lat 45.11..44.13N -> y; lon -111.15..-109.83W -> x).
+// The Yellowstone River flows NORTH out of the lake — its true orientation.
+function riverX(y){ return 2980 + 240*Math.sin((y-2100)/760) + 70*Math.sin(y/230); }
 const RIVER_HALF = 78;
-// The Grand Loop Road: a band across the lower-middle map
-function roadY(x){ return 1680 + 110*Math.sin(x/700 + 2) ; }
-const ROAD_HALF = 52;
+function inLake(x,y){
+  const e=(cx,cy,rx,ry)=>((x-cx)/rx)*((x-cx)/rx)+((y-cy)/ry)*((y-cy)/ry)<1;
+  return e(3430,4150,420,560)||e(2560,4330,260,200)||e(3560,4780,150,260)||e(3260,4800,120,240);
+}
+// Grand Canyon of the Yellowstone: downstream (north) of Hayden Valley — true position
+const CANYON={y1:1980,y2:2530, upper:2500, lower:2410};
+const FALLS=[
+  {y:2500, name:"Upper Falls",
+   desc:"The Yellowstone River's first plunge into its canyon — 109 feet, higher than a ten-story building."},
+  {y:2410, name:"Lower Falls",
+   desc:"The park's grandest drop: 308 feet, nearly twice the height of Niagara, thundering into the golden canyon that gave Yellowstone its name."}
+];
+// The Norris–Canyon road: the Grand Loop stretch the migration actually crosses
+function roadY(x){ return 2400 + 45*Math.sin(x/420); }
+const ROAD_HALF = 52, ROAD_X1=1880, ROAD_X2=2840;
 
 const CHECKPOINTS = [
-  {x:2900, y:760,  r:120, title:"Out of Lamar Valley",
+  {x:4050, y:1380, r:120, title:"Out of Lamar Valley",
    fact:"Bison are the largest land mammals in North America — big bulls weigh around 2,000 pounds — yet they can sprint up to 35 mph, three times faster than a person.",
    next:"Swim the Yellowstone River"},
-  {x:2380, y:1030, r:130, title:"The River Crossing",
-   fact:"Bison are strong swimmers. Herds regularly cross the Yellowstone River on their seasonal migrations, calves paddling alongside their mothers.",
+  {x:2960, y:1800, r:130, title:"The River Crossing",
+   fact:"Bison are strong swimmers. Herds regularly cross the Yellowstone River on their seasonal migrations, calves paddling alongside their mothers. Wolves would rather not follow.",
+   next:"Follow the west rim to the Grand Canyon"},
+  {x:2790, y:2450, r:120, title:"Grand Canyon of the Yellowstone",
+   fact:"Below you the river thunders over two great falls — the Upper Falls at 109 feet, then the Lower Falls at 308 feet, nearly twice the height of Niagara — into a canyon a thousand feet deep. Ancient hot water 'cooked' the rhyolite walls, rusting their iron into the yellows and pinks that gave Yellowstone its name.",
    next:"Graze through Hayden Valley"},
-  {x:1820, y:1390, r:130, title:"Hayden Valley",
+  {x:2700, y:2980, r:130, title:"Hayden Valley",
    fact:"A bison spends 9 to 11 hours a day grazing. In deep winter it swings its huge head like a plow to sweep snow off the buried grass.",
    next:"Cross the road at the bison jam"},
-  {x:1290, y:1690, r:120, title:"The Bison Jam",
+  {x:2350, y:2390, r:120, title:"The Bison Jam",
    fact:"When bison cross the Grand Loop Road, traffic simply waits — bison always have the right of way. Visitors must stay at least 25 yards back; bison injure more people in Yellowstone than any other animal.",
-   next:"Head east to Norris Geyser Basin"},
-  {x:2250, y:2080, r:120, title:"Norris Geyser Basin",
-   fact:"Norris is the hottest, most restless basin in the park — and home to Steamboat, the tallest active geyser on Earth. Its rare major eruptions can top 300 feet, more than twice Old Faithful's.",
-   next:"Follow the steam to Fountain Paint Pot"},
-  {x:1720, y:2360, r:120, title:"Fountain Paint Pot",
-   fact:"These bubbling mud pots are acid hot springs that have dissolved the rock around them into mineral-rich clay. In spring they're thin and splattery; by late summer they thicken into plopping, gurgling mud.",
-   next:"Cross Midway's prismatic pools"},
-  {x:1150, y:2280, r:120, title:"Midway Geyser Basin",
-   fact:"Grand Prismatic Spring — the largest hot spring in the United States, wider than a football field — steams here, ringed in color by heat-loving microbes. The pale sinter crust around every pool can be paper-thin over boiling water: bison and people alike keep to solid ground.",
-   next:"Wait out Old Faithful's eruption"},
-  {x:700,  y:2415, r:120, title:"Old Faithful",
-   fact:"Old Faithful erupts roughly every 90 minutes, throwing up to 8,400 gallons of boiling water as high as 180 feet. It isn't the biggest geyser in the park — but it's the most reliable, which is how it earned its name.",
-   next:"Reach the herd's winter meadow"},
-  {x:330,  y:2140, r:130, title:"The Winter Meadow",
+   next:"Follow the road west to Norris Geyser Basin"},
+  {x:1940, y:2600, r:120, title:"Norris Geyser Basin",
+   fact:"Norris — beside the Norris–Canyon road, right where it really sits — is the hottest, most restless basin in the park, and home to Steamboat, the tallest active geyser on Earth. Its rare major eruptions can top 300 feet, more than twice Old Faithful's.",
+   next:"Drop south to Fountain Paint Pot"},
+  {x:1520, y:3480, r:120, title:"Fountain Paint Pot",
+   fact:"Here in the Lower Geyser Basin, bubbling mud pots — acid hot springs that dissolved the rock into clay — plop and gurgle. In spring they're thin and splattery; by late summer they thicken like porridge.",
+   next:"Continue down the Firehole to Midway"},
+  {x:1350, y:3860, r:120, title:"Midway Geyser Basin",
+   fact:"That vast rainbow pool is Grand Prismatic Spring — the largest hot spring in the United States, about 370 feet across, far bigger than any other pool on your route. Beside it yawns Excelsior Geyser Crater. The colors are mats of heat-loving microbes; the pale crust between pools can be paper-thin.",
+   next:"Follow the Firehole to Old Faithful"},
+  {x:1180, y:4270, r:120, title:"Old Faithful",
+   fact:"The Upper Geyser Basin holds the densest cluster of geysers on Earth. Old Faithful erupts roughly every 90 minutes, up to 180 feet — not the biggest, but the most reliable, which is how it earned its name.",
+   next:"Reach the herd's winter valley"},
+  {x:600,  y:4440, r:150, title:"The Winter Valley",
    fact:"Yellowstone is the only place in the United States where wild bison have lived continuously since prehistoric times. From about two dozen survivors in 1902, the herd has rebounded to thousands.",
    next:null}
 ];
+
+// Aerial palettes for each spring, matched to how the real pools photograph from above
+const SPRING_LOOKS={
+  prismatic:   {stops:[[0,"#1b4965"],[0.35,"#177e8e"],[0.55,"#2fa06b"],[0.7,"#d8c24a"],[0.84,"#e0872e"],[1,"#a8502a"]], runoff:true},
+  turquoise:   {stops:[[0,"#2e8ea0"],[0.6,"#5cb4bd"],[0.85,"#bfe0dd"],[1,"#e3ded0"]], rough:true},
+  morningglory:{stops:[[0,"#1e6e63"],[0.5,"#3f9e7c"],[0.78,"#d9c25a"],[1,"#d9853c"]]},
+  emerald:     {stops:[[0,"#12695a"],[0.6,"#2f9e6a"],[0.85,"#cfd35a"],[1,"#e0c76a"]]},
+  milky:       {stops:[[0,"#9fc3c9"],[0.7,"#c3d8d8"],[1,"#ded9c6"]], rough:true},
+  murky:       {stops:[[0,"#5f7d80"],[0.7,"#8aa0a0"],[1,"#cfc9b4"]]},
+  paleblue:    {stops:[[0,"#2b7f96"],[0.7,"#7fc4c2"],[1,"#e0d9c4"]]},
+  blueorange:  {stops:[[0,"#173f57"],[0.55,"#2b7f96"],[0.8,"#7fc4c2"],[0.92,"#e0b25a"],[1,"#c97a3a"]], runoff:true}
+};
 
 /* ---------------- State ---------------- */
 const S = {
@@ -247,14 +517,22 @@ const S = {
   player:{x:START.x, y:START.y, a:Math.PI*0.75, vx:0, vy:0, speed:0, energy:100, stamina:100, swim:false, grazeT:0, hurtT:0, bob:0},
   input:{up:0,down:0,left:0,right:0,sprint:0,jx:0,jy:0,joy:false},
   wolves:[], cars:[], grass:[], pools:[], trees:[], puffs:[],
-  wolfHintT:0, grassHintT:0, floaties:[],
+  wolfHintT:0, wolfWarned:false, grassHintT:0, wolfBites:0, healT:0, healCd:0, spareHearts:0, hearts:[], promoAt:0, floaties:[],
   geysers:[
-    {x:760,  y:2380, timer:6,  period:18, dur:4.5, h:120},           // Old Faithful
-    {x:2300, y:2150, timer:10, period:26, dur:6,   h:195},           // Steamboat
-    {x:1090, y:2210, timer:15, period:22, dur:4,   h:95}             // Midway cone
+    {x:1159, y:4328, timer:6,  period:18, dur:4.5, h:520, style:"mound", name:"Old Faithful",
+     desc:"The most reliable big geyser on Earth: roughly every 90 minutes it hurls up to 8,400 gallons as high as 180 feet — sixteen bison stacked nose to tail."},
+    {x:1965, y:2690, timer:10, period:26, dur:6,   h:800, style:"steamboat", name:"Steamboat Geyser",
+     desc:"The tallest active geyser in the world. Major eruptions top 300 feet — and nobody can predict them: Steamboat has slept anywhere from three days to fifty years between blasts."},
+    {x:1025, y:4295, timer:14, period:22, dur:4,   h:300, style:"castle", name:"Castle Geyser",
+     desc:"Its fortress-like sinter cone took thousands of years to build, layer by layer. It erupts about every 14 hours, then roars steam for nearly an hour."}
   ],
   bear:null, bearHintT:0,
-  herdCalls:1, herd:[], herdT:0, relic:null, relicHinted:false,
+  herdCalls:1, herd:[], herdT:0, relic:null, relicHinted:false, herdToken:null, herdTokenHinted:false,
+  companions:[], moose:null, shakeCd:0,
+  otters:[], mooseFactShown:false, otterFactShown:false,
+  pronghorn:[], elk:[], eagle:null, swans:[],
+  pronghornFact:false, elkFact:false, eagleFact:false, swanFact:false,
+  thermalFacts:{},
   shakeT:0
 };
 
@@ -265,37 +543,85 @@ const dist=(x1,y1,x2,y2)=>Math.hypot(x2-x1,y2-y1);
 const lerp=(a,b,t)=>a+(b-a)*t;
 const angDiff=a=>((a+Math.PI*3)%(Math.PI*2))-Math.PI;
 const rand=(a,b)=>a+Math.random()*(b-a);
+function addCompanion(){
+  const P=S.player;
+  S.companions.push({
+    x:P.x-Math.cos(P.a)*60+rand(-30,30),
+    y:P.y-Math.sin(P.a)*60+rand(-30,30),
+    a:P.a, bob:rand(0,6), s:rand(0.85,1.0)
+  });
+}
 function toast(msg){
   const t=$("#toast"); t.textContent=msg; t.classList.add("show");
   clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("show"),2800);
 }
-function inRiver(x,y){ return Math.abs(y-riverY(x))<RIVER_HALF; }
-function onRoad(x,y){ return Math.abs(y-roadY(x))<ROAD_HALF; }
+function inRiver(x,y){ return y<3790 && Math.abs(x-riverX(y))<RIVER_HALF; }
+function onRoad(x,y){ return x>ROAD_X1&&x<ROAD_X2&&Math.abs(y-roadY(x))<ROAD_HALF; }
 
 /* ---------------- World generation ---------------- */
 function seedWorld(){
   S.grass=[]; S.pools=[]; S.trees=[]; S.wolves=[]; S.cars=[]; S.puffs=[];
   // Grass tufts — dense in valleys, sparse elsewhere, never in river/road/pools
   let guard=0;
-  while(S.grass.length<150 && guard++<4000){
+  while(S.grass.length<300 && guard++<8000){
     const x=rand(120,WORLD.w-120), y=rand(120,WORLD.h-120);
-    if(inRiver(x,y)||onRoad(x,y)) continue;
-    if(dist(x,y,900,2100)<420) continue; // thermal basin: little grass
+    if(inRiver(x,y)||onRoad(x,y)||inLake(x,y)) continue;
+    if(y>1930&&y<2580&&Math.abs(x-riverX(y))<175) continue; // canyon rock
+    if(dist(x,y,1520,3490)<280) continue; // Lower Geyser Basin
+    if(dist(x,y,1115,3934)<330) continue; // Midway
+    if(dist(x,y,1090,4270)<270) continue; // Upper Geyser Basin
+    if(dist(x,y,1560,3810)<230) continue; // Excelsior crater rim
+    if(dist(x,y,1950,2610)<300) continue; // Norris: little grass
     S.grass.push({x,y,eaten:false,regrow:0,s:rand(.8,1.3)});
   }
   // Thermal pools cluster (southwest basin)
-  const poolSpots=[[700,1950],[860,2060],[1010,1930],[930,2210],[760,2170],[620,2080],[1080,2130],[840,1860],
-                   [2350,2200],[2150,2230],[2430,2100],[2270,2280],   // Norris
-                   [600,2330],[850,2480]];                            // Upper basin
-  for(const [x,y] of poolSpots) S.pools.push({x,y,r:rand(46,86)});
-  // Fountain Paint Pot: scalding mud pots (render brown, same thin-crust danger)
-  for(const [x,y] of [[1660,2410],[1740,2440],[1705,2470]]) S.pools.push({x,y,r:rand(26,38),mud:true});
+  // Thermal features: positions from the park projection, sizes at bison scale
+  // (1 ft ≈ 4.2 units). Grand Prismatic alone is compressed — its card says so.
+  const springs=[
+    // NORRIS — Porcelain Basin (north, beside the road) / Back Basin (south)
+    {x:1830,y:2510,r:72, look:"milky", name:"Crackling Lake",
+     desc:"Porcelain Basin's noisy pool — named for the crackle of small hot springs popping along its shoreline."},
+    {x:2200,y:2545,r:56, look:"murky", name:"Congress Pool",
+     desc:"Born in 1891, the year a geology congress toured the park. Some years it boils violently; other years it sits quiet and muddy."},
+    {x:1800,y:2700,r:54, look:"emerald", name:"Emerald Spring",
+     desc:"A Back Basin classic, 27 feet across — two and a half bison, nose to tail. Yellow sulfur lining the bowl mixes with blue water to glow green."},
+    {x:2085,y:2720,r:50, look:"paleblue", name:"Cistern Spring",
+     desc:"Plumbed underground to Steamboat Geyser next door — every time Steamboat has a major eruption, Cistern drains completely dry."},
+    // LOWER GEYSER BASIN — the Fountain Paint Pot boardwalk cluster
+    {x:1600,y:3590,r:76, look:"blueorange", name:"Silex Spring",
+     desc:"Silex is Latin for silica — the dissolved rock in this water that slowly builds every white sinter terrace around you."},
+    {x:1700,y:3440,r:48, look:"paleblue", name:"Celestine Pool",
+     desc:"Lovely and lethal: thermal pools like this can top 190°F. Neither hooves nor boots belong past the rim."},
+    {x:1445,y:3455,r:40, mud:true, name:"Fountain Paint Pot",
+     desc:"A cauldron of boiling clay — acid gases dissolve the rock into mud that plops and gurgles. Thin as soup in spring, thick as paint by late summer."},
+    {x:1500,y:3425,r:26, mud:true},
+    {x:1395,y:3480,r:22, mud:true},
+    // MIDWAY GEYSER BASIN — the giant, standing alone
+    {x:1115,y:3934,r:200, look:"prismatic", name:"Grand Prismatic Spring",
+     desc:"The largest hot spring in the United States — one vast circle of rainbow microbe mats around a near-boiling blue heart. Even drawn giant here, the real spring is wider still: 370 feet across."},
+    {x:1560,y:3810,r:120, look:"turquoise", name:"Excelsior Geyser Crater",
+     desc:"Once a 300-foot geyser just downstream of Grand Prismatic, Excelsior blew its own crater apart in the 1880s. It still pours over 4,000 gallons of boiling water a minute into the Firehole."},
+    // UPPER GEYSER BASIN — Morning Glory at the north end, Old Faithful at the south
+    {x:1069,y:4208,r:46, look:"morningglory", name:"Morning Glory Pool",
+     desc:"About two bison-lengths across, at the quiet north end of the Upper Basin. Decades of tossed coins and trash cooled its vent, shifting the famous blue toward green and orange."}
+  ];
+  for(const p of springs) S.pools.push(p);
   // The grizzly that works the upper basin — last stretch of the trek
-  S.bear={x:640,y:2230,hx:640,hy:2230,a:rand(0,6.28),state:"idle",wt:rand(0,3),cool:0,fleeT:0};
+  const AGGR={detect:430,scent:850,spd:245,hitR:62,swatCd:2.5,dmg:27};
+  const MILD ={detect:380,scent:760,spd:225,hitR:48,swatCd:3.0,dmg:14};  // eased to wolf-level aggression
+  S.bears=[
+    {x:1350,y:4150,hx:1350,hy:4150,a:rand(0,6.28),state:"idle",wt:rand(0,3),cool:0,fleeT:0,scares:0,giveUpT:0,...AGGR}, // guards the Upper Basin
+    {x:5450,y:650, hx:5450,hy:650, a:rand(0,6.28),state:"idle",wt:rand(0,3),cool:0,fleeT:0,scares:0,giveUpT:0,...AGGR}, // Absaroka high country, far NE corner
+    {x:4950,y:5050,hx:4950,hy:5050,a:rand(0,6.28),state:"idle",wt:rand(0,3),cool:0,fleeT:0,scares:0,giveUpT:0,...AGGR}, // wild lake country, far SE corner
+    {x:550, y:600, hx:550, hy:600, a:rand(0,6.28),state:"idle",wt:rand(0,3),cool:0,fleeT:0,scares:0,giveUpT:0,...AGGR}, // the Gallatins, far NW corner
+    {x:3550,y:1150,hx:3550,hy:1150,a:rand(0,6.28),state:"idle",wt:rand(0,3),cool:0,fleeT:0,scares:0,giveUpT:0,...MILD}, // Specimen Ridge foothills
+    {x:2000,y:4650,hx:2000,hy:4650,a:rand(0,6.28),state:"idle",wt:rand(0,3),cool:0,fleeT:0,scares:0,giveUpT:0,...MILD}  // west of the lake, near the winter valley
+  ];
   for(const g of S.geysers){g.timer=rand(4,g.period);g.active=0;}
   // Hidden area: an old wallowing ground ringed by trees, far off the trail (SE corner).
   // Holds one extra Herd Call. No waypoint ever points here.
-  S.relic={x:3170,y:2330,taken:false};
+  S.relic={x:4600,y:4700,taken:false};
+  S.herdToken={x:900,y:1050,taken:false};
   for(let i=0;i<11;i++){
     const a=i/11*Math.PI*2;
     if(a>4.9&&a<5.7)continue; // leave a gap to slip through
@@ -303,31 +629,123 @@ function seedWorld(){
   }
   S.trees.sort((a,b)=>a.y-b.y);
   // Tree clusters
-  const clusters=[[3100,1500],[2600,600],[1500,900],[2200,2100],[1700,2350],[400,1200],[1200,400],[3200,2200],[500,600],[2900,1800]];
+  const clusters=[[4300,1800],[3600,900],[2400,1300],[3350,3350],[2000,3200],[900,2600],[1700,1500],[4400,3000],[1000,1200],[3900,2600],[1300,2900],[700,3900],[1900,4400],[4600,4200],[600,1700],[2200,4500],[4900,2200],[5200,3600]];
   for(const [cx,cy] of clusters){
     const n=8+Math.floor(Math.random()*7);
     for(let i=0;i<n;i++){
       const x=cx+rand(-220,220), y=cy+rand(-160,160);
-      if(inRiver(x,y)||onRoad(x,y)) continue;
+      if(inRiver(x,y)||onRoad(x,y)||inLake(x,y)) continue;
+      if(y>1930&&y<2580&&Math.abs(x-riverX(y))<175) continue; // canyon rock
       if(x<60||y<60||x>WORLD.w-60||y>WORLD.h-60) continue;
       S.trees.push({x,y,r:rand(16,30)});
     }
   }
   S.trees.sort((a,b)=>a.y-b.y);
+  // --- realism dressing ---
+  S.mottle=[];
+  for(let i=0;i<34;i++){
+    const x=rand(200,WORLD.w-200), y=rand(200,WORLD.h-200);
+    if(inLake(x,y))continue;
+    S.mottle.push({x,y,rx:rand(160,420),ry:rand(110,260),
+      c:Math.random()<0.5?"rgba(110,140,90,.32)":"rgba(152,172,112,.3)"});
+  }
+  const flats=[[4250,1250,1100,560],[2650,2980,620,420],[650,4450,650,380],[3400,1500,700,400]];
+  S.sage=[]; let sg=0;
+  while(S.sage.length<260&&sg++<4000){
+    const z=flats[Math.floor(Math.random()*flats.length)];
+    const x=z[0]+rand(-z[2],z[2]), y=z[1]+rand(-z[3],z[3]);
+    if(x<60||y<60||x>WORLD.w-60||y>WORLD.h-60)continue;
+    if(inRiver(x,y)||inLake(x,y)||onRoad(x,y))continue;
+    S.sage.push({x,y,s:rand(0.7,1.3)});
+  }
+  S.flowers=[]; let fl=0;
+  while(S.flowers.length<170&&fl++<3000){
+    const z=flats[Math.floor(Math.random()*flats.length)];
+    const x=z[0]+rand(-z[2],z[2]), y=z[1]+rand(-z[3],z[3]);
+    if(x<60||y<60||x>WORLD.w-60||y>WORLD.h-60)continue;
+    if(inRiver(x,y)||inLake(x,y)||onRoad(x,y))continue;
+    S.flowers.push({x,y,c:["#e8d56a","#d98ca0","#c9d9ff","#e8a95a"][Math.floor(Math.random()*4)]});
+  }
+  // standing grey snags — the 1988 fire legacy
+  S.snags=[];
+  for(const [cx,cy] of [[2500,1650],[3550,2700],[1500,2200]]){
+    for(let i=0;i<16;i++){
+      const x=cx+rand(-260,260), y=cy+rand(-180,180);
+      if(inRiver(x,y)||inLake(x,y)||onRoad(x,y))continue;
+      if(y>1930&&y<2580&&Math.abs(x-riverX(y))<185)continue;
+      S.snags.push({x,y,h:rand(16,26),a:rand(-0.15,0.15)});
+    }
+  }
+  // gravel bars on the river's bends
+  S.gravel=[];
+  for(let gy=500;gy<3500;gy+=rand(260,420)){
+    if(gy>CANYON.y1-60&&gy<CANYON.y2+60)continue;
+    S.gravel.push({y:gy,side:Math.random()<0.5?-1:1,len:rand(60,110)});
+  }
+  // drifting cloud shadows
+  S.clouds=[];
+  for(let i=0;i<3;i++)S.clouds.push({x:rand(0,WORLD.w),y:rand(0,WORLD.h),rx:rand(340,560),ry:rand(200,320),vx:rand(8,14)});
+  S.tracks=[]; S.birds=[];
+  // one spare heart hidden in the wild — it absorbs a killing strike
+  S.hearts=[
+    {x:3960,y:1540,taken:false,hinted:false}    // tucked behind Specimen Ridge
+  ];
+  // ground mist breathing over each thermal basin
+  S.mists=[];
+  for(const [mx,my] of [[1950,2610],[1520,3490],[1150,3930],[1090,4270]]){
+    S.mists.push({cx:mx+rand(-60,60),cy:my+rand(-40,40),r:rand(150,220),ph:rand(0,6)});
+    S.mists.push({cx:mx+rand(-80,80),cy:my+rand(-60,60),r:rand(120,180),ph:rand(0,6)});
+  }
+  // Frank & Stevenson Islands wear a few trees
+  S.trees.push({x:3430,y:4030,r:20},{x:3465,y:4300,r:24},{x:3410,y:4330,r:16});
+  S.trees.sort((a,b)=>a.y-b.y);
+  // Your starting band: one herdmate to begin — the rest join flag by flag
+  S.companions=[]; addCompanion();
+  // A bull moose stands statue-still in the willow flats south of the river
+  S.moose={x:3010,y:2830,a:-2.4,state:"idle",runT:0,touched:false};
+  S.blackbear={x:2560,y:1720,a:rand(0,6.28),state:"idle",runT:0,touched:false};
+  S.cubs=[
+    {x:2560+rand(-30,30),y:1720+rand(-30,30),a:rand(0,6.28),wt:rand(0,2),wig:rand(0,6)},
+    {x:2560+rand(-30,30),y:1720+rand(-30,30),a:rand(0,6.28),wt:rand(0,2),wig:rand(0,6)}
+  ];
   // Wolves — posted along the middle of the route
-  const dens=[[2500,1350],[2050,1150],[1550,1550],[1150,1350]];
-  for(const [x,y] of dens) S.wolves.push({x,y,hx:x,hy:y,a:rand(0,6.28),state:"idle",wt:rand(0,3),cool:0,fleeT:0,waryT:0,spin:Math.random()<.5?1:-1});
+  const dens=[[4250,1550],[3650,1350],[3300,2300],[2700,2680],[2380,2060],[2150,2860],[1750,3120],[2050,3900],[1350,2900],[2650,3560],[3050,3700]];
+  for(const [x,y] of dens) S.wolves.push({x,y,hx:x,hy:y,a:rand(0,6.28),state:"idle",wt:rand(0,3),cool:0,fleeT:0,waryT:0,engaged:false,stalkT:2.2,spin:Math.random()<.5?1:-1});
   // Cars on the road
   for(let i=0;i<7;i++){
+    const v0=rand(120,170);
     S.cars.push({
-      x:rand(100,WORLD.w-100),
+      x:rand(1920,2800),
       dir:Math.random()<0.5?1:-1,
       lane:Math.random()<0.5?-20:20,
-      v:rand(120,170),
-      hue:[["#c8543f"],["#4d7ba8"],["#d9c268"],["#7a8b7f"],["#a05e8f"],["#e0e4d8"],["#3c6b4f"]][i][0],
+      v:v0, cur:v0,
+      cautious:Math.random()<0.4,   // some drivers stop for wildlife even near the shoulder
+      hue:[["#c8543f"],["#4d7ba8"],["#d9c268"],["#7a8b7f"],["#a05e8f"],["#e0e4d8"],["#3c6b4f"]][i%7][0],
       stopped:false
     });
   }
+  // River otters working the Yellowstone River
+  S.otters=[
+    {x:0,y:1650,min:1480,max:1900,off:-24,dir:1, wig:rand(0,6)},
+    {x:0,y:2800,min:2620,max:3080,off: 22,dir:-1,wig:rand(0,6)},
+    {x:0,y:3350,min:3180,max:3560,off:  0,dir:1, wig:rand(0,6)}
+  ];
+  // Pronghorn band on the Lamar flats
+  S.pronghorn=[];
+  for(let i=0;i<3;i++){
+    const x=4400+rand(-120,120), y=1200+rand(-90,90);
+    S.pronghorn.push({x,y,hx:x,hy:y,a:rand(0,6.28),wt:rand(0,3),runT:0});
+  }
+  // Elk band (one bull) in the Firehole meadows
+  S.elk=[];
+  for(let i=0;i<4;i++){
+    const x=1250+rand(-90,90), y=3050+rand(-60,60);
+    S.elk.push({x,y,hx:x,hy:y,a:rand(0,6.28),wt:rand(0,3),runT:0,bull:i===0});
+  }
+  // Bald eagle on a dead snag at the river bank
+  S.eagle={x:3040,y:1750,state:"perched",t:0,a:0};
+  // Trumpeter swans on the marsh pond
+  S.swans=[{x:2500,dir:1},{x:2610,dir:-1}];
 }
 
 /* ---------------- Input ---------------- */
@@ -379,6 +797,16 @@ addEventListener("keyup",e=>{
   wrapEl.addEventListener("lostpointercapture",end);
   wrapEl.addEventListener("contextmenu",e=>e.preventDefault());
 
+  // Double-tap (or double-click) anywhere on the stage: shake off a close predator
+  let lastTapT=0,lastTapX=0,lastTapY=0;
+  wrapEl.addEventListener("pointerdown",e=>{
+    if(e.target.closest("button")||e.target.closest("#fact-card"))return;
+    const now=performance.now();
+    if(now-lastTapT<320&&Math.hypot(e.clientX-lastTapX,e.clientY-lastTapY)<48){
+      lastTapT=0;shakeOff();
+    } else {lastTapT=now;lastTapX=e.clientX;lastTapY=e.clientY;}
+  });
+
   const sb=$("#sprint-btn");
   sb.addEventListener("pointerdown",e=>{
     e.preventDefault();
@@ -417,7 +845,7 @@ addEventListener("keyup",e=>{
 
   // Auto-pause when the tab or app is backgrounded
   document.addEventListener("visibilitychange",()=>{
-    if(document.hidden&&S.running&&!S.over&&$("#fact-card").classList.contains("hidden")){
+    if(document.hidden&&S.running&&!S.over&&!S.paused){
       S.autoPaused=true;S.paused=true;
     } else if(S.autoPaused){
       S.autoPaused=false;S.paused=false;last=performance.now();
@@ -435,7 +863,7 @@ function update(dt){
   let iy=S.input.down-S.input.up + S.input.jy;
   const im=Math.hypot(ix,iy);
   if(im>1){ix/=im;iy/=im;}
-  const wantSprint=S.input.sprint&&P.stamina>2&&im>0.1;
+  const wantSprint=S.input.sprint&&im>0.1;
   const base=P.swim?88:135;
   const spd=wantSprint?base*1.85:base;
 
@@ -452,8 +880,25 @@ function update(dt){
   P.y+=Math.sin(P.a)*P.speed*dt;
   P.x=clamp(P.x,40,WORLD.w-40); P.y=clamp(P.y,40,WORLD.h-40);
   P.bob+=P.speed*dt*0.05;
-  P.swim=inRiver(P.x,P.y);
+  P.swim=inRiver(P.x,P.y)||inLake(P.x,P.y);
+  // hoofprints on the trail
+  P.trackD=(P.trackD||0)+P.speed*dt;
+  if(P.trackD>16&&P.speed>15&&!P.swim){
+    P.trackD=0;
+    S.tracks.push({x:P.x-Math.cos(P.a)*6,y:P.y-Math.sin(P.a)*6,a:P.a,t:0});
+    if(S.tracks.length>140)S.tracks.shift();
+  }
   if(P.hurtT>0)P.hurtT-=dt;
+  // whitewater in the Grand Canyon stretch
+  S.canyonToastT=Math.max(0,(S.canyonToastT||0)-dt);
+  if(P.swim&&P.y>CANYON.y1&&P.y<CANYON.y2){
+    P.y-=55*dt;
+    P.energy-=1.5*dt;
+    if(S.canyonToastT<=0){
+      S.canyonToastT=10;
+      toast("🌊 Whitewater! The canyon current drags at you — make for the bank!");
+    }
+  }
 
   // soft tree collision
   for(const tr of S.trees){
@@ -468,8 +913,7 @@ function update(dt){
   let drain=moving?(wantSprint?5.0:1.6):0.18;
   if(P.swim)drain+=2.2;
   P.energy-=drain*dt;
-  if(wantSprint&&moving)P.stamina=Math.max(0,P.stamina-26*dt);
-  else P.stamina=Math.min(100,P.stamina+16*dt);
+
 
   // --- grazing
   let grazing=false;
@@ -518,8 +962,26 @@ function update(dt){
 
   // --- wolves
   S.wolfHintT=Math.max(0,S.wolfHintT-dt);
+  S.shakeCd=Math.max(0,S.shakeCd-dt);
+  S.healCd=Math.max(0,S.healCd-dt);
+  if(S.healT>0){
+    if(P.speed>30||S.wolfBites<=0){
+      S.healT=0;
+      toast("The herdmate backs off — hold still to be tended.");
+    } else {
+      S.healT-=dt;
+      if(Math.random()<0.18)S.floaties.push({x:P.x+rand(-22,22),y:P.y-28,t:0,txt:"♥",rgb:"233,142,160"});
+      if(S.healT<=0){
+        S.wolfBites=Math.max(0,S.wolfBites-1);
+        S.healCd=18;
+        S.score+=5;
+        toast("💗 A herdmate licks your wounds clean — one strike healed. ("+S.wolfBites+" of 3 wounds remain)");
+      }
+    }
+  }
   for(const w of S.wolves){
     w.cool=Math.max(0,w.cool-dt);
+    const wox=w.x, woy=w.y; // wolves will not enter the river
     const dp=dist(w.x,w.y,P.x,P.y)||1;
     const toWolf=Math.atan2(w.y-P.y,w.x-P.x);
     // DEFENSE 1 — charge: run at a wolf to send it packing
@@ -546,29 +1008,165 @@ function update(dt){
           S.score+=10;
           toast("🦬 You stand your ground. The wolf thinks better of it and trots off. (+10)");
         }
+      } else if(!w.engaged){
+        // locked on: the wolf stops and stalks for a couple of seconds before committing
+        w.state="stalk"; w.waryT=0;
+        w.stalkT-=dt;
+        w.a=Math.atan2(P.y-w.y,P.x-w.x);
+        w.x+=Math.cos(w.a)*18*dt; w.y+=Math.sin(w.a)*18*dt;   // a slow, low creep
+        if(!S.wolfWarned){
+          S.wolfWarned=true;S.wolfHintT=16;
+          showCard("⚠ Predator Warning","Wolves!",
+            "It stalks for a moment before charging — use those seconds! STOP and FACE a wolf to stand your ground, CHARGE it to drive it off, or double-tap to shake one loose up close. Wolves won't follow you into the river. Four strikes will bring you down — heal at the ❤ Lick Wounds button.",
+            "wolf");
+        } else if(S.wolfHintT<=0){
+          S.wolfHintT=16;
+          toast("🐺 A wolf locks eyes and stalks low — you have seconds. Face it, or run!");
+        }
+        if(w.stalkT<=0)w.engaged=true;
       } else {
         w.state="chase"; w.waryT=0;
-        if(S.wolfHintT<=0){
-          S.wolfHintT=16;
-          toast("🐺 Wolf on your tail! Stop and turn to face it — or hold Charge and run it off.");
-        }
         w.a=Math.atan2(P.y-w.y,P.x-w.x);
         w.x+=Math.cos(w.a)*225*dt; w.y+=Math.sin(w.a)*225*dt;
         if(dp<42&&w.cool<=0){
           w.cool=3.0; P.energy-=10; P.hurtT=0.8; S.shakeT=0.35;
           P.x+=Math.cos(w.a)*40; P.y+=Math.sin(w.a)*40;
-          toast("🐺 A wolf nips at your flank! Face it down or charge. (−10 energy)");
+          S.wolfBites++;
+          if(S.wolfBites>=4){
+            if(S.spareHearts>0){
+              S.spareHearts--;S.wolfBites=3;
+              toast("💗 The hidden heart burns bright — the killing strike glances off!");
+            } else loseGame("wolves");
+          }
+          else if(S.wolfBites===3)toast("🐺 BADLY WOUNDED — ONE MORE BITE WILL BRING YOU DOWN! Face them or run! (−10 energy)");
+          else toast("🐺 A wolf tears your flank! Wound "+S.wolfBites+" of 3 — a fourth bite is the end. (−10 energy)");
         }
       }
     } else {
       w.state="idle"; w.waryT=0;
+      w.engaged=false; w.stalkT=2.2;
       w.wt-=dt;
       if(w.wt<=0){w.wt=rand(1.5,3.5);w.a=rand(0,Math.PI*2);}
       const dh=dist(w.x,w.y,w.hx,w.hy);
       if(dh>90){w.a=Math.atan2(w.hy-w.y,w.hx-w.x);}
       w.x+=Math.cos(w.a)*55*dt; w.y+=Math.sin(w.a)*55*dt;
     }
+    if(inRiver(w.x,w.y)){w.x=wox;w.y=woy;} // balked at the bank
     w.x=clamp(w.x,40,WORLD.w-40); w.y=clamp(w.y,40,WORLD.h-40);
+  }
+
+  // --- your band: follow in formation, and meet attackers head-on
+  {
+    const preds=[];
+    for(const w of S.wolves)if(w.state==="chase")preds.push(w);
+    // the bear is not intercepted solo — see the herd-wall rule in the bear block
+    for(let i=0;i<S.companions.length;i++){
+      const c=S.companions[i];
+      let tx,ty,rush=false;
+      let best=null,bd=340;
+      for(const pr of preds){
+        // the band only squares up if YOU are facing this predator — a herd defends as a wall
+        if(Math.abs(angDiff(Math.atan2(pr.y-P.y,pr.x-P.x)-P.a))>0.9)continue;
+        const d=dist(c.x,c.y,pr.x,pr.y);
+        if(d<bd){bd=d;best=pr;}
+      }
+      if(best){
+        tx=best.x;ty=best.y;rush=true;
+        if(bd<58){
+          best.fleeT=Math.max(best.fleeT,1.6);
+          best.cool=Math.max(best.cool,3);
+          S.floaties.push({x:best.x,y:best.y-24,t:0,txt:"Driven off!"});
+          S.score+=5;
+        }
+      } else {
+        const back=52+Math.floor(i/2)*46;
+        const side=(i%2===0?-1:1)*(40+Math.floor(i/2)*6);
+        tx=P.x-Math.cos(P.a)*back-Math.sin(P.a)*side;
+        ty=P.y-Math.sin(P.a)*back+Math.cos(P.a)*side;
+      }
+      const d=dist(c.x,c.y,tx,ty);
+      if(d>6){
+        const sp=rush?300:Math.min(300,d*3.2);
+        const na=Math.atan2(ty-c.y,tx-c.x);
+        c.a=na;
+        c.x+=Math.cos(na)*sp*dt; c.y+=Math.sin(na)*sp*dt;
+        c.bob+=sp*dt*0.05;
+      } else c.a=P.a;
+    }
+  }
+
+  // --- the moose: statue-still until something bumps it
+  if(S.moose){
+    const M=S.moose;
+    if(M.state==="idle"){
+      if(!S.mooseFactShown&&dist(P.x,P.y,M.x,M.y)<190){
+        S.mooseFactShown=true;S.score+=10;
+        showWildlifeCard("Bull Moose","moose",
+          "Standing up to 7 feet at the shoulder, moose are the largest members of the deer family. Yellowstone's moose haunt willow flats and marshy river bottoms like this one, often standing motionless for long stretches. Don't be fooled by the calm — a startled moose can be as dangerous as any bear, so give him room. (+10)");
+      }
+      if(dist(P.x,P.y,M.x,M.y)<62){
+        M.state="run";M.runT=1.7;
+        M.a=Math.atan2(M.y-P.y,M.x-P.x)+rand(-0.3,0.3);
+        if(!M.touched){
+          M.touched=true;S.score+=5;
+          toast("🫎 Too close! The moose crashes off through the willows. (+5)");
+        }
+      }
+    } else {
+      M.runT-=dt;
+      M.x+=Math.cos(M.a)*320*dt;M.y+=Math.sin(M.a)*320*dt;
+      M.x=clamp(M.x,60,WORLD.w-60);M.y=clamp(M.y,60,WORLD.h-60);
+      if(Math.random()<0.3)puff(M.x-Math.cos(M.a)*20,M.y+5,"#c9bd9c",1);
+      if(M.runT<=0)M.state="idle";
+    }
+  }
+
+  // --- the black bear: shy and harmless, forages the burn country, never attacks
+  if(S.blackbear){
+    const K=S.blackbear;
+    if(K.state==="idle"){
+      if(!S.blackbearFactShown&&dist(P.x,P.y,K.x,K.y)<190){
+        S.blackbearFactShown=true;S.score+=10;
+        showWildlifeCard("Black Bear","blackbear",
+          "Smaller and shyer than a grizzly, black bears keep to the timber and burned forest, foraging on berries, roots, and insects rather than hunting. This one wants nothing to do with you — give him space and he'll amble on. (+10)");
+      }
+      if(dist(P.x,P.y,K.x,K.y)<62){
+        K.state="run";K.runT=1.6;
+        K.a=Math.atan2(K.y-P.y,K.x-P.x)+rand(-0.3,0.3);
+        if(!K.touched){
+          K.touched=true;S.score+=5;
+          toast("🐻 The black bear bolts for the trees — he wants no trouble. (+5)");
+        }
+      }
+    } else {
+      K.runT-=dt;
+      K.x+=Math.cos(K.a)*260*dt;K.y+=Math.sin(K.a)*260*dt;
+      K.x=clamp(K.x,60,WORLD.w-60);K.y=clamp(K.y,60,WORLD.h-60);
+      if(K.runT<=0)K.state="idle";
+    }
+  }
+
+  // --- her two cubs: playful, loosely tethered, scamper when mom bolts
+  if(S.cubs.length){
+    const K=S.blackbear;
+    for(const c of S.cubs){
+      c.wig+=dt*5;
+      const dm=dist(c.x,c.y,K.x,K.y);
+      if(K.state==="run"){
+        // scamper after mom, staying a little behind
+        c.a=Math.atan2(K.y-c.y,K.x-c.x);
+        c.x+=Math.cos(c.a)*225*dt; c.y+=Math.sin(c.a)*225*dt;
+      } else {
+        c.wt-=dt;
+        if(c.wt<=0||dm>90){
+          c.wt=rand(1,2.4);
+          c.a=dm>90?Math.atan2(K.y-c.y,K.x-c.x)+rand(-0.4,0.4):rand(0,6.28);
+        }
+        const sp=dm>90?70:26;
+        c.x+=Math.cos(c.a)*sp*dt; c.y+=Math.sin(c.a)*sp*dt;
+      }
+      c.x=clamp(c.x,50,WORLD.w-50); c.y=clamp(c.y,50,WORLD.h-50);
+    }
   }
 
   // --- the herd (summoned by a Herd Call)
@@ -584,7 +1182,41 @@ function update(dt){
     for(const w of S.wolves){
       if(dist(w.x,w.y,P.x,P.y)<620){w.fleeT=Math.max(w.fleeT,1.2);w.cool=Math.max(w.cool,4);}
     }
-    if(S.bear&&dist(S.bear.x,S.bear.y,P.x,P.y)<620)S.bear.fleeT=Math.max(S.bear.fleeT,1.2);
+    for(const b0 of S.bears) if(dist(b0.x,b0.y,P.x,P.y)<620)b0.fleeT=Math.max(b0.fleeT,1.2);
+  }
+
+  // --- hidden spare hearts
+  for(const h of S.hearts){
+    if(h.taken)continue;
+    const dh=dist(P.x,P.y,h.x,h.y);
+    if(!h.hinted&&dh<450){
+      h.hinted=true;
+      toast("💗 You sense something tender hidden nearby…");
+    }
+    if(dh<55){
+      h.taken=true;
+      S.spareHearts=Math.min(1,S.spareHearts+1);   // the only one in the whole park
+      S.score+=25;
+      toast("💗 The hidden heart — the only one in the whole park! It will absorb one killing strike. (+25)");
+      puff(h.x,h.y,"#e98ea0",6);
+    }
+  }
+
+  // --- the hidden herd token: a second bonus stampede charge
+  if(S.herdToken&&!S.herdToken.taken){
+    const dk=dist(P.x,P.y,S.herdToken.x,S.herdToken.y);
+    if(!S.herdTokenHinted&&dk<600){
+      S.herdTokenHinted=true;
+      toast("🦬 You catch sight of a lone bison shape glinting in the highlands…");
+    }
+    if(dk<55){
+      S.herdToken.taken=true;
+      S.herdCalls=Math.min(3,S.herdCalls+1);
+      S.score+=25;
+      toast("🦬 A hidden herd token! One more stampede charge banked. (+25)");
+      updateHerdBtn();
+      puff(S.herdToken.x,S.herdToken.y,"#e8a93c",6);
+    }
   }
 
   // --- the hidden relic: one extra Herd Call
@@ -603,16 +1235,135 @@ function update(dt){
     }
   }
 
-  // --- cars
+  // --- cars: ease off near a bison on the shoulder, full stop when it's on the road
   for(const c of S.cars){
     c.y=roadY(c.x)+c.lane;
-    // stop for the bison (right of way!)
-    const ahead = (P.x-c.x)*c.dir;
-    c.stopped = onRoad(P.x,P.y)&&ahead>-30&&ahead<300&&Math.abs(P.y-c.y)<140;
-    if(!c.stopped){
-      c.x+=c.v*c.dir*dt;
-      if(c.x>WORLD.w+60)c.x=-60;
-      if(c.x<-60)c.x=WORLD.w+60;
+    const ahead=(P.x-c.x)*c.dir;
+    const nearRoad=Math.abs(P.y-roadY(P.x))<170;
+    let target=c.v;
+    if(onRoad(P.x,P.y)&&ahead>-30&&ahead<330&&Math.abs(P.y-c.y)<150){
+      target=0;                                  // bison on the road: everyone stops
+    } else if(nearRoad&&ahead>-40&&ahead<470){
+      target=c.cautious?0:c.v*0.35;              // near the shoulder: slow — cautious drivers stop outright
+    }
+    c.cur=lerp(c.cur,target,3*dt);               // smooth braking / pulling away
+    if(c.cur>2){
+      c.x+=c.cur*c.dir*dt;
+      if(c.x>ROAD_X2-30){c.x=ROAD_X2-30;c.dir=-1;}   // turn around at Canyon Village
+      if(c.x<ROAD_X1+30){c.x=ROAD_X1+30;c.dir=1;}    // turn around at Norris Junction
+    }
+    c.stopped=c.cur<=2;
+  }
+
+  // --- river otters: patrol their stretch of river
+  for(const o of S.otters){
+    o.y+=o.dir*70*dt;
+    if(o.y<o.min){o.y=o.min;o.dir=1;}
+    if(o.y>o.max){o.y=o.max;o.dir=-1;}
+    o.wig+=dt*6;
+    o.x=riverX(o.y)+o.off+Math.sin(o.wig)*10;
+  }
+  if(!S.otterFactShown){
+    for(const o of S.otters){
+      if(dist(P.x,P.y,o.x,o.y)<160){
+        S.otterFactShown=true;S.score+=10;
+        showWildlifeCard("River Otters","otter",
+          "North American river otters are the park's resident acrobats — sleek members of the weasel family that can hold their breath for several minutes while chasing trout and crayfish. Look for their slides worn into muddy and snowy riverbanks: even the adults toboggan for the sheer fun of it. (+10)");
+        break;
+      }
+    }
+  }
+
+  // --- pronghorn: hair-trigger, and nothing on the continent outruns them
+  for(const p of S.pronghorn){
+    if(p.runT>0){
+      p.runT-=dt;
+      p.x+=Math.cos(p.a)*480*dt;p.y+=Math.sin(p.a)*480*dt;
+      if(Math.random()<0.3)puff(p.x-Math.cos(p.a)*14,p.y+4,"#c9bd9c",1);
+    } else {
+      if(dist(p.x,p.y,P.x,P.y)<130){
+        p.runT=1.2;p.a=Math.atan2(p.y-P.y,p.x-P.x)+rand(-0.2,0.2);
+      } else {
+        p.wt-=dt;
+        if(p.wt<=0){p.wt=rand(1.5,3.5);p.a=rand(0,6.28);}
+        if(dist(p.x,p.y,p.hx,p.hy)>320)p.a=Math.atan2(p.hy-p.y,p.hx-p.x);
+        p.x+=Math.cos(p.a)*38*dt;p.y+=Math.sin(p.a)*38*dt;
+      }
+    }
+    p.x=clamp(p.x,60,WORLD.w-60);p.y=clamp(p.y,60,WORLD.h-60);
+  }
+  if(!S.pronghornFact){
+    for(const p of S.pronghorn){
+      if(dist(P.x,P.y,p.x,p.y)<210){
+        S.pronghornFact=true;S.score+=10;
+        showWildlifeCard("Pronghorn","pronghorn",
+          "Often called antelope, pronghorn are the fastest land animals in the Western Hemisphere — nearly 60 mph, with endurance no cheetah could match. Their huge eyes catch movement miles away across Lamar's open grass. (+10)");
+        break;
+      }
+    }
+  }
+
+  // --- elk: drift the meadows, give the bison polite room
+  for(const e of S.elk){
+    if(e.runT>0){
+      e.runT-=dt;
+      e.x+=Math.cos(e.a)*140*dt;e.y+=Math.sin(e.a)*140*dt;
+    } else {
+      if(dist(e.x,e.y,P.x,P.y)<110){
+        e.runT=1.0;e.a=Math.atan2(e.y-P.y,e.x-P.x)+rand(-0.2,0.2);
+      } else {
+        e.wt-=dt;
+        if(e.wt<=0){e.wt=rand(2,4);e.a=rand(0,6.28);}
+        if(dist(e.x,e.y,e.hx,e.hy)>260)e.a=Math.atan2(e.hy-e.y,e.hx-e.x);
+        e.x+=Math.cos(e.a)*26*dt;e.y+=Math.sin(e.a)*26*dt;
+      }
+    }
+    e.x=clamp(e.x,60,WORLD.w-60);e.y=clamp(e.y,60,WORLD.h-60);
+  }
+  if(!S.elkFact){
+    for(const e of S.elk){
+      if(dist(P.x,P.y,e.x,e.y)<200){
+        S.elkFact=true;S.score+=10;
+        showWildlifeCard("Elk","elk",
+          "Elk are Yellowstone's most abundant large animal — tens of thousands summer in the park. Come September, the bulls' eerie bugling echoes across meadows like these as they gather harems for the rut. (+10)");
+        break;
+      }
+    }
+  }
+
+  // --- bald eagle: watches from its snag, lifts off if crowded
+  if(S.eagle){
+    const E=S.eagle;
+    if(E.state==="perched"){
+      if(!S.eagleFact&&dist(P.x,P.y,E.x,E.y)<190){
+        S.eagleFact=true;S.score+=10;
+        showWildlifeCard("Bald Eagle","eagle",
+          "Bald eagles nest in tall snags along Yellowstone's rivers and lakes, dropping to snatch trout with eyesight several times sharper than yours. That white head takes about five years to grow in. (+10)");
+      }
+      if(dist(P.x,P.y,E.x,E.y)<75){
+        E.state="flying";E.a=Math.atan2(E.y-P.y,E.x-P.x)-0.4;
+      }
+    } else {
+      E.t+=dt;
+      E.x+=Math.cos(E.a)*180*dt;E.y+=Math.sin(E.a)*180*dt-30*dt;
+      if(E.t>5)S.eagle=null;
+    }
+  }
+
+  // --- trumpeter swans glide their pond
+  for(const sw of S.swans){
+    sw.x+=sw.dir*22*dt;
+    if(sw.x<2460){sw.x=2460;sw.dir=1;}
+    if(sw.x>2650){sw.x=2650;sw.dir=-1;}
+  }
+  if(!S.swanFact){
+    for(const sw of S.swans){
+      if(dist(P.x,P.y,sw.x,3150+Math.sin(sw.x*0.04)*14)<170){
+        S.swanFact=true;S.score+=10;
+        showWildlifeCard("Trumpeter Swans","swan",
+          "Trumpeter swans are North America's heaviest flying birds — up to 30 pounds on an 8-foot wingspan. Nearly extinct in the 1930s, they held on in the Yellowstone region's waters and slowly trumpeted their way back. (+10)");
+        break;
+      }
     }
   }
 
@@ -623,47 +1374,103 @@ function update(dt){
     if(G.active>0){
       G.active-=dt;
       if(Math.random()<0.5)puff(G.x+rand(-8,8),G.y-rand(0,G.h*0.8),"#f2efe4",1);
+    } else if(Math.random()<0.05){
+      puff(G.x+rand(-5,5),G.y-10,"#eef0e6",1);   // resting wisp from the vent
     }
   }
+
+  // --- every named feature gets a one-time description box
+  for(const pl of S.pools){
+    if(pl.name&&!S.thermalFacts[pl.name]&&dist(P.x,P.y,pl.x,pl.y)<pl.r+95){
+      S.thermalFacts[pl.name]=true;S.score+=10;
+      showCard("Thermal Feature",pl.name,pl.desc+" (+10)",pl.mud?"mudpot":"spring|"+(pl.look||"paleblue"));
+      break;
+    }
+  }
+  for(const G of S.geysers){
+    if(!S.thermalFacts[G.name]&&dist(P.x,P.y,G.x,G.y)<170){
+      S.thermalFacts[G.name]=true;S.score+=10;
+      showCard("Thermal Feature",G.name,G.desc+" (+10)","geyser|"+(G.style||"mound"));
+      break;
+    }
+  }
+  for(const f of FALLS){
+    if(!S.thermalFacts[f.name]&&dist(P.x,P.y,riverX(f.y),f.y)<180){
+      S.thermalFacts[f.name]=true;S.score+=10;
+      showCard("Waterfall",f.name,f.desc+" (+10)","falls");
+      break;
+    }
+  }
+  // mist off the Upper and Lower Falls
+  if(Math.random()<0.3)puff(riverX(CANYON.upper)+rand(-45,45), CANYON.upper+rand(-16,4), "#f2f5f2", 1);
+  if(Math.random()<0.45)puff(riverX(CANYON.lower)+rand(-50,50), CANYON.lower+rand(-20,4), "#f2f5f2", 1);
+
   // ambient steam from pools (brown spatter over the mud pots)
   if(Math.random()<0.3){
     const pl=S.pools[Math.floor(Math.random()*S.pools.length)];
     puff(pl.x+rand(-pl.r*.5,pl.r*.5), pl.y+rand(-pl.r*.4,pl.r*.4), pl.mud?"#b59a7d":"#eef0e6", 1);
   }
 
-  // --- the grizzly (guards the upper basin — standing still won't bluff a bear)
-  if(S.bear){
-    const b=S.bear;
+  // --- the grizzlies (won't bluff — standing still won't turn one)
+  for(const b of S.bears){
+    const box=b.x, boy=b.y;      // bears know better than to walk the sinter
     b.cool=Math.max(0,b.cool-dt);
+    b.giveUpT=Math.max(0,b.giveUpT-dt);
     S.bearHintT=Math.max(0,S.bearHintT-dt);
     const dp=dist(b.x,b.y,P.x,P.y)||1;
     const toBear=Math.atan2(b.y-P.y,b.x-P.x);
-    const chargingAtBear = wantSprint && P.speed>60 && dp<270 && Math.abs(angDiff(toBear-P.a))<0.8;
-    if(chargingAtBear||b.fleeT>0){
-      if(chargingAtBear&&b.fleeT<=0){S.score+=20;toast("🦬 A ton of charging bison changes the bear's mind — for now. (+20)");}
-      b.fleeT=Math.max(b.fleeT,1.2); b.state="flee";
+    // only a wall of three bison facing it — or a Herd Call stampede — turns a grizzly
+    const facingBear=Math.abs(angDiff(toBear-P.a))<0.9;
+    const herdWall=facingBear&&S.companions.length>=2&&dp<340;
+    if(herdWall&&b.fleeT<=0&&b.cool<=0&&b.giveUpT<=0){
+      b.cool=4;
+      b.scares++;
+      if(b.scares>=2){
+        b.scares=0; b.fleeT=2.2; b.giveUpT=26;
+        S.score+=35;
+        toast("🦬🦬🦬 Scared off twice, the grizzly finally gives up and lumbers away for good! (+35)");
+      } else {
+        b.fleeT=1.6;
+        S.score+=15;
+        toast("🦬🦬 The grizzly gives ground — but he'll be back. One more wall of three will drive him off for good! (+15)");
+      }
+    }
+    if(b.fleeT>0){
+      b.state="flee";
       b.a=toBear;
       b.x+=Math.cos(b.a)*260*dt; b.y+=Math.sin(b.a)*260*dt;
-    } else if(dp<330 && dist(b.x,b.y,b.hx,b.hy)<680){
+    } else if(b.giveUpT<=0 && dp<b.detect && dist(b.x,b.y,b.hx,b.hy)<b.scent){
       b.state="chase";
       if(S.bearHintT<=0){
         S.bearHintT=18;
-        toast("🐻 GRIZZLY! Standing your ground won't bluff a bear — charge it or run for open ground!");
+        toast("🐻 GRIZZLY! It takes THREE bison facing it shoulder to shoulder — or a Herd Call stampede — to turn a bear. Otherwise RUN!");
       }
       b.a=Math.atan2(P.y-b.y,P.x-b.x);
-      b.x+=Math.cos(b.a)*205*dt; b.y+=Math.sin(b.a)*205*dt;
-      if(dp<52&&b.cool<=0){
-        b.cool=3.5; P.energy-=20; P.hurtT=1.0; S.shakeT=0.5;
+      b.x+=Math.cos(b.a)*b.spd*dt; b.y+=Math.sin(b.a)*b.spd*dt;
+      if(dp<b.hitR&&b.cool<=0){
+        b.cool=b.swatCd; P.energy-=b.dmg; P.hurtT=1.0; S.shakeT=0.5;
         P.x+=Math.cos(b.a)*70; P.y+=Math.sin(b.a)*70;
-        toast("🐻 The grizzly swats you hard! (−20 energy)");
+        S.wolfBites++;
+        if(S.wolfBites>=4){
+          if(S.spareHearts>0){
+            S.spareHearts--;S.wolfBites=3;
+            toast("💗 The hidden heart burns bright — the grizzly's killing blow glances off!");
+          } else loseGame("bear");
+        }
+        else if(S.wolfBites===3)toast("🐻 BADLY WOUNDED — ONE MORE STRIKE WILL BRING YOU DOWN! (−20 energy)");
+        else toast("🐻 The grizzly swats you hard! Wound "+S.wolfBites+" of 3 — a fourth strike is the end. (−20 energy)");
       }
     } else {
       b.state="idle";
+      if(dp>900)b.scares=0;   // out of the encounter — a fresh confrontation starts over
       b.wt-=dt;
       if(b.wt<=0){b.wt=rand(2,4);b.a=rand(0,Math.PI*2);}
       const dh=dist(b.x,b.y,b.hx,b.hy);
       if(dh>120){b.a=Math.atan2(b.hy-b.y,b.hx-b.x);}
       b.x+=Math.cos(b.a)*45*dt; b.y+=Math.sin(b.a)*45*dt;
+    }
+    for(const pl of S.pools){
+      if(dist(b.x,b.y,pl.x,pl.y)<pl.r*1.15+14){b.x=box;b.y=boy;break;}
     }
     b.x=clamp(b.x,40,WORLD.w-40); b.y=clamp(b.y,40,WORLD.h-40);
   }
@@ -673,16 +1480,52 @@ function update(dt){
     p.t+=dt; p.y-=28*dt; p.x+=Math.sin(p.t*3+p.seed)*10*dt;
     if(p.t>p.life)S.puffs.splice(i,1);
   }
+  // cloud shadows drift east on the wind
+  for(const c of S.clouds){
+    c.x+=c.vx*dt;
+    if(c.x-c.rx>WORLD.w)c.x=-c.rx;
+  }
+  // hoofprints fade
+  for(let i=S.tracks.length-1;i>=0;i--){
+    S.tracks[i].t+=dt;
+    if(S.tracks[i].t>9)S.tracks.splice(i,1);
+  }
+  // ravens on the wind
+  for(let i=S.birds.length-1;i>=0;i--){
+    const b=S.birds[i];
+    b.x+=b.vx*dt; b.y+=Math.sin(S.t*0.7+b.seed)*8*dt;
+    if(Math.abs(b.x-P.x)>1200)S.birds.splice(i,1);
+  }
+  if(S.birds.length<2&&Math.random()<0.004){
+    const dir=Math.random()<0.5?1:-1;
+    S.birds.push({x:P.x-dir*950,y:P.y+rand(-380,380),vx:dir*rand(95,135),seed:rand(0,6)});
+  }
 
-  // --- checkpoints
+  // --- checkpoints: reached mid-stride, no pause
   const cp=CHECKPOINTS[S.cpIndex];
   if(cp&&dist(P.x,P.y,cp.x,cp.y)<cp.r){
     S.score+=100;
-    showFact(cp);
+    const idx=S.cpIndex+1;
+    const wasLast=S.cpIndex===CHECKPOINTS.length-1;
+    S.cpIndex++;
+    if(wasLast){winGame();}
+    else{
+      showFact(cp,idx);
+      addCompanion();
+      toast("🦬 Another bison joins your band — "+(S.companions.length+1)+" strong!");
+      $("#objective-text").textContent=cp.next||"";
+      if(S.cpIndex===5)S.promoAt=S.t+7;   // halfway promo, after the banner settles
+    }
+  }
+
+  // --- halfway promo (once per session)
+  if(S.promoAt&&S.t>=S.promoAt&&!S.over){
+    S.promoAt=0;
+    showPromo();
   }
 
   // --- fail state
-  if(P.energy<=0){P.energy=0;loseGame();}
+  if(P.energy<=0){P.energy=0;loseGame("exhausted");}
 
   S.shakeT=Math.max(0,S.shakeT-dt);
   updateHUD();
@@ -695,8 +1538,25 @@ function puff(x,y,color,n){
 /* ---------------- HUD ---------------- */
 function updateHUD(){
   $("#energy-fill").style.width=S.player.energy+"%";
-  $("#stamina-fill").style.width=S.player.stamina+"%";
+
   $("#hud-score").textContent=S.score;
+  document.querySelectorAll("#strike-pips i:not(.sp)").forEach((p,i)=>p.classList.toggle("hit",i<S.wolfBites));
+  document.querySelectorAll("#strike-pips i.sp").forEach((p,i)=>p.classList.toggle("own",i<S.spareHearts));
+  {
+    const hp=$("#herd-pips");
+    if(hp.childElementCount!==S.herdCalls){
+      hp.innerHTML="";
+      for(let i=0;i<S.herdCalls;i++){const d=document.createElement("i");d.className="herd on";hp.appendChild(d);}
+    }
+  }
+  const lickOk=S.wolfBites>0&&S.healCd<=0&&S.healT<=0&&S.companions.length>0&&!S.over;
+  {
+    const hd=$("#heal-pips").firstElementChild;
+    hd.className="heal"+(lickOk?" ready":(S.wolfBites>0?" cd":""));
+  }
+  const lickState=lickOk?"1":(S.wolfBites>0?"cd":"0");
+  const lb=$("#lick-btn");
+  if(lb.dataset.ok!==lickState)lb.dataset.ok=lickState;
   const cp=CHECKPOINTS[S.cpIndex];
   if(cp){
     const d=Math.round(dist(S.player.x,S.player.y,cp.x,cp.y)/10);
@@ -704,27 +1564,78 @@ function updateHUD(){
   } else $("#hud-dist").textContent="—";
 }
 
-/* ---------------- Fact card / progression ---------------- */
-function showFact(cp){
-  S.paused=true;
-  $("#fact-eyebrow").textContent="Waypoint "+(S.cpIndex+1)+" of "+CHECKPOINTS.length;
-  $("#fact-title").textContent=cp.title;
-  $("#fact-text").textContent=cp.fact;
-  $("#fact-btn").textContent=cp.next?"Onward — "+cp.next:"Join the herd";
-  $("#fact-card").classList.remove("hidden");
-  $("#fact-btn").focus();
+/* ---------------- Fact banner: waypoints & wildlife, play continues ---------------- */
+// Animal avatars drawn by the game's own art, framed in the banner.
+// s = zoom, ax/ay = the point in the drawing's own coordinates to center on.
+const AVATARS={
+  bison:    {s:1.75, fn:()=>bison({x:0,y:0,a:-0.5,speed:0,swim:false,grazeT:0,hurtT:0,bob:1,nearTuft:null})},
+  moose:    {s:1.55, fn:()=>moose({x:0,y:0,a:-0.5,state:"idle"})},
+  otter:    {s:2.6,  fn:()=>otter({x:0,y:0,dir:1,wig:1})},
+  pronghorn:{s:2.3,  fn:()=>pronghornDraw({x:0,y:0,a:-0.5})},
+  elk:      {s:1.75, fn:()=>elkDraw({x:0,y:0,a:-0.5,bull:true})},
+  eagle:    {s:1.8, ay:-5, fn:()=>eagleDraw({x:0,y:0,state:"perched"})},
+  swan:     {s:2.5, ay:1327, fn:()=>swanDraw({x:0,dir:1})},
+  bisonhead:{s:1.5, ay:1, fn:()=>bisonHead()},
+  wolf:     {s:1.9, fn:()=>wolf({x:0,y:0,a:-0.4,state:"chase",hx:0,hy:0})},
+  heal:     {s:2.2, ay:-1, fn:()=>healIcon()},
+  spring: {s:0.85, fn:v=>poolDraw({x:0,y:0,r:50,look:v})},
+  mudpot: {s:1.45, fn:()=>poolDraw({x:0,y:0,r:34,mud:true})},
+  geyser: {s:0.5,  ay:-58, fn:v=>geyserDraw({x:0,y:0,active:1,dur:2,h:130,style:v})},
+  falls:  {s:1.0,  fn:fallsAvatar}
+};
+function drawAvatarOn(c,key){
+  const g=c.getContext("2d");
+  g.setTransform(1,0,0,1,0,0);
+  g.clearRect(0,0,c.width,c.height);
+  const [base,variant]=String(key).split("|");
+  const a=AVATARS[base];
+  if(!a)return;
+  const sc=a.s*(c.width/132);
+  g.setTransform(sc,0,0,sc, c.width/2-(a.ax||0)*sc, c.height/2-(a.ay||0)*sc);
+  const old=ctx; ctx=g;
+  try{a.fn(variant);}finally{ctx=old;}
 }
-$("#fact-btn").addEventListener("click",()=>{
+function drawAvatar(key){
+  drawAvatarOn(document.getElementById("fact-avatar"),key);
+}
+let cardTimer=null, cardQueue=[], cardShownAt=0;
+function showCard(eyebrow,title,text,species){
+  const el=$("#fact-card");
+  // if a fresh card is up, queue this one rather than clobbering it
+  if(!el.classList.contains("hidden")&&performance.now()-cardShownAt<3500){
+    cardQueue.push([eyebrow,title,text,species]);
+    return;
+  }
+  cardShownAt=performance.now();
+  $("#fact-eyebrow").textContent=eyebrow;
+  $("#fact-title").textContent=title;
+  $("#fact-text").textContent=text;
+  drawAvatar(species);
+  el.classList.add("hidden");         // restart the slide-in animation
+  void el.offsetWidth;
+  el.classList.remove("hidden");
+  clearTimeout(cardTimer);
+  cardTimer=setTimeout(hideCard,9000);
+}
+function hideCard(){
+  clearTimeout(cardTimer);
   $("#fact-card").classList.add("hidden");
-  const wasLast=S.cpIndex===CHECKPOINTS.length-1;
-  S.cpIndex++;
-  if(wasLast){winGame();return;}
-  $("#objective-text").textContent=CHECKPOINTS[S.cpIndex-1].next||"";
-  S.paused=false;
-});
+  if(cardQueue.length){
+    const n=cardQueue.shift();
+    cardTimer=setTimeout(()=>showCard(n[0],n[1],n[2],n[3]),400);
+  }
+}
+function showFact(cp,idx){
+  showCard("Waypoint "+idx+" of "+CHECKPOINTS.length, cp.title, cp.fact, "bison");
+}
+function showWildlifeCard(title,species,text){
+  showCard("Wildlife Encounter", title, text, species);
+}
+$("#fact-btn").addEventListener("click",hideCard);
+$("#fact-card").addEventListener("click",hideCard);
 
 /* ---------------- Rendering ---------------- */
-const cv=$("#stage"), ctx=cv.getContext("2d");
+const cv=$("#stage"); let ctx=cv.getContext("2d");
 let VW=950; // view width in world units
 function resize(){
   const r=cv.getBoundingClientRect(), dpr=Math.min(devicePixelRatio||1,2);
@@ -748,56 +1659,206 @@ function render(){
 
   // ---- terrain base
   ctx.fillStyle="#7f9662"; ctx.fillRect(L,T,VW,vh);
+  for(const m of S.mottle){
+    if(m.x+m.rx<L||m.x-m.rx>R||m.y+m.ry<T||m.y-m.ry>B)continue;
+    ctx.fillStyle=m.c;
+    ctx.beginPath();ctx.ellipse(m.x,m.y,m.rx,m.ry,0,0,7);ctx.fill();
+  }
   // valley meadows (lighter)
-  meadow(3100,650,700,420,"#93a768");
-  meadow(1850,1400,760,460,"#98ab6b");
-  meadow(470,2300,520,340,"#a3b070");
+  meadow(4250,1250,1150,600,"#93a768");
+  meadow(2650,2980,650,450,"#98ab6b");
+  meadow(650,4450,700,400,"#a3b070");
+  // mountain country: the Absarokas along the east, Washburn over the canyon,
+  // Specimen Ridge above Lamar, the Gallatins in the northwest
+  ridge(5520,1400,520,1.25,150,true);
+  ridge(5560,2400,560,1.35,160,true);
+  ridge(5480,3400,500,1.3,150,true);
+  ridge(3280,1980,330,0.5,110,true);
+  ridge(3950,1680,360,0.25,95,false);
+  ridge(650,700,420,0.9,130,true);
+  ridge(4700,300,380,0.15,100,false);
+  // marsh pond off Hayden Valley — trumpeter swan water
+  ctx.fillStyle="#3f7d8c";
+  ctx.beginPath();ctx.ellipse(2550,3150,100,58,0,0,7);ctx.fill();
+  ctx.fillStyle="#4f93a2";
+  ctx.beginPath();ctx.ellipse(2550,3150,72,40,0,0,7);ctx.fill();
+  ctx.strokeStyle="#5e7d3e";ctx.lineWidth=2;
+  for(let a2=0;a2<6.28;a2+=0.45){
+    const rx2=2550+Math.cos(a2)*104, ry2=3150+Math.sin(a2)*62;
+    ctx.beginPath();ctx.moveTo(rx2,ry2+3);ctx.lineTo(rx2+2,ry2-8);ctx.stroke();
+  }
+  // pale shoreline sand
+  ctx.fillStyle="#cfc4a2";
+  ctx.beginPath();ctx.ellipse(3430,4150,440,580,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(2560,4330,278,216,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(3560,4780,164,276,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(3260,4800,134,256,0,0,7);ctx.fill();
+  // Yellowstone Lake — true position and footprint: West Thumb and the southern arms
+  ctx.fillStyle="#1d3f4c";
+  ctx.beginPath();ctx.ellipse(3430,4150,420,560,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(2560,4330,260,200,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(3560,4780,150,260,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(3260,4800,120,240,0,0,7);ctx.fill();
+  ctx.fillStyle="#24505f";
+  ctx.beginPath();ctx.ellipse(3430,4150,340,470,0,0,7);ctx.fill();
+  // Frank & Stevenson Islands
+  ctx.fillStyle="#8fa065";
+  ctx.beginPath();ctx.ellipse(3440,4040,55,34,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(3440,4315,70,44,0,0,7);ctx.fill();
   // thermal sinter apron (pale)
+  // sinter aprons: Norris basin (north of the road) + the Firehole corridor
   ctx.fillStyle="#d8cfb2";
-  ctx.beginPath();ctx.ellipse(880,2060,470,330,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(1950,2610,270,230,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(1520,3490,230,170,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(1230,3900,300,240,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(1090,4270,230,190,0,0,7);ctx.fill();
   ctx.fillStyle="#cfc3a1";
-  ctx.beginPath();ctx.ellipse(880,2060,340,240,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(1950,2610,195,165,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(1520,3490,165,120,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(1220,3900,220,175,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(1090,4270,165,135,0,0,7);ctx.fill();
 
-  // ---- river
-  drawBand(riverY,RIVER_HALF,"#3f7d8c",L,R);
-  drawBand(riverY,RIVER_HALF-16,"#4f93a2",L,R);
-  // ripples
-  ctx.strokeStyle="rgba(230,240,240,.35)";ctx.lineWidth=2;
-  for(let x=Math.floor(L/140)*140;x<R;x+=140){
-    const y=riverY(x)+Math.sin(S.t*1.5+x)*10;
-    ctx.beginPath();ctx.moveTo(x,y);ctx.quadraticCurveTo(x+22,y-6,x+44,y);ctx.stroke();
+  // ---- the Yellowstone River: north out of the lake, through Hayden, over the falls
+  {
+    const a=Math.max(T-40,60), b=Math.min(B+40,3790);
+    if(b>a){
+      drawBandV(riverX,RIVER_HALF,"#3f7d8c",a,b);
+      drawBandV(riverX,RIVER_HALF-16,"#4f93a2",a,b);
+    }
+  }
+  // the river mouth widens as it opens into Yellowstone Lake
+  if(B>3660&&T<3810){
+    drawBandV(riverX,96,"#3f7d8c",3700,3790);
+    drawBandV(riverX,110,"#3f7d8c",3745,3790);
+    drawBandV(riverX,80,"#4f93a2",3710,3790);
+  }
+  // gravel bars on the bends
+  for(const g of S.gravel){
+    if(g.y<T-60||g.y>B+60)continue;
+    const gx=riverX(g.y)+g.side*(RIVER_HALF-14);
+    ctx.fillStyle="#cdbd97";
+    ctx.beginPath();ctx.ellipse(gx,g.y,16,g.len*0.5,0,0,7);ctx.fill();
   }
 
-  // ---- road
-  drawBand(roadY,ROAD_HALF,"#5c5f58",L,R);
-  ctx.strokeStyle="rgba(232,215,160,.8)";ctx.lineWidth=3;ctx.setLineDash([26,26]);
-  ctx.beginPath();
-  for(let x=L;x<=R;x+=24){const y=roadY(x);x===L?ctx.moveTo(x,y):ctx.lineTo(x,y);}
-  ctx.stroke();ctx.setLineDash([]);
+  // ---- Grand Canyon of the Yellowstone
+  if(B>CANYON.y1-80&&T<CANYON.y2+80){
+    const a=Math.max(T-20,CANYON.y1), b=Math.min(B+20,CANYON.y2);
+    if(b>a){
+      drawBandV(riverX,168,"#d8a558",a,b);
+      drawBandV(riverX,128,"#c98a4a",a,b);
+      drawBandV(riverX,94,"#a9683a",a,b);
+      // dark rim lip — the gorge reads as a drop, not a stripe
+      drawBandV(riverX,RIVER_HALF+9,"rgba(45,28,14,.38)",a,b);
+      drawBandV(riverX,RIVER_HALF-4,"#3a7482",a,b);
+      drawBandV(riverX,RIVER_HALF-20,"#4f93a2",a,b);
+      ctx.fillStyle="rgba(235,246,246,.22)";
+      drawBandFillV(riverX,RIVER_HALF-14,a,b);
+    }
+    // tapered canyon mouths: the gorge opens and closes instead of starting square
+    const hws=[138,112,92];
+    for(const dir of [-1,1]){
+      const ye=dir<0?CANYON.y1:CANYON.y2;
+      for(let k=0;k<3;k++){
+        const y0=ye+dir*k*46, y1=ye+dir*(k+1)*46;
+        const t0=Math.min(y0,y1), t1=Math.max(y0,y1);
+        if(t1<T-40||t0>B+40)continue;
+        drawBandV(riverX,hws[k],k===0?"#d8a558":(k===1?"#c98a4a":"#b98a5c"),t0,t1);
+        drawBandV(riverX,RIVER_HALF,"#3f7d8c",t0,t1);
+        drawBandV(riverX,RIVER_HALF-16,"#4f93a2",t0,t1);
+      }
+    }
+    fallsDraw(CANYON.upper,22);
+    fallsDraw(CANYON.lower,32);
+  }
+
+  // ripples
+  ctx.strokeStyle="rgba(230,240,240,.35)";ctx.lineWidth=2;
+  {
+    const drift=(S.t*30)%140;
+    for(let y=Math.floor(Math.max(T,100)/140)*140;y<Math.min(B,3720)+140;y+=140){
+      const yd=y-drift;
+      if(yd<80||yd>3690)continue;
+      const x=riverX(yd)+Math.sin(S.t*1.5+y)*10;
+      ctx.beginPath();ctx.moveTo(x,yd);ctx.quadraticCurveTo(x+6,yd+22,x,yd+44);ctx.stroke();
+    }
+  }
+  // otters, sleek in the current
+  for(const o of S.otters){
+    if(o.x>L-40&&o.x<R+40&&o.y>T-40&&o.y<B+40)otter(o);
+  }
+  // swans on the pond
+  for(const sw of S.swans){
+    if(sw.x>L-40&&sw.x<R+40)swanDraw(sw);
+  }
+
+  // ---- the Norris–Canyon road (the Grand Loop stretch the migration crosses)
+  {
+    const a=Math.max(L,ROAD_X1), b=Math.min(R,ROAD_X2);
+    if(b>a){
+      drawBand(roadY,ROAD_HALF,"#5c5f58",a,b);
+      ctx.strokeStyle="rgba(232,215,160,.8)";ctx.lineWidth=3;ctx.setLineDash([26,26]);
+      const d0=Math.max(ROAD_X1,Math.floor(a/52)*52);
+      ctx.beginPath();
+      for(let x=d0;x<=b;x+=26){const y=roadY(x);x===d0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+      ctx.stroke();ctx.setLineDash([]);
+      // real endpoints: Norris Junction (west) and Canyon Village (east, at the rim)
+      ctx.fillStyle="#6b6e66";
+      ctx.beginPath();ctx.ellipse(ROAD_X1+16,roadY(ROAD_X1+16),48,27,0,0,7);ctx.fill();
+      ctx.beginPath();ctx.ellipse(ROAD_X2-16,roadY(ROAD_X2-16),48,27,0,0,7);ctx.fill();
+      // Canyon Village cabins
+      ctx.fillStyle="#7a5c3e";
+      rr(ROAD_X2-44,roadY(ROAD_X2-16)-62,30,20,4);ctx.fill();
+      rr(ROAD_X2-2, roadY(ROAD_X2-16)-56,26,18,4);ctx.fill();
+      // Norris Museum cabin
+      ctx.fillStyle="#8d6b48";
+      rr(ROAD_X1-14,roadY(ROAD_X1+16)-58,28,18,4);ctx.fill();
+    }
+  }
 
   // ---- thermal pools (prismatic rings)
   for(const pl of S.pools){
-    if(pl.x<L-150||pl.x>R+150||pl.y<T-150||pl.y>B+150)continue;
-    if(pl.mud){
-      ring(pl.x,pl.y,pl.r*1.2,"#8a6b4f");
-      ring(pl.x,pl.y,pl.r*0.85,"#6e5138");
-      ring(pl.x,pl.y,pl.r*0.5,"#57402c");
-      // plopping bubble
-      const bub=(S.t*1.3+pl.x)%1;
-      if(bub<0.5){ctx.fillStyle="#7d5f42";ctx.beginPath();ctx.arc(pl.x+Math.sin(pl.y)*6,pl.y-2,pl.r*0.22*(0.5+bub),0,7);ctx.fill();}
-    } else {
-      ring(pl.x,pl.y,pl.r*1.25,"#d96c2c");
-      ring(pl.x,pl.y,pl.r*1.05,"#e8a93c");
-      ring(pl.x,pl.y,pl.r*0.85,"#4f9e63");
-      ring(pl.x,pl.y,pl.r*0.62,"#1e8e86");
-      ring(pl.x,pl.y,pl.r*0.4,"#2b5d73");
-    }
+    if(pl.x<L-270||pl.x>R+270||pl.y<T-270||pl.y>B+270)continue;
+    poolDraw(pl);
+  }
+  // boardwalks — Yellowstone's signature basin trails
+  boardwalk([[1420,3540],[1500,3510],[1580,3500],[1645,3468]]);   // Fountain Paint Pot loop
+  boardwalk([[1330,4070],[1310,3970],[1320,3860]]);               // Midway, along Prismatic's east side
+  boardwalk([[1080,4360],[1140,4330],[1200,4340]]);               // Old Faithful viewing
+  // low ground mist breathing over the basins
+  for(const ms of S.mists){
+    if(ms.cx+ms.r<L||ms.cx-ms.r>R||ms.cy+ms.r<T||ms.cy-ms.r>B)continue;
+    const mx=ms.cx+Math.sin(S.t*0.15+ms.ph)*60, my=ms.cy+Math.cos(S.t*0.11+ms.ph)*40;
+    ctx.fillStyle="rgba(240,245,242,.10)";
+    ctx.beginPath();ctx.ellipse(mx,my,ms.r,ms.r*0.55,0,0,7);ctx.fill();
+    ctx.beginPath();ctx.ellipse(mx+ms.r*0.5,my+14,ms.r*0.6,ms.r*0.35,0,0,7);ctx.fill();
   }
 
   // ---- grass tufts
   for(const g of S.grass){
     if(g.eaten||g.x<L-40||g.x>R+40||g.y<T-40||g.y>B+40)continue;
     tuft(g.x,g.y,g.s);
+  }
+  // sagebrush flats & summer wildflowers
+  for(const sb of S.sage){
+    if(sb.x<L-20||sb.x>R+20||sb.y<T-20||sb.y>B+20)continue;
+    ctx.fillStyle="#8a9878";
+    ctx.beginPath();ctx.ellipse(sb.x,sb.y,7*sb.s,4.5*sb.s,0,0,7);ctx.fill();
+    ctx.fillStyle="#a4b18e";
+    ctx.beginPath();ctx.ellipse(sb.x-2*sb.s,sb.y-1.5*sb.s,3.5*sb.s,2.2*sb.s,0,0,7);ctx.fill();
+  }
+  for(const f of S.flowers){
+    if(f.x<L||f.x>R||f.y<T||f.y>B)continue;
+    ctx.fillStyle=f.c;
+    ctx.beginPath();ctx.arc(f.x,f.y,2.2,0,7);ctx.fill();
+  }
+  // hoofprints on the trail behind you
+  for(const tk of S.tracks){
+    if(tk.x<L||tk.x>R||tk.y<T||tk.y>B)continue;
+    ctx.fillStyle="rgba(40,32,22,"+(0.22*(1-tk.t/9)).toFixed(3)+")";
+    ctx.save();ctx.translate(tk.x,tk.y);ctx.rotate(tk.a);
+    ctx.beginPath();ctx.ellipse(0,-5,3.4,2.4,0,0,7);ctx.fill();
+    ctx.beginPath();ctx.ellipse(0, 5,3.4,2.4,0,0,7);ctx.fill();
+    ctx.restore();
   }
 
   // ---- checkpoint marker (current only)
@@ -811,6 +1872,18 @@ function render(){
     ctx.beginPath();ctx.moveTo(cp.x,cp.y);ctx.lineTo(cp.x,cp.y-56);ctx.stroke();
     ctx.fillStyle="#d96c2c";
     ctx.beginPath();ctx.moveTo(cp.x,cp.y-56);ctx.lineTo(cp.x+34,cp.y-47);ctx.lineTo(cp.x,cp.y-38);ctx.closePath();ctx.fill();
+  }
+
+  // ---- hidden herd token: a small glowing bison-head medallion
+  if(S.herdToken&&!S.herdToken.taken&&S.herdToken.x>L-70&&S.herdToken.x<R+70&&S.herdToken.y>T-70&&S.herdToken.y<B+70){
+    const kp=1+0.12*Math.sin(S.t*4+S.herdToken.x);
+    ctx.fillStyle="rgba(0,0,0,.18)";
+    ctx.beginPath();ctx.ellipse(S.herdToken.x,S.herdToken.y+5,20,8,0,0,7);ctx.fill();
+    ctx.strokeStyle="rgba(232,169,60,.9)";ctx.lineWidth=3;
+    ctx.beginPath();ctx.arc(S.herdToken.x,S.herdToken.y,22*kp,0,7);ctx.stroke();
+    ctx.save();ctx.translate(S.herdToken.x,S.herdToken.y);ctx.scale(0.62,0.62);
+    bisonHead();
+    ctx.restore();
   }
 
   // ---- hidden relic (only drawn if you find the grove)
@@ -831,32 +1904,47 @@ function render(){
     ctx.beginPath();ctx.arc(S.relic.x+3,S.relic.y-2,1.8,0,7);ctx.fill();
   }
 
-  // ---- geyser cones + eruptions
+  // hidden spare hearts, pulsing where they lie
+  for(const h of S.hearts){
+    if(h.taken)continue;
+    if(h.x<L-60||h.x>R+60||h.y<T-60||h.y>B+60)continue;
+    const pu=1+0.12*Math.sin(S.t*4+h.x);
+    ctx.strokeStyle="rgba(233,142,160,.9)";ctx.lineWidth=3;
+    ctx.beginPath();ctx.arc(h.x,h.y,20*pu,0,7);ctx.stroke();
+    ctx.save();ctx.translate(h.x,h.y);ctx.scale(0.7,0.7);
+    healIcon();
+    ctx.restore();
+  }
+
+  // ---- geyser mounds + eruptions
   for(const G of S.geysers){
-    if(G.x<L-120||G.x>R+120||G.y<T-250||G.y>B+120)continue;
-    ctx.fillStyle="#c9bd9c";
-    ctx.beginPath();ctx.ellipse(G.x,G.y,34,20,0,0,7);ctx.fill();
-    ctx.fillStyle="#8e8266";
-    ctx.beginPath();ctx.ellipse(G.x,G.y-4,14,8,0,0,7);ctx.fill();
-    if(G.active>0){
-      ctx.fillStyle="rgba(242,239,228,.85)";
-      const h=G.h+Math.sin(S.t*9)*G.h*0.12;
-      ctx.beginPath();
-      ctx.moveTo(G.x-8,G.y-6);
-      ctx.quadraticCurveTo(G.x-16,G.y-h*0.6,G.x-24,G.y-h);
-      ctx.lineTo(G.x+24,G.y-h);
-      ctx.quadraticCurveTo(G.x+16,G.y-h*0.6,G.x+8,G.y-6);
-      ctx.closePath();ctx.fill();
-    }
+    if(G.x<L-120||G.x>R+120||G.y<T-(G.h+80)||G.y>B+120)continue;
+    geyserDraw(G);
+  }
+
+  // drifting cloud shadows
+  for(const cl of S.clouds){
+    if(cl.x+cl.rx<L||cl.x-cl.rx>R||cl.y+cl.ry<T||cl.y-cl.ry>B)continue;
+    ctx.fillStyle="rgba(20,35,30,.07)";
+    ctx.beginPath();ctx.ellipse(cl.x,cl.y,cl.rx,cl.ry,0,0,7);ctx.fill();
+    ctx.beginPath();ctx.ellipse(cl.x+cl.rx*0.4,cl.y+cl.ry*0.3,cl.rx*0.6,cl.ry*0.55,0,0,7);ctx.fill();
   }
 
   // ---- y-sorted entities: trees, cars, wolves, player
   const ents=[];
   for(const tr of S.trees) if(tr.x>L-60&&tr.x<R+60&&tr.y>T-80&&tr.y<B+80) ents.push({y:tr.y,draw:()=>tree(tr)});
+  for(const sn of S.snags) if(sn.x>L-40&&sn.x<R+40&&sn.y>T-60&&sn.y<B+40) ents.push({y:sn.y,draw:()=>snag(sn)});
   for(const c of S.cars) if(c.x>L-80&&c.x<R+80) ents.push({y:c.y,draw:()=>car(c)});
   for(const w of S.wolves) if(w.x>L-60&&w.x<R+60&&w.y>T-60&&w.y<B+60) ents.push({y:w.y,draw:()=>wolf(w)});
-  if(S.bear&&S.bear.x>L-80&&S.bear.x<R+80&&S.bear.y>T-80&&S.bear.y<B+80) ents.push({y:S.bear.y,draw:()=>bear(S.bear)});
+  for(const b0 of S.bears) if(b0.x>L-80&&b0.x<R+80&&b0.y>T-80&&b0.y<B+80) ents.push({y:b0.y,draw:()=>bear(b0)});
   for(const h of S.herd) if(h.x>L-80&&h.x<R+80&&h.y>T-80&&h.y<B+80) ents.push({y:h.y,draw:()=>herdBison(h)});
+  for(const c of S.companions) if(c.x>L-80&&c.x<R+80&&c.y>T-80&&c.y<B+80) ents.push({y:c.y,draw:()=>herdBison(c)});
+  if(S.moose&&S.moose.x>L-80&&S.moose.x<R+80&&S.moose.y>T-80&&S.moose.y<B+80) ents.push({y:S.moose.y,draw:()=>moose(S.moose)});
+  if(S.blackbear&&S.blackbear.x>L-70&&S.blackbear.x<R+70&&S.blackbear.y>T-70&&S.blackbear.y<B+70) ents.push({y:S.blackbear.y,draw:()=>blackBear(S.blackbear)});
+  for(const c of S.cubs) if(c.x>L-50&&c.x<R+50&&c.y>T-50&&c.y<B+50) ents.push({y:c.y,draw:()=>cub(c)});
+  for(const p of S.pronghorn) if(p.x>L-60&&p.x<R+60&&p.y>T-60&&p.y<B+60) ents.push({y:p.y,draw:()=>pronghornDraw(p)});
+  for(const e of S.elk) if(e.x>L-60&&e.x<R+60&&e.y>T-60&&e.y<B+60) ents.push({y:e.y,draw:()=>elkDraw(e)});
+  if(S.eagle&&S.eagle.x>L-80&&S.eagle.x<R+80&&S.eagle.y>T-100&&S.eagle.y<B+80) ents.push({y:S.eagle.y,draw:()=>eagleDraw(S.eagle)});
   ents.push({y:P.y,draw:()=>bison(P)});
   ents.sort((a,b)=>a.y-b.y);
   for(const e of ents)e.draw();
@@ -879,7 +1967,7 @@ function render(){
   ctx.font="600 16px Oswald, sans-serif";ctx.textAlign="center";
   for(const f of S.floaties){
     const a=1-f.t/1.4;
-    ctx.fillStyle="rgba(227,200,90,"+a.toFixed(2)+")";
+    ctx.fillStyle="rgba("+(f.rgb||"227,200,90")+","+a.toFixed(2)+")";
     ctx.strokeStyle="rgba(34,48,43,"+(a*0.8).toFixed(2)+")";ctx.lineWidth=3;
     ctx.strokeText(f.txt,f.x,f.y);
     ctx.fillText(f.txt,f.x,f.y);
@@ -891,6 +1979,34 @@ function render(){
     ctx.fillStyle=hexA(p.color,a*0.6);
     ctx.beginPath();ctx.arc(p.x,p.y,p.r*(1+p.t*0.7),0,7);ctx.fill();
   }
+  // ravens on the wind, shadows sliding over the ground
+  for(const b of S.birds){
+    if(b.x<L-40||b.x>R+40||b.y<T-40||b.y>B+40)continue;
+    ctx.fillStyle="rgba(0,0,0,.10)";
+    ctx.beginPath();ctx.ellipse(b.x+16,b.y+30,7,2.4,0,0,7);ctx.fill();
+    const f=Math.sin(S.t*9+b.seed)*4;
+    ctx.strokeStyle="rgba(25,22,18,.85)";ctx.lineWidth=2.6;ctx.lineCap="round";
+    ctx.beginPath();
+    ctx.moveTo(b.x-9,b.y-3-f);ctx.quadraticCurveTo(b.x,b.y+3,b.x+9,b.y-3-f);
+    ctx.stroke();
+  }
+
+  // soft vignette
+  ctx.setTransform(1,0,0,1,0,0);
+  const vg=ctx.createRadialGradient(cv.width/2,cv.height/2,Math.min(cv.width,cv.height)*0.55,cv.width/2,cv.height/2,Math.max(cv.width,cv.height)*0.78);
+  vg.addColorStop(0,"rgba(0,0,0,0)");vg.addColorStop(1,"rgba(10,25,20,.22)");
+  ctx.fillStyle=vg;
+  ctx.fillRect(0,0,cv.width,cv.height);
+  // a gentle three-minute day: dawn gold, clear noon, golden evening, blue dusk
+  {
+    const day=(S.t%180)/180;
+    let tint=null;
+    if(day<0.15)tint="rgba(255,170,90,"+(0.12*(1-day/0.15)).toFixed(3)+")";
+    else if(day>0.55&&day<0.8)tint="rgba(255,150,70,"+(0.10*Math.sin((day-0.55)/0.25*Math.PI)).toFixed(3)+")";
+    else if(day>=0.8)tint="rgba(40,60,110,"+(0.12*Math.sin((day-0.8)/0.2*Math.PI)).toFixed(3)+")";
+    if(tint){ctx.fillStyle=tint;ctx.fillRect(0,0,cv.width,cv.height);}
+  }
+  ctx.setTransform(scale,0,0,scale,-(cx-VW/2)*scale,-(cy-vh/2)*scale);
 
   // ---- waypoint arrow (screen space)
   if(cp){
@@ -915,15 +2031,232 @@ function render(){
 
 function meadow(x,y,rx,ry,fill){ctx.fillStyle=fill;ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,7);ctx.fill();}
 function ring(x,y,r,fill){ctx.fillStyle=fill;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();}
+function ridge(x,y,len,ang,w,snow){
+  ctx.save();ctx.translate(x,y);ctx.rotate(ang);
+  ctx.fillStyle="#6f7f57";
+  ctx.beginPath();ctx.ellipse(0,0,len,w,0,0,7);ctx.fill();
+  ctx.fillStyle="#8a976a";
+  ctx.beginPath();ctx.ellipse(0,w*0.28,len*0.94,w*0.62,0,0,7);ctx.fill();
+  ctx.fillStyle="#5b6b49";
+  ctx.beginPath();ctx.ellipse(0,-w*0.3,len*0.9,w*0.34,0,0,7);ctx.fill();
+  if(snow){
+    ctx.fillStyle="rgba(242,246,244,.85)";
+    ctx.beginPath();ctx.ellipse(0,-w*0.32,len*0.55,w*0.2,0,0,7);ctx.fill();
+  }
+  ctx.restore();
+}
+function boardwalk(pts){
+  ctx.lineCap="butt";
+  ctx.strokeStyle="#9c825c";ctx.lineWidth=10;
+  ctx.beginPath();
+  pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));
+  ctx.stroke();
+  ctx.strokeStyle="#7d6544";ctx.lineWidth=1.5;
+  for(let i=0;i<pts.length-1;i++){
+    const x1=pts[i][0],y1=pts[i][1],x2=pts[i+1][0],y2=pts[i+1][1];
+    const d=Math.hypot(x2-x1,y2-y1),n=Math.max(1,Math.floor(d/14));
+    const ux=(y2-y1)/d, uy=-(x2-x1)/d;
+    for(let k=0;k<=n;k++){
+      const t=k/n, px2=x1+(x2-x1)*t, py2=y1+(y2-y1)*t;
+      ctx.beginPath();ctx.moveTo(px2-ux*5,py2-uy*5);ctx.lineTo(px2+ux*5,py2+uy*5);ctx.stroke();
+    }
+  }
+  ctx.lineCap="round";
+}
+function snag(sn){
+  ctx.save();ctx.translate(sn.x,sn.y);ctx.rotate(sn.a);
+  ctx.fillStyle="rgba(0,0,0,.15)";
+  ctx.beginPath();ctx.ellipse(2,3,sn.h*0.35,3,0,0,7);ctx.fill();
+  ctx.strokeStyle="#9a938a";ctx.lineWidth=3.4;ctx.lineCap="round";
+  ctx.beginPath();ctx.moveTo(0,4);ctx.lineTo(0,-sn.h);ctx.stroke();
+  ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(0,-sn.h*0.55);ctx.lineTo(6,-sn.h*0.75);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(0,-sn.h*0.35);ctx.lineTo(-5,-sn.h*0.5);ctx.stroke();
+  ctx.restore();
+}
 function hexA(hex,a){
   const n=parseInt(hex.slice(1),16);
   return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;
 }
 function drawBand(fn,half,fill,L,R){
   ctx.fillStyle=fill;ctx.beginPath();
-  for(let x=L-20;x<=R+20;x+=26)  {const y=fn(x)-half; x===L-20?ctx.moveTo(x,y):ctx.lineTo(x,y);}
-  for(let x=R+20;x>=L-20;x-=26)  {ctx.lineTo(x,fn(x)+half);}
+  ctx.moveTo(L,fn(L)-half);
+  for(let x=Math.ceil(L/26)*26;x<R;x+=26)ctx.lineTo(x,fn(x)-half);
+  ctx.lineTo(R,fn(R)-half);
+  ctx.lineTo(R,fn(R)+half);
+  for(let x=Math.floor(R/26)*26;x>L;x-=26)ctx.lineTo(x,fn(x)+half);
+  ctx.lineTo(L,fn(L)+half);
   ctx.closePath();ctx.fill();
+}
+function roughCircle(x,y,r,seed){
+  ctx.beginPath();
+  for(let k=0;k<=14;k++){
+    const a=k/14*Math.PI*2;
+    const rr=r*(1+0.09*Math.sin(a*3+seed)+0.05*Math.sin(a*7+seed*1.7));
+    const px=x+Math.cos(a)*rr, py=y+Math.sin(a)*rr;
+    k?ctx.lineTo(px,py):ctx.moveTo(px,py);
+  }
+  ctx.closePath();
+}
+function poolDraw(pl){
+  if(pl.mud){
+    // pinkish clay, as the real paint pots weather
+    ctx.fillStyle="#c9a58f";
+    ctx.beginPath();ctx.ellipse(pl.x,pl.y,pl.r*1.15,pl.r*0.95,0,0,7);ctx.fill();
+    ctx.fillStyle="#a97f68";
+    ctx.beginPath();ctx.ellipse(pl.x,pl.y,pl.r*0.78,pl.r*0.62,0,0,7);ctx.fill();
+    ctx.fillStyle="#8a614d";
+    ctx.beginPath();ctx.ellipse(pl.x,pl.y,pl.r*0.42,pl.r*0.34,0,0,7);ctx.fill();
+    const bub=(S.t*1.2+pl.x*0.01)%1;
+    if(bub<0.55){
+      ctx.fillStyle="#b58e77";
+      ctx.beginPath();ctx.arc(pl.x-pl.r*0.2,pl.y,pl.r*0.22*(0.4+bub),0,7);ctx.fill();
+    }
+    return;
+  }
+  const look=SPRING_LOOKS[pl.look]||SPRING_LOOKS.paleblue;
+  // white sinter apron
+  ctx.fillStyle="rgba(236,231,213,.92)";
+  if(look.rough){roughCircle(pl.x,pl.y,pl.r*1.3,pl.x*0.013);ctx.fill();}
+  else{ctx.beginPath();ctx.arc(pl.x,pl.y,pl.r*1.28,0,7);ctx.fill();}
+  // orange runoff streamers (Grand Prismatic's aerial signature; Silex's apron)
+  if(look.runoff){
+    ctx.fillStyle="rgba(216,124,40,.5)";
+    for(let k=0;k<6;k++){
+      const a0=-1.3+k*0.52+Math.sin(pl.x+k)*0.1;
+      const len=pl.r*(1.35+(k%3)*0.14);
+      ctx.beginPath();
+      ctx.moveTo(pl.x+Math.cos(a0-0.1)*pl.r*1.08, pl.y+Math.sin(a0-0.1)*pl.r*1.08);
+      ctx.lineTo(pl.x+Math.cos(a0)*len,            pl.y+Math.sin(a0)*len);
+      ctx.lineTo(pl.x+Math.cos(a0+0.1)*pl.r*1.08, pl.y+Math.sin(a0+0.1)*pl.r*1.08);
+      ctx.closePath();ctx.fill();
+    }
+  }
+  // the water, in the pool's own colors
+  if(!pl.grad){
+    const g=ctx.createRadialGradient(pl.x,pl.y,pl.r*0.05,pl.x,pl.y,pl.r*1.12);
+    for(const [st,c] of look.stops)g.addColorStop(st,c);
+    pl.grad=g;
+  }
+  ctx.fillStyle=pl.grad;
+  if(look.rough){roughCircle(pl.x,pl.y,pl.r*1.1,pl.x*0.013+2);ctx.fill();}
+  else{ctx.beginPath();ctx.arc(pl.x,pl.y,pl.r*1.12,0,7);ctx.fill();}
+}
+function geyserDraw(G){
+  let vy;
+  if(G.style==="castle"){
+    // Castle's chunky ruined-fortress cone
+    ctx.fillStyle="#b7afa0";
+    ctx.beginPath();ctx.ellipse(G.x,G.y,46,26,0,0,7);ctx.fill();
+    ctx.fillStyle="#a29a89";
+    ctx.beginPath();ctx.ellipse(G.x,G.y-8,32,18,0,0,7);ctx.fill();
+    ctx.fillStyle="#8d8577";
+    ctx.beginPath();ctx.ellipse(G.x,G.y-16,20,11,0,0,7);ctx.fill();
+    ctx.fillStyle="#9b9384";
+    for(let k=0;k<7;k++){
+      const a=k/7*Math.PI*2;
+      ctx.beginPath();ctx.arc(G.x+Math.cos(a)*18,G.y-16+Math.sin(a)*9,4.5,0,7);ctx.fill();
+    }
+    ctx.fillStyle="#3f4442";
+    ctx.beginPath();ctx.ellipse(G.x,G.y-18,6,3.6,0,0,7);ctx.fill();
+    vy=G.y-18;
+  } else if(G.style==="steamboat"){
+    // Steamboat: a scarred hillside with its twin vents
+    ctx.fillStyle="#c9bfa8";
+    ctx.beginPath();ctx.ellipse(G.x,G.y,52,30,0,0,7);ctx.fill();
+    ctx.fillStyle="#b3a88e";
+    ctx.beginPath();ctx.ellipse(G.x,G.y-4,36,20,0,0,7);ctx.fill();
+    ctx.strokeStyle="rgba(140,150,145,.6)";ctx.lineWidth=2.5;ctx.lineCap="round";
+    for(const dxa of [-26,-10,8,24]){
+      ctx.beginPath();
+      ctx.moveTo(G.x+dxa*0.4,G.y-6);
+      ctx.quadraticCurveTo(G.x+dxa*0.8,G.y+8,G.x+dxa,G.y+24);
+      ctx.stroke();
+    }
+    ctx.fillStyle="#3f4442";
+    ctx.beginPath();ctx.ellipse(G.x-10,G.y-7,6.5,4,0,0,7);ctx.fill();
+    ctx.beginPath();ctx.ellipse(G.x+9,G.y-6,5,3.2,0,0,7);ctx.fill();
+    vy=G.y-7;
+  } else {
+    // Old Faithful: broad pale sinter mound
+    ctx.fillStyle="#e3dcc8";
+    ctx.beginPath();ctx.ellipse(G.x,G.y,42,24,0,0,7);ctx.fill();
+    ctx.fillStyle="#cfc6ad";
+    ctx.beginPath();ctx.ellipse(G.x,G.y-3,24,13,0,0,7);ctx.fill();
+    ctx.fillStyle="#4d5350";
+    ctx.beginPath();ctx.ellipse(G.x,G.y-5,7,4.5,0,0,7);ctx.fill();
+    vy=G.y-5;
+  }
+  if(G.active>0){
+    const h=G.h*(0.7+0.3*Math.sin(Math.min((1-G.active/G.dur)*2.4,Math.PI)))+Math.sin(S.t*9)*8;
+    ctx.fillStyle="rgba(242,246,246,.9)";
+    ctx.beginPath();
+    ctx.moveTo(G.x-6,vy);
+    ctx.lineTo(G.x-15,G.y-h);
+    ctx.lineTo(G.x+15,G.y-h);
+    ctx.lineTo(G.x+6,vy);
+    ctx.closePath();ctx.fill();
+    ctx.fillStyle="rgba(245,249,249,.85)";
+    for(let i=0;i<3;i++){
+      ctx.beginPath();
+      ctx.arc(G.x+(i-1)*16+Math.sin(S.t*3+i)*5, G.y-h-6, 13+i*2, 0, 7);
+      ctx.fill();
+    }
+  }
+}
+function drawBandV(fn,half,fill,T,B){
+  ctx.fillStyle=fill;ctx.beginPath();
+  ctx.moveTo(fn(T)-half,T);
+  for(let y=Math.ceil(T/26)*26;y<B;y+=26)ctx.lineTo(fn(y)-half,y);
+  ctx.lineTo(fn(B)-half,B);
+  ctx.lineTo(fn(B)+half,B);
+  for(let y=Math.floor(B/26)*26;y>T;y-=26)ctx.lineTo(fn(y)+half,y);
+  ctx.lineTo(fn(T)+half,T);
+  ctx.closePath();ctx.fill();
+}
+function drawBandFillV(fn,half,T,B){
+  ctx.beginPath();
+  ctx.moveTo(fn(T)-half,T);
+  for(let y=Math.ceil(T/26)*26;y<B;y+=26)ctx.lineTo(fn(y)-half,y);
+  ctx.lineTo(fn(B)-half,B);
+  ctx.lineTo(fn(B)+half,B);
+  for(let y=Math.floor(B/26)*26;y>T;y-=26)ctx.lineTo(fn(y)+half,y);
+  ctx.lineTo(fn(T)+half,T);
+  ctx.closePath();ctx.fill();
+}
+function drawBandFill(fn,half,L,R){
+  ctx.beginPath();
+  ctx.moveTo(L,fn(L)-half);
+  for(let x=Math.ceil(L/26)*26;x<R;x+=26)ctx.lineTo(x,fn(x)-half);
+  ctx.lineTo(R,fn(R)-half);
+  ctx.lineTo(R,fn(R)+half);
+  for(let x=Math.floor(R/26)*26;x>L;x-=26)ctx.lineTo(x,fn(x)+half);
+  ctx.lineTo(L,fn(L)+half);
+  ctx.closePath();ctx.fill();
+}
+function fallsAvatar(){
+  ctx.fillStyle="#3f7d8c";ctx.fillRect(-52,-32,104,64);
+  ctx.fillStyle="rgba(245,250,250,.95)";ctx.fillRect(-9,-32,18,64);
+  ctx.strokeStyle="rgba(198,224,229,.95)";ctx.lineWidth=2;
+  for(let y=-22;y<=22;y+=11){
+    ctx.beginPath();ctx.moveTo(8,y);ctx.lineTo(-8,y+2);ctx.stroke();
+  }
+}
+function fallsDraw(y0,w){
+  const xc=riverX(y0);
+  // white curtain across the gorge, dropping downstream (north)
+  ctx.fillStyle="rgba(245,250,250,.92)";
+  ctx.beginPath();
+  ctx.moveTo(xc-RIVER_HALF+8, y0);
+  ctx.lineTo(xc-RIVER_HALF+12, y0-w);
+  ctx.lineTo(xc+RIVER_HALF-12, y0-w);
+  ctx.lineTo(xc+RIVER_HALF-8, y0);
+  ctx.closePath();ctx.fill();
+  ctx.strokeStyle="rgba(198,224,229,.95)";ctx.lineWidth=2;
+  for(let i=-2;i<=2;i++){
+    const x=xc+i*((RIVER_HALF-16)/2);
+    ctx.beginPath();ctx.moveTo(x,y0-2);ctx.lineTo(x+2.5,y0-w+3);ctx.stroke();
+  }
 }
 function tuft(x,y,s){
   // lit meadow patch so food reads against the terrain
@@ -976,7 +2309,7 @@ function wolf(w){
   ctx.fillStyle="rgba(0,0,0,.2)";
   ctx.beginPath();ctx.ellipse(0,7,20,6.5,0,0,7);ctx.fill();
   ctx.rotate(w.a);
-  const hunting=w.state==="chase";
+  const hunting=w.state==="chase"||w.state==="stalk";
   const moving=hunting||w.state==="flee";
   const coat  = hunting?"#6e6862":"#8b8f8c";
   const coatD = hunting?"#514c47":"#6a6e6b";
@@ -1027,6 +2360,58 @@ function wolf(w){
   }
   ctx.restore();
 }
+function blackBear(b){
+  ctx.save();ctx.translate(b.x,b.y);
+  ctx.fillStyle="rgba(0,0,0,.22)";
+  ctx.beginPath();ctx.ellipse(0,8,20,7,0,0,7);ctx.fill();
+  ctx.rotate(b.a);
+  const lumber=b.state==="run"?Math.sin(S.t*11)*3:0;
+  ctx.fillStyle="#1c1815";
+  ctx.beginPath();ctx.ellipse( 8+lumber*0.4,-6,3,2.3,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse( 8-lumber*0.4, 6,3,2.3,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-10-lumber*0.4,-6,3,2.3,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-10+lumber*0.4, 6,3,2.3,0,0,7);ctx.fill();
+  ctx.fillStyle="#26201b";
+  ctx.beginPath();ctx.ellipse(0,0,15,9.5,0,0,7);ctx.fill();
+  ctx.fillStyle="#1e1a16";
+  ctx.beginPath();ctx.arc(-18,0,2.6,0,7);ctx.fill();   // no shoulder hump — a black bear's tell
+  ctx.fillStyle="#26201b";
+  ctx.beginPath();ctx.arc(16,0,7,0,7);ctx.fill();       // rounder head, straighter profile
+  ctx.fillStyle="#1e1a16";
+  ctx.beginPath();ctx.arc(13,-6.5,3,0,7);ctx.fill();    // taller, more prominent ears
+  ctx.beginPath();ctx.arc(13, 6.5,3,0,7);ctx.fill();
+  ctx.fillStyle="#4a4136";
+  ctx.beginPath();ctx.ellipse(22,0,4.4,2.8,0,0,7);ctx.fill();  // pointed tan-brown muzzle
+  ctx.fillStyle="#0f0d0b";
+  ctx.beginPath();ctx.arc(25.6,0,1.5,0,7);ctx.fill();
+  ctx.restore();
+}
+
+function cub(c){
+  ctx.save();ctx.translate(c.x,c.y);
+  ctx.fillStyle="rgba(0,0,0,.2)";
+  ctx.beginPath();ctx.ellipse(0,6,11,4,0,0,7);ctx.fill();
+  ctx.rotate(c.a);
+  const bob=Math.sin(c.wig)*1.6;
+  ctx.translate(0,bob*0.3);
+  ctx.fillStyle="#241f1a";
+  ctx.beginPath();ctx.ellipse( 5,-3.5,1.7,1.3,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse( 5, 3.5,1.7,1.3,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-6,-3.5,1.7,1.3,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-6, 3.5,1.7,1.3,0,0,7);ctx.fill();
+  ctx.fillStyle="#2e2721";
+  ctx.beginPath();ctx.ellipse(0,0,8.5,5.5,0,0,7);ctx.fill();
+  ctx.fillStyle="#241f1a";
+  ctx.beginPath();ctx.arc(9,0,4,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(7,-3.8,1.9,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(7, 3.8,1.9,0,7);ctx.fill();
+  ctx.fillStyle="#4a4136";
+  ctx.beginPath();ctx.ellipse(12.5,0,2.6,1.7,0,0,7);ctx.fill();
+  ctx.fillStyle="#0f0d0b";
+  ctx.beginPath();ctx.arc(14.4,0,0.9,0,7);ctx.fill();
+  ctx.restore();
+}
+
 function bear(b){
   ctx.save();ctx.translate(b.x,b.y);
   ctx.fillStyle="rgba(0,0,0,.25)";
@@ -1095,6 +2480,222 @@ function herdBison(h){
   ctx.restore();
 }
 
+function otter(o){
+  const slope=(riverX(o.y+12)-riverX(o.y-12))/24;
+  let a=Math.atan2(1,slope);
+  if(o.dir<0)a+=Math.PI;
+  ctx.save();ctx.translate(o.x,o.y);ctx.rotate(a);
+  // wake
+  ctx.strokeStyle="rgba(230,240,240,.5)";ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(-9,-4);ctx.quadraticCurveTo(-18,0,-9,4);ctx.stroke();
+  // long tapering tail, sculling
+  ctx.strokeStyle="#5d4a33";ctx.lineWidth=3.4;ctx.lineCap="round";
+  ctx.beginPath();ctx.moveTo(-8,0);
+  ctx.quadraticCurveTo(-15,Math.sin(o.wig*2)*3,-20,Math.sin(o.wig*2)*4);ctx.stroke();
+  // sleek body
+  ctx.fillStyle="#5d4a33";
+  ctx.beginPath();ctx.ellipse(0,0,9,4,0,0,7);ctx.fill();
+  // head with pale muzzle
+  ctx.beginPath();ctx.arc(9,0,3.6,0,7);ctx.fill();
+  ctx.fillStyle="#b39c7d";
+  ctx.beginPath();ctx.arc(11.5,0,1.7,0,7);ctx.fill();
+  ctx.restore();
+}
+
+function pronghornDraw(p){
+  ctx.save();ctx.translate(p.x,p.y);
+  ctx.fillStyle="rgba(0,0,0,.18)";
+  ctx.beginPath();ctx.ellipse(0,6,14,5,0,0,7);ctx.fill();
+  ctx.rotate(p.a);
+  ctx.fillStyle="#f2efe4";                                   // white rump flash
+  ctx.beginPath();ctx.ellipse(-9,0,6,5,0,0,7);ctx.fill();
+  ctx.fillStyle="#c69a5f";                                   // tan body
+  ctx.beginPath();ctx.ellipse(0,0,12,5.5,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(11,0,4,0,7);ctx.fill();
+  ctx.fillStyle="#f2efe4";
+  ctx.beginPath();ctx.arc(13.5,0,1.8,0,7);ctx.fill();        // white muzzle
+  ctx.strokeStyle="#2f261e";ctx.lineWidth=2;ctx.lineCap="round";
+  ctx.beginPath();ctx.moveTo(9,-3);ctx.lineTo(7,-8);ctx.stroke();  // pronged horns
+  ctx.beginPath();ctx.moveTo(9, 3);ctx.lineTo(7, 8);ctx.stroke();
+  ctx.restore();
+}
+function elkDraw(e){
+  ctx.save();ctx.translate(e.x,e.y);
+  ctx.fillStyle="rgba(0,0,0,.2)";
+  ctx.beginPath();ctx.ellipse(0,7,17,6,0,0,7);ctx.fill();
+  ctx.rotate(e.a);
+  ctx.fillStyle="#d8c49a";                                   // pale rump patch — the elk field mark
+  ctx.beginPath();ctx.ellipse(-11,0,6.5,6,0,0,7);ctx.fill();
+  ctx.fillStyle="#8a6a48";
+  ctx.beginPath();ctx.ellipse(0,0,15,7,0,0,7);ctx.fill();
+  ctx.fillStyle="#5d4430";                                   // dark neck and head
+  ctx.beginPath();ctx.ellipse(12,0,7,4.6,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(18,0,3.6,0,7);ctx.fill();
+  if(e.bull){                                                // branching antlers
+    ctx.strokeStyle="#c9a86b";ctx.lineWidth=2;ctx.lineCap="round";
+    for(const sgn of [-1,1]){
+      ctx.beginPath();ctx.moveTo(15,sgn*3);
+      ctx.quadraticCurveTo(8,sgn*10,2,sgn*13);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(10,sgn*7);ctx.lineTo(12,sgn*12);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(6,sgn*10);ctx.lineTo(6,sgn*15);ctx.stroke();
+    }
+  }
+  ctx.restore();
+}
+function eagleDraw(E){
+  if(E.state==="perched"){
+    ctx.strokeStyle="#7d766a";ctx.lineWidth=5;ctx.lineCap="round";   // dead snag
+    ctx.beginPath();ctx.moveTo(E.x,E.y+16);ctx.lineTo(E.x,E.y-14);ctx.stroke();
+    ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(E.x,E.y-2);ctx.lineTo(E.x+10,E.y-10);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(E.x,E.y+4);ctx.lineTo(E.x-9,E.y-2);ctx.stroke();
+    ctx.fillStyle="#3c3128";                                          // dark body
+    ctx.beginPath();ctx.ellipse(E.x,E.y-18,5,7,0,0,7);ctx.fill();
+    ctx.fillStyle="#f2efe4";                                          // white head
+    ctx.beginPath();ctx.arc(E.x,E.y-25,3.4,0,7);ctx.fill();
+    ctx.fillStyle="#e8a93c";                                          // yellow beak
+    ctx.beginPath();ctx.arc(E.x+3,E.y-25,1.4,0,7);ctx.fill();
+  } else {
+    ctx.save();ctx.translate(E.x,E.y);ctx.rotate(E.a);
+    const flap=Math.sin(S.t*7)*0.35;
+    ctx.fillStyle="#3c3128";
+    ctx.beginPath();ctx.ellipse(-2,-12,4,13,flap*0.5-0.2,0,7);ctx.fill();  // wings
+    ctx.beginPath();ctx.ellipse(-2, 12,4,13,-flap*0.5+0.2,0,7);ctx.fill();
+    ctx.beginPath();ctx.ellipse(0,0,9,4,0,0,7);ctx.fill();
+    ctx.fillStyle="#f2efe4";
+    ctx.beginPath();ctx.arc(8,0,3,0,7);ctx.fill();                    // white head
+    ctx.beginPath();ctx.moveTo(-8,0);ctx.lineTo(-14,-4);ctx.lineTo(-14,4);ctx.closePath();ctx.fill(); // white tail
+    ctx.restore();
+  }
+}
+function swanDraw(sw){
+  const y=3150+Math.sin(sw.x*0.04)*14;
+  ctx.save();ctx.translate(sw.x,y);
+  if(sw.dir<0)ctx.scale(-1,1);
+  ctx.strokeStyle="rgba(230,240,240,.5)";ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(-8,-3);ctx.quadraticCurveTo(-15,0,-8,3);ctx.stroke();
+  ctx.fillStyle="#f5f2e8";
+  ctx.beginPath();ctx.ellipse(0,0,9,4.5,0,0,7);ctx.fill();
+  ctx.strokeStyle="#f5f2e8";ctx.lineWidth=2.6;ctx.lineCap="round";
+  ctx.beginPath();ctx.moveTo(7,0);ctx.quadraticCurveTo(12,-1,12,-6);ctx.stroke();
+  ctx.fillStyle="#f5f2e8";
+  ctx.beginPath();ctx.arc(12,-6.5,2.2,0,7);ctx.fill();
+  ctx.fillStyle="#1d1a17";
+  ctx.beginPath();ctx.moveTo(13.5,-6.8);ctx.lineTo(16.5,-6);ctx.lineTo(13.5,-5.4);ctx.closePath();ctx.fill();
+  ctx.restore();
+}
+
+function moose(M){
+  ctx.save();ctx.translate(M.x,M.y);
+  ctx.fillStyle="rgba(0,0,0,.25)";
+  ctx.beginPath();ctx.ellipse(0,9,25,9,0,0,7);ctx.fill();
+  ctx.rotate(M.a);
+  const run=M.state==="run"?Math.sin(S.t*13)*4:0;
+  // long legs
+  ctx.fillStyle="#2f261e";
+  ctx.beginPath();ctx.ellipse( 10+run*0.4,-8,3,2.3,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse( 10-run*0.4, 8,3,2.3,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-13-run*0.4,-8,3,2.3,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-13+run*0.4, 8,3,2.3,0,0,7);ctx.fill();
+  // dark chocolate body, deeper shoulder
+  ctx.fillStyle="#4a3a2e";
+  ctx.beginPath();ctx.ellipse(-2,0,19,10.5,0,0,7);ctx.fill();
+  ctx.fillStyle="#3b2e24";
+  ctx.beginPath();ctx.ellipse(5,0,10,8,0,0,7);ctx.fill();
+  // long head and drooping bulbous nose
+  ctx.fillStyle="#4a3a2e";
+  ctx.beginPath();ctx.ellipse(19,0,8,5.2,0,0,7);ctx.fill();
+  ctx.fillStyle="#3b2e24";
+  ctx.beginPath();ctx.ellipse(27.5,0,5.4,3.8,0,0,7);ctx.fill();
+  // great palmate antlers
+  ctx.fillStyle="#c9a86b";
+  ctx.save();ctx.translate(15,-9);ctx.rotate(-0.55);
+  ctx.beginPath();ctx.ellipse(0,0,9.5,4.6,0,0,7);ctx.fill();ctx.restore();
+  ctx.save();ctx.translate(15,9);ctx.rotate(0.55);
+  ctx.beginPath();ctx.ellipse(0,0,9.5,4.6,0,0,7);ctx.fill();ctx.restore();
+  ctx.restore();
+}
+
+function healIcon(){
+  // a warm heart with a lick-swipe — the herd tends its own
+  ctx.fillStyle="#c9564a";
+  ctx.beginPath();
+  ctx.moveTo(0,17);
+  ctx.bezierCurveTo(-23,1,-17,-19,0,-8);
+  ctx.bezierCurveTo(17,-19,23,1,0,17);
+  ctx.closePath();ctx.fill();
+  ctx.fillStyle="#b23a2f";
+  ctx.beginPath();
+  ctx.moveTo(0,13);
+  ctx.bezierCurveTo(-15,1,-12,-12,0,-5);
+  ctx.bezierCurveTo(12,-12,15,1,0,13);
+  ctx.closePath();ctx.fill();
+  ctx.strokeStyle="#f2b8ae";ctx.lineWidth=4;ctx.lineCap="round";
+  ctx.beginPath();ctx.moveTo(-8,1);ctx.quadraticCurveTo(0,-7,8,-1);ctx.stroke();
+}
+
+function bisonHead(){
+  // front-facing bison face — the classic buffalo-portrait emblem
+  // shaggy cheek wool behind everything
+  ctx.fillStyle="#33231a";
+  ctx.beginPath();ctx.ellipse(-14,9,9,13,0.3,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse( 14,9,9,13,-0.3,0,7);ctx.fill();
+  // head mass
+  ctx.fillStyle="#3d2a1f";
+  ctx.beginPath();ctx.ellipse(0,4,17,24,0,0,7);ctx.fill();
+  // lumpy woolly cap
+  ctx.fillStyle="#33231a";
+  ctx.beginPath();ctx.ellipse(0,-12,17,12,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(-10,-18,6.5,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(  0,-21,7.5,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc( 10,-18,6.5,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(-16,-11,5.5,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc( 16,-11,5.5,0,7);ctx.fill();
+  // horns: filled crescents rising from the cap, drawn on top so the bases read
+  ctx.fillStyle="#d8cdb4";
+  for(const sgn of [-1,1]){
+    ctx.beginPath();
+    ctx.moveTo(sgn*12,-6);
+    ctx.quadraticCurveTo(sgn*31,-8, sgn*27,-28);
+    ctx.quadraticCurveTo(sgn*23,-14, sgn*11,-14);
+    ctx.closePath();ctx.fill();
+  }
+  ctx.fillStyle="#b8ab8c";
+  for(const sgn of [-1,1]){
+    ctx.beginPath();
+    ctx.moveTo(sgn*12,-6);
+    ctx.quadraticCurveTo(sgn*24,-8, sgn*24,-18);
+    ctx.quadraticCurveTo(sgn*20,-13, sgn*11,-13);
+    ctx.closePath();ctx.fill();
+  }
+  // ears flick out beneath the horns
+  ctx.fillStyle="#2e2018";
+  ctx.beginPath();ctx.ellipse(-20,-2,6,3.4,-0.55,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse( 20,-2,6,3.4, 0.55,0,7);ctx.fill();
+  // eyes with a glint
+  ctx.fillStyle="#150f0b";
+  ctx.beginPath();ctx.arc(-9,1,2.6,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc( 9,1,2.6,0,7);ctx.fill();
+  ctx.fillStyle="rgba(255,255,255,.7)";
+  ctx.beginPath();ctx.arc(-9.8,0.2,0.9,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc( 8.2,0.2,0.9,0,7);ctx.fill();
+  // muzzle, nose, nostrils
+  ctx.fillStyle="#6b4e37";
+  ctx.beginPath();ctx.ellipse(0,16,11.5,9,0,0,7);ctx.fill();
+  ctx.fillStyle="#241811";
+  ctx.beginPath();ctx.ellipse(0,20,8,5.2,0,0,7);ctx.fill();
+  ctx.fillStyle="#0f0b09";
+  ctx.beginPath();ctx.ellipse(-3.4,19.6,1.6,2.1,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse( 3.4,19.6,1.6,2.1,0,0,7);ctx.fill();
+  // beard
+  ctx.strokeStyle="#241811";ctx.lineCap="round";
+  ctx.lineWidth=5;
+  ctx.beginPath();ctx.moveTo(0,26);ctx.lineTo(0,36);ctx.stroke();
+  ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(-4,25);ctx.lineTo(-5.5,33);ctx.stroke();
+  ctx.beginPath();ctx.moveTo( 4,25);ctx.lineTo( 5.5,33);ctx.stroke();
+}
+
 function bison(P){
   const b=Math.sin(P.bob)* (P.speed>15?2.2:0.6);
   ctx.save();ctx.translate(P.x,P.y);
@@ -1147,6 +2748,11 @@ function bison(P){
     ctx.beginPath();ctx.moveTo(24,3);ctx.lineTo(23,7);ctx.stroke();
   }
   ctx.restore();
+  // healing channel ring
+  if(S.healT>0){
+    ctx.strokeStyle="rgba(233,142,160,.95)";ctx.lineWidth=4;
+    ctx.beginPath();ctx.arc(P.x,P.y-34,12,-Math.PI/2,-Math.PI/2+(1-S.healT/2.6)*Math.PI*2);ctx.stroke();
+  }
   // grazing indicator
   if(P.grazeT>0){
     ctx.strokeStyle="rgba(232,169,60,.95)";ctx.lineWidth=4;
@@ -1154,15 +2760,109 @@ function bison(P){
   }
 }
 
+/* ---------------- Park map overlay ---------------- */
+// Anchor pairs: [game x, game y, park-map x, park-map y].
+// Exact at every real landmark; smoothly interpolated between them.
+const PARK_ANCHORS=[
+  [4750,1080,236,56],  // deep Lamar Valley (start)
+  [4100,1350,226,62],  // mid Lamar Valley
+  [2960,1800,178,100], // Yellowstone River crossing (below Tower)
+  [3010,2830,186,150], // moose willows, Hayden riverbank
+  [2790,2450,180,128], // Grand Canyon rim (the falls)
+  [2700,2980,180,158], // Hayden Valley
+  [2350,2390,141,121], // bison jam on the Norris–Canyon road
+  [1940,2600,106,124], // Norris Geyser Basin
+  [1520,3480,90,181],  // Fountain Paint Pot (Lower Basin)
+  [1350,3860,93,196],  // Midway Geyser Basin
+  [1180,4270,106,216], // Old Faithful (Upper Basin)
+  [600,4440,96,232],   // winter valley SW of the Upper Basin
+  [4600,4700,224,252]  // southeast lake country (hidden grove)
+];
+function gameToPark(x,y){
+  let sx=0,sy=0,sw=0;
+  for(const [gx,gy,px,py] of PARK_ANCHORS){
+    const d2=(x-gx)*(x-gx)+(y-gy)*(y-gy);
+    if(d2<1)return[px,py];
+    const w=1/d2;
+    sx+=px*w;sy+=py*w;sw+=w;
+  }
+  return[sx/sw,sy/sw];
+}
+function openMap(){
+  if(!S.running||S.over)return;
+  S.paused=true;
+  const [px,py]=gameToPark(S.player.x,S.player.y);
+  document.getElementById("you-marker").setAttribute("transform","translate("+px.toFixed(1)+","+py.toFixed(1)+")");
+  const cp=CHECKPOINTS[S.cpIndex], tm=document.getElementById("target-marker");
+  if(cp){
+    const [tx,ty]=gameToPark(cp.x,cp.y);
+    tm.setAttribute("transform","translate("+tx.toFixed(1)+","+ty.toFixed(1)+")");
+    tm.style.display="";
+  } else tm.style.display="none";
+  $("#map-card").classList.remove("hidden");
+  $("#map-close").focus();
+}
+$("#map-btn").addEventListener("click",openMap);
+$("#map-close").addEventListener("click",()=>{
+  $("#map-card").classList.add("hidden");
+  S.paused=false;
+});
+
+/* ---------------- Shake-off (double-tap) ---------------- */
+function shakeOff(){
+  if(!S.running||S.paused||S.over)return;
+  if(S.shakeCd>0)return;
+  S.shakeCd=1.0;
+  const P=S.player;
+  puff(P.x,P.y,"#c9bd9c",8);
+  S.shakeT=0.25;
+  let hit=0;
+  const scare=pr=>{
+    if(dist(pr.x,pr.y,P.x,P.y)<170){pr.fleeT=Math.max(pr.fleeT,1.5);pr.cool=Math.max(pr.cool,2.5);hit++;}
+  };
+  for(const w of S.wolves)scare(w);   // a shake startles wolves — never a grizzly
+  if(hit){S.score+=5*hit;toast("🦬 You buck and shake — "+(hit>1?"they break":"it breaks")+" off! (+"+(5*hit)+")");}
+}
+
+/* ---------------- Halfway promo popup ---------------- */
+let promoShown=false;   // once per browser session, not re-shown on replays
+function showPromo(){
+  if(promoShown)return;
+  promoShown=true;
+  S.paused=true;
+  drawAvatarOn(document.getElementById("promo-avatar"),"bisonhead");
+  $("#promo-card").classList.remove("hidden");
+  $("#affil-bar").classList.remove("hidden");
+  $("#promo-close").focus();
+}
+$("#promo-close").addEventListener("click",()=>{
+  $("#promo-card").classList.add("hidden");
+  $("#affil-bar").classList.add("hidden");
+  S.paused=false;
+});
+
+/* ---------------- Lick Wounds: the herd tends its own ---------------- */
+function lickWounds(){
+  if(!S.running||S.paused||S.over||S.healT>0)return;
+  if(S.wolfBites<=0){toast("No wounds to tend — you're sound as a drum.");return;}
+  if(S.companions.length<1){toast("No herdmates nearby to tend you.");return;}
+  if(S.healCd>0){toast("The herd needs a moment before tending you again.");return;}
+  S.healT=2.6;
+  toast("💗 Stand still — a herdmate moves in to lick your wounds…");
+}
+$("#lick-btn").addEventListener("click",lickWounds);
+
 /* ---------------- Herd Call ---------------- */
 function updateHerdBtn(){
   $("#herd-count").textContent=S.herdCalls;
   $("#herd-btn").dataset.count=S.herdCalls;
+  drawAvatarOn(document.getElementById("herd-avatar"),"bisonhead");
+  drawAvatarOn(document.getElementById("lick-avatar"),"heal");
 }
 function callHerd(){
   if(!S.running||S.paused||S.over)return;
   if(S.herdCalls<=0){
-    toast("No Herd Calls left… though they say one more waits somewhere far off the trail.");
+    toast("No Herd Calls left… though they say one more waits far to the southeast, off every trail.");
     return;
   }
   S.herdCalls--; updateHerdBtn();
@@ -1185,7 +2885,7 @@ function callHerd(){
   for(const w of S.wolves){
     if(dist(w.x,w.y,P.x,P.y)<800){w.fleeT=5;w.cool=6;w.waryT=0;}
   }
-  if(S.bear&&dist(S.bear.x,S.bear.y,P.x,P.y)<800)S.bear.fleeT=5;
+  for(const b0 of S.bears){ if(dist(b0.x,b0.y,P.x,P.y)<800){b0.fleeT=5;b0.giveUpT=26;b0.scares=0;} }
   S.shakeT=0.5;
   S.score+=25;
   toast("🦬🦬🦬 The ground shakes — the herd answers your call! Predators scatter. (+25)");
@@ -1195,6 +2895,10 @@ addEventListener("keydown",e=>{
   if((e.code==="KeyE"||e.code==="Space")&&document.body.classList.contains("playing")){
     e.preventDefault();
     callHerd();
+  }
+  if(e.code==="KeyH"&&document.body.classList.contains("playing")){
+    e.preventDefault();
+    lickWounds();
   }
 });
 
@@ -1210,9 +2914,9 @@ function loop(now){
 /* ---------------- Win / lose / reset ---------------- */
 function rankFor(){
   const p=S.score;
-  if(p>=1300)return["Herd Leader","You crossed the park with the confidence of an old bull — geyser to geyser, wolf to grizzly. The herd follows where you walk."];
-  if(p>=1050)return["Seasoned Bull","Strong swimming, smart grazing, predators given the horn. A fine migration."];
-  if(p>=800)return["Young Bull","You made it — a little lean, a little wiser. Next season you'll lead from the front."];
+  if(p>=1500)return["Herd Leader","You crossed the park with the confidence of an old bull — geyser to geyser, wolf to grizzly. The herd follows where you walk."];
+  if(p>=1250)return["Seasoned Bull","Strong swimming, smart grazing, predators given the horn. A fine migration."];
+  if(p>=950)return["Young Bull","You made it — a little lean, a little wiser. Next season you'll lead from the front."];
   return["Spring Calf","Every giant of the plains started somewhere. Rest up and trek again."];
 }
 function winGame(){
@@ -1224,21 +2928,28 @@ function winGame(){
     <h2>You've Reached the Herd</h2>
     <p>Steam drifts over the winter meadow as the herd closes around you. The migration is complete —
     the same journey Yellowstone's bison have made for thousands of years.</p>
+    <p style="font-size:.9rem;color:#5c5340">${CHECKPOINTS[CHECKPOINTS.length-1].fact}</p>
     <div class="rank">${rank}</div>
     <p><b>${S.score} points</b> &middot; ${S.grassEaten} tufts grazed &middot; ${mins}s on the trail &middot; ${Math.round(S.player.energy)} energy to spare</p>
     <p style="max-width:46ch;margin:10px auto">${blurb}</p>
     <p style="margin-top:18px"><button class="btn thermal" id="replay-btn">Migrate Again</button></p>
+    
   `);
 }
-function loseGame(){
+function loseGame(cause){
   S.over=true;
+  const wolves=cause==="wolves", bear=cause==="bear";
   endScreen(`
-    <h2>Winded on the Trail</h2>
-    <p>Your legs give out and you bed down in the sage. Even a bison has limits — out here,
-    grass is fuel, and the smart traveler grazes before the tank runs dry.</p>
-    <div class="rank" style="background:var(--danger)">Rest &amp; Recover</div>
+    <h2>${wolves?"Brought Down by the Pack":bear?"Brought Down by the Grizzly":"Winded on the Trail"}</h2>
+    <p>${wolves
+      ?"The fourth bite finds its mark and your legs buckle in the grass. Wolves win by wearing prey down — a healthy bison that stands its ground is rarely touched, but one that keeps getting caught becomes the hunt."
+      :bear
+      ?"The grizzly's fourth blow drops you in the sage. A thousand pounds of bear is the one argument on this trail a lone bison cannot win — only a wall of horns, or a stampede, turns it."
+      :"Your legs give out and you bed down in the sage. Even a bison has limits — out here, grass is fuel, and the smart traveler grazes before the tank runs dry."}</p>
+    ${wolves||bear?`<div class="rank" style="background:var(--danger)">${wolves?"Taken by Wolves":"Taken by a Grizzly"}</div>`:""}
     <p><b>${S.score} points</b> &middot; waypoint ${S.cpIndex+1} of ${CHECKPOINTS.length} &middot; ${S.grassEaten} tufts grazed</p>
     <p style="margin-top:18px"><button class="btn thermal" id="replay-btn">Try the Migration Again</button></p>
+    
   `);
 }
 function endScreen(html){
@@ -1251,16 +2962,23 @@ function endScreen(html){
   el.classList.remove("hidden");
   el.innerHTML=html;
   $("#replay-btn").addEventListener("click",resetGame);
+  $("#end-extra").classList.remove("hidden");
+  $("#affil-bar").classList.remove("hidden");
   el.scrollIntoView({behavior:"smooth"});
 }
 function resetGame(){
   document.body.classList.add("playing");
   Object.assign(S.player,{x:START.x,y:START.y,a:Math.PI*0.75,speed:0,energy:100,stamina:100,swim:false,grazeT:0,hurtT:0,bob:0});
-  S.cpIndex=0;S.score=0;S.grassEaten=0;S.over=false;S.paused=false;S.t=0;S.wolfHintT=0;S.grassHintT=0;S.bearHintT=0;S.floaties=[];
-  S.herdCalls=1;S.herd=[];S.herdT=0;S.relicHinted=false;updateHerdBtn();
+  S.cpIndex=0;S.score=0;S.grassEaten=0;S.over=false;S.paused=false;S.t=0;S.wolfHintT=0;S.wolfWarned=false;S.wolfBites=0;S.healT=0;S.healCd=0;S.spareHearts=0;S.promoAt=0;S.grassHintT=0;S.bearHintT=0;S.floaties=[];
+  S.herdCalls=1;S.herd=[];S.herdT=0;S.relicHinted=false;S.herdTokenHinted=false;
+  S.mooseFactShown=false;S.otterFactShown=false;S.blackbearFactShown=false;
+  S.pronghornFact=false;S.elkFact=false;S.eagleFact=false;S.swanFact=false;
+  S.thermalFacts={};cardQueue=[];updateHerdBtn();hideCard();
   cam.x=START.x;cam.y=START.y;
   seedWorld();
   $("#end-screen").classList.add("hidden");
+  $("#end-extra").classList.add("hidden");
+  $("#affil-bar").classList.add("hidden");
   $("#game-screen").classList.remove("hidden");
   $("#objective-text").textContent="Head southwest out of Lamar Valley";
   S.startTime=performance.now();
