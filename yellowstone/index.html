@@ -149,12 +149,12 @@
   #objective b{color:var(--gold);font-family:Oswald,sans-serif;letter-spacing:.08em}
 
   /* Fact banner: slides in near the top, play continues underneath */
-  #fact-card{position:fixed;top:10px;left:50%;transform:translateX(-50%);width:min(360px,92%);z-index:60;
+  #fact-card{position:fixed;left:10px;bottom:10px;width:min(360px,88vw);z-index:60;
     display:flex;gap:12px;align-items:flex-start;
     background:var(--paper);color:var(--ink);border-radius:12px;box-shadow:var(--shadow);
     padding:8px 22px 8px 8px;overflow:hidden;animation:factIn .3s ease-out}
   #fact-card::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:var(--ring)}
-  @keyframes factIn{from{opacity:0;transform:translate(-50%,-10px)}to{opacity:1;transform:translate(-50%,0)}}
+  @keyframes factIn{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
   #fact-avatar{width:46px;height:46px;flex:0 0 auto;border-radius:50%;border:2px solid var(--teal);background:radial-gradient(circle at 35% 30%,#e9edcf,#cfdab3)}
   #fact-card .fc-text{min-width:0}
   #fact-card .loc-eyebrow{font-family:Oswald,sans-serif;font-weight:600;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--thermal);margin:1px 0 1px}
@@ -700,7 +700,7 @@ function seedWorld(){
   // A bull moose stands statue-still in the willow flats south of the river
   S.moose={x:3010,y:2830,a:-2.4,state:"idle",runT:0,touched:false};
   S.blackbear={x:2560,y:1720,a:rand(0,6.28),state:"idle",runT:0,touched:false};
-  S.fox={x:3800,y:1550,a:rand(0,6.28),state:"idle",runT:0,touched:false,pounceT:0};
+  S.fox={x:3800,y:1550,a:rand(0,6.28),state:"idle",runT:0,touched:false,pounceT:0,wt:rand(0,2)};
   S.cubs=[
     {x:2560+rand(-30,30),y:1720+rand(-30,30),a:rand(0,6.28),wt:rand(0,2),wig:rand(0,6)},
     {x:2560+rand(-30,30),y:1720+rand(-30,30),a:rand(0,6.28),wt:rand(0,2),wig:rand(0,6)}
@@ -1166,17 +1166,22 @@ function update(dt){
     }
   }
 
-  // --- the red fox: hunts mice in the sage, shy and harmless
+  // --- the red fox: prowls the sage hunting mice, shy and harmless
   if(S.fox){
     const X=S.fox;
     if(X.state==="idle"){
       if(!S.foxFactShown&&dist(P.x,P.y,X.x,X.y)<170){
         S.foxFactShown=true;S.score+=10;
         showWildlifeCard("Red Fox","fox",
-          "Yellowstone's red foxes hunt mostly by ear, cocking their heads to pinpoint a mouse rustling under the sage, then leaping high and pouncing straight down nose-first. Quick and solitary, they want nothing to do with a bison. (+10)");
+          "Yellowstone's red foxes hunt mostly by ear, cocking their head to pinpoint a mouse rustling under the sage, then leaping high and pouncing straight down nose-first. Quick, solitary, and always on the move, they want nothing to do with a bison. (+10)");
       }
       X.pounceT-=dt;
-      if(X.pounceT<=0){X.pounceT=rand(2.5,4.5);}
+      if(X.pounceT<=0)X.pounceT=rand(2.5,4.5);
+      // prowl: pick a new nearby heading every couple seconds and keep moving
+      X.wt-=dt;
+      if(X.wt<=0){X.wt=rand(1.4,2.6);X.a=rand(0,Math.PI*2);}
+      X.x+=Math.cos(X.a)*34*dt; X.y+=Math.sin(X.a)*34*dt;
+      X.x=clamp(X.x,50,WORLD.w-50); X.y=clamp(X.y,50,WORLD.h-50);
       if(dist(P.x,P.y,X.x,X.y)<58){
         X.state="run";X.runT=1.5;
         X.a=Math.atan2(X.y-P.y,X.x-P.x)+rand(-0.3,0.3);
@@ -2434,38 +2439,45 @@ function cub(c){
 function fox(X){
   ctx.save();ctx.translate(X.x,X.y);
   ctx.fillStyle="rgba(0,0,0,.2)";
-  ctx.beginPath();ctx.ellipse(0,7,13,4.4,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(0,7,15,5,0,0,7);ctx.fill();
   ctx.rotate(X.a);
-  const pounce=X.state==="idle"?Math.max(0,Math.sin((2.8-X.pounceT)*3))*3:0;
-  const lope=X.state==="run"?Math.sin(S.t*14)*2.5:0;
+  const moving=X.state!=="idle"||true;
+  const pounce=X.state==="idle"?Math.max(0,Math.sin((2.8-X.pounceT)*3))*2.5:0;
+  const trot=Math.sin(S.t*(X.state==="run"?15:7)+X.x*0.02)*(X.state==="run"?3:1.6);
   ctx.translate(0,-pounce);
-  // bushy white-tipped tail trailing behind
+  // four paws, splayed to both flanks — top-down gait
+  ctx.fillStyle="#2a1a12";
+  ctx.beginPath();ctx.ellipse( 7+trot*0.4,-5,2.1,3.4,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse( 7-trot*0.4, 5,2.1,3.4,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-8-trot*0.4,-5,2.1,3.4,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-8+trot*0.4, 5,2.1,3.4,0,0,7);ctx.fill();
+  // bushy white-tipped tail trailing straight back, swaying side to side
+  const sway=Math.sin(S.t*3+X.x*0.01)*3;
   ctx.fillStyle="#b8481f";
-  ctx.beginPath();ctx.ellipse(-13-lope*0.3,3,9,4,0.35,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-15,sway*0.4,8,4,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(-21,sway,6,3.4,0,0,7);ctx.fill();
   ctx.fillStyle="#f4ece0";
-  ctx.beginPath();ctx.ellipse(-19-lope*0.3,4.5,3.6,2.4,0.35,0,7);ctx.fill();
-  // legs
-  ctx.fillStyle="#2a1a12";
-  ctx.beginPath();ctx.ellipse( 6+lope*0.4,-4.5,2,4.5,0,0,7);ctx.fill();
-  ctx.beginPath();ctx.ellipse(-4-lope*0.4, 4.5,2,4.5,0,0,7);ctx.fill();
-  // body, rust-red back over a pale belly
+  ctx.beginPath();ctx.ellipse(-26,sway*1.3,3.4,2.4,0,0,7);ctx.fill();
+  // body: rust-red back over a pale belly stripe, seen from above
   ctx.fillStyle="#c85a28";
-  ctx.beginPath();ctx.ellipse(-2,-1,11,5.6,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(0,0,12,6,0,0,7);ctx.fill();
   ctx.fillStyle="#f0e6d6";
-  ctx.beginPath();ctx.ellipse(-1,3,8,3,0,0,7);ctx.fill();
-  // pointed head, tall ears
+  ctx.beginPath();ctx.ellipse(-1,0,9,2.6,0,0,7);ctx.fill();
+  // head: pointed muzzle, both ears visible, both eyes
   ctx.fillStyle="#c85a28";
-  ctx.beginPath();ctx.moveTo(6,-5);ctx.quadraticCurveTo(17,-3,17,1);ctx.quadraticCurveTo(12,4,6,1);ctx.closePath();ctx.fill();
-  ctx.beginPath();ctx.moveTo(4,-6);ctx.lineTo(2,-13);ctx.lineTo(9,-8);ctx.closePath();ctx.fill();
+  ctx.beginPath();ctx.ellipse(12,0,6.5,4.6,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.moveTo(14,-8);ctx.lineTo(9,-3.5);ctx.lineTo(17,-4.5);ctx.closePath();ctx.fill();
+  ctx.beginPath();ctx.moveTo(14, 8);ctx.lineTo(9, 3.5);ctx.lineTo(17, 4.5);ctx.closePath();ctx.fill();
   ctx.fillStyle="#2a1a12";
-  ctx.beginPath();ctx.moveTo(4.6,-7);ctx.lineTo(3.6,-11.4);ctx.lineTo(7.4,-8.4);ctx.closePath();ctx.fill();
-  // white cheeks & muzzle, dark nose
+  ctx.beginPath();ctx.moveTo(14.3,-7);ctx.lineTo(11,-4);ctx.lineTo(15.6,-4.6);ctx.closePath();ctx.fill();
+  ctx.beginPath();ctx.moveTo(14.3, 7);ctx.lineTo(11, 4);ctx.lineTo(15.6, 4.6);ctx.closePath();ctx.fill();
   ctx.fillStyle="#f0e6d6";
-  ctx.beginPath();ctx.ellipse(13,0,4.4,2.6,0,0,7);ctx.fill();
-  ctx.fillStyle="#1c130d";
-  ctx.beginPath();ctx.arc(16.6,-0.3,1.1,0,7);ctx.fill();
+  ctx.beginPath();ctx.ellipse(17,0,3.6,3,0,0,7);ctx.fill();
   ctx.fillStyle="#150f0b";
-  ctx.beginPath();ctx.arc(9,-2.6,1.3,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(9,-2.6,1.2,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(9, 2.6,1.2,0,7);ctx.fill();
+  ctx.fillStyle="#1c130d";
+  ctx.beginPath();ctx.arc(19.6,0,1.1,0,7);ctx.fill();
   ctx.restore();
 }
 
