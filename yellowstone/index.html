@@ -201,7 +201,7 @@
       <li><b>Phone &amp; tablet:</b> touch and drag anywhere to steer, hold the <b>Charge</b> button to run. Tap <b>⛶</b> to go fullscreen.</li>
       <li><b>Graze:</b> stand on the glowing golden grass tufts to refill energy — walking sips it, charging gulps it.</li>
       <li><b>Swim</b> the Yellowstone River, cross the road at the bison jam, and skirt the thermal pools.</li>
-      <li>Wolves shadow the route — and they are deadly: <b>four bites will bring you down</b>. They won't follow you into the river. <b>Stop and face one to stand your ground</b>, <b>charge</b> it, or <b>double-tap the screen</b> to shake it off. Wolves <b>stalk for a moment before they charge</b> — use those seconds.</li>
+      <li>Wolves shadow the route — and they are deadly: <b>three bites will bring you down</b>. They won't follow you into the river. <b>Stop and face one to stand your ground</b>, <b>charge</b> it, or <b>double-tap the screen</b> to shake it off. Wolves <b>stalk for a moment before they charge</b> — use those seconds.</li>
       <li>Watch the <b>wolf strike meter</b> — four strikes and it's over. But the herd tends its own: press the <b>❤ button</b> (or <span class="kbd">H</span>) and <b>stand still</b> while a herdmate licks a wound clean. And <b>a single spare heart is hidden somewhere in the park</b> — find it, and it will absorb what would be a killing strike. A hidden <b>herd token</b> banks you a bonus stampede charge, too.</li>
       <li>You start with <b>one herdmate</b>, and another bison joins your band at every flag. <b>Turn and face a predator</b> and the whole band squares up with you to drive it off — a herd defends as a wall, not with its back turned.</li>
       <li>The trail winds through <b>Norris, Fountain Paint Pot, Midway, and Old Faithful</b> — and a <b>grizzly</b> works the last basins. Nothing bluffs a bear: <b>three bison facing it shoulder to shoulder</b> will make it back off — but it takes <b>two such stands</b> before it truly gives up. A full <b>Herd Call stampede</b> settles it in one shot. Otherwise, run.</li>
@@ -222,7 +222,7 @@
           <span class="bar-k">Energy</span>
           <div class="bar"><span id="energy-fill"></span></div>
           <span class="bar-k">Predator strikes</span>
-          <div class="strikes" id="strike-pips" title="Four predator strikes and it's over"><i></i><i></i><i></i><i></i><i class="sp"></i></div>
+          <div class="strikes" id="strike-pips" title="Three predator strikes and it's over"><i></i><i></i><i></i><i class="sp"></i></div>
           <span class="bar-k">Herd call</span>
           <div class="strikes meter" id="herd-pips" title="Stampede charges available"></div>
           <span class="bar-k">Lick wounds</span>
@@ -707,7 +707,7 @@ function seedWorld(){
   ];
   // Wolves — posted along the middle of the route
   const dens=[[4250,1550],[3650,1350],[3300,2300],[2700,2680],[2380,2060],[2150,2860],[1750,3120],[2050,3900],[1350,2900],[2650,3560],[3050,3700]];
-  for(const [x,y] of dens) S.wolves.push({x,y,hx:x,hy:y,a:rand(0,6.28),state:"idle",wt:rand(0,3),cool:0,fleeT:0,waryT:0,engaged:false,stalkT:2.2,spin:Math.random()<.5?1:-1});
+  for(const [x,y] of dens) S.wolves.push({x,y,hx:x,hy:y,a:rand(0,6.28),state:"idle",wt:rand(0,3),cool:0,fleeT:0,waryT:0,engaged:false,stalkT:7,facedCount:0,spin:Math.random()<.5?1:-1});
   // Cars on the road
   for(let i=0;i<7;i++){
     const v0=rand(120,170);
@@ -1000,17 +1000,27 @@ function update(dt){
         const vy= ux*w.spin*72 + uy*(215-dp)*1.4;
         w.x+=vx*dt; w.y+=vy*dt;
         w.a=Math.atan2(P.y-w.y,P.x-w.x); // eyes on the bison
-        if(w.waryT>2.4){
+        if(w.waryT>1.1){
           w.waryT=0; w.fleeT=1.6; w.cool=3;
-          S.score+=10;
-          toast("🦬 You stand your ground. The wolf thinks better of it and trots off. (+10)");
+          w.facedCount++;
+          if(w.facedCount>=3){
+            w.retired=true;
+            S.score+=25;
+            toast("🦬 Faced down for the third time, the wolf finally abandons the hunt for good! (+25)");
+          } else {
+            S.score+=10;
+            toast("🦬 You stand your ground. The wolf thinks better of it and trots off. ("+w.facedCount+" of 3) (+10)");
+          }
         }
       } else if(!w.engaged){
         // locked on: the wolf stops and stalks for a couple of seconds before committing
         w.state="stalk"; w.waryT=0;
         w.stalkT-=dt;
         w.a=Math.atan2(P.y-w.y,P.x-w.x);
-        w.x+=Math.cos(w.a)*18*dt; w.y+=Math.sin(w.a)*18*dt;   // a slow, low creep
+        // barely moving at first, easing into a low creep as the charge nears
+        const stalkFrac=1-w.stalkT/7;
+        const creepSpd=6+stalkFrac*stalkFrac*30;
+        w.x+=Math.cos(w.a)*creepSpd*dt; w.y+=Math.sin(w.a)*creepSpd*dt;
         if(!S.wolfWarned){
           S.wolfWarned=true;S.wolfHintT=16;
           showCard("⚠ Predator Warning","Wolves!",
@@ -1029,19 +1039,19 @@ function update(dt){
           w.cool=3.0; P.energy-=10; P.hurtT=0.8; S.shakeT=0.35;
           P.x+=Math.cos(w.a)*40; P.y+=Math.sin(w.a)*40;
           S.wolfBites++;
-          if(S.wolfBites>=4){
+          if(S.wolfBites>=3){
             if(S.spareHearts>0){
               S.spareHearts--;S.wolfBites=3;
               toast("💗 The hidden heart burns bright — the killing strike glances off!");
             } else loseGame("wolves");
           }
-          else if(S.wolfBites===3)toast("🐺 BADLY WOUNDED — ONE MORE BITE WILL BRING YOU DOWN! Face them or run! (−10 energy)");
-          else toast("🐺 A wolf tears your flank! Wound "+S.wolfBites+" of 3 — a fourth bite is the end. (−10 energy)");
+          else if(S.wolfBites===2)toast("🐺 BADLY WOUNDED — ONE MORE BITE WILL BRING YOU DOWN! Face them or run! (−10 energy)");
+          else toast("🐺 A wolf tears your flank! Wound "+S.wolfBites+" of 2 — a third bite is the end. (−10 energy)");
         }
       }
     } else {
       w.state="idle"; w.waryT=0;
-      w.engaged=false; w.stalkT=2.2;
+      w.engaged=false; w.stalkT=7;
       w.wt-=dt;
       if(w.wt<=0){w.wt=rand(1.5,3.5);w.a=rand(0,Math.PI*2);}
       const dh=dist(w.x,w.y,w.hx,w.hy);
@@ -1051,6 +1061,7 @@ function update(dt){
     if(inRiver(w.x,w.y)){w.x=wox;w.y=woy;} // balked at the bank
     w.x=clamp(w.x,40,WORLD.w-40); w.y=clamp(w.y,40,WORLD.h-40);
   }
+  if(S.wolves.some(w=>w.retired))S.wolves=S.wolves.filter(w=>!w.retired);
 
   // --- your band: follow in formation, and meet attackers head-on
   {
@@ -1477,14 +1488,14 @@ function update(dt){
         b.cool=b.swatCd; P.energy-=b.dmg; P.hurtT=1.0; S.shakeT=0.5;
         P.x+=Math.cos(b.a)*70; P.y+=Math.sin(b.a)*70;
         S.wolfBites++;
-        if(S.wolfBites>=4){
+        if(S.wolfBites>=3){
           if(S.spareHearts>0){
             S.spareHearts--;S.wolfBites=3;
             toast("💗 The hidden heart burns bright — the grizzly's killing blow glances off!");
           } else loseGame("bear");
         }
-        else if(S.wolfBites===3)toast("🐻 BADLY WOUNDED — ONE MORE STRIKE WILL BRING YOU DOWN! (−20 energy)");
-        else toast("🐻 The grizzly swats you hard! Wound "+S.wolfBites+" of 3 — a fourth strike is the end. (−20 energy)");
+        else if(S.wolfBites===2)toast("🐻 BADLY WOUNDED — ONE MORE STRIKE WILL BRING YOU DOWN! (−20 energy)");
+        else toast("🐻 The grizzly swats you hard! Wound "+S.wolfBites+" of 2 — a third strike is the end. (−20 energy)");
       }
     } else {
       b.state="idle";
@@ -3011,9 +3022,9 @@ function loseGame(cause){
   endScreen(`
     <h2>${wolves?"Brought Down by the Pack":bear?"Brought Down by the Grizzly":"Winded on the Trail"}</h2>
     <p>${wolves
-      ?"The fourth bite finds its mark and your legs buckle in the grass. Wolves win by wearing prey down — a healthy bison that stands its ground is rarely touched, but one that keeps getting caught becomes the hunt."
+      ?"The third bite finds its mark and your legs buckle in the grass. Wolves win by wearing prey down — a healthy bison that stands its ground is rarely touched, but one that keeps getting caught becomes the hunt."
       :bear
-      ?"The grizzly's fourth blow drops you in the sage. A thousand pounds of bear is the one argument on this trail a lone bison cannot win — only a wall of horns, or a stampede, turns it."
+      ?"The grizzly's third blow drops you in the sage. A thousand pounds of bear is the one argument on this trail a lone bison cannot win — only a wall of horns, or a stampede, turns it."
       :"Your legs give out and you bed down in the sage. Even a bison has limits — out here, grass is fuel, and the smart traveler grazes before the tank runs dry."}</p>
     ${wolves||bear?`<div class="rank" style="background:var(--danger)">${wolves?"Taken by Wolves":"Taken by a Grizzly"}</div>`:""}
     <p><b>${S.score} points</b> &middot; waypoint ${S.cpIndex+1} of ${CHECKPOINTS.length} &middot; ${S.grassEaten} tufts grazed</p>
