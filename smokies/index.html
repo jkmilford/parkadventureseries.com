@@ -134,15 +134,15 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
   </sc-if>
 
   <!-- stamina + place readout -->
-  <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:20px;display:flex;flex-direction:column;gap:6px;align-items:center;pointer-events:none;">
+  <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:14px;display:flex;flex-direction:column;gap:6px;align-items:center;pointer-events:none;">
     <div style="display:flex;align-items:center;gap:8px;color:#f3ecd9;font-family:'LatoB',sans-serif;font-size:12px;letter-spacing:.5px;text-shadow:0 1px 4px rgba(0,0,0,.6);">
       <span>🐾 STAMINA</span>
     </div>
-    <div style="width:220px;height:14px;border-radius:8px;background:rgba(20,14,8,.45);border:1px solid rgba(243,236,217,.35);overflow:hidden;">
+    <div style="width:154px;height:14px;border-radius:8px;background:rgba(20,14,8,.45);border:1px solid rgba(243,236,217,.35);overflow:hidden;">
       <div style="height:100%;border-radius:8px;transition:width .25s;width:{{ staminaPct }};background:{{ staminaColor }};"></div>
     </div>
     <div style="color:#f0e3c0;font-size:11px;font-family:'LatoB',sans-serif;text-shadow:0 1px 4px rgba(0,0,0,.6);">{{ staminaNote }}</div>
-    <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start;">
+    <div style="order:-1;display:flex;flex-direction:column;gap:6px;align-items:center;">
       <div style="display:inline-flex;align-items:flex-end;gap:8px;background:rgba(38,28,16,.72);border:1px solid rgba(233,196,106,.35);border-radius:16px;padding:5px 12px;color:#f3ecd9;font-family:'LatoB',sans-serif;font-size:11.5px;">
         <div style="position:relative;width:34px;height:30px;">
           <sc-for list="{{ berryPile }}" as="b" hint-placeholder-count="0">
@@ -198,8 +198,8 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
     <div ref="{{ joyBaseRef }}" sc-camel-on-pointer-down="{{ joyStart }}" sc-camel-on-pointer-move="{{ joyMove }}" sc-camel-on-pointer-up="{{ joyEnd }}" sc-camel-on-pointer-cancel="{{ joyEnd }}" style="position:fixed;left:30px;bottom:44px;width:82px;height:82px;border-radius:50%;background:rgba(38,28,16,.42);border:1.5px solid rgba(233,196,106,.4);touch-action:none;z-index:35;display:flex;align-items:center;justify-content:center;">
       <div ref="{{ joyKnobRef }}" style="width:36px;height:36px;border-radius:50%;background:rgba(233,196,106,.85);border:2px solid #a8391f;box-shadow:0 3px 10px rgba(0,0,0,.4);pointer-events:none;"></div>
     </div>
-    <div ref="{{ catchBtnRef }}" sc-camel-on-pointer-down="{{ pounceBtn }}" style="position:fixed;right:30px;bottom:44px;width:96px;height:96px;border-radius:50%;background:#a8391f;border:2px solid #e9c46a;box-shadow:0 5px 16px rgba(0,0,0,.45);touch-action:none;z-index:35;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#f8ecd6;font-family:'LatoB',sans-serif;user-select:none;">
-      <span style="font-size:34px;line-height:1;">🐾</span>
+    <div ref="{{ catchBtnRef }}" sc-camel-on-pointer-down="{{ pounceBtn }}" style="position:fixed;right:30px;bottom:44px;width:82px;height:82px;border-radius:50%;background:#a8391f;border:2px solid #e9c46a;box-shadow:0 5px 16px rgba(0,0,0,.45);touch-action:none;z-index:35;display:flex;align-items:center;justify-content:center;color:#f8ecd6;font-family:'LatoB',sans-serif;user-select:none;">
+      <span style="font-size:46px;line-height:1;"><svg viewBox="0 0 64 64" width="46" height="46" fill="#f8ecd6"><ellipse cx="32" cy="43" rx="15" ry="12"></ellipse><ellipse cx="14" cy="27" rx="6" ry="8"></ellipse><ellipse cx="25" cy="18" rx="6" ry="8.5"></ellipse><ellipse cx="39" cy="18" rx="6" ry="8.5"></ellipse><ellipse cx="50" cy="27" rx="6" ry="8"></ellipse></svg></span>
     </div>
   </sc-if>
 
@@ -990,8 +990,8 @@ class Component extends DCLogic {
       if (!vv){ return; }
       const cx = vv.offsetLeft + vv.width / 2;
       const bottom = vv.offsetTop + vv.height;
-      if (j){ j.style.left = cx + 'px'; j.style.top = (bottom - 28 - 82) + 'px'; j.style.bottom = 'auto'; }
-      if (c){ c.style.left = (vv.offsetLeft + vv.width - 30 - 96) + 'px'; c.style.top = (bottom - 44 - 96) + 'px'; c.style.right = 'auto'; c.style.bottom = 'auto'; }
+      if (j){ j.style.left = (vv.offsetLeft + 30) + 'px'; j.style.top = (bottom - 44 - 82) + 'px'; j.style.bottom = 'auto'; }
+      if (c){ c.style.left = (vv.offsetLeft + vv.width - 30 - 82) + 'px'; c.style.top = (bottom - 44 - 82) + 'px'; c.style.right = 'auto'; c.style.bottom = 'auto'; }
     };
     if (window.visualViewport){
       window.visualViewport.addEventListener('resize', this.placeTouchCtl);
