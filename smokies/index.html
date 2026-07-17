@@ -52,6 +52,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         e.target.tagName, String(e.target.src || e.target.href || ''));
       return;
     }
+    // Once the game has booted successfully, don't paint the red overlay for
+    // stray errors from the host page, browser extensions, or injected scripts
+    // — just log them. The overlay is only meaningful for a real boot failure.
+    if (window.__bear) {
+      console.warn('[bundle] ignored post-boot error:', e.message || e.type,
+        e.filename ? '(' + String(e.filename).slice(0, 80) + ':' + e.lineno + ')' : '');
+      return;
+    }
     var p = document.body || document.documentElement;
     var d = document.getElementById('__bundler_err') || p.appendChild(document.createElement('div'));
     d.id = '__bundler_err';
