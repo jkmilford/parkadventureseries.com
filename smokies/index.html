@@ -134,7 +134,7 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
   </sc-if>
 
   <!-- stamina + place readout -->
-  <div style="position:absolute;left:20px;bottom:20px;display:flex;flex-direction:column;gap:6px;pointer-events:none;">
+  <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:20px;display:flex;flex-direction:column;gap:6px;align-items:center;pointer-events:none;">
     <div style="display:flex;align-items:center;gap:8px;color:#f3ecd9;font-family:'LatoB',sans-serif;font-size:12px;letter-spacing:.5px;text-shadow:0 1px 4px rgba(0,0,0,.6);">
       <span>🐾 STAMINA</span>
     </div>
@@ -195,7 +195,7 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
 
   <!-- touch controls (mobile / tablet) -->
   <sc-if value="{{ touchCtl }}" hint-placeholder-val="{{ false }}">
-    <div ref="{{ joyBaseRef }}" sc-camel-on-pointer-down="{{ joyStart }}" sc-camel-on-pointer-move="{{ joyMove }}" sc-camel-on-pointer-up="{{ joyEnd }}" sc-camel-on-pointer-cancel="{{ joyEnd }}" style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);width:82px;height:82px;border-radius:50%;background:rgba(38,28,16,.42);border:1.5px solid rgba(233,196,106,.4);touch-action:none;z-index:35;display:flex;align-items:center;justify-content:center;">
+    <div ref="{{ joyBaseRef }}" sc-camel-on-pointer-down="{{ joyStart }}" sc-camel-on-pointer-move="{{ joyMove }}" sc-camel-on-pointer-up="{{ joyEnd }}" sc-camel-on-pointer-cancel="{{ joyEnd }}" style="position:fixed;left:30px;bottom:44px;width:82px;height:82px;border-radius:50%;background:rgba(38,28,16,.42);border:1.5px solid rgba(233,196,106,.4);touch-action:none;z-index:35;display:flex;align-items:center;justify-content:center;">
       <div ref="{{ joyKnobRef }}" style="width:36px;height:36px;border-radius:50%;background:rgba(233,196,106,.85);border:2px solid #a8391f;box-shadow:0 3px 10px rgba(0,0,0,.4);pointer-events:none;"></div>
     </div>
     <div ref="{{ catchBtnRef }}" sc-camel-on-pointer-down="{{ pounceBtn }}" style="position:fixed;right:30px;bottom:44px;width:96px;height:96px;border-radius:50%;background:#a8391f;border:2px solid #e9c46a;box-shadow:0 5px 16px rgba(0,0,0,.45);touch-action:none;z-index:35;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#f8ecd6;font-family:'LatoB',sans-serif;user-select:none;">
