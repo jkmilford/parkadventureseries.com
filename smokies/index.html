@@ -3366,7 +3366,7 @@ class Component extends DCLogic {
     if (hasSmokies && nearVC && !this._bookDelivering && !this.state.bookDelivered){
       this._bookDelivering = true;
       this.setState({ bookDelivered: true }, () => this.saveGame());
-      this.vcRanger = { x: vc.x, y: vc.y + vc.h / 2, ph: 0, dance: true, danceT: 3.4 };
+      this.vcRanger = { x: vc.x, y: vc.y + vc.h / 2, ph: 0, dance: true, danceT: 6.8 };
       this._vcWarned = false; this._vcWarnT = 0;
       SFX.play('success');
       this.showToast('📗 You turned a copy of the Smokies book in at Sugarlands \u2014 the ranger does a happy dance! Your collection copy stays in your pack.');
@@ -3426,7 +3426,7 @@ class Component extends DCLogic {
     if (r.hitCd > 0) r.hitCd -= dt;
     const d = Math.hypot(r.x - bear.x, r.y - bear.y);
     const ang = Math.atan2(bear.y - r.y, bear.x - r.x);
-    const sp = 273 * this.mobSpeedFactor() * dt;
+    const sp = 191 * this.mobSpeedFactor() * dt;
     r.heading = ang; r.ph += dt;
     r.x = clamp(r.x + Math.cos(ang) * sp, 16, this.WORLD_W - 16);
     r.y = clamp(r.y + Math.sin(ang) * sp, 16, this.WORLD_H - 16);
