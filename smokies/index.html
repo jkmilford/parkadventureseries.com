@@ -67,7 +67,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     d.style.cssText = 'position:fixed;bottom:12px;left:12px;right:12px;font:12px/1.4 ui-monospace,monospace;background:#2a1215;color:#ff8a80;padding:10px 14px;border-radius:8px;border:1px solid #5c2b2e;z-index:99999;white-space:pre-wrap;max-height:40vh;overflow:auto';
     d.textContent = (d.textContent ? d.textContent + String.fromCharCode(10) : '') +
       '[bundle] ' + (e.message || e.type) +
-      (e.filename ? ' (' + e.filename.slice(0, 60) + ':' + e.lineno + ')' : '');
+      String.fromCharCode(10) + 'src: ' + (e.filename || '(inline/unknown)') + ':' + e.lineno + ':' + e.colno +
+      (e.error && e.error.stack ? String.fromCharCode(10) + String(e.error.stack).split(String.fromCharCode(10)).slice(0,4).join(String.fromCharCode(10)) : '');
   }, true);
 
   try {
@@ -173,13 +174,21 @@ document.addEventListener('DOMContentLoaded', async function() {
     // createElement so they execute, awaiting onload for src scripts to
     // preserve ordering (React before ReactDOM before Babel before text/babel).
     const doc = new DOMParser().parseFromString(template, 'text/html');
-    // Adopt the parsed root INTO this document before swapping. Passing a node
-    // that still belongs to the DOMParser document straight into replaceWith is
-    // a cross-document move that some Safari/WebView builds reject, which can
-    // leave document.documentElement null and break everything downstream.
-    const newRoot = document.importNode(doc.documentElement, true);
-    document.replaceChild(newRoot, document.documentElement);
-    const dead = Array.from(document.scripts);
+    // NON-DESTRUCTIVE SWAP. Do NOT replace document.documentElement — when this
+    // file is served inside a host that injects its own scripts (Cloudflare
+    // Rocket Loader, tag managers, site-builder chrome), wiping the root element
+    // destroys nodes those scripts hold references to, and they then throw
+    // "Cannot read properties of null (reading 'document')" on every device.
+    // Instead: merge the bundle's <head> into the live head and swap only <body>.
+    const preexisting = new Set(document.querySelectorAll('script'));
+    const curHead = document.head || document.documentElement.appendChild(document.createElement('head'));
+    if (doc.head) Array.from(doc.head.childNodes).forEach(function(n){ curHead.appendChild(document.importNode(n, true)); });
+    const newBody = document.importNode(doc.body, true);
+    if (document.body) document.body.replaceWith(newBody);
+    else document.documentElement.appendChild(newBody);
+    // Recreate ONLY the scripts the bundle added — never the host's or our own
+    // unpack script (which would re-run and loop).
+    const dead = Array.from(document.scripts).filter(function(s){ return !preexisting.has(s); });
     for (const old of dead) {
       const s = document.createElement('script');
       for (const a of old.attributes) s.setAttribute(a.name, a.value);
