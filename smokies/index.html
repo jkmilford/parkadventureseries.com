@@ -60,7 +60,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         e.filename ? '(' + String(e.filename).slice(0, 80) + ':' + e.lineno + ')' : '');
       return;
     }
-    var p = document.body || document.documentElement;
+    var p = document.body || document.documentElement || document;
+    if (!p || !p.appendChild) { console.error('[bundle]', e.message || e.type); return; }
     var d = document.getElementById('__bundler_err') || p.appendChild(document.createElement('div'));
     d.id = '__bundler_err';
     d.style.cssText = 'position:fixed;bottom:12px;left:12px;right:12px;font:12px/1.4 ui-monospace,monospace;background:#2a1215;color:#ff8a80;padding:10px 14px;border-radius:8px;border:1px solid #5c2b2e;z-index:99999;white-space:pre-wrap;max-height:40vh;overflow:auto';
@@ -172,7 +173,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     // createElement so they execute, awaiting onload for src scripts to
     // preserve ordering (React before ReactDOM before Babel before text/babel).
     const doc = new DOMParser().parseFromString(template, 'text/html');
-    document.documentElement.replaceWith(doc.documentElement);
+    // Adopt the parsed root INTO this document before swapping. Passing a node
+    // that still belongs to the DOMParser document straight into replaceWith is
+    // a cross-document move that some Safari/WebView builds reject, which can
+    // leave document.documentElement null and break everything downstream.
+    const newRoot = document.importNode(doc.documentElement, true);
+    document.replaceChild(newRoot, document.documentElement);
     const dead = Array.from(document.scripts);
     for (const old of dead) {
       const s = document.createElement('script');
