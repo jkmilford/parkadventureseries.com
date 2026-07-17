@@ -33,7 +33,7 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
   <canvas ref="{{ canvasRef }}" style="position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;"></canvas>
 
   <!-- top HUD -->
-  <div style="position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:14px;padding:14px 20px 8px;background:linear-gradient(180deg,rgba(30,22,12,.7),rgba(30,22,12,0));pointer-events:none;">
+  <div style="position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:14px;padding:14px 20px 8px;background:linear-gradient(180deg,rgba(30,22,12,.7),rgba(30,22,12,0));pointer-events:none;z-index:74;">
     <div style="margin-left:auto;display:flex;gap:9px;flex-direction:{{ hudDir }};align-items:flex-end;pointer-events:auto;">
       <div style="display:flex;align-items:center;gap:7px;background:rgba(38,28,16,.72);border:1px solid rgba(233,196,106,.4);border-radius:20px;padding:6px 13px;color:#f7efd8;font-family:'LatoB',sans-serif;font-size:13px;">
         <span>🦎</span><span>{{ foundCount }}/30</span>
@@ -48,12 +48,12 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
   </div>
 
   <!-- date/time chip (top center) -->
-  <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:7px;background:rgba(38,28,16,.72);border:1px solid rgba(233,196,106,.4);border-radius:20px;padding:6px 13px;color:#f7efd8;font-family:'LatoB',sans-serif;font-size:13px;white-space:nowrap;z-index:21;">
+  <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:7px;background:rgba(38,28,16,.72);border:1px solid rgba(233,196,106,.4);border-radius:20px;padding:6px 13px;color:#f7efd8;font-family:'LatoB',sans-serif;font-size:13px;white-space:nowrap;z-index:74;">
     <span>{{ clockLabel }}</span>
   </div>
 
   <!-- field journal button (top left) -->
-  <div sc-camel-on-click="{{ toggleJournal }}" style="position:absolute;left:14px;top:14px;z-index:22;cursor:pointer;display:flex;align-items:center;gap:8px;background:#a8391f;border:1px solid #e9c46a;border-radius:20px;padding:7px 16px;color:#f8ecd6;font-family:'LatoB',sans-serif;font-size:13px;box-shadow:0 3px 10px rgba(0,0,0,.35);">
+  <div sc-camel-on-click="{{ toggleJournal }}" style="position:absolute;left:14px;top:14px;z-index:74;cursor:pointer;display:flex;align-items:center;gap:8px;background:#a8391f;border:1px solid #e9c46a;border-radius:20px;padding:7px 16px;color:#f8ecd6;font-family:'LatoB',sans-serif;font-size:13px;box-shadow:0 3px 10px rgba(0,0,0,.35);">
     <span>Field Journal</span>
   </div>
 
@@ -121,7 +121,7 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
 
   <!-- cave fact card -->
   <sc-if value="{{ caveFact }}" hint-placeholder-val="{{ false }}">
-    <div style="position:absolute;bottom:64px;left:50%;transform:translateX(-50%);z-index:20;width:430px;max-width:86vw;background:rgba(38,28,16,.93);border:1px solid rgba(233,196,106,.5);border-radius:11px;padding:13px 17px;animation:fadeIn .4s;">
+    <div style="position:absolute;top:52px;left:50%;transform:translateX(-50%);z-index:20;width:430px;max-width:86vw;background:rgba(38,28,16,.93);border:1px solid rgba(233,196,106,.5);border-radius:11px;padding:13px 17px;animation:fadeIn .4s;">
       <div style="display:flex;align-items:flex-start;gap:10px;">
         <span style="font-size:17px;">🔦</span>
         <div style="flex:1;">
@@ -922,9 +922,9 @@ class Component extends DCLogic {
     this.caveHikers = [];
     // placed field gear: an old specimen jar cached at Elkmont, a net left at Cades Cove
     this.netDrops = [
-      { x: 250 * this.CELL, y: 44 * this.CELL, t: 0, kind: 'bottle', placed: true },
+      { x: 250 * this.CELL, y: 58 * this.CELL, t: 0, kind: 'bottle', placed: true },
       { x: 95 * this.CELL, y: 116 * this.CELL, t: 0, kind: 'net', placed: true },
-      { x: 430 * this.CELL, y: 82 * this.CELL, t: 0, kind: 'honey', placed: true },
+      { x: 430 * this.CELL, y: 98 * this.CELL, t: 0, kind: 'honey', placed: true },
       { x: 305 * this.CELL, y: 12 * this.CELL, t: 0, kind: 'book', title: 'Yosemite Trivia & Activities', placed: true },
       { x: 436 * this.CELL, y: 85 * this.CELL, t: 0, kind: 'book', title: 'Zion Trivia & Activities', placed: true }
     ];
@@ -2926,8 +2926,9 @@ class Component extends DCLogic {
       if (db < 120){
         r.flee = 1.2;
         const fa = Math.atan2(dyb, dxb);
-        r.x += Math.cos(fa) * (150 - db) * dt * 1.4;
-        r.y += Math.sin(fa) * (150 - db) * dt * 1.4;
+        const nx = r.x + Math.cos(fa) * (150 - db) * dt * 1.4;
+        const ny = r.y + Math.sin(fa) * (150 - db) * dt * 1.4;
+        if (distToPolyline(nx, ny, pts) < 40){ r.x = nx; r.y = ny; }
         r.heading = fa; r.paddle += dt * 9;
         r.ph += dt; continue;
       }
