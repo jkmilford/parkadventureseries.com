@@ -875,7 +875,7 @@ class Component extends DCLogic {
     muted: false, wildlifeCard: null, seenWildlife: [], berries: 0, introSeen: false, fireflyCount: 0,
     syncSeen: false, caveSeen: false, syncOpen: false, caveIntroOpen: false, caveFact: null, caveFactName: '', netSwings: 0, bottleUses: 0, scares: 0, rangerActive: false,
     mapOpen: false,
-    books: [], seriesComplete: false, seriesAwardOpen: false, bookDelivered: false
+    books: [], seriesComplete: false, seriesAwardOpen: false, bookDelivered: false, booksTurnedIn: false, salamanderBook: false
   };
 
   openMap = () => this.setState({ mapOpen: true });
@@ -931,7 +931,7 @@ class Component extends DCLogic {
     this.caveNetDrops = [];
     this.ranger = null;
     this.tourists = [];
-    this._gburgSeen = false; this._gburgSignT = 0;
+    this._gburgSeen = false; this._gburgSignT = 0; this._shopHintT = 0;
     this._vcWarnT = 0; this._vcWarned = false; this.vcRanger = null;
     this._frozenT = 0;
     this.shake = 0;
@@ -1084,7 +1084,7 @@ class Component extends DCLogic {
         foundIds: sv.foundIds || [], timeMin: sv.timeMin ?? 480, day: sv.day ?? 1,
         stamina: sv.stamina ?? 100, trackedId: sv.trackedId ?? null, berries: clamp(sv.berries ?? 0, 0, 10), introSeen: sv.introSeen ?? false, fireflyCount: clamp(sv.fireflyCount ?? 0, 0, 9),
         syncSeen: !!sv.syncSeen, caveSeen: !!sv.caveSeen, netSwings: clamp(sv.netSwings ?? 0, 0, 99), bottleUses: clamp(sv.bottleUses ?? 0, 0, 99),
-        books: sv.books || [], bookDelivered: !!sv.bookDelivered, seriesComplete: !!sv.seriesComplete,
+        books: sv.books || [], bookDelivered: !!sv.bookDelivered, seriesComplete: !!sv.seriesComplete, salamanderBook: !!sv.salamanderBook, booksTurnedIn: !!sv.booksTurnedIn,
         completeSeen: (sv.foundIds || []).length >= 30
       });
       this._stAccum = sv.stamina ?? 100;
@@ -1114,7 +1114,7 @@ class Component extends DCLogic {
       trackedId: null, completed: false, completeSeen: false, toast: null,
       berries: 0, fireflyCount: 0, syncSeen: false, caveSeen: false, netSwings: 0, bottleUses: 0, scares: 0, rangerActive: false, gameOver: false, rangerWarnOpen: false,
       syncOpen: false, caveIntroOpen: false, caveFact: null,
-      books: [], seriesComplete: false, seriesAwardOpen: false, bookDelivered: false
+      books: [], seriesComplete: false, seriesAwardOpen: false, bookDelivered: false, booksTurnedIn: false, salamanderBook: false
     });
   };
 
@@ -1127,7 +1127,7 @@ class Component extends DCLogic {
         y: Math.round(this.inCave && this._outside ? this._outside.y : this.bear.y),
         trackedId: this.state.trackedId, berries: this.state.berries || 0, introSeen: this.state.introSeen,
         fireflyCount: this.state.fireflyCount || 0, syncSeen: !!this.state.syncSeen, caveSeen: !!this.state.caveSeen, netSwings: this.state.netSwings || 0, bottleUses: this.state.bottleUses || 0,
-        books: this.state.books || [], bookDelivered: !!this.state.bookDelivered, seriesComplete: !!this.state.seriesComplete
+        books: this.state.books || [], bookDelivered: !!this.state.bookDelivered, seriesComplete: !!this.state.seriesComplete, salamanderBook: !!this.state.salamanderBook, booksTurnedIn: !!this.state.booksTurnedIn
       }));
     } catch (e) {}
   }
@@ -1285,6 +1285,8 @@ class Component extends DCLogic {
     this.buildings.push({ x: 300 * CELL, y: 6 * CELL, w: 6, h: 6, roof: '#b0b4bc', tower: true });
     // Sugarlands Visitor Center — a single larger NPS building with a parking apron
     this.vc = { x: 322 * CELL, y: 50 * CELL, w: 30, h: 20, roof: '#5a3f2a' };
+    this.bookshop = { x: 296 * CELL, y: 22 * CELL, w: 12, h: 9, roof: '#c24a2e', bookshop: true };
+    this.buildings.push(this.bookshop);
 
     // historic settlements: rustic log cabins, barns and churches (browns/greys)
     const cabinRoofs = ['#5a4130', '#6b5136', '#4f4636', '#6d5a3e', '#54463a'];
@@ -1791,6 +1793,19 @@ class Component extends DCLogic {
         w.fillStyle = '#7f858d'; w.beginPath(); w.arc(x, y - 2, 3, 0, 7); w.fill();
         continue;
       }
+      if (b.bookshop){
+        w.fillStyle = 'rgba(20,16,10,0.3)'; w.fillRect(x - b.w / 2 + 2, y - b.h / 2 + 3, b.w, b.h);
+        w.fillStyle = '#9a5a3a'; w.fillRect(x - b.w / 2, y - b.h / 2, b.w, b.h);
+        w.fillStyle = b.roof; w.fillRect(x - b.w / 2 - 1, y - b.h / 2 - 2.5, b.w + 2, 3);
+        w.fillStyle = '#2f6d4a'; w.fillRect(x - b.w / 2, y + b.h / 2 - 3, b.w, 3);
+        w.fillStyle = '#cfe0ea'; w.fillRect(x - b.w / 2 + 1.4, y - 1, 2.6, 2.6);
+        w.fillStyle = '#e9d9a8'; w.fillRect(x - 1.4, y + b.h / 2 - 3, 2.8, 3);
+        w.fillStyle = '#3a2a18'; w.fillRect(x - 12, y - b.h / 2 - 9, 24, 6);
+        w.strokeStyle = '#e9c46a'; w.lineWidth = 0.6; w.strokeRect(x - 12, y - b.h / 2 - 9, 24, 6);
+        w.fillStyle = '#f3ecd9'; w.font = '700 4.4px LatoB, sans-serif'; w.textAlign = 'center';
+        w.fillText('THE NEXT CHAPTER', x, y - b.h / 2 - 4.6);
+        continue;
+      }
       w.fillStyle = 'rgba(20,16,10,0.28)'; w.fillRect(x - b.w / 2 + 2, y - b.h / 2 + 3, b.w, b.h);
       if (b.rustic){
         // log-cabin walls with a shingled gable; churches get a little steeple
@@ -1881,8 +1896,9 @@ class Component extends DCLogic {
     this.critters = this.critters.filter((c) => Math.hypot(c.x - bear.x, c.y - bear.y) < 720 && !c.dead && !foundNow.has(c.sp.id));
     this.critterTimer -= dt;
     if (this.critterTimer <= 0){
-      this.critterTimer = 0.7;
-      const maxC = 8;
+      const boost = this.state.salamanderBook && (this.inCave || this.isWater(bear.x, bear.y));
+      this.critterTimer = boost ? 0.3 : 0.7;
+      const maxC = boost ? 24 : 8;
       if (this.critters.length < maxC){
         const tp = this.timePeriod(), weather = this.state.weather;
         const foundSet = new Set(this.state.foundIds);
@@ -2601,7 +2617,7 @@ class Component extends DCLogic {
       const len = Math.hypot(mx, my); mx /= len; my /= len;
       const staminaFactor = this.state.stamina < 18 ? 0.55 : 1;
       const swimF = this.isWater(this.bear.x, this.bear.y) ? 0.72 : 1;
-      const speed = 190 * (sprinting ? 0.98 : 1) * staminaFactor * this.mobSpeedFactor() * swimF * dt;
+      const speed = 262 * (sprinting ? 0.98 : 1) * staminaFactor * this.mobSpeedFactor() * swimF * dt;
       const BW = this.inCave ? this.inCave.w : this.inDome ? this.inDome.w : this.WORLD_W, BH = this.inCave ? this.inCave.h : this.inDome ? this.inDome.h : this.WORLD_H;
       const nbx = clamp(this.bear.x + mx * speed, 16, BW - 16);
       const nby = clamp(this.bear.y + my * speed, 16, BH - 16);
@@ -3400,6 +3416,20 @@ class Component extends DCLogic {
     const gx = 305 * CELL, gy = 26 * CELL;
     const nearG = Math.hypot(bx - gx, by - gy) < 150;
     this._nearGburg = nearG;
+    const shop = this.bookshop;
+    if (shop){
+      const nearShop = Math.hypot(bx - shop.x, by - shop.y) < 95;
+      const nBooks = (this.state.books || []).length;
+      if (this._shopHintT > 0) this._shopHintT -= dt;
+      if (nearShop && nBooks >= 5 && !this.state.salamanderBook){
+        this.setState({ salamanderBook: true, booksTurnedIn: true }, () => this.saveGame());
+        SFX.play('rank');
+        this.showToast('\uD83D\uDCDA You delivered all 5 books to The Next Chapter Bookshop! They gift you \u201cSmoky Mountain Salamanders\u201d \u2014 now 3\u00d7 as many salamanders appear in caves and creeks!');
+      } else if (nearShop && nBooks < 5 && !this.state.salamanderBook && this._shopHintT <= 0){
+        this._shopHintT = 10;
+        this.showToast('\uD83D\uDCD6 The Next Chapter Bookshop: bring all 5 trivia & activity books for a special salamander guide! (' + nBooks + '/5)');
+      }
+    }
     if (this._gburgSignT > 0) this._gburgSignT -= dt;
     if (nearG && !this._gburgSeen){
       this._gburgSeen = true;
@@ -3497,7 +3527,7 @@ class Component extends DCLogic {
     if (r.hitCd > 0) r.hitCd -= dt;
     const d = Math.hypot(r.x - bear.x, r.y - bear.y);
     const ang = Math.atan2(bear.y - r.y, bear.x - r.x);
-    const sp = 229 * this.mobSpeedFactor() * dt;
+    const sp = 286 * this.mobSpeedFactor() * dt;
     r.heading = ang; r.ph += dt;
     r.x = clamp(r.x + Math.cos(ang) * sp, 16, this.WORLD_W - 16);
     r.y = clamp(r.y + Math.sin(ang) * sp, 16, this.WORLD_H - 16);
