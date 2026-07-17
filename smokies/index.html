@@ -33,7 +33,7 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
   <canvas ref="{{ canvasRef }}" style="position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;"></canvas>
 
   <!-- top HUD -->
-  <div style="position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:14px;padding:8px 20px;background:linear-gradient(180deg,rgba(30,22,12,.7),rgba(30,22,12,0));pointer-events:none;">
+  <div style="position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:14px;padding:14px 20px 8px;background:linear-gradient(180deg,rgba(30,22,12,.7),rgba(30,22,12,0));pointer-events:none;">
     <div style="margin-left:auto;display:flex;gap:9px;flex-direction:{{ hudDir }};align-items:flex-end;pointer-events:auto;">
       <div style="display:flex;align-items:center;gap:7px;background:rgba(38,28,16,.72);border:1px solid rgba(233,196,106,.4);border-radius:20px;padding:6px 13px;color:#f7efd8;font-family:'LatoB',sans-serif;font-size:13px;">
         <span>🦎</span><span>{{ foundCount }}/30</span>
@@ -43,13 +43,13 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
           <span>📚</span><span>{{ bookCount }}/5</span>
         </div>
       </sc-if>
-      <div sc-camel-on-click="{{ toggleMute }}" title="Sound on/off" style="cursor:pointer;display:flex;align-items:center;justify-content:center;width:34px;height:34px;background:rgba(38,28,16,.72);border:1px solid rgba(233,196,106,.4);border-radius:50%;color:#f7efd8;font-size:14px;">{{ muteIcon }}</div>
+      
     </div>
   </div>
 
   <!-- date/time chip (top center) -->
-  <div style="position:absolute;top:44px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:7px;background:rgba(38,28,16,.72);border:1px solid rgba(233,196,106,.4);border-radius:20px;padding:6px 13px;color:#f7efd8;font-family:'LatoB',sans-serif;font-size:13px;white-space:nowrap;z-index:21;">
-    <span>{{ clockIcon }}</span><span>{{ clockLabel }}</span>
+  <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:7px;background:rgba(38,28,16,.72);border:1px solid rgba(233,196,106,.4);border-radius:20px;padding:6px 13px;color:#f7efd8;font-family:'LatoB',sans-serif;font-size:13px;white-space:nowrap;z-index:21;">
+    <span>{{ clockLabel }}</span>
   </div>
 
   <!-- field journal button (top left) -->
@@ -213,6 +213,14 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
     <div style="position:fixed;top:38%;left:50%;transform:translate(-50%,-50%);animation:modalIn .3s ease-out;background:rgba(70,20,14,.95);border:1.5px solid #e9c46a;color:#f8ecd6;padding:16px 30px;border-radius:14px;box-shadow:0 10px 34px rgba(0,0,0,.55);white-space:nowrap;z-index:33;text-align:center;">
       <div style="font-family:'Chunk',serif;font-size:22px;color:#f3c94a;letter-spacing:.5px;">🚨 Ranger is Coming!</div>
       <div style="font-family:'LatoB',sans-serif;font-size:14px;color:#f8ecd6;margin-top:6px;">Find a cave and hide!</div>
+    </div>
+  </sc-if>
+
+  <!-- clingmans dome escape countdown -->
+  <sc-if value="{{ domeEscape }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;top:38%;left:50%;transform:translate(-50%,-50%);animation:modalIn .3s ease-out;background:rgba(70,20,14,.95);border:1.5px solid #e9c46a;color:#f8ecd6;padding:16px 30px;border-radius:14px;text-align:center;z-index:60;box-shadow:0 10px 40px rgba(0,0,0,.5);">
+      <div style="font-family:'Chunk',serif;font-size:22px;color:#f3c94a;letter-spacing:.5px;">🚔 Get Off the Dome!</div>
+      <div style="font-family:'LatoB',sans-serif;font-size:30px;color:#f8ecd6;margin-top:4px;">{{ domeEscapeLeft }}s</div>
     </div>
   </sc-if>
 
@@ -882,8 +890,8 @@ class Component extends DCLogic {
     this.touch = { x: 0, y: 0, mag: 0 };
     try { this.buildWorld(); } catch (err) { window.__bearErr = String(err && err.stack || err); console.error('buildWorld failed:', err); }
     window.__bear = this;
-    this.bear = { x: 740, y: 470, facing: 1, heading: 0, moving: false, pounce: 0 };
-    this.camera = { x: 740, y: 470 };
+    this.bear = { x: 740, y: 582, facing: 1, heading: 0, moving: false, pounce: 0 };
+    this.camera = { x: 740, y: 582 };
     this.keys = new Set();
     this.weatherTimer = 90;
     this.critters = [];
@@ -1090,8 +1098,8 @@ class Component extends DCLogic {
   resetGame = () => {
     try { localStorage.removeItem(SAVE_KEY); } catch (e) {}
     this._save = null; this.hasSave = false;
-    this.bear.x = 740; this.bear.y = 470;
-    this.camera.x = 740; this.camera.y = 470;
+    this.bear.x = 740; this.bear.y = 582;
+    this.camera.x = 740; this.camera.y = 582;
     this._stAccum = 100;
     this.catchAnim = null; this.critters = []; this.trackTarget = null;
     this.ranger = null;
@@ -1155,7 +1163,7 @@ class Component extends DCLogic {
 
   // ================= WORLD GENERATION =================
   buildWorld(){
-    const GRID_W = 660, GRID_H = 214, CELL = 7;
+    const GRID_W = 660, GRID_H = 230, CELL = 7, NPAD = 16;
     this.GRID_W = GRID_W; this.GRID_H = GRID_H; this.CELL = CELL;
     this.WORLD_W = GRID_W * CELL; this.WORLD_H = GRID_H * CELL;
     const noise = makeNoise2D(1337), noise2 = makeNoise2D(9042);
@@ -1166,7 +1174,7 @@ class Component extends DCLogic {
       [335, 80, 6643], [372, 82, 5820], [400, 84, 5046], [430, 82, 6593], [460, 84, 6621],
       [500, 88, 5842], [560, 96, 4500], [640, 106, 2000]
     ];
-    this.spine = spine;
+    for (const s of spine) s[1] += NPAD; this.spine = spine;
     const rawRivers = [
       { name: 'Little River', pts: [[320, 82], [300, 62], [255, 46], [190, 36], [110, 30], [40, 28]] },
       { name: 'Abrams Creek', pts: [[190, 92], [150, 106], [95, 114], [40, 124]] },
@@ -1184,9 +1192,12 @@ class Component extends DCLogic {
     ];
     // Fontana Lake — the reservoir along the park's southwest boundary
     const rawLake = [[66, 198], [100, 201], [140, 197], [180, 200], [220, 196], [258, 192], [296, 189], [330, 187]];
-    this.lake = { name: 'Fontana Lake', pts: catmullRom(rawLake.map((p) => [p[0] * CELL, p[1] * CELL]), 12) };
+    for (const p of rawLake) p[1] += NPAD; this.lake = { name: 'Fontana Lake', pts: catmullRom(rawLake.map((p) => [p[0] * CELL, p[1] * CELL]), 12) };
     this.lakeGridPts = rawLake;
-    this.rivers = rawRivers.map((r) => ({ name: r.name, pts: meander(catmullRom(r.pts.map((p) => [p[0] * CELL, p[1] * CELL]), 12), 8, 0.28) }));
+    this.rafts = [];
+    { const lp = this.lake.pts, LN = lp.length, raftCols = [['#c85a3a', '#2f6d8c'], ['#c9a23a', '#4a7a4e'], ['#8a4a6d', '#c85a3a']];
+      for (let i = 0; i < 3; i++) this.rafts.push({ seg: (i / 3) * (LN - 1), sp: 6 + i * 2, ph: Math.random() * 10, paddle: Math.random() * 6, people: raftCols[i], x: lp[0][0], y: lp[0][1], heading: 0 }); }
+    for (const r of rawRivers) for (const p of r.pts) p[1] += NPAD; this.rivers = rawRivers.map((r) => ({ name: r.name, pts: meander(catmullRom(r.pts.map((p) => [p[0] * CELL, p[1] * CELL]), 12), 8, 0.28) }));
     // Real GSMNP main roads, fitted to this map's geography:
     // US-441 crosses the crest at Newfound Gap (Gatlinburg side follows the
     // W. Prong Little Pigeon, Cherokee side follows the Oconaluftee).
@@ -1202,7 +1213,7 @@ class Component extends DCLogic {
       { name: 'Cades Cove Loop', pts: [[95, 114], [110, 108], [118, 116], [112, 126], [95, 130], [78, 126], [72, 116], [80, 108], [95, 114]] },
       { name: 'Cove Creek Rd', pts: [[640, 118], [618, 124], [598, 132], [575, 138]] }
     ];
-    this.roads = rawRoads.map((r) => ({ name: r.name, pts: catmullRom(r.pts.map((p) => [p[0] * CELL, p[1] * CELL]), 10) }));
+    for (const r of rawRoads) for (const p of r.pts) p[1] += NPAD; this.roads = rawRoads.map((r) => ({ name: r.name, pts: catmullRom(r.pts.map((p) => [p[0] * CELL, p[1] * CELL]), 10) }));
     // slow sightseeing cars looping Cades Cove, stopping to photograph wildlife
     const loop = this.roads.find((r) => r.name === 'Cades Cove Loop');
     this.coveCars = [];
@@ -1299,7 +1310,7 @@ class Component extends DCLogic {
     this.buildings.push({ x: 430 * CELL, y: 82 * CELL, w: 15, h: 11, roof: '#5a4130', rustic: true, lodge: true });
     this.landmarks.push({ x: 430 * CELL, y: 82 * CELL, name: 'LeConte Lodge', peak: false });
 
-    const elev = new Float32Array(GRID_W * GRID_H);
+    const NDY = NPAD * CELL; for (const s of this.special) s.y += NDY; for (const f of this.falls) f.y += NDY; for (const l of this.landmarks) l.y += NDY; for (const b of this.buildings) b.y += NDY; for (const cv of this.CAVES) cv.y += NDY; this.DOME.y += NDY; this.vc.y += NDY; const elev = new Float32Array(GRID_W * GRID_H);
     const distRiver = new Float32Array(GRID_W * GRID_H);
     const distLake = new Float32Array(GRID_W * GRID_H);
     const gridRivers = rawRivers.map((r) => r.pts);
@@ -2589,7 +2600,8 @@ class Component extends DCLogic {
     if (moving && this._frozenT <= 0){
       const len = Math.hypot(mx, my); mx /= len; my /= len;
       const staminaFactor = this.state.stamina < 18 ? 0.55 : 1;
-      const speed = 185 * (sprinting ? 1.65 : 1) * staminaFactor * this.mobSpeedFactor() * dt;
+      const swimF = this.isWater(this.bear.x, this.bear.y) ? 0.72 : 1;
+      const speed = 266 * (sprinting ? 1.65 : 1) * staminaFactor * this.mobSpeedFactor() * swimF * dt;
       const BW = this.inCave ? this.inCave.w : this.inDome ? this.inDome.w : this.WORLD_W, BH = this.inCave ? this.inCave.h : this.inDome ? this.inDome.h : this.WORLD_H;
       const nbx = clamp(this.bear.x + mx * speed, 16, BW - 16);
       const nby = clamp(this.bear.y + my * speed, 16, BH - 16);
@@ -2624,6 +2636,7 @@ class Component extends DCLogic {
     }
     for (const p of this.pawPrints) p.t += dt;
     this.bear.moving = moving && this._frozenT <= 0;
+    this.bear.swim = !this.inCave && !this.inDome && this.isWater(this.bear.x, this.bear.y);
     this.bear.sprinting = sprinting;
     this.camera.x = this.bear.x; this.camera.y = this.bear.y;
 
@@ -2643,11 +2656,13 @@ class Component extends DCLogic {
 
     this.updateCritters(dt);
     this.updateHikers(dt);
+    if (this.inDome) this.updateDomeHikers(dt);
     this.pickupNets(dt);
     this.updateRanger(dt);
     if (!this.inCave && !this.inDome) this.updateTownEvents(dt);
     if (!this.inCave && !this.inDome){
       this.updateAnimals(dt);
+      this.updateRafts(dt);
       this.updateRivals(dt);
     }
     this.stepParticles(dt);
@@ -2881,6 +2896,54 @@ class Component extends DCLogic {
       ctx.restore();
     }
   }
+  isWater(x, y){
+    if (this.inCave || this.inDome) return false;
+    if (this.lake && distToPolyline(x, y, this.lake.pts) < 42) return true;
+    for (const r of (this.rivers || [])){ if (distToPolyline(x, y, r.pts) < 9) return true; }
+    return false;
+  }
+  updateRafts(dt){
+    const pts = this.lake && this.lake.pts; if (!pts) return;
+    const N = pts.length;
+    for (const r of (this.rafts || [])){
+      const dxb = r.x - this.bear.x, dyb = r.y - this.bear.y, db = Math.hypot(dxb, dyb);
+      if (db < 120){
+        r.flee = 1.2;
+        const fa = Math.atan2(dyb, dxb);
+        r.x += Math.cos(fa) * (150 - db) * dt * 1.4;
+        r.y += Math.sin(fa) * (150 - db) * dt * 1.4;
+        r.heading = fa; r.paddle += dt * 9;
+        r.ph += dt; continue;
+      }
+      if (r.flee > 0){ r.flee -= dt; r.paddle += dt * 6; r.ph += dt; continue; }
+      r.seg += r.sp * dt * 0.02;
+      if (r.seg >= N - 1) r.seg -= (N - 1);
+      r.ph += dt; r.paddle += dt * 3;
+      const i = Math.floor(r.seg), f = r.seg - i, a = pts[i], b = pts[Math.min(i + 1, N - 1)];
+      r.x = a[0] + (b[0] - a[0]) * f; r.y = a[1] + (b[1] - a[1]) * f + Math.sin(r.ph * 1.3) * 2;
+      r.heading = Math.atan2(b[1] - a[1], b[0] - a[0]);
+    }
+  }
+  drawRafts(ctx, ox, oy){
+    for (const r of (this.rafts || [])){
+      const x = r.x - ox, y = r.y - oy;
+      if (x < -40 || y < -40 || x > this.viewW + 40 || y > this.viewH + 40) continue;
+      ctx.strokeStyle = 'rgba(255,255,255,0.22)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.ellipse(x, y + 7, 15 + Math.sin(r.ph) * 2, 5, 0, 0, Math.PI); ctx.stroke();
+      ctx.save(); ctx.translate(x, y); ctx.rotate(r.heading || 0);
+      ctx.fillStyle = 'rgba(20,40,50,0.28)'; ctx.beginPath(); ctx.ellipse(0, 5, 20, 9, 0, 0, 7); ctx.fill();
+      ctx.fillStyle = '#d8b24a'; ctx.beginPath(); ctx.ellipse(0, 0, 18, 8, 0, 0, 7); ctx.fill();
+      ctx.fillStyle = '#c49a34'; ctx.beginPath(); ctx.ellipse(0, 0, 12, 4.5, 0, 0, 7); ctx.fill();
+      (r.people || []).forEach((col, k) => {
+        const px = -5 + k * 10;
+        ctx.fillStyle = col; ctx.beginPath(); ctx.arc(px, -1, 3.4, 0, 7); ctx.fill();
+        ctx.fillStyle = '#e8c9a0'; ctx.beginPath(); ctx.arc(px, -5, 2.2, 0, 7); ctx.fill();
+      });
+      ctx.strokeStyle = '#7a5a34'; ctx.lineWidth = 1.6; const pa = Math.sin(r.paddle) * 0.5;
+      ctx.beginPath(); ctx.moveTo(-2, -1); ctx.lineTo(-14, 6 + pa * 6); ctx.stroke();
+      ctx.restore();
+    }
+  }
   drawBear(ctx, sx, sy, scale){
     const heading = this.bear.heading ?? (this.bear.facing === 1 ? 0 : Math.PI);
     const facing = Math.cos(heading) >= 0 ? 1 : -1;
@@ -2896,6 +2959,14 @@ class Component extends DCLogic {
     const pounceSquash = this.bear.pounce > 0 ? 1 - Math.sin((0.35 - this.bear.pounce) / 0.35 * Math.PI) * 0.18 : 1;
     ctx.save();
     ctx.translate(sx, sy - bob);
+    if (this.bear.swim){
+      ctx.save();
+      ctx.fillStyle = 'rgba(40,70,90,0.28)'; ctx.beginPath(); ctx.ellipse(0, 7, 16, 7, 0, 0, 7); ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.35)'; ctx.lineWidth = 1.4;
+      const rp = performance.now() / 500;
+      for (let i = 0; i < 2; i++){ const rr = 12 + i * 7 + Math.sin(rp + i) * 1.5; ctx.beginPath(); ctx.ellipse(0, 6, rr, rr * 0.5, 0, 0, Math.PI * 2); ctx.stroke(); }
+      ctx.restore();
+    }
     // mostly-vertical movement → draw top-down view (back of the bear, paws at sides)
     if (Math.abs(Math.sin(heading)) > 0.38){
       this.drawBearTop(ctx, heading, scale, gait, stride, moving, pounceSquash);
@@ -3326,7 +3397,7 @@ class Component extends DCLogic {
   updateTownEvents(dt){
     const CELL = this.CELL, bx = this.bear.x, by = this.bear.y;
     // ---- Gatlinburg: warning sign pops up, tourists rush out to take photos
-    const gx = 305 * CELL, gy = 10 * CELL;
+    const gx = 305 * CELL, gy = 26 * CELL;
     const nearG = Math.hypot(bx - gx, by - gy) < 150;
     this._nearGburg = nearG;
     if (this._gburgSignT > 0) this._gburgSignT -= dt;
@@ -3426,7 +3497,7 @@ class Component extends DCLogic {
     if (r.hitCd > 0) r.hitCd -= dt;
     const d = Math.hypot(r.x - bear.x, r.y - bear.y);
     const ang = Math.atan2(bear.y - r.y, bear.x - r.x);
-    const sp = 191 * this.mobSpeedFactor() * dt;
+    const sp = 229 * this.mobSpeedFactor() * dt;
     r.heading = ang; r.ph += dt;
     r.x = clamp(r.x + Math.cos(ang) * sp, 16, this.WORLD_W - 16);
     r.y = clamp(r.y + Math.sin(ang) * sp, 16, this.WORLD_H - 16);
@@ -3507,7 +3578,7 @@ class Component extends DCLogic {
     }
     // ---- Gatlinburg "We don't feed bears!" sign
     if (this._gburgSignT > 0){
-      const gx = 305 * this.CELL - ox, gy = 10 * this.CELL - oy;
+      const gx = 305 * this.CELL - ox, gy = 26 * this.CELL - oy;
       const pop = Math.min(1, (5 - this._gburgSignT) * 4) * Math.min(1, this._gburgSignT * 2);
       ctx.save(); ctx.translate(gx, gy - 26); ctx.scale(pop, pop);
       ctx.strokeStyle = '#6b4a2a'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(0, 22); ctx.lineTo(0, 6); ctx.stroke();
@@ -4343,6 +4414,45 @@ class Component extends DCLogic {
     clearTimeout(this._caveFactT);
   }
   // ================= CLINGMANS DOME =================
+  makeDomeHikers(){
+    const d = this.DOME, list = [], shirts = ['#c0492e', '#2f6d8c', '#c9a23a', '#4a7a4e', '#8a4a6d'];
+    for (let i = 0; i < 5; i++){
+      const a = (i / 5) * Math.PI * 2 + 0.35, rr = d.platformR - 22;
+      list.push({ x: d.cx + Math.cos(a) * rr, y: d.cy + Math.sin(a) * rr, ph: Math.random() * 10, flash: 0, flashCd: Math.random() * 1.5, shirt: shirts[i], fled: false });
+    }
+    return list;
+  }
+  updateDomeHikers(dt){
+    const d = this.DOME, bear = this.bear, list = this.domeHikers; if (!list) return;
+    for (const h of list){
+      h.ph += dt;
+      if (h.fled){
+        const ex = this._spiral ? this._spiral[0][0] : d.cx, ey = this._spiral ? this._spiral[0][1] : d.h;
+        const ang = Math.atan2(ey - h.y, ex - h.x);
+        h.x += Math.cos(ang) * 200 * dt; h.y += Math.sin(ang) * 200 * dt;
+        continue;
+      }
+      h.flashCd -= dt;
+      if (h.flashCd <= 0){ h.flashCd = 1.2 + Math.random() * 1.8; h.flash = 0.18; }
+      if (h.flash > 0) h.flash -= dt;
+      if (Math.hypot(h.x - bear.x, h.y - bear.y) < 30){
+        h.fled = true; this.shake = 9; SFX.play('miss');
+        this.burst(h.x, h.y - 8, 10, '#f0e3c0');
+        this._domeScares = (this._domeScares || 0) + 1;
+        if (this._domeScares >= 3 && this._domeEscapeT <= 0){
+          this._domeEscapeT = 35; SFX.play('miss');
+          this.showToast('\uD83D\uDE94 A ranger spotted you \u2014 get off the dome, 35 seconds!');
+        } else if (this._domeEscapeT <= 0){
+          this.showToast('\uD83D\uDE30 Scared a photographer! (' + this._domeScares + '/3 before a ranger comes)');
+        }
+      }
+    }
+    this.domeHikers = list.filter((h) => !(h.fled && Math.hypot(h.x - d.cx, h.y - d.cy) > d.platformR + 90));
+    if (this._domeEscapeT > 0){
+      this._domeEscapeT -= dt;
+      if (this._domeEscapeT <= 0){ this._domeEscapeT = 0; this.exitDome(); this.rangerCatch(); }
+    }
+  }
   domeSpiral(){
     if (this._spiral) return this._spiral;
     const d = this.DOME, pts = [], N = 170, a0 = Math.PI / 2;
@@ -4388,6 +4498,8 @@ class Component extends DCLogic {
     this.critters = []; this.pawPrints = []; this.catchAnim = null; this.trackTarget = null;
     this.shake = 6;
     SFX.play('click');
+    this.domeHikers = this.makeDomeHikers();
+    this._domeScares = 0; this._domeEscapeT = 0;
     this.showToast('\uD83D\uDD2D Clingmans Dome ramp \u2014 walk the spiral up to the 6,643-ft platform.');
   }
   exitDome(){
@@ -4399,6 +4511,7 @@ class Component extends DCLogic {
     this.critters = []; this.pawPrints = []; this.catchAnim = null;
     this.shake = 5;
     SFX.play('click');
+    this.domeHikers = []; this._domeScares = 0; this._domeEscapeT = 0;
     this.showToast('Back on the crest.');
   }
   drawDome(ctx, vw, vh){
@@ -4456,6 +4569,22 @@ class Component extends DCLogic {
     for (let i = 0; i < 20; i++){ const a = i / 20 * 7; ctx.strokeStyle = 'rgba(120,110,96,0.55)'; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * (d.platformR - 4), cy + Math.sin(a) * (d.platformR - 4)); ctx.lineTo(cx + Math.cos(a) * (d.platformR - 12), cy + Math.sin(a) * (d.platformR - 12)); ctx.stroke(); }
     ctx.font = '700 12px LatoB, sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = '#5b5346';
     ctx.fillText('6,643 ft', cx, cy + 4);
+    for (const h of (this.domeHikers || [])){
+      const hx = h.x - ox, hy = h.y - oy;
+      ctx.save(); ctx.translate(hx, hy);
+      ctx.fillStyle = '#3a3128'; ctx.fillRect(-3, 2, 2.4, 7); ctx.fillRect(1, 2, 2.4, 7);
+      ctx.fillStyle = h.shirt; ctx.beginPath(); ctx.roundRect(-4.5, -6, 9, 10, 3); ctx.fill();
+      ctx.fillStyle = '#e8c9a0'; ctx.beginPath(); ctx.arc(0, -9, 3.4, 0, 7); ctx.fill();
+      ctx.fillStyle = '#2a2018'; ctx.fillRect(3, -11, 5, 4);
+      ctx.fillStyle = '#5b6b76'; ctx.beginPath(); ctx.arc(8, -9, 1.6, 0, 7); ctx.fill();
+      if (h.flash > 0){
+        const fa = h.flash / 0.18;
+        const g = ctx.createRadialGradient(10, -9, 0, 10, -9, 16);
+        g.addColorStop(0, 'rgba(255,255,240,' + (0.85 * fa) + ')'); g.addColorStop(1, 'rgba(255,255,240,0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(10, -9, 16, 0, 7); ctx.fill();
+      }
+      ctx.restore();
+    }
 
     // bear
     const bsx = this.bear.x - ox, bsy = this.bear.y - oy;
@@ -4871,6 +5000,7 @@ class Component extends DCLogic {
     if (this.ranger) this.drawRanger(ctx, ox, oy);
     // town events: tourists, Gatlinburg sign, Sugarlands warning ranger
     this.drawTownEvents(ctx, ox, oy);
+    this.drawRafts(ctx, ox, oy);
 
     // bear
     const bsx = this.bear.x - ox, bsy = this.bear.y - oy;
@@ -5171,6 +5301,8 @@ class Component extends DCLogic {
       toastTop: this.state.toast && !this._nearGburg && !(this.bear && this.bear.y < 260),
       weatherAlert: this.state.weatherAlert,
       rangerAlert: this.state.rangerAlert,
+      domeEscape: !!this.inDome && (this._domeEscapeT || 0) > 0,
+      domeEscapeLeft: Math.ceil(this._domeEscapeT || 0),
       rivalAlert: this.state.rivalAlert,
       muteIcon: this.state.muted ? '🔇' : '🔊', toggleMute: this.toggleMute,
       trackingName, trackingDist, stopTracking: this.stopTracking,
