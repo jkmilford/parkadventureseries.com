@@ -2589,7 +2589,7 @@ class Component extends DCLogic {
     if (moving && this._frozenT <= 0){
       const len = Math.hypot(mx, my); mx /= len; my /= len;
       const staminaFactor = this.state.stamina < 18 ? 0.55 : 1;
-      const speed = 370 * (sprinting ? 1.65 : 1) * staminaFactor * this.mobSpeedFactor() * dt;
+      const speed = 185 * (sprinting ? 1.65 : 1) * staminaFactor * this.mobSpeedFactor() * dt;
       const BW = this.inCave ? this.inCave.w : this.inDome ? this.inDome.w : this.WORLD_W, BH = this.inCave ? this.inCave.h : this.inDome ? this.inDome.h : this.WORLD_H;
       const nbx = clamp(this.bear.x + mx * speed, 16, BW - 16);
       const nby = clamp(this.bear.y + my * speed, 16, BH - 16);
