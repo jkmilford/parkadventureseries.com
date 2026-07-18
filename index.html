@@ -281,3 +281,226 @@ margin: 0 auto;
 .about-section {
 padding: 5rem 2rem;
 background: var(--white);
+}
+
+.about-inner {
+max-width: 680px;
+margin: 0 auto;
+text-align: center;
+}
+
+.about-inner .section-eyebrow {
+margin-bottom: 0.75rem;
+}
+
+.about-inner h2 {
+font-family: 'Playfair Display', serif;
+font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+color: var(--brown-dark);
+margin-bottom: 1.25rem;
+}
+
+.about-inner p {
+color: var(--text-muted);
+font-size: 1rem;
+line-height: 1.8;
+margin-bottom: 1rem;
+}
+
+.about-inner p:last-child { margin-bottom: 0; }
+
+/* ── NEWSLETTER BANNER ──────────────────────── */
+.newsletter-section {
+background: var(--brown-dark);
+padding: 3.5rem 2rem;
+text-align: center;
+}
+
+.newsletter-section h2 {
+font-family: 'Playfair Display', serif;
+font-size: clamp(1.4rem, 3vw, 2rem);
+color: var(--cream);
+margin-bottom: 0.5rem;
+}
+
+.newsletter-section p {
+color: var(--cream-dark);
+font-size: 0.95rem;
+margin-bottom: 1.75rem;
+}
+
+.newsletter-cta {
+display: inline-block;
+background: var(--cream);
+color: var(--brown-dark);
+font-weight: 700;
+font-size: 0.9rem;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+text-decoration: none;
+padding: 0.8em 2em;
+border-radius: 3px;
+transition: background 0.2s;
+}
+
+.newsletter-cta:hover { background: var(--white); }
+
+/* ── FOOTER ─────────────────────────────────── */
+footer {
+background: var(--forest);
+padding: 2rem;
+text-align: center;
+color: var(--cream-dark);
+font-size: 0.85rem;
+}
+
+footer a {
+color: var(--cream-dark);
+text-decoration: underline;
+text-underline-offset: 2px;
+}
+
+footer a:hover { color: var(--white); }
+
+.footer-brand {
+font-family: 'Playfair Display', serif;
+font-size: 1rem;
+color: var(--white);
+margin-bottom: 0.4rem;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+<a href="/" class="nav-brand">&#x2060;<span style="color:var(--gold)">Park</span> Adventure Series</a>
+<ul class="nav-links">
+<li><a href="#books">Books</a></li>
+<li><a href="#explorer-pack">Free Pack</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="https://www.amazon.com/stores/Jeremy-Milford/author/B0GTPQZ24N" target="_blank" rel="noopener">Author Page</a></li>
+</ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+<svg class="hero-mountains" viewBox="0 0 1200 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+<path d="M0,220 L0,160 L60,90 L130,150 L200,70 L280,140 L360,45 L440,130 L520,60 L600,140 L680,25 L760,120 L840,55 L920,135 L1000,40 L1080,125 L1140,70 L1200,130 L1200,220 Z" fill="var(--cream)"/>
+</svg>
+<p class="hero-eyebrow">Signal Press &middot; <span style="color:var(--gold)">Park</span> Adventure Series</p>
+<h1>Adventure Starts <em>Before</em> You Arrive</h1>
+<p class="hero-sub">Activity books packed with puzzles, games &amp; discovery for America's greatest national parks.</p>
+<a href="#books" class="hero-cta">Explore the Series</a>
+</section>
+
+<!-- BOOKS -->
+<section class="books-section" id="books">
+<div class="section-header">
+<p class="section-eyebrow">The Series</p>
+<h2>Five Parks. Five Adventures.</h2>
+<div class="section-divider"></div>
+</div>
+
+<div class="book-grid">
+
+<!-- Smokies -->
+<div class="book-card">
+<div class="book-cover">
+<img src="smoky-cover.png" alt="Great Smoky Mountains Activity Book cover">
+</div>
+<div class="book-info">
+<h3>Great Smoky Mountains Activity Book</h3>
+<p>America's most visited park, packed into 30+ puzzles, games, and adventures for the whole family.</p>
+<a href="https://www.amazon.com/dp/B0GWZNDH1C" class="book-link available" target="_blank" rel="noopener">Buy on Amazon &rarr;</a>
+</div>
+</div>
+
+<!-- Yellowstone -->
+<div class="book-card">
+<div class="book-cover">
+<img src="yellowstone-cover.jpg" alt="Yellowstone Activity Book cover">
+</div>
+<div class="book-info">
+<h3>Yellowstone Activity Book</h3>
+<p>Geysers, grizzlies, and geothermal wonders — explore America's first national park through fun and learning.</p>
+<a href="https://www.amazon.com/dp/B0H1M6QQBL" class="book-link available" target="_blank" rel="noopener">Buy on Amazon &rarr;</a>
+</div>
+</div>
+
+<!-- Yosemite -->
+<div class="book-card">
+<div class="book-cover">
+<img src="yosemite-cover.jpg" alt="Yosemite Activity Book cover">
+</div>
+<div class="book-info">
+<h3>Yosemite Activity Book</h3>
+<p>Half Dome, El Capitan, and ancient sequoias — the iconic valley comes alive in this activity book.</p>
+<a href="https://www.amazon.com/dp/B0H3TSSVCS" class="book-link available" target="_blank" rel="noopener">Buy on Amazon &rarr;</a>
+</div>
+</div>
+
+<!-- Grand Canyon -->
+<div class="book-card">
+<div class="book-cover">
+<img src="grandcanyon-cover.jpg" alt="Grand Canyon Activity Book cover">
+</div>
+<div class="book-info">
+<h3>Grand Canyon Activity Book</h3>
+<p>One mile deep, 277 miles long — and full of surprises waiting to be discovered by young explorers.</p>
+<a href="#" class="book-link coming">Coming Soon</a>
+</div>
+</div>
+
+<!-- Zion -->
+<div class="book-card">
+<div class="book-cover">
+<img src="zion-cover.png" alt="Zion National Park Activity Book cover">
+</div>
+<div class="book-info">
+<h3>Zion National Park Activity Book</h3>
+<p>100 pages of towering cliffs, slot canyons, wildlife, geology, puzzles &amp; fun for the whole family.</p>
+<a href="https://www.amazon.com/dp/B0H6FG1GL7" class="book-link available" target="_blank" rel="noopener">Buy on Amazon &rarr;</a>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- EXPLORER PACK -->
+<section class="signup-section" id="explorer-pack">
+<div class="section-header">
+<p class="section-eyebrow">Free Download</p>
+<h2>Get Your Free Bonus Smokies Explorer Pack</h2>
+<div class="section-divider"></div>
+</div>
+<div class="kit-form-container">
+<script async data-uid="b858650751" src="https://national-park-adventure-series.kit.com/b858650751/index.js"></script>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+<div class="about-inner">
+<p class="section-eyebrow">About the Series</p>
+<h2>Books That Make the Trip</h2>
+<p>The <span style="color:var(--gold)">Park</span> Adventure Series is published by Signal Press and designed for families who want to go deeper than the scenic overlook. Each book is packed with park-specific activities, puzzles, and discovery pages built for kids and curious adults alike.</p>
+<p>Whether you're driving in on arrival day or sitting around the campfire, these books turn downtime into discovery time.</p>
+</div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+<h2>Stay on the Trail</h2>
+<p>New parks, new books, and free resources for families — delivered to your inbox.</p>
+<a href="#explorer-pack" class="newsletter-cta">Get the Free Explorer Pack</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="footer-brand">Signal Press &middot; <span style="color:var(--gold)">Park</span> Adventure Series</div>
+<p><a href="https://parkadventureseries.com">parkadventureseries.com</a> &nbsp;&middot;&nbsp; <a href="https://www.amazon.com/stores/Jeremy-Milford/author/B0GTPQZ24N" target="_blank" rel="noopener">Amazon Author Page</a></p>
+</footer>
+
+</body>
+</html>
