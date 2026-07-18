@@ -644,13 +644,13 @@ const SPECIES = [
   { id: 11, name: 'Northern Dusky Salamander', sci: 'Desmognathus fuscus', habitats: ['seep', 'stream'], elevMin: 1200, elevMax: 3500, moistureMin: 0.5, time: 'dusk-night', weather: 'any', rarity: 'common', pattern: 'spotted', note: 'A common streamside salamander that never strays far from trickling water.' },
   { id: 12, name: 'Ocoee Salamander', sci: 'Desmognathus ocoee', habitats: ['stream', 'cove-forest', 'hardwood-forest'], elevMin: 2000, elevMax: 5000, moistureMin: 0.4, time: 'any', weather: 'any', rarity: 'common', pattern: 'striped', note: 'Small and variable, ranging from streambanks up into damp forest litter.' },
   { id: 13, name: 'Imitator Salamander', sci: 'Desmognathus imitator', habitats: ['hardwood-forest', 'high-forest'], elevMin: 3000, elevMax: 5500, moistureMin: 0.4, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'striped', note: 'Mimics the warning colors of the red-cheeked salamander to deter predators.' },
-  { id: 14, name: 'Pygmy Salamander', sci: 'Desmognathus wrighti', habitats: ['spruce-fir'], elevMin: 5000, elevMax: 6643, moistureMin: 0.5, time: 'dusk-night', weather: 'any', rarity: 'rare', pattern: 'striped', note: 'Barely two inches long, found in wet moss under spruce-fir logs near the highest peaks.' },
+  { id: 14, name: 'Northern Pygmy Salamander', sci: 'Desmognathus organi', habitats: ['spruce-fir'], elevMin: 5000, elevMax: 6643, moistureMin: 0.5, time: 'dusk-night', weather: 'any', rarity: 'rare', pattern: 'striped', note: 'Barely two inches long, found in wet moss under spruce-fir logs near the highest peaks.' },
   { id: 15, name: 'Southern Appalachian Salamander', sci: 'Plethodon teyahalee', habitats: ['cove-forest', 'hardwood-forest'], elevMin: 1500, elevMax: 4000, moistureMin: 0.3, time: 'night', weather: 'any', rarity: 'common', pattern: 'plain', note: 'A large woodland salamander common under logs in the park\u2019s rich cove forests.' },
   { id: 16, name: 'Southern Gray-cheeked Salamander', sci: 'Plethodon metcalfi', habitats: ['hardwood-forest', 'high-forest'], elevMin: 3000, elevMax: 5500, moistureMin: 0.3, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'plain', note: 'Nearly identical to its cousins, told apart mostly by elevation and range.' },
   { id: 17, name: 'Red-cheeked Salamander', sci: 'Plethodon jordani', habitats: ['spruce-fir', 'high-forest', 'rock-outcrop'], elevMin: 4500, elevMax: 6643, moistureMin: 0.3, time: 'night', weather: 'any', rarity: 'rare', pattern: 'spotted', note: 'Found nowhere else on Earth but these high Smokies ridgelines — the park\u2019s signature endemic.' },
   { id: 18, name: 'White-spotted Slimy Salamander', sci: 'Plethodon cylindraceus', habitats: ['hardwood-forest', 'cove-forest'], elevMin: 1200, elevMax: 4000, moistureMin: 0.28, time: 'night', weather: 'any', rarity: 'common', pattern: 'spotted', note: 'Glossy black with silvery flecks; its skin secretes a sticky glue-like slime when threatened.' },
   { id: 19, name: 'Northern Slimy Salamander', sci: 'Plethodon glutinosus', habitats: ['floodplain', 'hardwood-forest'], elevMin: 1200, elevMax: 2500, moistureMin: 0.28, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'spotted', note: 'A lowland forest-floor salamander, active on humid nights after dark.' },
-  { id: 20, name: "Wehrle's Salamander", sci: 'Plethodon wehrlei', habitats: ['rock-outcrop', 'hardwood-forest'], elevMin: 1500, elevMax: 3500, moistureMin: 0.28, time: 'night', weather: 'any', rarity: 'rare', pattern: 'plain', note: 'Prefers rocky slopes and talus, retreating deep into crevices by day.' },
+  { id: 20, name: 'Three-lined Salamander', sci: 'Eurycea guttolineata', habitats: ['floodplain', 'stream', 'seep'], elevMin: 1200, elevMax: 2500, moistureMin: 0.5, time: 'night', weather: 'any', rarity: 'rare', pattern: 'striped', note: 'A long, slender salamander with three dark stripes down a yellow-tan body, found along low-elevation streambanks and floodplains.' },
   { id: 21, name: 'Zigzag Salamander', sci: 'Plethodon dorsalis', habitats: ['rock-outcrop', 'floodplain'], elevMin: 1200, elevMax: 2500, moistureMin: 0.28, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'striped', note: 'Named for the wavy stripe zigzagging down its back.' },
   { id: 22, name: 'Four-toed Salamander', sci: 'Hemidactylium scutatum', habitats: ['pond'], elevMin: 1500, elevMax: 4500, moistureMin: 0.7, time: 'dusk-night', weather: 'any', rarity: 'very-rare', pattern: 'spotted', note: 'Lays its eggs in sphagnum moss over still water — a rare bog specialist.' },
   { id: 23, name: 'Green Salamander', sci: 'Aneides caroliniensis', habitats: ['rock-outcrop'], elevMin: 1200, elevMax: 3500, moistureMin: 0.28, time: 'night', weather: 'any', rarity: 'very-rare', pattern: 'spotted', note: 'Lichen-green and flattened, wedged deep into narrow rock crevices — easy to miss.' },
@@ -2522,10 +2522,10 @@ class Component extends DCLogic {
     this.trackTarget = best;
   }
 
-  showToast(msg){
+  showToast(msg, dur){
     this.setState({ toast: msg });
     clearTimeout(this._toastT);
-    this._toastT = setTimeout(() => this.setState({ toast: null }), 2600);
+    this._toastT = setTimeout(() => this.setState({ toast: null }), dur || 2600);
   }
   showWeatherAlert(msg){
     this.setState({ weatherAlert: msg });
@@ -3425,10 +3425,10 @@ class Component extends DCLogic {
       if (nearShop && nBooks >= 5 && !this.state.salamanderBook){
         this.setState({ salamanderBook: true, booksTurnedIn: true }, () => this.saveGame());
         SFX.play('rank');
-        this.showToast('\uD83D\uDCDA You delivered all 5 books to The Next Chapter Bookshop! They gift you \u201cSmoky Mountain Salamanders\u201d \u2014 now 3\u00d7 as many salamanders appear in caves and creeks!');
+        this.showToast('\uD83D\uDCDA You delivered all 5 books to The Next Chapter Bookshop! They gift you \u201cSmoky Mountain Salamanders\u201d \u2014 now 3\u00d7 as many salamanders appear in caves and creeks!', 11000);
       } else if (nearShop && nBooks < 5 && !this.state.salamanderBook && this._shopHintT <= 0){
         this._shopHintT = 10;
-        this.showToast('\uD83D\uDCD6 The Next Chapter Bookshop: bring all 5 trivia & activity books for a special salamander guide! (' + nBooks + '/5)');
+        this.showToast('\uD83D\uDCD6 The Next Chapter Bookshop: bring all 5 trivia & activity books for a special salamander guide! (' + nBooks + '/5)', 11000);
       }
     }
     if (this._gburgSignT > 0) this._gburgSignT -= dt;
