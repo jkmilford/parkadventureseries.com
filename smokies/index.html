@@ -36,7 +36,7 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
   <div style="position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:14px;padding:14px 20px 8px;background:linear-gradient(180deg,rgba(30,22,12,.7),rgba(30,22,12,0));pointer-events:none;z-index:74;">
     <div style="margin-left:auto;display:flex;gap:9px;flex-direction:{{ hudDir }};align-items:flex-end;pointer-events:auto;">
       <div style="display:flex;align-items:center;gap:7px;background:rgba(38,28,16,.72);border:1px solid rgba(233,196,106,.4);border-radius:20px;padding:6px 13px;color:#f7efd8;font-family:'LatoB',sans-serif;font-size:13px;">
-        <span>🦎</span><span>{{ foundCount }}/30</span>
+        <span>🦎</span><span>{{ foundCount }}/31</span>
       </div>
       <sc-if value="{{ hasBooks }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;align-items:center;gap:7px;background:rgba(38,28,16,.72);border:1px solid rgba(233,196,106,.4);border-radius:20px;padding:6px 13px;color:#f7efd8;font-family:'LatoB',sans-serif;font-size:13px;">
@@ -155,9 +155,14 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
         <div style="width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 40% 35%, #fff6c8 0%, #ffe27a 45%, rgba(255,210,90,0) 78%);box-shadow:0 0 6px 2px rgba(255,226,122,.55);"></div>
         <span>{{ fireflyCount }}/10</span>
       </div>
+      <sc-if value="{{ hasDash }}" hint-placeholder-val="{{ false }}">
+        <div sc-camel-on-click="{{ useDash }}" style="cursor:pointer;display:inline-flex;align-items:center;gap:7px;background:{{ dashBg }};border:1px solid rgba(255,215,106,.7);border-radius:16px;padding:5px 12px;color:#fff3cf;font-family:'LatoB',sans-serif;font-size:11.5px;box-shadow:0 0 10px rgba(255,200,90,.35);">
+          <span>⚡</span><span>{{ dashLabel }}</span>
+        </div>
+      </sc-if>
       <sc-if value="{{ hasNets }}" hint-placeholder-val="{{ false }}">
         <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(38,28,16,.72);border:1px solid rgba(233,196,106,.35);border-radius:16px;padding:5px 12px;color:#f3ecd9;font-family:'LatoB',sans-serif;font-size:11.5px;">
-          <span>🥅</span><span>{{ netCount }}</span>
+          <span>🔭</span><span>{{ netCount }}</span>
         </div>
       </sc-if>
       <sc-if value="{{ hasScares }}" hint-placeholder-val="{{ false }}">
@@ -167,7 +172,7 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
       </sc-if>
       <sc-if value="{{ hasBottles }}" hint-placeholder-val="{{ false }}">
         <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(38,28,16,.72);border:1px solid rgba(233,196,106,.35);border-radius:16px;padding:5px 12px;color:#f3ecd9;font-family:'LatoB',sans-serif;font-size:11.5px;">
-          <span>🧪</span><span>{{ bottleCount }}</span>
+          <span>📷</span><span>{{ bottleCount }}</span>
         </div>
       </sc-if>
       <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(38,28,16,.72);border:1px solid rgba(233,196,106,.35);border-radius:16px;padding:5px 12px;color:#f3ecd9;font-family:'LatoB',sans-serif;font-size:11.5px;">
@@ -189,7 +194,7 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
   <!-- controls hint (desktop) -->
   <sc-if value="{{ showDesktopHint }}" hint-placeholder-val="{{ true }}">
     <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:20px;color:#f0e3c0;font-size:12px;font-family:'LatoB',sans-serif;background:rgba(38,28,16,.72);padding:6px 15px;border-radius:20px;border:1px solid rgba(233,196,106,.35);pointer-events:none;white-space:nowrap;">
-      WASD move &nbsp;·&nbsp; <span style="color:#e9c46a;">Shift</span> sprint &nbsp;·&nbsp; <span style="color:#e9c46a;">E</span> pounce · eat · offer · sniff &nbsp;·&nbsp; <span style="color:#e9c46a;">J</span> journal
+      WASD move &nbsp;·&nbsp; <span style="color:#e9c46a;">Shift</span> sprint &nbsp;·&nbsp; <span style="color:#e9c46a;">E</span> photo · eat · offer · sniff &nbsp;·&nbsp; <span style="color:#e9c46a;">R</span> sarvisberry dash &nbsp;·&nbsp; <span style="color:#e9c46a;">J</span> journal
     </div>
   </sc-if>
 
@@ -198,8 +203,13 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
     <div ref="{{ joyBaseRef }}" sc-camel-on-pointer-down="{{ joyStart }}" sc-camel-on-pointer-move="{{ joyMove }}" sc-camel-on-pointer-up="{{ joyEnd }}" sc-camel-on-pointer-cancel="{{ joyEnd }}" style="position:fixed;left:30px;bottom:44px;width:82px;height:82px;border-radius:50%;background:rgba(38,28,16,.42);border:1.5px solid rgba(233,196,106,.4);touch-action:none;z-index:35;display:flex;align-items:center;justify-content:center;">
       <div ref="{{ joyKnobRef }}" style="width:36px;height:36px;border-radius:50%;background:rgba(233,196,106,.85);border:2px solid #a8391f;box-shadow:0 3px 10px rgba(0,0,0,.4);pointer-events:none;"></div>
     </div>
+    <sc-if value="{{ hasDash }}" hint-placeholder-val="{{ false }}">
+      <div sc-camel-on-pointer-down="{{ useDash }}" style="position:fixed;right:124px;bottom:58px;width:58px;height:58px;border-radius:50%;background:{{ dashBg }};border:2px solid #ffd76a;box-shadow:0 4px 14px rgba(0,0,0,.45),0 0 12px rgba(255,200,90,.45);touch-action:none;z-index:35;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff3cf;font-family:'LatoB',sans-serif;user-select:none;line-height:1;">
+        <span style="font-size:22px;">⚡</span><span style="font-size:11px;margin-top:2px;">{{ dashShort }}</span>
+      </div>
+    </sc-if>
     <div ref="{{ catchBtnRef }}" sc-camel-on-pointer-down="{{ pounceBtn }}" style="position:fixed;right:30px;bottom:44px;width:82px;height:82px;border-radius:50%;background:#a8391f;border:2px solid #e9c46a;box-shadow:0 5px 16px rgba(0,0,0,.45);touch-action:none;z-index:35;display:flex;align-items:center;justify-content:center;color:#f8ecd6;font-family:'LatoB',sans-serif;user-select:none;">
-      <span style="font-size:46px;line-height:1;"><svg viewBox="0 0 64 64" width="46" height="46" fill="#f8ecd6"><ellipse cx="32" cy="43" rx="15" ry="12"></ellipse><ellipse cx="14" cy="27" rx="6" ry="8"></ellipse><ellipse cx="25" cy="18" rx="6" ry="8.5"></ellipse><ellipse cx="39" cy="18" rx="6" ry="8.5"></ellipse><ellipse cx="50" cy="27" rx="6" ry="8"></ellipse></svg></span>
+      <span style="font-size:46px;line-height:1;"><svg viewBox="0 0 64 64" width="46" height="46"><rect x="8" y="20" width="48" height="32" rx="6" fill="#f8ecd6"></rect><rect x="22" y="13" width="18" height="10" rx="3" fill="#f8ecd6"></rect><circle cx="32" cy="36" r="11" fill="#a8391f"></circle><circle cx="32" cy="36" r="6.5" fill="#f8ecd6"></circle><circle cx="47" cy="27" r="2.5" fill="#a8391f"></circle></svg></span>
     </div>
   </sc-if>
 
@@ -249,10 +259,10 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
         <div style="font-family:'Chunk',serif;font-size:clamp(26px,7vw,36px);color:#a8391f;letter-spacing:.5px;margin-top:8px;line-height:1;">GREAT SMOKY<br>MOUNTAINS</div>
         <div style="font-family:'Chunk',serif;font-size:19px;color:#3a2e1d;margin-top:8px;">Bear Trail</div>
         <div style="font-family:'LatoR',sans-serif;font-size:14.5px;color:#4a3d28;margin-top:16px;line-height:1.6;text-align:left;">
-          <sc-if value="{{ notMob }}" hint-placeholder-val="{{ true }}">You are a black bear in the salamander capital of the world. Roam the coves, ridges and rivers of the Smokies to log all <b>30 native species</b> in your field journal.
+          <sc-if value="{{ notMob }}" hint-placeholder-val="{{ true }}">You are a black bear in the salamander capital of the world. Roam the coves, ridges and rivers of the Smokies to log all <b>31 native species</b> in your field journal.
           <br><br>
-          Salamanders <b style="color:#a8391f;">scurry through the underbrush</b> — chase one down and <b>pounce with E</b> when you're close, then time the catch. Each species only appears in its true habitat: the right elevation, moisture, hour and weather. <b>Sniff (E)</b> to smell the nearest one out, eat <b style="color:#a8391f;">berry bushes</b> to keep your strength up, track species from your journal — and remember: <b>rain wakes the mountains</b>. Deer, elk, foxes and wild turkeys share these woods — keep an eye out as you roam. Five real caves — Gregory's, Bull, Blowhole, Rainbow Falls and Alum — open into the dark: walk into a cave mouth and your <b>helmet lamp</b> clicks on.</sc-if>
-          <sc-if value="{{ mob }}" hint-placeholder-val="{{ false }}">Roam the Smokies as a black bear and log all <b>30 salamander species</b>. Move with the joystick; tap <b>CATCH</b> to pounce, sniff, and log. Each species hides in its own habitat, time and weather. <b>Rain wakes the mountains.</b></sc-if>
+          Salamanders <b style="color:#a8391f;">scurry through the underbrush</b> — creep close and press <b>E to photograph</b> one, then press again when the shot snaps into focus. No catching — every salamander stays wild. Each species only appears in its true habitat: the right elevation, moisture, hour and weather. <b>Sniff (E)</b> to smell the nearest one out, eat <b style="color:#a8391f;">berry bushes</b> to keep your strength up, track species from your journal — and remember: <b>rain wakes the mountains</b>. Deer, elk, foxes and wild turkeys share these woods — keep an eye out as you roam. Five real caves — Gregory's, Bull, Blowhole, Rainbow Falls and Alum — open into the dark: walk into a cave mouth and your <b>helmet lamp</b> clicks on.</sc-if>
+          <sc-if value="{{ mob }}" hint-placeholder-val="{{ false }}">Roam the Smokies as a black bear and log all <b>31 salamander species</b>. Move with the joystick; tap the <b>camera</b> button to photograph, sniff, and log. Each species hides in its own habitat, time and weather. <b>Rain wakes the mountains.</b></sc-if>
         </div>
         <div style="display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap;">
           <div sc-camel-on-click="{{ startGame }}" style="cursor:pointer;background:#a8391f;color:#f8ecd6;font-family:'LatoB',sans-serif;font-size:15px;padding:13px 34px;border-radius:26px;box-shadow:0 6px 16px rgba(168,57,31,.4);">Salamander Quest</div>
@@ -273,7 +283,7 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
         <div style="font-family:'LatoB',sans-serif;font-size:11px;letter-spacing:3px;color:#a8391f;margin-top:10px;">SURVEY COMPLETE</div>
         <div style="font-family:'Chunk',serif;font-size:clamp(24px,6.5vw,32px);color:#a8391f;margin-top:6px;line-height:1.1;">LEGEND OF<br>THE SMOKIES</div>
         <div style="font-family:'LatoR',sans-serif;font-size:14.5px;color:#4a3d28;margin-top:16px;line-height:1.6;">
-          All <b>30 salamander species</b> logged in <b>{{ daysTaken }}</b> — every seep, summit and stream surveyed. The salamander capital of the world thanks its most diligent bear.
+          All <b>31 salamander species</b> logged in <b>{{ daysTaken }}</b> — every seep, summit and stream surveyed. The salamander capital of the world thanks its most diligent bear.
         </div>
         <a href="https://amzn.to/4wJeXJo" target="_blank" rel="noopener" style="display:block;margin-top:22px;text-decoration:none;cursor:pointer;background:#e8791b;color:#fff;font-family:'LatoB',sans-serif;font-size:14.5px;padding:14px 28px;border-radius:26px;box-shadow:0 6px 18px rgba(232,121,27,.4);">Check out the rest of the Park Adventure Series on Amazon</a>
         <div style="display:flex;gap:12px;justify-content:center;margin-top:16px;">
@@ -339,10 +349,10 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
     <div style="position:fixed;inset:0;background:rgba(20,14,8,.6);z-index:66;" sc-camel-on-click="{{ closeFind }}"></div>
     <div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);animation:modalIn .3s ease-out;z-index:67;width:400px;max-width:88vw;background:#f3ecd9;border-radius:12px;padding:clamp(16px,4vw,26px) clamp(18px,4.5vw,30px);box-shadow:0 22px 66px rgba(0,0,0,.55);border-top:8px solid #7a5326;text-align:center;">
       <div style="font-size:40px;">{{ findIcon }}</div>
-      <div style="font-family:'LatoB',sans-serif;font-size:11px;letter-spacing:2px;color:#7a5326;margin-top:8px;">FIELD GEAR RECOVERED</div>
+      <div style="font-family:'LatoB',sans-serif;font-size:11px;letter-spacing:2px;color:#7a5326;margin-top:8px;">{{ findKicker }}</div>
       <div style="font-family:'Chunk',serif;font-size:clamp(19px,5.2vw,23px);color:#5a3f2a;margin-top:6px;line-height:1.1;">{{ findTitle }}</div>
       <div style="font-family:'LatoR',sans-serif;font-size:14px;color:#4a3d28;margin-top:12px;line-height:1.6;text-align:left;">{{ findBody }}</div>
-      <div sc-camel-on-click="{{ closeFind }}" style="margin-top:20px;display:inline-block;cursor:pointer;color:#f8ecd6;background:#7a5326;font-family:'LatoB',sans-serif;font-size:13.5px;padding:11px 30px;border-radius:24px;">Take it</div>
+      <div sc-camel-on-click="{{ closeFind }}" style="margin-top:20px;display:inline-block;cursor:pointer;color:#f8ecd6;background:#7a5326;font-family:'LatoB',sans-serif;font-size:13.5px;padding:11px 30px;border-radius:24px;">{{ findBtn }}</div>
     </div>
   </sc-if>
 
@@ -365,7 +375,7 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
   <sc-if value="{{ discovery }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;inset:0;background:rgba(20,14,8,.6);z-index:60;" sc-camel-on-click="{{ closeDiscovery }}"></div>
     <div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);animation:modalIn .3s ease-out;z-index:61;width:430px;max-width:88vw;background:#f3ecd9;border-radius:12px;padding:28px 30px 26px;box-shadow:0 24px 60px rgba(0,0,0,.55);text-align:center;border-top:7px solid #a8391f;">
-      <div style="font-family:'LatoB',sans-serif;font-size:11px;letter-spacing:2px;color:#a8391f;">NEW SPECIES LOGGED · {{ foundCount }}/30</div>
+      <div style="font-family:'LatoB',sans-serif;font-size:11px;letter-spacing:2px;color:#a8391f;">NEW SPECIES PHOTOGRAPHED · {{ foundCount }}/31</div>
       <svg sc-camel-view-box="0 0 100 62" style="width:170px;height:105px;margin:12px auto 4px;display:block;animation:popIn .45s ease-out;">
         <ellipse cx="50" cy="49" rx="36" ry="5" fill="rgba(0,0,0,0.09)"></ellipse>
         <path d="{{ discovery.svgLegs }}" stroke="{{ discovery.color1 }}" stroke-width="2" fill="none" stroke-linecap="round"></path>
@@ -395,7 +405,7 @@ a{color:#a8391f;} a:hover{color:#c24a2a;}
         <div style="display:flex;align-items:center;justify-content:space-between;">
           <div>
             <div style="font-family:'Chunk',serif;font-size:clamp(20px,5.4vw,24px);color:#a8391f;">FIELD JOURNAL</div>
-            <div style="font-family:'LatoR',sans-serif;font-size:12.5px;color:#7a6650;margin-top:2px;">{{ foundCount }} of 30 species · rank: {{ rankLabel }}</div>
+            <div style="font-family:'LatoR',sans-serif;font-size:12.5px;color:#7a6650;margin-top:2px;">{{ foundCount }} of 31 species · rank: {{ rankLabel }}</div>
           </div>
           <div sc-camel-on-click="{{ toggleJournal }}" style="cursor:pointer;font-family:'LatoB',sans-serif;color:#8a6a4a;font-size:24px;line-height:1;">×</div>
         </div>
@@ -571,9 +581,21 @@ const SFX = {
       case 'sniff': this.tone(300, 0.08, 'sine', 0.06); this.tone(340, 0.08, 'sine', 0.06, 0.1); break;
       case 'catchStart': this.tone(880, 0.06, 'square', 0.045); break;
       case 'pounce': this.tone(180, 0.16, 'triangle', 0.12, 0, 90); break;
+      case 'shutter': this.tone(2400, 0.025, 'square', 0.05); this.tone(1200, 0.04, 'square', 0.045, 0.06); this.tone(700, 0.05, 'triangle', 0.04, 0.1); break;
+      case 'focus': this.tone(1320, 0.05, 'sine', 0.05); this.tone(1760, 0.05, 'sine', 0.04, 0.07); break;
       case 'success': this.tone(523, 0.13, 'triangle', 0.11); this.tone(659, 0.13, 'triangle', 0.11, 0.11); this.tone(784, 0.24, 'triangle', 0.12, 0.22); break;
       case 'rank': this.tone(392, 0.12, 'triangle', 0.11); this.tone(523, 0.12, 'triangle', 0.11, 0.11); this.tone(659, 0.12, 'triangle', 0.11, 0.22); this.tone(784, 0.32, 'triangle', 0.13, 0.33); break;
     }
+  },
+  // a one-off tone that is safe to call before audio is unlocked and respects mute
+  beep(freq, dur, type, vol, when){ if (this.muted || !this.ensure()) return; this.tone(freq, dur, type, vol, when); },
+  // a bright, quickly-decaying plucked string (banjo head + steel strings)
+  pluck(freq, when, vol){
+    if (this.muted || !this.ensure()) return;
+    const v = vol || 1;
+    this.tone(freq, 0.34, 'triangle', 0.085 * v, when);
+    this.tone(freq * 2, 0.13, 'square', 0.016 * v, when);
+    this.tone(freq * 3.01, 0.06, 'sine', 0.02 * v, when);
   },
   setRain(on){
     if (!this.ctx) return;
@@ -610,7 +632,8 @@ const HABITAT_TAG = {
 const TIME_LABEL = { night: 'after dark', 'dusk-night': 'dusk onward', day: 'daytime', any: 'any time' };
 const WEATHER_LABEL = { rain: 'during rain', wet: 'when everything is soaked', any: '' };
 const RARITY_LABEL = { common: 'Common', uncommon: 'Uncommon', rare: 'Rare', 'very-rare': 'Very Rare' };
-const RARITY_ZONE = { common: 0.68, uncommon: 0.52, rare: 0.39, 'very-rare': 0.28 };
+// green-zone half-widths — sized so a press lands ~50% more often than before (was .68/.52/.39/.28)
+const RARITY_ZONE = { common: 0.9, uncommon: 0.72, rare: 0.56, 'very-rare': 0.41 };
 const RARITY_SPEED = { common: 3.2, uncommon: 3.9, rare: 4.7, 'very-rare': 5.5 };
 const RARITY_FLEE = { common: 52, uncommon: 62, rare: 74, 'very-rare': 86 };
 const RARITY_SPAWN = { common: 0.5, uncommon: 0.3, rare: 0.18, 'very-rare': 0.11 };
@@ -618,7 +641,7 @@ const RARITY_COLOR = { common: '#5b7a3a', uncommon: '#3f7691', rare: '#7a5a2a', 
 const RARITY_BG = { common: '#e6ecd0', uncommon: '#dbe7ec', rare: '#efe2c4', 'very-rare': '#f2dcc8' };
 const RANKS = [
   [0, 'Wandering Cub'], [5, 'Curious Yearling'], [10, 'Creek Forager'],
-  [18, 'Ridge Naturalist'], [25, 'Storm Tracker'], [30, 'Legend of the Smokies']
+  [18, 'Ridge Naturalist'], [25, 'Storm Tracker'], [31, 'Legend of the Smokies']
 ];
 function rankFor(n){
   let r = RANKS[0][1];
@@ -630,38 +653,42 @@ const PALETTES = [
   ['#6b3f2a', '#f0d060'], ['#35362a', '#c98a3b'], ['#7a4a30', '#f2e0b0'], ['#2e3b2c', '#8ab090'],
   ['#5a2e22', '#e8934a'], ['#463a26', '#b8a468']
 ];
+// Roster follows the park's official amphibian checklist (nps.gov/grsm) plus the 2022 split of the
+// black-bellied salamander into the Cherokee and Pisgah species: 31 species. (The Green Salamander is
+// on the checklist but has not been seen in the park for 70+ years, so it is not included.)
 const SPECIES = [
-  { id: 1, name: 'Eastern Hellbender', sci: 'Cryptobranchus alleganiensis', habitats: ['stream'], elevMin: 1200, elevMax: 3000, moistureMin: 0.72, time: 'night', weather: 'any', rarity: 'rare', pattern: 'plain', note: "A giant among salamanders, hiding under slab rocks in clean, fast rivers — a living sign of a healthy stream." },
-  { id: 2, name: 'Spring Salamander', sci: 'Gyrinophilus porphyriticus', habitats: ['seep', 'stream', 'cave'], elevMin: 1200, elevMax: 5000, moistureMin: 0.68, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'plain', note: 'Salmon-pink and stout, found where cold spring water seeps straight from the mountainside.' },
-  { id: 3, name: 'Northern Red Salamander', sci: 'Pseudotriton ruber', habitats: ['seep', 'stream', 'floodplain'], elevMin: 1200, elevMax: 4000, moistureMin: 0.58, time: 'dusk-night', weather: 'any', rarity: 'uncommon', pattern: 'spotted', note: 'Bright red-orange with black spots — a boldly colored seep-dweller often mistaken for a newt.' },
-  { id: 4, name: 'Mud Salamander', sci: 'Pseudotriton montanus', habitats: ['floodplain', 'seep'], elevMin: 1200, elevMax: 2200, moistureMin: 0.72, time: 'night', weather: 'any', rarity: 'very-rare', pattern: 'spotted', note: 'A low-elevation specialist of muddy seeps and springs — rare this high in the Smokies.' },
-  { id: 5, name: 'Blue Ridge Two-lined Salamander', sci: 'Eurycea wilderae', habitats: ['stream', 'seep'], elevMin: 1200, elevMax: 5500, moistureMin: 0.4, time: 'any', weather: 'any', rarity: 'common', pattern: 'striped', note: 'Slender and yellow with dark racing stripes — the most common streamside salamander in the park.' },
-  { id: 6, name: 'Long-tailed Salamander', sci: 'Eurycea longicauda', habitats: ['cave', 'stream'], elevMin: 1200, elevMax: 2500, moistureMin: 0.4, time: 'night', weather: 'any', rarity: 'rare', pattern: 'spotted', note: 'Its tail is longer than its body — found lurking near cave entrances and low-elevation seeps.' },
-  { id: 7, name: 'Cave Salamander', sci: 'Eurycea lucifuga', habitats: ['cave'], elevMin: 1200, elevMax: 2200, moistureMin: 0.3, time: 'any', weather: 'any', rarity: 'very-rare', pattern: 'spotted', note: 'Bright orange-red with a prehensile tail for gripping cave walls — rare at the park\u2019s low limestone edges.' },
-  { id: 8, name: 'Seal Salamander', sci: 'Desmognathus monticola', habitats: ['stream', 'rock-outcrop'], elevMin: 1200, elevMax: 4000, moistureMin: 0.5, time: 'dusk-night', weather: 'any', rarity: 'common', pattern: 'spotted', note: 'A heavy-bodied stream salamander that basks on wet boulders at dusk.' },
-  { id: 9, name: 'Black-bellied Salamander', sci: 'Desmognathus quadramaculatus', habitats: ['stream'], elevMin: 1500, elevMax: 4500, moistureMin: 0.7, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'plain', note: 'The largest Desmognathus in the Smokies, holding fast in the roughest whitewater.' },
-  { id: 10, name: 'Shovel-nosed Salamander', sci: 'Desmognathus marmoratus', habitats: ['stream'], elevMin: 1500, elevMax: 4000, moistureMin: 0.75, time: 'night', weather: 'rain', rarity: 'rare', pattern: 'plain', note: 'A flattened, torpedo-shaped body built to wedge under rocks in the strongest current.' },
-  { id: 11, name: 'Northern Dusky Salamander', sci: 'Desmognathus fuscus', habitats: ['seep', 'stream'], elevMin: 1200, elevMax: 3500, moistureMin: 0.5, time: 'dusk-night', weather: 'any', rarity: 'common', pattern: 'spotted', note: 'A common streamside salamander that never strays far from trickling water.' },
-  { id: 12, name: 'Ocoee Salamander', sci: 'Desmognathus ocoee', habitats: ['stream', 'cove-forest', 'hardwood-forest'], elevMin: 2000, elevMax: 5000, moistureMin: 0.4, time: 'any', weather: 'any', rarity: 'common', pattern: 'striped', note: 'Small and variable, ranging from streambanks up into damp forest litter.' },
-  { id: 13, name: 'Imitator Salamander', sci: 'Desmognathus imitator', habitats: ['hardwood-forest', 'high-forest'], elevMin: 3000, elevMax: 5500, moistureMin: 0.4, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'striped', note: 'Mimics the warning colors of the red-cheeked salamander to deter predators.' },
-  { id: 14, name: 'Northern Pygmy Salamander', sci: 'Desmognathus organi', habitats: ['spruce-fir'], elevMin: 5000, elevMax: 6643, moistureMin: 0.5, time: 'dusk-night', weather: 'any', rarity: 'rare', pattern: 'striped', note: 'Barely two inches long, found in wet moss under spruce-fir logs near the highest peaks.' },
-  { id: 15, name: 'Southern Appalachian Salamander', sci: 'Plethodon teyahalee', habitats: ['cove-forest', 'hardwood-forest'], elevMin: 1500, elevMax: 4000, moistureMin: 0.3, time: 'night', weather: 'any', rarity: 'common', pattern: 'plain', note: 'A large woodland salamander common under logs in the park\u2019s rich cove forests.' },
-  { id: 16, name: 'Southern Gray-cheeked Salamander', sci: 'Plethodon metcalfi', habitats: ['hardwood-forest', 'high-forest'], elevMin: 3000, elevMax: 5500, moistureMin: 0.3, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'plain', note: 'Nearly identical to its cousins, told apart mostly by elevation and range.' },
-  { id: 17, name: 'Red-cheeked Salamander', sci: 'Plethodon jordani', habitats: ['spruce-fir', 'high-forest', 'rock-outcrop'], elevMin: 4500, elevMax: 6643, moistureMin: 0.3, time: 'night', weather: 'any', rarity: 'rare', pattern: 'spotted', note: 'Found nowhere else on Earth but these high Smokies ridgelines — the park\u2019s signature endemic.' },
-  { id: 18, name: 'White-spotted Slimy Salamander', sci: 'Plethodon cylindraceus', habitats: ['hardwood-forest', 'cove-forest'], elevMin: 1200, elevMax: 4000, moistureMin: 0.28, time: 'night', weather: 'any', rarity: 'common', pattern: 'spotted', note: 'Glossy black with silvery flecks; its skin secretes a sticky glue-like slime when threatened.' },
-  { id: 19, name: 'Northern Slimy Salamander', sci: 'Plethodon glutinosus', habitats: ['floodplain', 'hardwood-forest'], elevMin: 1200, elevMax: 2500, moistureMin: 0.28, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'spotted', note: 'A lowland forest-floor salamander, active on humid nights after dark.' },
-  { id: 20, name: 'Three-lined Salamander', sci: 'Eurycea guttolineata', habitats: ['floodplain', 'stream', 'seep'], elevMin: 1200, elevMax: 2500, moistureMin: 0.5, time: 'night', weather: 'any', rarity: 'rare', pattern: 'striped', note: 'A long, slender salamander with three dark stripes down a yellow-tan body, found along low-elevation streambanks and floodplains.' },
-  { id: 21, name: 'Zigzag Salamander', sci: 'Plethodon dorsalis', habitats: ['rock-outcrop', 'floodplain'], elevMin: 1200, elevMax: 2500, moistureMin: 0.28, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'striped', note: 'Named for the wavy stripe zigzagging down its back.' },
-  { id: 22, name: 'Four-toed Salamander', sci: 'Hemidactylium scutatum', habitats: ['pond'], elevMin: 1500, elevMax: 4500, moistureMin: 0.7, time: 'dusk-night', weather: 'any', rarity: 'very-rare', pattern: 'spotted', note: 'Lays its eggs in sphagnum moss over still water — a rare bog specialist.' },
-  { id: 23, name: 'Green Salamander', sci: 'Aneides caroliniensis', habitats: ['rock-outcrop'], elevMin: 1200, elevMax: 3500, moistureMin: 0.28, time: 'night', weather: 'any', rarity: 'very-rare', pattern: 'spotted', note: 'Lichen-green and flattened, wedged deep into narrow rock crevices — easy to miss.' },
-  { id: 24, name: 'Junaluska Salamander', sci: 'Eurycea junaluska', habitats: ['stream', 'floodplain'], elevMin: 1200, elevMax: 2000, moistureMin: 0.65, time: 'night', weather: 'rain', rarity: 'very-rare', pattern: 'spotted', note: 'One of the rarest salamanders in the Smokies, found only along a few low-elevation streams.' },
-  { id: 25, name: 'Spotted Salamander', sci: 'Ambystoma maculatum', habitats: ['pond'], elevMin: 1200, elevMax: 3000, moistureMin: 0.6, time: 'night', weather: 'rain', rarity: 'rare', pattern: 'spotted', note: 'Migrates to vernal pools on the first warm, rainy nights of the year to breed.' },
-  { id: 26, name: 'Marbled Salamander', sci: 'Ambystoma opacum', habitats: ['pond', 'floodplain'], elevMin: 1200, elevMax: 3000, moistureMin: 0.4, time: 'dusk-night', weather: 'any', rarity: 'rare', pattern: 'striped', note: 'Silver-banded and stout, it breeds in autumn rather than spring like its cousins.' },
-  { id: 27, name: 'Eastern Newt (Red Eft)', sci: 'Notophthalmus viridescens', habitats: ['pond', 'hardwood-forest', 'cove-forest'], elevMin: 1200, elevMax: 5500, moistureMin: 0.28, time: 'day', weather: 'any', rarity: 'common', pattern: 'spotted', note: "The bright orange terrestrial \u2018red eft\u2019 stage roams the forest floor in broad daylight, warning off predators." },
-  { id: 28, name: 'Eastern Red-backed Salamander', sci: 'Plethodon cinereus', habitats: ['high-forest', 'spruce-fir'], elevMin: 4500, elevMax: 6643, moistureMin: 0.35, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'striped', note: 'A northern species finding refuge from the heat only at the park\u2019s highest, coolest elevations.' },
-  { id: 29, name: 'Yonahlossee Salamander', sci: 'Plethodon yonahlossee', habitats: ['cove-forest', 'rock-outcrop'], elevMin: 3000, elevMax: 5000, moistureMin: 0.45, time: 'night', weather: 'rain', rarity: 'very-rare', pattern: 'spotted', note: 'Large and strikingly patterned, sheltering in rock crevices within rich cove forest.' },
-  { id: 30, name: 'Southern Dusky Salamander', sci: 'Desmognathus auriculatus', habitats: ['floodplain', 'seep'], elevMin: 1200, elevMax: 1800, moistureMin: 0.75, time: 'night', weather: 'any', rarity: 'very-rare', pattern: 'plain', note: "A soggy floodplain specialist clinging on only at the park\u2019s lowest, wettest edges." }
-].map((s, i) => ({ ...s, color1: PALETTES[i % PALETTES.length][0], color2: PALETTES[i % PALETTES.length][1] }));
+  { id: 1, name: 'Eastern Hellbender', sci: 'Cryptobranchus alleganiensis', habitats: ['stream'], elevMin: 1100, elevMax: 2700, moistureMin: 0.72, time: 'night', weather: 'any', rarity: 'rare', pattern: 'spotted', len: 16, color1: '#5e4a32', color2: '#33281b', note: 'North America\'s largest salamander: usually 11–20 in., and Smokies hellbenders can reach 29 in. Flat, wrinkly and mottled brown, it hides under big slab rocks in clean, fast rivers like Little River.' },
+  { id: 2, name: 'Blue Ridge Spring Salamander', sci: 'Gyrinophilus porphyriticus danielsi', habitats: ['seep', 'stream', 'cave'], elevMin: 1100, elevMax: 5500, moistureMin: 0.66, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'spotted', len: 6, color1: '#e08a6e', color2: '#4a2a22', note: 'A big, stout 4–8 in. salamander, salmon to orange-pink with fine dark flecks. Lives in cold springs, seeps and small streams, and eats other salamanders.' },
+  { id: 3, name: 'Blackchin Red Salamander', sci: 'Pseudotriton ruber schencki', habitats: ['seep', 'stream', 'floodplain'], elevMin: 1100, elevMax: 4000, moistureMin: 0.58, time: 'dusk-night', weather: 'any', rarity: 'uncommon', pattern: 'spotted', len: 5, color1: '#d2402e', color2: '#1a1210', note: 'Stout and bright red (4–6 in.) with irregular black spots, a black-flecked chin and yellow eyes. Its red color mimics the toxic red eft. Found around springs, seeps and streams.' },
+  { id: 4, name: 'Midland Mud Salamander', sci: 'Pseudotriton montanus diastictus', habitats: ['floodplain', 'seep'], elevMin: 1100, elevMax: 2200, moistureMin: 0.7, time: 'night', weather: 'any', rarity: 'very-rare', pattern: 'spotted', len: 5, color1: '#c0603a', color2: '#1a1412', note: 'Orange-brown to reddish-brown (3–7 in.) with round, well-spaced black spots and dark eyes. Burrows in muddy seeps at the park\'s lowest edges and is rarely seen here.' },
+  { id: 5, name: 'Blue Ridge Two-lined Salamander', sci: 'Eurycea wilderae', habitats: ['stream', 'seep'], elevMin: 1100, elevMax: 6000, moistureMin: 0.4, time: 'any', weather: 'any', rarity: 'common', pattern: 'striped', len: 3.5, color1: '#f0c13a', color2: '#2a2016', note: 'Small and slender (2.75–4.5 in.), bright yellow to orange with a dark line down each side. One of the most common streamside salamanders in the park.' },
+  { id: 6, name: 'Long-tailed Salamander', sci: 'Eurycea longicauda', habitats: ['stream', 'seep', 'cave', 'floodplain'], elevMin: 1100, elevMax: 2500, moistureMin: 0.4, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'spotted', len: 5.5, color1: '#e0a432', color2: '#1c1714', note: 'Yellow-orange with many black spots (4–6.5 in.). Its tail makes up about 60% of its length, with dark herringbone bars. Found along low streams, seeps and cave mouths.' },
+  { id: 7, name: 'Cave Salamander', sci: 'Eurycea lucifuga', habitats: ['cave'], elevMin: 1100, elevMax: 2200, moistureMin: 0.3, time: 'any', weather: 'any', rarity: 'very-rare', pattern: 'spotted', len: 5, color1: '#e2552a', color2: '#1c1410', note: 'Bright orange-red with scattered black spots and an unmarked yellow belly (4–6 in.). An agile climber that lives in the dim twilight zone of limestone caves.' },
+  { id: 8, name: 'Seal Salamander', sci: 'Desmognathus monticola', habitats: ['stream', 'seep'], elevMin: 1100, elevMax: 4500, moistureMin: 0.5, time: 'dusk-night', weather: 'any', rarity: 'common', pattern: 'spotted', len: 4.5, color1: '#9a8466', color2: '#3b2c1e', note: 'Heavy-bodied (3–6 in.), light brown to gray with dark wormy markings. It rests at the water\'s edge with its head held up like a seal. Common along rocky streams.' },
+  { id: 9, name: 'Cherokee Black-bellied Salamander', sci: 'Desmognathus gvnigeusgwotli', habitats: ['stream'], elevMin: 1100, elevMax: 5000, moistureMin: 0.66, time: 'any', weather: 'any', rarity: 'common', pattern: 'spotted', len: 5.5, color1: '#1f1c1a', color2: '#cfc4a8', note: 'A large, dark streamside salamander (about 4–7 in.) with a jet-black belly and two rows of pale spots on each side. Split from the black-bellied salamander in 2022 as the park\'s 31st species; its name means \'black belly\' in Cherokee.' },
+  { id: 10, name: 'Shovel-nosed Salamander', sci: 'Desmognathus marmoratus', habitats: ['stream'], elevMin: 1100, elevMax: 4000, moistureMin: 0.72, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'spotted', len: 4.25, color1: '#3a3530', color2: '#b8a46a', note: 'Almost fully aquatic (3.5–5 in.), dark brown to gray with two rows of pale blotches, a flattened \'shovel\' head and a keeled tail. Lives under rocks in mid-stream riffles.' },
+  { id: 11, name: 'Spotted Dusky Salamander', sci: 'Desmognathus conanti', habitats: ['stream', 'seep'], elevMin: 1100, elevMax: 2600, moistureMin: 0.5, time: 'dusk-night', weather: 'any', rarity: 'common', pattern: 'spotted', len: 3.75, color1: '#6a553e', color2: '#d6a23e', note: 'Tan to dark brown (2.5–5 in.), usually with 6–8 pairs of golden or reddish spots down the back. Very abundant along low-elevation streams and seeps.' },
+  { id: 12, name: 'Ocoee Salamander', sci: 'Desmognathus ocoee', habitats: ['stream', 'seep', 'cove-forest', 'hardwood-forest', 'high-forest'], elevMin: 2000, elevMax: 6600, moistureMin: 0.4, time: 'any', weather: 'any', rarity: 'common', pattern: 'striped', len: 3.5, color1: '#6e5a40', color2: '#c49a4c', note: 'Small (2.5–4.5 in.) and extremely variable: often a wavy back stripe, sometimes spots, sometimes plain dark. Some Smokies animals have red cheeks or legs. Can be the most abundant salamander around.' },
+  { id: 13, name: 'Imitator Salamander', sci: 'Desmognathus imitator', habitats: ['seep', 'stream', 'hardwood-forest', 'high-forest'], elevMin: 3000, elevMax: 6400, moistureMin: 0.45, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'cheeks', len: 3.5, color1: '#2e2a26', color2: '#d4462e', note: 'Brown to black (about 2.75–4.3 in.), often with red or yellow cheek patches that copy the bad-tasting Red-cheeked Salamander. Almost entirely restricted to the park, above 3,000 ft.' },
+  { id: 14, name: 'Pygmy Salamander', sci: 'Desmognathus wrighti', habitats: ['spruce-fir', 'high-forest'], elevMin: 4500, elevMax: 6643, moistureMin: 0.45, time: 'dusk-night', weather: 'any', rarity: 'uncommon', pattern: 'chevron', len: 1.75, color1: '#9a6238', color2: '#3a2416', note: 'One of the smallest salamanders anywhere, just 1.5–2 in. A coppery-brown back with a dark herringbone (chevron) pattern and silvery sides. Lives in high spruce-fir forest and climbs trees on wet nights.' },
+  { id: 15, name: 'Southern Appalachian Slimy Salamander', sci: 'Plethodon teyahalee', habitats: ['cove-forest', 'hardwood-forest'], elevMin: 1500, elevMax: 4500, moistureMin: 0.3, time: 'night', weather: 'any', rarity: 'common', pattern: 'spotted', len: 5.75, color1: '#18171a', color2: '#e6e6e0', note: 'A large black woodland salamander (4.75–6.75 in.) with small white spots on the back and larger ones on the sides. Sticky skin secretions deter predators. Common in the park\'s coves.' },
+  { id: 16, name: 'Southern Gray-cheeked Salamander', sci: 'Plethodon metcalfi', habitats: ['hardwood-forest', 'high-forest'], elevMin: 3400, elevMax: 5600, moistureMin: 0.35, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'plain', len: 4.25, color1: '#3a3e44', color2: '#6a707a', region: [470, 640, 96, 160], note: 'A slate-gray member of the Jordan\'s salamander group (about 3.5–5 in.) with plain gray cheeks and no red or white markings. In the park it lives in the southeast, around Balsam Mountain.' },
+  { id: 17, name: 'Red-cheeked (Jordan\'s) Salamander', sci: 'Plethodon jordani', habitats: ['spruce-fir', 'high-forest', 'hardwood-forest'], elevMin: 3500, elevMax: 6643, moistureMin: 0.3, time: 'night', weather: 'any', rarity: 'common', pattern: 'cheeks', len: 4.25, color1: '#3c4552', color2: '#d63a2a', note: 'Slate-gray to bluish-black (3.5–5 in.) with bright red cheek patches. Found nowhere in the world but the high forests of Great Smoky Mountains National Park.' },
+  { id: 18, name: 'Common Mudpuppy', sci: 'Necturus maculosus', habitats: ['stream', 'pond'], elevMin: 1100, elevMax: 1800, moistureMin: 0.75, time: 'night', weather: 'any', rarity: 'very-rare', pattern: 'spotted', len: 10.5, color1: '#7a5a3a', color2: '#2e2a30', note: 'A permanently aquatic salamander (8–13 in.) that keeps its bushy dark-red gills for life. Rusty brown with dark spots. In the park, recorded only in a few large low-elevation streams.' },
+  { id: 19, name: 'Northern Slimy Salamander', sci: 'Plethodon glutinosus', habitats: ['floodplain', 'hardwood-forest', 'cove-forest'], elevMin: 1100, elevMax: 2500, moistureMin: 0.28, time: 'night', weather: 'any', rarity: 'uncommon', pattern: 'spotted', len: 6, color1: '#141416', color2: '#d8dde0', note: 'Large and glossy black (4.5–8 in.) with small white or silver spots. Its skin oozes a glue-like slime when grabbed. A lowland forest-floor species.' },
+  { id: 20, name: 'Three-lined Salamander', sci: 'Eurycea guttolineata', habitats: ['floodplain', 'stream', 'seep'], elevMin: 1100, elevMax: 2000, moistureMin: 0.5, time: 'night', weather: 'any', rarity: 'rare', pattern: 'striped', len: 5.5, color1: '#d9a33e', color2: '#1e1a16', note: 'Long and slender (4–7 in.), yellow to orange with a black stripe down the spine and another along each side. Known from only a few low-elevation sites in east Tennessee.' },
+  { id: 21, name: 'Southern Zigzag Salamander', sci: 'Plethodon ventralis', habitats: ['rock-outcrop', 'floodplain', 'cove-forest'], elevMin: 1100, elevMax: 2500, moistureMin: 0.28, time: 'night', weather: 'any', rarity: 'rare', pattern: 'zigzag', len: 3, color1: '#33302e', color2: '#d0602c', note: 'Small and dark (2.5–3.5 in.) with a wavy red-to-yellow stripe down the back and pale speckled sides. Lives in moist talus, rocky slopes and leaf litter low in the mountains.' },
+  { id: 22, name: 'Four-toed Salamander', sci: 'Hemidactylium scutatum', habitats: ['pond', 'seep'], elevMin: 1500, elevMax: 4500, moistureMin: 0.7, time: 'dusk-night', weather: 'any', rarity: 'rare', pattern: 'plain', len: 3, color1: '#9a5a32', color2: '#d9d4c6', note: 'Small (2–4 in.) and rusty brown with four toes on each foot, a pinch at the base of the tail and a white belly with bold black spots. Lays its eggs in moss over still water.' },
+  { id: 23, name: 'Mole Salamander', sci: 'Ambystoma talpoideum', habitats: ['pond', 'floodplain'], elevMin: 1100, elevMax: 2000, moistureMin: 0.6, time: 'night', weather: 'rain', rarity: 'very-rare', pattern: 'spotted', len: 3.5, color1: '#3b3f47', color2: '#a9b8c9', note: 'Short and chunky (3–4 in.) with an oversized head and legs, gray-black with bluish-white flecks. It burrows most of the year and is one of the rarest salamanders in the park, at low elevations only.' },
+  { id: 24, name: 'Junaluska Salamander', sci: 'Eurycea junaluska', habitats: ['stream', 'floodplain'], elevMin: 1100, elevMax: 2000, moistureMin: 0.65, time: 'night', weather: 'any', rarity: 'very-rare', pattern: 'spotted', len: 3.5, color1: '#d9952e', color2: '#2a2018', note: 'Slender (3–4 in.) and yellowish-orange, with black flecks along the sides that form a faint wavy line. Named for Cherokee leader Junaluska. Found only in a few low-elevation streams.' },
+  { id: 25, name: 'Spotted Salamander', sci: 'Ambystoma maculatum', habitats: ['pond'], elevMin: 1100, elevMax: 3000, moistureMin: 0.6, time: 'night', weather: 'rain', rarity: 'rare', pattern: 'spotted', len: 6.5, color1: '#2a2a33', color2: '#f2c230', note: 'Large (up to about 7.75 in.), purplish-black to steel gray with two rows of round yellow spots. Migrates to breeding pools on warm, rainy late-winter nights.' },
+  { id: 26, name: 'Marbled Salamander', sci: 'Ambystoma opacum', habitats: ['pond', 'floodplain'], elevMin: 1100, elevMax: 3000, moistureMin: 0.4, time: 'dusk-night', weather: 'any', rarity: 'rare', pattern: 'banded', len: 4.25, color1: '#1e1e22', color2: '#c9ccd2', note: 'Stout (3.75–4.75 in.) and black with bold crossbands, silvery-white on males and gray on females. Unusually, it breeds in autumn and lays its eggs on land.' },
+  { id: 27, name: 'Red-spotted Newt (Red Eft)', sci: 'Notophthalmus viridescens viridescens', habitats: ['pond', 'hardwood-forest', 'cove-forest'], elevMin: 1100, elevMax: 5500, moistureMin: 0.28, time: 'day', weather: 'any', rarity: 'common', pattern: 'spotted', len: 2.5, color1: '#e2622a', color2: '#b8281c', note: 'The land-dwelling eft (1–3 in.) is bright orange with black-ringed red spots and toxic skin, so it roams openly by day. Adults (4–5 in.) turn olive green and return to ponds.' },
+  { id: 28, name: 'Southern Red-backed Salamander', sci: 'Plethodon serratus', habitats: ['hardwood-forest', 'cove-forest', 'high-forest'], elevMin: 1500, elevMax: 5500, moistureMin: 0.35, time: 'night', weather: 'any', rarity: 'common', pattern: 'striped', len: 3.25, color1: '#2e2622', color2: '#c8452c', note: 'Small and slender (2.5–4 in.), dark brown with a red to orange stripe down the back. Some are all-dark \'lead-backs\'. Common in the park\'s forests.' },
+  { id: 29, name: 'Seepage Salamander', sci: 'Desmognathus aeneus', habitats: ['seep'], elevMin: 1100, elevMax: 3500, moistureMin: 0.6, time: 'night', weather: 'any', rarity: 'rare', pattern: 'striped', len: 2, color1: '#4a3a2c', color2: '#c9873a', region: [0, 300, 104, 250], note: 'Tiny (1.75–2.25 in.) with a yellow to reddish-brown back stripe and a light line from eye to jaw. It lives in wet leaf litter around seeps and hatches without a water stage. Found in the park\'s far southwest.' },
+  { id: 30, name: 'Santeetlah Dusky Salamander', sci: 'Desmognathus santeetlah', habitats: ['seep', 'stream'], elevMin: 2200, elevMax: 6000, moistureMin: 0.5, time: 'dusk-night', weather: 'any', rarity: 'common', pattern: 'plain', len: 3.25, color1: '#6b6a3e', color2: '#d8c25a', note: 'Medium-sized (2.5–4 in.) and greenish-brown with a yellow wash under the legs and tail. Found only at higher elevations in and around the Smokies, mostly inside the park.' },
+  { id: 31, name: 'Pisgah Black-bellied Salamander', sci: 'Desmognathus mavrokoilius', habitats: ['stream'], elevMin: 1500, elevMax: 4500, moistureMin: 0.66, time: 'any', weather: 'any', rarity: 'rare', pattern: 'spotted', len: 5, color1: '#1f1c1a', color2: '#cfc4a8', region: [480, 600, 0, 96], note: 'Looks just like the Cherokee black-belly (dark, stocky, about 4–6 in., with a black belly) and can only be told apart by DNA. In the park it lives only around Cosby.' }
+].map((s) => ({ ...s, scale: Math.max(0.6, Math.min(2.6, 0.55 + s.len * 0.11)) }));
 
 // ---------- realistic salamander art (shared width profile + SVG generator) ----------
 function salWidth(t){
@@ -724,7 +751,37 @@ function makeSalSVG(seed, pattern){
     detail = 'M' + P(spine[2]);
     for (let i = 3; i < N - 2; i++) detail += 'L' + P(spine[i]);
   }
+  if (pattern === 'banded'){
+    // bold crossbands (marbled salamander)
+    for (let t = 0.14; t <= 0.9; t += 0.09){
+      const i = Math.round(t * (N - 1)), [tx, ty] = tang(i), wd = salWidth(t) * 0.92;
+      detail += `M${(spine[i][0] - ty * wd).toFixed(1)},${(spine[i][1] + tx * wd).toFixed(1)}L${(spine[i][0] + ty * wd).toFixed(1)},${(spine[i][1] - tx * wd).toFixed(1)}`;
+    }
+  }
+  if (pattern === 'chevron'){
+    // herringbone of V's down the back (pygmy salamander)
+    for (let t = 0.14; t <= 0.8; t += 0.07){
+      const i = Math.round(t * (N - 1)), [tx, ty] = tang(i), wd = salWidth(t) * 0.6;
+      const j = Math.min(N - 1, i + 1);
+      detail += `M${(spine[i][0] - ty * wd).toFixed(1)},${(spine[i][1] + tx * wd).toFixed(1)}L${P(spine[j])}L${(spine[i][0] + ty * wd).toFixed(1)},${(spine[i][1] - tx * wd).toFixed(1)}`;
+    }
+  }
+  if (pattern === 'zigzag'){
+    detail = '';
+    for (let i = 3; i < N - 4; i++){
+      const t = i / (N - 1), [tx, ty] = tang(i), off = (i % 2 ? 1 : -1) * salWidth(t) * 0.32;
+      detail += (i === 3 ? 'M' : 'L') + (spine[i][0] - ty * off).toFixed(1) + ',' + (spine[i][1] + tx * off).toFixed(1);
+    }
+  }
   let spots = '';
+  if (pattern === 'cheeks'){
+    // bright cheek patches behind the eyes
+    const ic = Math.round(0.12 * (N - 1)), [tcx, tcy] = tang(ic);
+    for (const s of [1, -1]){
+      const wd = salWidth(0.12) * 0.62, cx = spine[ic][0] - s * tcy * wd, cy = spine[ic][1] + s * tcx * wd, r = 2.1;
+      spots += `M${(cx - r).toFixed(1)},${cy.toFixed(1)}a${r},${r} 0 1,0 ${r * 2},0a${r},${r} 0 1,0 ${-r * 2},0`;
+    }
+  }
   if (pattern === 'spotted'){
     for (let t = 0.1; t <= 0.86; t += 0.085){
       const i = Math.round(t * (N - 1)), [tx, ty] = tang(i);
@@ -872,7 +929,7 @@ class Component extends DCLogic {
     timeMin: 8 * 60, day: 1, weather: 'clear', wetness: 0.2,
     stamina: 100, foundIds: [], discovery: null, journalOpen: false, toast: null,
     trackedId: null, locName: null, completed: false, completeSeen: false,
-    muted: false, wildlifeCard: null, seenWildlife: [], berries: 0, introSeen: false, fireflyCount: 0,
+    muted: false, wildlifeCard: null, seenWildlife: [], berries: 0, introSeen: false, fireflyCount: 0, dashBerries: 0, dashing: false,
     syncSeen: false, caveSeen: false, syncOpen: false, caveIntroOpen: false, caveFact: null, caveFactName: '', netSwings: 0, bottleUses: 0, scares: 0, rangerActive: false,
     mapOpen: false,
     books: [], seriesComplete: false, seriesAwardOpen: false, bookDelivered: false, booksTurnedIn: false, salamanderBook: false
@@ -920,9 +977,9 @@ class Component extends DCLogic {
     this.particles = [];
     this.hikers = this.makeHikers();
     this.caveHikers = [];
-    // placed field gear: an old specimen jar cached at Elkmont, a net left at Cades Cove
+    // placed field gear: an old camera cached at Elkmont, a better (telephoto) lens left at Cades Cove
     this.netDrops = [
-      { x: 250 * this.CELL, y: 58 * this.CELL, t: 0, kind: 'bottle', placed: true },
+      { x: 259.8 * this.CELL, y: 78 * this.CELL, t: 0, kind: 'bottle', placed: true },
       { x: 95 * this.CELL, y: 116 * this.CELL, t: 0, kind: 'net', placed: true },
       { x: 430 * this.CELL, y: 98 * this.CELL, t: 0, kind: 'honey', placed: true },
       { x: 305 * this.CELL, y: 12 * this.CELL, t: 0, kind: 'book', title: 'Yosemite Trivia & Activities', placed: true },
@@ -1028,10 +1085,11 @@ class Component extends DCLogic {
 
   onKey(e, down){
     const k = e.key.toLowerCase();
-    if (['arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'w', 'a', 's', 'd', 'e', 'j', 'shift'].includes(k)) e.preventDefault();
+    if (['arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'w', 'a', 's', 'd', 'e', 'j', 'q', 'r', 'shift'].includes(k)) e.preventDefault();
     if (down){
       this.keys.add(k);
-      if (k === 'e'){
+      if ((k === 'r' || k === 'q') && !e.repeat) this.useDash();
+      if (k === 'e' && !e.repeat){
         if (this.catchAnim) this.resolveCatch();
         else this.action();
       }
@@ -1081,11 +1139,11 @@ class Component extends DCLogic {
       this.camera.x = this.bear.x; this.camera.y = this.bear.y;
       this.setState({
         started: true,
-        foundIds: sv.foundIds || [], timeMin: sv.timeMin ?? 480, day: sv.day ?? 1,
-        stamina: sv.stamina ?? 100, trackedId: sv.trackedId ?? null, berries: clamp(sv.berries ?? 0, 0, 10), introSeen: sv.introSeen ?? false, fireflyCount: clamp(sv.fireflyCount ?? 0, 0, 9),
+        foundIds: (sv.speciesV >= 2 ? (sv.foundIds || []) : (sv.foundIds || []).filter((id) => ![18, 23, 29, 30].includes(id))), timeMin: sv.timeMin ?? 480, day: sv.day ?? 1,
+        stamina: sv.stamina ?? 100, trackedId: sv.trackedId ?? null, berries: clamp(sv.berries ?? 0, 0, 10), dashBerries: clamp(sv.dashBerries ?? 0, 0, 5), introSeen: sv.introSeen ?? false, fireflyCount: clamp(sv.fireflyCount ?? 0, 0, 9),
         syncSeen: !!sv.syncSeen, caveSeen: !!sv.caveSeen, netSwings: clamp(sv.netSwings ?? 0, 0, 99), bottleUses: clamp(sv.bottleUses ?? 0, 0, 99),
         books: sv.books || [], bookDelivered: !!sv.bookDelivered, seriesComplete: !!sv.seriesComplete, salamanderBook: !!sv.salamanderBook, booksTurnedIn: !!sv.booksTurnedIn,
-        completeSeen: (sv.foundIds || []).length >= 30
+        completeSeen: (sv.foundIds || []).length >= SPECIES.length
       });
       this._stAccum = sv.stamina ?? 100;
     } else {
@@ -1101,7 +1159,9 @@ class Component extends DCLogic {
     this.bear.x = 740; this.bear.y = 582;
     this.camera.x = 740; this.camera.y = 582;
     this._stAccum = 100;
-    this.catchAnim = null; this.critters = []; this.trackTarget = null;
+    this.catchAnim = null; this.critters = []; this.trackTarget = null; this.residentMap = {};
+    this.banjoPlaying = false; this.villagers = []; this.banjoNotes = []; this._dashT = 0; this._carHitCd = 0;
+    for (const t of (this.hollowTrees || [])){ t.ready = true; t.regrowT = 0; }
     this.ranger = null;
     this.inCave = null; this._outside = null;
     this.inDome = null; this._outsideDome = null;
@@ -1112,7 +1172,7 @@ class Component extends DCLogic {
       started: true, timeMin: 480, day: 1, weather: 'clear', wetness: 0.2,
       stamina: 100, foundIds: [], discovery: null, journalOpen: false,
       trackedId: null, completed: false, completeSeen: false, toast: null,
-      berries: 0, fireflyCount: 0, syncSeen: false, caveSeen: false, netSwings: 0, bottleUses: 0, scares: 0, rangerActive: false, gameOver: false, rangerWarnOpen: false,
+      berries: 0, dashBerries: 0, dashing: false, fireflyCount: 0, syncSeen: false, caveSeen: false, netSwings: 0, bottleUses: 0, scares: 0, rangerActive: false, gameOver: false, rangerWarnOpen: false,
       syncOpen: false, caveIntroOpen: false, caveFact: null,
       books: [], seriesComplete: false, seriesAwardOpen: false, bookDelivered: false, booksTurnedIn: false, salamanderBook: false
     });
@@ -1121,11 +1181,11 @@ class Component extends DCLogic {
   saveGame(){
     try {
       localStorage.setItem(SAVE_KEY, JSON.stringify({
-        foundIds: this.state.foundIds, timeMin: Math.round(this.state.timeMin), day: this.state.day,
+        foundIds: this.state.foundIds, speciesV: 2, timeMin: Math.round(this.state.timeMin), day: this.state.day,
         stamina: Math.round(this.state.stamina),
         x: Math.round(this.inCave && this._outside ? this._outside.x : this.bear.x),
         y: Math.round(this.inCave && this._outside ? this._outside.y : this.bear.y),
-        trackedId: this.state.trackedId, berries: this.state.berries || 0, introSeen: this.state.introSeen,
+        trackedId: this.state.trackedId, berries: this.state.berries || 0, introSeen: this.state.introSeen, dashBerries: this.state.dashBerries || 0,
         fireflyCount: this.state.fireflyCount || 0, syncSeen: !!this.state.syncSeen, caveSeen: !!this.state.caveSeen, netSwings: this.state.netSwings || 0, bottleUses: this.state.bottleUses || 0,
         books: this.state.books || [], bookDelivered: !!this.state.bookDelivered, seriesComplete: !!this.state.seriesComplete, salamanderBook: !!this.state.salamanderBook, booksTurnedIn: !!this.state.booksTurnedIn
       }));
@@ -1176,7 +1236,8 @@ class Component extends DCLogic {
     ];
     for (const s of spine) s[1] += NPAD; this.spine = spine;
     const rawRivers = [
-      { name: 'Little River', pts: [[320, 82], [300, 62], [255, 46], [190, 36], [110, 30], [40, 28]] },
+      // rises below the crest, flows north through Elkmont, then turns west alongside Little River Rd
+      { name: 'Little River', pts: [[320, 82], [296, 87], [272, 86], [254, 84], [246, 76], [244, 62], [240, 50], [232, 43], [190, 36], [110, 30], [40, 28]] },
       { name: 'Abrams Creek', pts: [[190, 92], [150, 106], [95, 114], [40, 124]] },
       { name: 'Oconaluftee R.', pts: [[400, 84], [416, 110], [430, 136], [440, 168], [430, 200]] },
       { name: 'W. Prong Little Pigeon', pts: [[335, 80], [330, 58], [320, 38], [300, 22]] },
@@ -1209,6 +1270,11 @@ class Component extends DCLogic {
       { name: 'Newfound Gap Rd (US-441)', pts: [[302, 16], [312, 34], [322, 52], [340, 64], [362, 72], [384, 78], [400, 84], [412, 102], [422, 124], [432, 148], [440, 168], [434, 188], [430, 200]] },
       { name: 'Clingmans Dome Rd', pts: [[400, 84], [382, 90], [362, 90], [346, 86], [335, 80]] },
       { name: 'Little River Rd', pts: [[322, 52], [300, 58], [258, 50], [220, 42], [190, 40], [162, 44]] },
+      { name: 'Elkmont Rd', pts: [[265.4, 51.4], [264, 53.6], [262.4, 55.6]] },   // turns south (left, westbound) into Elkmont
+      // Daisy Town — closely spaced cottages along the road up to the Appalachian Clubhouse (the Great Hall)
+      { name: 'Daisy Town Rd', pts: [[262.4, 55.6], [262.2, 61], [262, 68.4]] },
+      // Millionaires' Row — the larger cottages strung east toward the Little River
+      { name: "Millionaires' Row", pts: [[262.4, 55.6], [270, 56.2], [280, 61], [290, 69], [298, 77], [304, 81]] },
       { name: 'Laurel Creek Rd', pts: [[162, 44], [138, 58], [120, 80], [108, 98], [95, 114]] },
       { name: 'Cades Cove Loop', pts: [[95, 114], [110, 108], [118, 116], [112, 126], [95, 130], [78, 126], [72, 116], [80, 108], [95, 114]] },
       { name: 'Cove Creek Rd', pts: [[640, 118], [618, 124], [598, 132], [575, 138]] }
@@ -1238,7 +1304,10 @@ class Component extends DCLogic {
       { x: 180 * CELL, y: 32 * CELL, r: 9 * CELL, hab: 'pond', name: 'Elkmont Wetland' },
       { x: 425 * CELL, y: 185 * CELL, r: 8 * CELL, hab: 'pond', name: 'Oconaluftee Marsh' },
       { x: 205 * CELL, y: 52 * CELL, r: 5 * CELL, hab: 'stream', name: 'Laurel Falls' },
-      { x: 478 * CELL, y: 74 * CELL, r: 5 * CELL, hab: 'stream', name: 'Ramsey Cascades' }
+      { x: 478 * CELL, y: 74 * CELL, r: 5 * CELL, hab: 'stream', name: 'Ramsey Cascades' },
+      // low-elevation rock bluffs — crevice habitat below the high-country outcrops
+      { x: 68 * CELL, y: 106 * CELL, r: 4 * CELL, hab: 'rock-outcrop', name: 'Abrams Creek bluffs' },
+      { x: 175 * CELL, y: 46 * CELL, r: 4 * CELL, hab: 'rock-outcrop', name: 'Little River Gorge bluffs' }
     ];
     // waterfalls — drawn as cascades in bakeWorldCanvas
     this.falls = [
@@ -1256,7 +1325,7 @@ class Component extends DCLogic {
       { x: 95 * CELL, y: 114 * CELL, name: 'Cades Cove', peak: false },
       { x: 575 * CELL, y: 138 * CELL, name: 'Cataloochee', peak: false },
       { x: 468 * CELL, y: 60 * CELL, name: 'Charlies Bunion', peak: false },
-      { x: 250 * CELL, y: 42 * CELL, name: 'Elkmont', peak: false },
+      { x: 254 * CELL, y: 60 * CELL, name: 'Elkmont', peak: false },
       { x: 66 * CELL, y: 198 * CELL, name: 'Fontana Dam', peak: false },
       { x: 590 * CELL, y: 32 * CELL, name: 'Big Creek', peak: false },
       { x: 205 * CELL, y: 52 * CELL, name: 'Laurel Falls', peak: false },
@@ -1305,7 +1374,35 @@ class Component extends DCLogic {
       }
     };
     settle(95, 114, 3, 4421, 6);    // Cades Cove — a few historic cabins near the loop
-    settle(250, 42, 11, 7788, 6);   // Elkmont — historic cottages along the river
+    { // Elkmont — laid out like the real Appalachian Club area
+      const rnd = mulberry32(7788);
+      const pick = () => cabinRoofs[Math.floor(rnd() * cabinRoofs.length)];
+      const cabins = [];
+      // Daisy Town: two tidy rows facing the main street, four cottages a side
+      for (const cy of [58.4, 60.8, 63.2, 65.6]){
+        for (const side of [-1, 1]){
+          cabins.push({ x: (262.2 + side * 2.45) * CELL, y: cy * CELL, w: 10 + rnd() * 2.5, h: 7.6 + rnd() * 1.4, roof: pick(), rustic: true });
+        }
+      }
+      // Millionaires' Row: bigger summer homes along the lane toward the river
+      for (const [cx, cy] of [[273.9, 60.9], [283.4, 67], [286.6, 63], [292.2, 74.8], [295.8, 71.2], [299.5, 80.6]]){
+        cabins.push({ x: cx * CELL, y: cy * CELL, w: 13.5 + rnd() * 2.5, h: 9.5 + rnd() * 1.5, roof: pick(), rustic: true });
+      }
+      for (const b of cabins) this.buildings.push(b);
+      const PAINTS = [
+        { wall: '#a8402f', roof: '#5c2a20', line: 'rgba(70,24,16,0.45)' },   // red
+        { wall: '#5a8248', roof: '#2f4a2a', line: 'rgba(28,48,24,0.45)' },   // green
+        { wall: '#4a76a0', roof: '#2a4260', line: 'rgba(22,40,62,0.45)' }    // blue
+      ];
+      // about half the cottages get paint, cycling red → green → blue
+      let pi = 0;
+      cabins.forEach((b, k) => { if (((k >> 1) + k) % 2 === 0){ const pt = PAINTS[pi++ % 3]; b.paint = pt; b.roof = pt.roof; } });   // checkerboard the rows
+      this.elkmontCabins = cabins;
+      // the Great Hall (Appalachian Clubhouse) closes the top of Daisy Town Rd
+      const hall = { x: 262 * CELL, y: 74 * CELL, w: 130, h: 80, hall: true };
+      this.buildings.push(hall);
+      this.greatHall = hall;
+    }
     settle(575, 138, 8, 3312, 6);   // Cataloochee — valley homesteads
     // LeConte Lodge — a cluster of rustic cabins + dining hall atop Mt. LeConte
     settle(430, 82, 5, 5591, 3.2);
@@ -1673,7 +1770,7 @@ class Component extends DCLogic {
     w.save();
     w.font = '600 10.5px LatoB, sans-serif'; w.textAlign = 'center';
     for (const rd of this.roads){
-      if (rd.name === 'Cades Cove Loop') continue;
+      if (rd.name === 'Cades Cove Loop' || rd.name === 'Elkmont Rd') continue;
       const m = Math.floor(rd.pts.length * 0.5);
       const mid = rd.pts[m];
       const a = rd.pts[Math.max(0, m - 3)], b = rd.pts[Math.min(rd.pts.length - 1, m + 3)];
@@ -1806,11 +1903,12 @@ class Component extends DCLogic {
         w.fillText('THE NEXT CHAPTER', x, y - b.h / 2 - 4.6);
         continue;
       }
+      if (b.hall){ this.bakeGreatHall(w, b); continue; }
       w.fillStyle = 'rgba(20,16,10,0.28)'; w.fillRect(x - b.w / 2 + 2, y - b.h / 2 + 3, b.w, b.h);
       if (b.rustic){
         // log-cabin walls with a shingled gable; churches get a little steeple
-        w.fillStyle = '#9c8360'; w.fillRect(x - b.w / 2, y - b.h / 2, b.w, b.h);
-        w.strokeStyle = 'rgba(70,52,34,0.5)'; w.lineWidth = 0.6;
+        w.fillStyle = b.paint ? b.paint.wall : '#9c8360'; w.fillRect(x - b.w / 2, y - b.h / 2, b.w, b.h);
+        w.strokeStyle = b.paint ? b.paint.line : 'rgba(70,52,34,0.5)'; w.lineWidth = 0.6;
         for (let ly = y - b.h / 2 + 2; ly < y + b.h / 2; ly += 2.4){ w.beginPath(); w.moveTo(x - b.w / 2, ly); w.lineTo(x + b.w / 2, ly); w.stroke(); }
         w.fillStyle = b.roof;
         w.beginPath();
@@ -1866,8 +1964,14 @@ class Component extends DCLogic {
     return { habitat: this.habitatGrid[idx], elev: this.elevGrid[idx], moisture, idx, i, j };
   }
 
+  inRegion(sp, s){
+    if (!sp.region || this.inCave || this.inDome || s.i == null) return true;
+    const [i0, i1, j0, j1] = sp.region;
+    return s.i >= i0 && s.i <= i1 && s.j >= j0 && s.j <= j1;
+  }
   speciesMatch(sp, s, timePeriod, weather){
     if (!sp.habitats.includes(s.habitat)) return false;
+    if (!this.inRegion(sp, s)) return false;
     if (s.elev < sp.elevMin || s.elev > sp.elevMax) return false;
     if (s.moisture < sp.moistureMin) return false;
     if (sp.time !== 'any'){
@@ -1887,23 +1991,105 @@ class Component extends DCLogic {
     return r;
   }
 
+  // ---- resident population: guarantees every un-logged species is out on the map ----
+  // Residents are placed only where the species really lives (habitat + elevation +
+  // moisture). They never despawn with distance; outside their active hours or
+  // weather they sit still under cover rather than vanishing.
+  residentPlaceOk(sp, s){
+    return sp.habitats.includes(s.habitat) && s.elev >= sp.elevMin && s.elev <= sp.elevMax && this.inRegion(sp, s);
+  }
+  residentCells(sp){
+    if (!this._resCells) this._resCells = {};
+    if (this._resCells[sp.id]) return this._resCells[sp.id];
+    const { GRID_W, GRID_H, CELL } = this;
+    const blocks = [...(this.CAVES || []), ...(this.DOME ? [this.DOME] : [])].map((b) => ({ x: b.x, y: b.y, r: b.mr * CELL * 0.75 }));
+    const good = [], wetOnly = [], any = [];
+    for (let j = 3; j < GRID_H - 3; j++){
+      for (let i = 3; i < GRID_W - 3; i++){
+        const idx = j * GRID_W + i;
+        if (!sp.habitats.includes(this.habitatGrid[idx])) continue;
+        const e = this.elevGrid[idx];
+        if (e < sp.elevMin || e > sp.elevMax) continue;
+        if (!this.inRegion(sp, { i, j })) continue;
+        const x = (i + 0.5) * CELL, y = (j + 0.5) * CELL;
+        if (blocks.some((b) => Math.hypot(x - b.x, y - b.y) < b.r)) continue;
+        const m = this.moistureGrid[idx];
+        if (m * 0.85 >= sp.moistureMin) good.push(idx);       // damp enough in ordinary weather
+        else if (m * 1.3 >= sp.moistureMin) wetOnly.push(idx); // damp enough once soaked
+        else any.push(idx);
+      }
+    }
+    const list = good.length ? good : wetOnly.length ? wetOnly : any;
+    this._resCells[sp.id] = list;
+    return list;
+  }
+  ensureResidents(foundNow){
+    if (!this.residentMap) this.residentMap = {};
+    const have = new Set();
+    for (const c of this.critters) if (c.resident) have.add(c.sp.id);
+    let placed = 0;
+    for (const sp of SPECIES){
+      if (foundNow.has(sp.id)){ delete this.residentMap[sp.id]; continue; }
+      if (have.has(sp.id)) continue;
+      let c = this.residentMap[sp.id];
+      if (!c || c.dead){
+        if (placed >= 4) continue; // spread first-time placement over a few frames
+        const cells = this.residentCells(sp);
+        if (!cells.length) continue;
+        const idx = cells[Math.floor(Math.random() * cells.length)];
+        const { GRID_W, CELL } = this;
+        const x = ((idx % GRID_W) + 0.2 + Math.random() * 0.6) * CELL;
+        const y = (Math.floor(idx / GRID_W) + 0.2 + Math.random() * 0.6) * CELL;
+        const dir0 = Math.random() * Math.PI * 2;
+        c = {
+          sp, x, y, vx: 0, vy: 0, dir: dir0, heading: dir0, speed: 0,
+          state: 'wander', wt: Math.random() * 2, ph: Math.random() * 10,
+          spook: 0, alertT: 0, resident: true
+        };
+        this.residentMap[sp.id] = c;
+        placed++;
+      }
+      this.critters.push(c);
+    }
+  }
+
+  // cave-dwellers that can live in this cave are always somewhere in its passages
+  ensureCaveResidents(foundNow){
+    const s = this.sampleAt(0, 0);
+    const have = new Set(this.critters.map((c) => c.sp.id));
+    for (const sp of SPECIES){
+      if (foundNow.has(sp.id) || have.has(sp.id)) continue;
+      if (!this.residentPlaceOk(sp, s) || s.moisture < sp.moistureMin) continue;
+      const pt = this.randomCavePoint(); if (!pt) continue;
+      const dir0 = Math.random() * Math.PI * 2;
+      this.critters.push({
+        sp, x: pt.x, y: pt.y, vx: 0, vy: 0, dir: dir0, heading: dir0, speed: 0,
+        state: 'wander', wt: Math.random() * 2, ph: Math.random() * 10,
+        spook: 0, alertT: 0, resident: true
+      });
+    }
+  }
+
   // spawn live critters near the bear in valid habitat
   updateCritters(dt){
     const bear = this.bear;
     if (this.inDome){ this.critters = []; return; }
     // despawn far critters
     const foundNow = new Set(this.state.foundIds);
-    this.critters = this.critters.filter((c) => Math.hypot(c.x - bear.x, c.y - bear.y) < 720 && !c.dead && !foundNow.has(c.sp.id));
+    this.critters = this.critters.filter((c) => (c.resident || Math.hypot(c.x - bear.x, c.y - bear.y) < 720) && !c.dead && (!foundNow.has(c.sp.id) || c.photographed));
+    // one resident of every species not yet logged always lives somewhere on the map
+    if (!this.inCave) this.ensureResidents(foundNow);
+    else this.ensureCaveResidents(foundNow);
     this.critterTimer -= dt;
     if (this.critterTimer <= 0){
       const boost = this.state.salamanderBook && (this.inCave || this.isWater(bear.x, bear.y));
-      this.critterTimer = boost ? 0.3 : 0.7;
-      const maxC = boost ? 24 : 8;
-      if (this.critters.length < maxC){
+      this.critterTimer = boost ? 0.15 : 0.35;
+      const maxC = boost ? 48 : 16;
+      if (this.critters.filter((c) => !c.resident).length < maxC){
         const tp = this.timePeriod(), weather = this.state.weather;
         const foundSet = new Set(this.state.foundIds);
         const trackedId = this.state.trackedId;
-        for (let attempt = 0; attempt < 10; attempt++){
+        for (let attempt = 0; attempt < 20; attempt++){
           let x, y;
           if (this.inCave){
             const pt = this.randomCavePoint();
@@ -1927,7 +2113,7 @@ class Component extends DCLogic {
             if (!sp) sp = pool[Math.floor(Math.random() * pool.length)];
           }
           if (!sp) continue;
-          if (this.critters.some((c) => c.sp.id === sp.id)) continue;
+          if (this.critters.filter((c) => c.sp.id === sp.id).length >= 2) continue;
           const dir0 = Math.random() * Math.PI * 2;
           this.critters.push({
             sp, x, y, vx: 0, vy: 0, dir: dir0, heading: dir0, speed: 0,
@@ -1941,6 +2127,7 @@ class Component extends DCLogic {
     // behavior — smooth steering (no jitter)
     for (const c of this.critters){
       const d = Math.hypot(c.x - bear.x, c.y - bear.y);
+      if (c.resident && d > 1500) continue;
       const fleeR = 88, calmR = 150;
       if (c.spook > 0) c.spook -= dt;
       if (d < fleeR || c.spook > 0){
@@ -1956,6 +2143,8 @@ class Component extends DCLogic {
         if (c.wt <= 0){ c.wt = 1.6 + Math.random() * 2.6; c.dir = c.heading + (Math.random() - 0.5) * 1.3; c.pause = Math.random() < 0.5; }
         targetDir = c.dir;
         targetSpeed = c.pause ? 0 : 16;
+        // a resident outside its active hours/weather stays tucked under cover
+        if (c.resident && !this.speciesMatch(c.sp, this.sampleAt(c.x, c.y), this.timePeriod(), this.state.weather)) targetSpeed = 0;
       }
       let dh = targetDir - c.heading;
       while (dh > Math.PI) dh -= Math.PI * 2;
@@ -1967,7 +2156,7 @@ class Component extends DCLogic {
       const nx = clamp(c.x + c.vx * dt, 14, this.WORLD_W - 14);
       const ny = clamp(c.y + c.vy * dt, 14, this.WORLD_H - 14);
       // don't let critters leave valid habitat while wandering
-      if (c.state === 'flee' || this.speciesMatch(c.sp, this.sampleAt(nx, ny), this.timePeriod(), this.state.weather) || Math.random() < 0.3){
+      if (c.state === 'flee' || (c.resident ? this.residentPlaceOk(c.sp, this.sampleAt(nx, ny)) : this.speciesMatch(c.sp, this.sampleAt(nx, ny), this.timePeriod(), this.state.weather)) || Math.random() < 0.3){
         c.x = nx; c.y = ny;
       } else {
         // leaving habitat: turn back once and pause, instead of thrashing every frame
@@ -2173,7 +2362,7 @@ class Component extends DCLogic {
           const bt = h.item === 'book' ? this.pickBook() : null;
           arr.push({ x: h.x, y: h.y, t: 0, kind: h.item, title: bt });
           SFX.play('click');
-          this.showToast(h.item === 'book' ? ('\uD83D\uDCD8 A caver dropped \u201c' + bt + '\u201d \u2014 grab it!') : h.item === 'bottle' ? '\uD83E\uDED9 A hiker dropped a specimen jar \u2014 grab it!' : '\uD83E\uDD45 A hiker dropped their net \u2014 grab it!');
+          this.showToast(h.item === 'book' ? ('\uD83D\uDCD8 A caver dropped \u201c' + bt + '\u201d \u2014 grab it!') : h.item === 'bottle' ? '\uD83D\uDCF7 A hiker dropped an old camera \u2014 grab it!' : '\uD83D\uDD2D A hiker dropped a telephoto lens \u2014 grab it!');
           h.item = null;
         }
         if (d < 58 && h.sprayCd <= 0 && this._frozenT <= 0 && Math.random() < 0.85){
@@ -2189,7 +2378,7 @@ class Component extends DCLogic {
           this.showWeatherAlert('\uD83E\uDDF4 Bear sprayed! You\u2019re frozen for a moment\u2026');
           if ((this.state.netSwings || 0) > 0){
             this.setState({ netSwings: Math.max(0, this.state.netSwings - 3) });
-            this.showToast('\uD83E\uDD45 You dropped a net in the panic \u2014 lost it!');
+            this.showToast('\uD83D\uDD2D You dropped your telephoto lens in the panic \u2014 lost it!');
           }
         }
       } else {
@@ -2251,8 +2440,8 @@ class Component extends DCLogic {
         } else if (n.kind === 'bottle'){
           const bu = (this.state.bottleUses || 0) + 3;
           this.setState({ bottleUses: bu });
-          if (n.placed) this.showFind('\uD83E\uDED9', 'An Old Specimen Jar', 'Tucked inside a weathered Elkmont cottage, you find a naturalist\u2019s glass collecting jar. It makes salamanders <b>2\u00d7 easier</b> to catch \u2014 <b>3 uses</b>.', 6000);
-          else this.showToast('\uD83E\uDED9 Specimen jar collected \u2014 3 uses (' + bu + ' total). Makes salamanders 2\u00d7 easier to catch.');
+          if (n.placed) this.showFind('\uD83D\uDCF7', 'An Old Camera', 'On a dusty shelf in an Elkmont cottage you find a summer resident\u2019s old folding camera. Its big, bright viewfinder makes salamanders <b>2\u00d7 easier</b> to photograph \u2014 <b>3 uses</b>.', 6000);
+          else this.showToast('\uD83D\uDCF7 Old camera picked up \u2014 3 uses (' + bu + ' total). Makes sharp photos 2\u00d7 easier.');
         } else if (n.kind === 'book'){
           const title = n.title || SMOKIES_BOOK;
           const have = this.state.books || [];
@@ -2272,8 +2461,8 @@ class Component extends DCLogic {
         } else {
           const sw = (this.state.netSwings || 0) + 3;
           this.setState({ netSwings: sw });
-          if (n.placed) this.showFind('\uD83E\uDD45', 'A Net in an Old Building', 'Rummaging through a dusty Cades Cove cabin, you turn up a long-handled dip net left behind long ago. It <b>triples your pounce reach</b> for salamanders \u2014 <b>3 uses</b>.');
-          else this.showToast('\uD83E\uDD45 Net collected \u2014 3 uses (' + sw + ' total). Triples your pounce reach.');
+          if (n.placed) this.showFind('\uD83D\uDD2D', 'A Better Lens', 'Rummaging through a dusty Cades Cove cabin, you turn up a long telephoto lens. It <b>triples how far away</b> you can photograph a salamander \u2014 <b>3 uses</b>.', 6000, { kicker: 'FIELD GEAR RECOVERED', btn: 'Take it' });
+          else this.showToast('\uD83D\uDD2D Telephoto lens picked up \u2014 3 uses (' + sw + ' total). Triples your photo reach.');
         }
       }
     }
@@ -2306,7 +2495,9 @@ class Component extends DCLogic {
 
   nearestCritter(){
     let best = null, bd = Infinity;
+    const logged = new Set(this.state.foundIds || []);
     for (const c of this.critters){
+      if (logged.has(c.sp.id)) continue;   // already photographed — nothing new to log
       const d = Math.hypot(c.x - this.bear.x, c.y - this.bear.y);
       if (d < bd){ bd = d; best = c; }
     }
@@ -2359,29 +2550,28 @@ class Component extends DCLogic {
     if (this.state.discovery || !this.state.started || this.catchAnim) return;
     if (this.eCooldown > 0) return;
     this.eCooldown = 0.35;
+    if (this.nearBanjo()){ if (this.banjoPlaying) this.stopBanjo(); else this.startBanjo(); return; }
     const { critter, dist } = this.nearestCritter();
-    // pounce
+    // photograph (same reach a pounce used to have; the telephoto lens triples it)
     if (critter && dist < this.pounceReach()){
-      const useNet = (this.state.netSwings || 0) > 0;
-      const useBottle = (this.state.bottleUses || 0) > 0;
+      const useNet = (this.state.netSwings || 0) > 0;      // telephoto lens
+      const useBottle = (this.state.bottleUses || 0) > 0;  // old camera
       const assist = (this.props.catchAssist ?? false) || useBottle;
-      SFX.play('pounce');
-      this.bear.pounce = 0.35;
-      this.shake = 5;
-      this.burst(critter.x, critter.y, 10, (useNet || useBottle) ? '#cfe0a0' : '#c9b184');
+      SFX.play('focus');
       this.catchAnim = {
         sp: critter.sp, critter, t: 0, net: useNet, bottle: useBottle,
         speed: RARITY_SPEED[critter.sp.rarity] * (useBottle ? 0.6 : assist ? 0.72 : 1),
-        zone: RARITY_ZONE[critter.sp.rarity] * (useBottle ? 2 : assist ? 1.5 : 1),
+        zone: Math.min(0.95, RARITY_ZONE[critter.sp.rarity] * (useBottle ? 2 : assist ? 1.5 : 1)),
         life: 5, resolved: false, flash: 0
       };
       const msgs = [];
-      if (useNet){ const sw = this.state.netSwings - 1; this.setState({ netSwings: sw }); msgs.push('\uD83E\uDD45 Net reach (' + sw + ' left)'); }
-      if (useBottle){ const bu = this.state.bottleUses - 1; this.setState({ bottleUses: bu }); msgs.push('\uD83E\uDED9 Jar 2\u00d7 (' + bu + ' left)'); }
-      if (msgs.length) this.showToast(msgs.join('  \u00b7  ') + ' \u2014 pin it in the green zone!');
-      SFX.play('catchStart');
+      if (useNet){ const sw = this.state.netSwings - 1; this.setState({ netSwings: sw }); msgs.push('\uD83D\uDD2D Telephoto reach (' + sw + ' left)'); }
+      if (useBottle){ const bu = this.state.bottleUses - 1; this.setState({ bottleUses: bu }); msgs.push('\uD83D\uDCF7 Old camera 2\u00d7 steadier (' + bu + ' left)'); }
+      if (msgs.length) this.showToast(msgs.join('  \u00b7  ') + ' \u2014 snap when it\u2019s in the gold!');
       return;
     }
+    // search a hollow tree for sarvisberries
+    { const ht = this.nearestHollowTree(); if (ht.tree && ht.dist < 46){ this.searchHollowTree(ht.tree); return; } }
     // eat berries
     const { bush, dist: bd } = this.nearestBush();
     if (bush && bd < 34){
@@ -2455,15 +2645,16 @@ class Component extends DCLogic {
     if (!c || c.resolved) return;
     c.resolved = true;
     const pos = Math.sin(c.t * c.speed);
-    const hit = Math.abs(pos) <= c.zone;
+    const hit = Math.abs(pos) <= c.zone + (c.markerTol || 0.03);
     const sp = c.sp;
     if (hit){
       c.flash = 1;
-      this.shake = 8;
-      this.burst(c.critter.x, c.critter.y, 22, sp.color2);
+      SFX.play('shutter');
+      this._photoFlashAt = performance.now();
       setTimeout(() => {
         this.catchAnim = null;
-        c.critter.dead = true;
+        // no catching: the salamander is left where it is, a little startled by the flash
+        c.critter.photographed = true; c.critter.resident = false; c.critter.spook = 1.4;
         const foundSet = new Set(this.state.foundIds);
         foundSet.add(sp.id);
         const ids = Array.from(foundSet);
@@ -2484,11 +2675,12 @@ class Component extends DCLogic {
       }, 260);
     } else {
       c.flash = -1;
-      SFX.play('miss');
+      SFX.play('shutter');
+      this._photoFlashAt = performance.now();
       c.critter.spook = 2.2;
       setTimeout(() => {
         this.catchAnim = null;
-        this.showToast(`The ${sp.name} wriggled free! Chase it down and try again.`);
+        this.showToast(`Blurry shot \u2014 the ${sp.name} scurried off! Follow it and line up another photo.`);
       }, 420);
     }
   }
@@ -2512,7 +2704,7 @@ class Component extends DCLogic {
       for (let i = 2; i < GRID_W - 2; i += 3){
         const idx = j * GRID_W + i;
         const moisture = clamp(this.moistureGrid[idx] * (0.4 + 0.9 * this.state.wetness), 0, 1.3);
-        const s = { habitat: this.habitatGrid[idx], elev: this.elevGrid[idx], moisture };
+        const s = { habitat: this.habitatGrid[idx], elev: this.elevGrid[idx], moisture, i, j };
         if (!this.speciesMatch(sp, s, tp, weather)) continue;
         const x = (i + 0.5) * CELL, y = (j + 0.5) * CELL;
         const d = Math.hypot(x - this.bear.x, y - this.bear.y);
@@ -2532,15 +2724,15 @@ class Component extends DCLogic {
     clearTimeout(this._weatherAlertT);
     this._weatherAlertT = setTimeout(() => this.setState({ weatherAlert: null }), 3200);
   }
-  showFind = (icon, title, body, ms) => {
+  showFind = (icon, title, body, ms, opts) => {
     clearTimeout(this._findTimer);
-    this.setState({ findOpen: true, findIcon: icon, findTitle: title, findBody: body });
+    this.setState({ findOpen: true, findIcon: icon, findTitle: title, findBody: body, findKicker: (opts && opts.kicker) || 'FIELD GEAR RECOVERED', findBtn: (opts && opts.btn) || 'Take it' });
     this._findTimer = setTimeout(() => this.setState({ findOpen: false }), ms || 10000);
   };
   closeFind = () => { clearTimeout(this._findTimer); this.setState({ findOpen: false }); };
   closeDiscovery = () => {
     clearTimeout(this._discTimer);
-    const done = this.state.foundIds.length >= 30 && !this.state.completeSeen;
+    const done = this.state.foundIds.length >= SPECIES.length && !this.state.completeSeen;
     this.setState({ discovery: null, completed: done, completeSeen: this.state.completeSeen || done });
     if (this._pendingRank && !done){
       const r = this._pendingRank; this._pendingRank = null;
@@ -2569,7 +2761,7 @@ class Component extends DCLogic {
           this.catchAnim.critter.spook = 2.5;
           this.catchAnim = null;
           SFX.play('miss');
-          this.showToast(`The ${sp.name} vanished into the leaf litter…`);
+          this.showToast(`The ${sp.name} slipped out of frame into the leaf litter…`);
         }
       }
       // particles keep animating during catch
@@ -2617,7 +2809,8 @@ class Component extends DCLogic {
       const len = Math.hypot(mx, my); mx /= len; my /= len;
       const staminaFactor = this.state.stamina < 18 ? 0.55 : 1;
       const swimF = this.isWater(this.bear.x, this.bear.y) ? 0.72 : 1;
-      const speed = 262 * (sprinting ? 0.98 : 1) * staminaFactor * this.mobSpeedFactor() * swimF * dt;
+      const dashF = (this._dashT || 0) > 0 ? 1.9 : 1;
+      const speed = 262 * (sprinting ? 0.98 : 1) * (dashF > 1 ? 1 : staminaFactor) * dashF * this.mobSpeedFactor() * swimF * dt;
       const BW = this.inCave ? this.inCave.w : this.inDome ? this.inDome.w : this.WORLD_W, BH = this.inCave ? this.inCave.h : this.inDome ? this.inDome.h : this.WORLD_H;
       const nbx = clamp(this.bear.x + mx * speed, 16, BW - 16);
       const nby = clamp(this.bear.y + my * speed, 16, BH - 16);
@@ -2632,7 +2825,9 @@ class Component extends DCLogic {
       while (dh > Math.PI) dh -= Math.PI * 2;
       while (dh < -Math.PI) dh += Math.PI * 2;
       this.bear.heading = (this.bear.heading ?? 0) + dh * Math.min(1, dt * 9);
-      this.setStaminaDelta(-speed * (sprinting ? 0.03 : 0.014) - dt * 0.3);
+      if (dashF > 1){
+        if (Math.random() < 0.7) this.particles.push({ x: this.bear.x - mx * 18 + (Math.random() - 0.5) * 10, y: this.bear.y + 8 + (Math.random() - 0.5) * 8, vx: -mx * 40, vy: -my * 40 - 10, life: 0.45, t: 0, color: Math.random() < 0.5 ? '#ffd76a' : '#d9482f', size: 2.2 + Math.random() * 1.6 });
+      } else this.setStaminaDelta(-speed * (sprinting ? 0.03 : 0.014) - dt * 0.3);
       this._pawDist += speed;
       if (this._pawDist > 17){
         this._pawDist = 0;
@@ -2672,6 +2867,9 @@ class Component extends DCLogic {
 
     this.updateCritters(dt);
     this.updateHikers(dt);
+    this.updateBanjo(dt);
+    this.updateHollowTrees(dt);
+    this.updateLastHint(dt);
     if (this.inDome) this.updateDomeHikers(dt);
     this.pickupNets(dt);
     this.updateRanger(dt);
@@ -2874,33 +3072,460 @@ class Component extends DCLogic {
     ctx.beginPath(); ctx.ellipse(29.2, 0, 1.7, 1.4, 0, 0, 7); ctx.fill();
   }
 
+  // ================= LAST-SALAMANDER HINT =================
+  lastSpeciesHint(){
+    const found = new Set(this.state.foundIds || []);
+    const sp = SPECIES.find((s) => !found.has(s.id));
+    if (!sp) return null;
+    const C = this.CELL;
+    // where is one actually waiting? the surface resident, or (for cave-only species) the nearest suitable cave
+    let target = null, inCave = null;
+    const res = this.residentMap && this.residentMap[sp.id];
+    if (res && !res.dead) target = { x: res.x, y: res.y };
+    else {
+      const caves = (this.CAVES || []).filter((cv) => sp.habitats.includes('cave') && cv.elev >= sp.elevMin && cv.elev <= sp.elevMax && cv.moisture >= sp.moistureMin);
+      let bd = Infinity;
+      for (const cv of caves){ const d = Math.hypot(cv.x - this.bear.x, cv.y - this.bear.y); if (d < bd){ bd = d; inCave = cv; } }
+      if (inCave) target = { x: inCave.x, y: inCave.y };
+    }
+    // describe the habitat
+    const hab = sp.habitats.map((h) => HABITAT_LABEL[h] || h);
+    const habTxt = hab.length > 1 ? hab.slice(0, -1).join(', ') + ' or ' + hab[hab.length - 1] : hab[0];
+    const fmt = (n) => n.toLocaleString('en-US');
+    const when = [TIME_LABEL[sp.time], WEATHER_LABEL[sp.weather]].filter((t) => t && t !== 'any time').join(', ');
+    let where = '', dirTxt = '';
+    if (target){
+      // nearest named place to the salamander
+      const places = [...(this.landmarks || []), ...(this.special || []).filter((s) => s.name)];
+      let near = null, nd = Infinity;
+      for (const p of places){ const d = Math.hypot(p.x - target.x, p.y - target.y); if (d < nd){ nd = d; near = p; } }
+      if (inCave) where = 'inside <b>' + inCave.name + '</b>';
+      else if (near) where = (nd < 18 * C ? 'near <b>' : 'out past <b>') + near.name + '</b>';
+      const dx = target.x - this.bear.x, dy = target.y - this.bear.y, dist = Math.hypot(dx, dy);
+      const dirs = ['east', 'southeast', 'south', 'southwest', 'west', 'northwest', 'north', 'northeast'];
+      const oct = Math.round(((Math.atan2(dy, dx) + Math.PI * 2) % (Math.PI * 2)) / (Math.PI / 4)) % 8;
+      const mi = dist * MI_PER_PX;
+      dirTxt = mi < 0.3 ? 'It’s <b>right around you</b> — sniff and look closely!' : 'That’s about <b>' + mi.toFixed(1) + ' mi ' + dirs[oct] + '</b> of you.';
+    }
+    const body = 'Only one species left: the <b>' + sp.name + '</b> <i>(' + sp.sci + ')</i>.<br><br>' +
+      'Look in <b>' + habTxt + '</b> between <b>' + fmt(sp.elevMin) + '–' + fmt(sp.elevMax) + ' ft</b>' + (when ? ', most active <b>' + when + '</b>' : '') + '.' +
+      (where ? '<br><br>One is waiting ' + where + '. ' + dirTxt : '') +
+      '<br><br><span style="font-size:12px;opacity:.8">' + (inCave ? 'Head into the cave \u2014 once you\u2019re inside, it shows as a gold dot on your minimap.' : 'It shows as a gold dot on your minimap. Track it in the Field Journal for a compass arrow.') + '</span>';
+    const short = '🦎 Last one: ' + sp.name + (where ? ' — ' + where.replace(/<\/?b>/g, '') : '') + (dirTxt ? ' (' + dirTxt.replace(/<[^>]+>/g, '').replace(/^That’s about /, '').replace(/ of you\.$/, '') + ')' : '');
+    return { sp, body, short };
+  }
+  updateLastHint(dt){
+    if (!this.state.started || this.state.discovery || this.catchAnim) return;
+    const left = SPECIES.length - (this.state.foundIds || []).length;
+    if (left !== 1){ this._hintSp = null; return; }
+    this._hintT = (this._hintT || 0) - dt;
+    const h = this.lastSpeciesHint();
+    if (!h) return;
+    if (this._hintSp !== h.sp.id){
+      // first time down to one: a full hint card
+      this._hintSp = h.sp.id; this._hintT = 120;
+      this.showFind('🧭', 'One Salamander Left!', h.body, 16000, { kicker: 'FIELD HINT', btn: 'On my way' });
+    } else if (this._hintT <= 0 && !this.inDome){
+      // gentle reminder every couple of minutes with an updated bearing
+      this._hintT = 120;
+      this.showToast(h.short, 5200);
+    }
+  }
+
+  // ================= HOLLOW TREES & SARVISBERRY DASH =================
+  initHollowTrees(){
+    const C = this.CELL, PAD = 16;
+    // old-growth spots across the park; each snaps to the nearest open forest cell
+    const SEEDS = [
+      [214, 62, 'tulip poplar', 'Laurel Falls'], [128, 128, 'white oak', 'Cades Cove'], [168, 80, 'sycamore', 'Tremont'],
+      [352, 58, 'American chestnut snag', 'the Chimneys'], [420, 40, 'eastern hemlock', 'Porters Creek'], [530, 52, 'tulip poplar', 'Albright Grove'],
+      [560, 120, 'sugar maple', 'Cataloochee'], [380, 148, 'red oak', 'Deep Creek'], [286, 140, 'yellow buckeye', 'Hazel Creek']
+    ];
+    const OK = ['cove-forest', 'hardwood-forest', 'high-forest'];
+    const lines = [...(this.rivers || []).map((r) => r.pts), ...(this.roads || []).map((r) => r.pts)];
+    const clear = (x, y) => {
+      for (const pts of lines) if (distToPolyline(x, y, pts) < 34) return false;
+      for (const b of (this.buildings || [])) if (Math.hypot(x - b.x, y - b.y) < 60) return false;
+      for (const cv of (this.CAVES || [])) if (Math.hypot(x - cv.x, y - cv.y) < 60) return false;
+      return true;
+    };
+    this.hollowTrees = [];
+    for (const [si, sj, kind, place] of SEEDS){
+      let found = null;
+      for (let r = 0; r <= 14 && !found; r++){
+        for (let a = 0; a < 16 && !found; a++){
+          const i = Math.round(si + Math.cos(a / 16 * Math.PI * 2) * r), j = Math.round(sj + PAD + Math.sin(a / 16 * Math.PI * 2) * r);
+          if (i < 4 || j < 4 || i >= this.GRID_W - 4 || j >= this.GRID_H - 4) continue;
+          if (!OK.includes(this.habitatGrid[j * this.GRID_W + i])) continue;
+          const x = (i + 0.5) * C, y = (j + 0.5) * C;
+          if (clear(x, y)) found = { x, y };
+          if (r === 0) break;
+        }
+      }
+      if (found) this.hollowTrees.push({ ...found, kind, place, ready: true, regrowT: 0, ph: Math.random() * 6 });
+    }
+  }
+  updateHollowTrees(dt){
+    if (!this.hollowTrees && this.habitatGrid) this.initHollowTrees();
+    for (const t of (this.hollowTrees || [])){
+      t.ph += dt;
+      if (!t.ready){ t.regrowT -= dt; if (t.regrowT <= 0) t.ready = true; }
+    }
+    if ((this._dashT || 0) > 0){
+      this._dashT -= dt;
+      if (this._dashT <= 0){ this._dashT = 0; this.setState({ dashing: false }); }
+    }
+  }
+  nearestHollowTree(){
+    if (this.inCave || this.inDome || !this.hollowTrees) return { tree: null, dist: Infinity };
+    let best = null, bd = Infinity;
+    for (const t of this.hollowTrees){ const d = Math.hypot(t.x - this.bear.x, t.y - this.bear.y); if (d < bd){ bd = d; best = t; } }
+    return { tree: best, dist: bd };
+  }
+  searchHollowTree(t){
+    if (!t.ready){ this.showToast('🌳 This hollow ' + t.kind + ' is picked clean — the sarvisberries will ripen again soon.'); return; }
+    const have = this.state.dashBerries || 0;
+    if (have >= 5){ this.showToast('🍒 Your paws are full — 5 sarvisberries is all you can carry. Press R to use one!'); return; }
+    const got = Math.min(5 - have, 2);
+    t.ready = false; t.regrowT = 240;
+    SFX.play('success');
+    this.burst(t.x, t.y - 6, 16, '#d9482f');
+    const first = !this._dashSeen; this._dashSeen = true;
+    this.setState({ dashBerries: have + got }, () => this.saveGame());
+    this.showToast('🌳 Deep inside a hollow ' + t.kind + ' near ' + t.place + ' you find ' + got + ' sarvisberr' + (got > 1 ? 'ies' : 'y') + '!' +
+      (first ? ' Eat one (R or the ⚡ button) for a burst of speed. (Smokies black bears really do den in hollow trees.)' : ''), first ? 6000 : 3200);
+  }
+  useDash = () => {
+    if (!this.state.started || this.catchAnim || this.state.discovery) return;
+    if ((this._dashT || 0) > 0) return;
+    const n = this.state.dashBerries || 0;
+    if (n <= 0){ this.showToast('🍒 No sarvisberries — search hollow trees to find some.'); return; }
+    this._dashT = 5;
+    SFX.play('rank');
+    this.burst(this.bear.x, this.bear.y - 6, 14, '#ffd76a');
+    this.setState({ dashBerries: n - 1, dashing: true }, () => this.saveGame());
+    this.showToast('⚡ Sarvisberry rush! Top speed for 5 seconds.');
+  };
+  drawHollowTrees(ctx, ox, oy){
+    if (!this.hollowTrees || this.inCave || this.inDome) return;
+    const now = performance.now() / 1000;
+    for (const t of this.hollowTrees){
+      const x = t.x - ox, y = t.y - oy;
+      if (x < -60 || y < -60 || x > this.viewW + 60 || y > this.viewH + 60) continue;
+      ctx.save(); ctx.translate(x, y);
+      // shadow + root flare
+      ctx.fillStyle = 'rgba(20,14,8,0.32)'; ctx.beginPath(); ctx.ellipse(4, 8, 27, 12, 0, 0, 7); ctx.fill();
+      ctx.fillStyle = '#4a3420';
+      for (let k = 0; k < 6; k++){ const a = k / 6 * Math.PI * 2 + 0.3; ctx.beginPath(); ctx.ellipse(Math.cos(a) * 15, Math.sin(a) * 10 + 2, 8, 4.5, a, 0, 7); ctx.fill(); }
+      // broad trunk with bark rings
+      ctx.fillStyle = '#5e4229'; ctx.beginPath(); ctx.ellipse(0, 0, 19, 15, 0, 0, 7); ctx.fill();
+      ctx.strokeStyle = 'rgba(40,26,14,0.55)'; ctx.lineWidth = 1;
+      for (const r of [16, 12.5]){ ctx.beginPath(); ctx.ellipse(0, 0, r, r * 0.79, 0, 0, 7); ctx.stroke(); }
+      // moss
+      ctx.fillStyle = 'rgba(110,150,70,0.75)'; ctx.beginPath(); ctx.ellipse(-9, -7, 7, 3.5, -0.5, 0, 7); ctx.fill();
+      // the hollow — big enough for a bear to climb into
+      ctx.fillStyle = '#140d06'; ctx.beginPath(); ctx.ellipse(1, 1, 10, 7.5, 0, 0, 7); ctx.fill();
+      ctx.strokeStyle = '#7a5836'; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(1, 1, 10.5, 8, 0, 0, Math.PI); ctx.stroke();
+      if (t.ready){
+        // a few red sarvisberries glinting inside
+        ctx.fillStyle = '#c8322a';
+        for (const [bx, by] of [[-3, 2], [1, 3.5], [4, 1.5]]){ ctx.beginPath(); ctx.arc(bx, by, 1.8, 0, 7); ctx.fill(); }
+      }
+      ctx.restore();
+      ctx.font = '700 10px LatoB, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillStyle = 'rgba(20,14,8,0.55)'; ctx.fillText('Hollow Tree', x + 0.6, y - 21.4);
+      ctx.fillStyle = 'rgba(248,236,214,0.92)'; ctx.fillText('Hollow Tree', x, y - 22);
+    }
+  }
+
+  // ================= ELKMONT GREAT HALL & BANJO =================
+  bakeGreatHall(w, b){
+    const x = b.x, y = b.y, W = b.w, H = b.h, L = x - W / 2, T = y - H / 2, wall = 5;
+    // ground shadow
+    w.fillStyle = 'rgba(20,16,10,0.3)'; w.fillRect(L + 3, T + 4, W, H);
+    // plank dance floor
+    w.fillStyle = '#b48f5c'; w.fillRect(L, T, W, H);
+    w.strokeStyle = 'rgba(96,66,36,0.38)'; w.lineWidth = 0.7;
+    for (let py = T + 3.5; py < T + H; py += 3.5){ w.beginPath(); w.moveTo(L, py); w.lineTo(L + W, py); w.stroke(); }
+    for (let r = 0; r * 3.5 < H; r++){ const off = (r % 3) * 9; for (let px = L + 6 + off; px < L + W; px += 26){ const py = T + r * 3.5; w.beginPath(); w.moveTo(px, py); w.lineTo(px, py + 3.5); w.stroke(); } }
+    // raised musician's stage at the east end
+    w.fillStyle = '#987246'; w.fillRect(L + W - 40, T + wall, 40 - wall, H - wall * 2);
+    w.strokeStyle = 'rgba(60,40,20,0.55)'; w.lineWidth = 1; w.strokeRect(L + W - 40, T + wall, 40 - wall, H - wall * 2);
+    // benches along the south wall
+    w.fillStyle = '#6b4c2e';
+    for (const bx of [L + 10, L + 36, L + 62]) w.fillRect(bx, T + H - wall - 5, 20, 3.5);
+    w.fillRect(L + wall + 2, T + 30, 3.5, 30);
+    // log walls (no roof — the floor stays open to the sky); doorway on the north side facing Elkmont Rd
+    const doorL = x - 13, doorR = x + 13;
+    w.fillStyle = '#6e5032';
+    w.fillRect(L, T, doorL - L, wall); w.fillRect(doorR, T, L + W - doorR, wall);   // north wall with door gap
+    w.fillRect(L, T + H - wall, W, wall);                                         // south
+    w.fillRect(L, T, wall, H); w.fillRect(L + W - wall, T, wall, H);               // west / east
+    w.strokeStyle = 'rgba(40,26,14,0.55)'; w.lineWidth = 0.6;
+    for (let k = 1; k < 3; k++){
+      const o = k * (wall / 3);
+      w.beginPath();
+      w.moveTo(L, T + o); w.lineTo(doorL, T + o); w.moveTo(doorR, T + o); w.lineTo(L + W, T + o);
+      w.moveTo(L, T + H - wall + o); w.lineTo(L + W, T + H - wall + o);
+      w.moveTo(L + o, T); w.lineTo(L + o, T + H); w.moveTo(L + W - wall + o, T); w.lineTo(L + W - wall + o, T + H);
+      w.stroke();
+    }
+    // corner and door posts
+    w.fillStyle = '#3e2a18';
+    for (const [px, py] of [[L, T], [L + W - 6, T], [L, T + H - 6], [L + W - 6, T + H - 6], [doorL - 3, T - 1], [doorR - 3, T - 1]]) w.fillRect(px, py, 6, 6);
+    // bare roof rafters spanning the open hall
+    for (const rx of [L + W * 0.2, L + W * 0.4, L + W * 0.6, L + W * 0.8]){
+      w.fillStyle = 'rgba(20,14,8,0.22)'; w.fillRect(rx - 1 + 3, T + 3, 3, H - 2);
+      w.fillStyle = '#4e3620'; w.fillRect(rx - 1.5, T - 1, 3, H + 2);
+    }
+    // painted sign under the hall
+    w.fillStyle = '#3f5a3a'; w.fillRect(x - 30, T + H + 4, 60, 12);
+    w.strokeStyle = '#2a3a26'; w.lineWidth = 1; w.strokeRect(x - 30, T + H + 4, 60, 12);
+    w.fillStyle = '#f3ecd9'; w.font = '700 8px LatoB, sans-serif'; w.textAlign = 'center';
+    w.fillText('GREAT HALL', x, T + H + 12.8);
+  }
+  banjoStand(){ const h = this.greatHall; return { x: h.x + h.w / 2 - 16, y: h.y - 6 }; }
+  banjoSpot(){ const h = this.greatHall; return { x: h.x + h.w / 2 - 34, y: h.y + 6 }; }
+  nearBanjo(){
+    if (!this.greatHall || this.inCave || this.inDome) return false;
+    const s = this.banjoPlaying ? this.banjoSpot() : this.banjoStand();
+    return Math.hypot(this.bear.x - s.x, this.bear.y - s.y) < (this.banjoPlaying ? 44 : 36);
+  }
+  startBanjo(){
+    const sp = this.banjoSpot();
+    this.banjoPlaying = true;
+    this.bear.x = sp.x; this.bear.y = sp.y; this.bear.heading = Math.PI; this.bear.facing = -1;
+    if (SFX.ensure()){ this._banjoNext = SFX.ctx.currentTime + 0.08; this._banjoStep = 0; }
+    this._noteT = 0;
+    // neighbors pour out of every cottage and head for the hall
+    if (!this.villagers) this.villagers = [];
+    const cabins = this.elkmontCabins || [];
+    const OUTFITS = [
+      { shirt: '#7a2e2a', skirt: '#3a3f5a', hat: null, hair: '#3a2416' }, { shirt: '#e8e0c8', skirt: null, pants: '#3c4f6e', hat: '#c9a85a', hair: '#5a3a1e' },
+      { shirt: '#4f7a4a', skirt: '#7a5a3a', hat: null, hair: '#8a5a2a' }, { shirt: '#c7a24a', skirt: null, pants: '#4a3a2a', hat: '#2a2018', hair: '#2a1a10' },
+      { shirt: '#5a6f9a', skirt: '#e6dcc4', hat: null, hair: '#c9a46a' }, { shirt: '#9a4a5a', skirt: null, pants: '#2e3e5a', hat: '#c9a85a', hair: '#6a4a2a' }
+    ];
+    cabins.forEach((b, k) => {
+      let v = this.villagers.find((q) => q.home === b);
+      if (!v){
+        v = { home: b, x: b.x, y: b.y + b.h / 2 + 4, heading: Math.PI / 2, ph: Math.random() * 6, outfit: OUTFITS[k % OUTFITS.length] };
+        this.villagers.push(v);
+      }
+      v.state = 'come'; v.slot = k; v.via = !this.inHall(v.x, v.y);
+    });
+    SFX.play('click');
+    if (!this._banjoSeen){
+      this._banjoSeen = true;
+      this.showToast('🪕 You pick up the old banjo and start a tune — Elkmont folks come pouring out of their cabins to dance!', 4200);
+    } else this.showToast('🪕 Strike up the band! The neighbors are on their way.');
+  }
+  stopBanjo(silent){
+    this.banjoPlaying = false;
+    for (const v of (this.villagers || [])){ v.state = 'home'; v.via = this.inHall(v.x, v.y); }
+    if (!silent) this.showToast('🪕 You set the banjo back on its stand. The dancers wander home.');
+  }
+  inHall(x, y){ const h = this.greatHall; return h && Math.abs(x - h.x) < h.w / 2 - 4 && Math.abs(y - h.y) < h.h / 2 - 4; }
+  hallDoor(){ const h = this.greatHall; return { x: h.x, y: h.y - h.h / 2 + 1 }; }
+  scheduleBanjo(){
+    if (SFX.muted || !SFX.ensure()) return;
+    const c = SFX.ctx, now = c.currentTime;
+    if (this._banjoNext == null || this._banjoNext < now - 0.1){ this._banjoNext = now + 0.05; }
+    // 8-bar G-major breakdown played with a forward roll (original tune)
+    const CH = {
+      G: [196.0, 246.9, 293.7, 392.0], C: [261.6, 329.6, 392.0, 523.3], D: [293.7, 370.0, 440.0, 587.3]
+    };
+    const PROG = ['G', 'G', 'C', 'G', 'G', 'G', 'D', 'G'];
+    const ROLL_A = [0, 2, 3, 1, 2, 3, 1, 3], ROLL_B = [3, 2, 0, 3, 1, 2, 0, 2];
+    const EIGHTH = 0.15;
+    while (this._banjoNext < now + 0.3){
+      const step = this._banjoStep || 0;
+      const bar = Math.floor(step / 8) % PROG.length, e = step % 8;
+      const chord = CH[PROG[bar]];
+      const roll = (bar % 2 === 0) ? ROLL_A : ROLL_B;
+      const when = Math.max(0, this._banjoNext - now);
+      SFX.pluck(chord[roll[e]], when, e === 0 ? 1.15 : 0.9);
+      if (e === 0 || e === 4) SFX.tone(chord[0] / 2, 0.22, 'triangle', 0.07, when);          // thumbed bass
+      if (e === 7 && bar % 2 === 1) SFX.pluck(392.0, when + EIGHTH * 0.5, 0.6);                // 5th-string drone pop
+      this._banjoStep = step + 1;
+      this._banjoNext += EIGHTH;
+    }
+  }
+  updateBanjo(dt){
+    const hall = this.greatHall;
+    if (!hall) return;
+    if (this.banjoPlaying){
+      const sp = this.banjoSpot();
+      if (this.inCave || this.inDome || Math.hypot(this.bear.x - sp.x, this.bear.y - sp.y) > 46) this.stopBanjo(this.inCave || this.inDome);
+    }
+    if (this.banjoPlaying){
+      this.scheduleBanjo();
+      this._noteT = (this._noteT || 0) - dt;
+      if (this._noteT <= 0){
+        this._noteT = 0.32;
+        if (!this.banjoNotes) this.banjoNotes = [];
+        this.banjoNotes.push({ x: this.bear.x - 8 + (Math.random() - 0.5) * 14, y: this.bear.y - 22, t: 0, life: 1.6, sway: Math.random() * 6, glyph: Math.random() < 0.5 ? '♪' : '♫' });
+      }
+    }
+    if (this.banjoNotes){
+      for (const n of this.banjoNotes) n.t += dt;
+      this.banjoNotes = this.banjoNotes.filter((n) => n.t < n.life);
+    }
+    if (!this.villagers || !this.villagers.length || this.inCave || this.inDome) return;
+    // ring dance around the middle of the floor
+    const cx = hall.x - 16, cy = hall.y + 4, rx = 36, ry = 22;
+    this._ringAng = (this._ringAng || 0) + dt * 1.05;
+    const n = Math.max(1, this.villagers.length);
+    const door = this.hallDoor();
+    const walkTo = (v, tx, ty, sp) => {
+      const dx = tx - v.x, dy = ty - v.y, d = Math.hypot(dx, dy);
+      if (d < 0.5) return d;
+      const step = Math.min(d, sp * dt);
+      v.x += (dx / d) * step; v.y += (dy / d) * step;
+      v.heading = Math.atan2(dy, dx);
+      return d - step;
+    };
+    for (const v of this.villagers){
+      v.ph += dt;
+      const ang = this._ringAng + (v.slot / n) * Math.PI * 2;
+      const rxp = cx + Math.cos(ang) * rx, ryp = cy + Math.sin(ang) * ry;
+      if (v.state === 'come'){
+        v.dancing = false;
+        if (v.via){ if (walkTo(v, door.x, door.y + 2, 62) < 3) v.via = false; }
+        else if (walkTo(v, rxp, ryp, 62) < 2) v.state = 'dance';
+      } else if (v.state === 'dance'){
+        v.dancing = true;
+        v.x = rxp; v.y = ryp;
+        v.heading = ang + Math.PI / 2;   // facing along the circle
+      } else if (v.state === 'home'){
+        v.dancing = false;
+        const hb = v.home, hx = hb.x, hy = hb.y + hb.h / 2 + 4;
+        if (v.via){ if (walkTo(v, door.x, door.y - 6, 50) < 3) v.via = false; }
+        else if (walkTo(v, hx, hy, 50) < 2) v.gone = true;
+      }
+    }
+    this.villagers = this.villagers.filter((v) => !v.gone);
+  }
+  drawBanjo(ctx, x, y, rot, s){
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(s, s);
+    // neck + peghead
+    ctx.fillStyle = '#4e321a'; ctx.fillRect(4, -1.3, 17, 2.6);
+    ctx.fillStyle = '#3a2412'; ctx.beginPath(); ctx.roundRect(20, -2.2, 5.5, 4.4, 1.2); ctx.fill();
+    ctx.fillStyle = '#e8dcc0'; for (const py of [-2.6, 2.6]) for (const px of [21.5, 24]) { ctx.beginPath(); ctx.arc(px, py, 0.8, 0, 7); ctx.fill(); }
+    // fifth-string peg partway up the neck
+    ctx.beginPath(); ctx.arc(11, -2.1, 0.7, 0, 7); ctx.fill();
+    // pot: wooden rim, metal hoop, skin head
+    ctx.fillStyle = '#6b4424'; ctx.beginPath(); ctx.arc(0, 0, 7, 0, 7); ctx.fill();
+    ctx.fillStyle = '#b9b4a6'; ctx.beginPath(); ctx.arc(0, 0, 6, 0, 7); ctx.fill();
+    ctx.fillStyle = '#f2ead6'; ctx.beginPath(); ctx.arc(0, 0, 5.1, 0, 7); ctx.fill();
+    // bridge + strings
+    ctx.fillStyle = '#6b4424'; ctx.fillRect(-1.6, -0.6, 1, 1.2);
+    ctx.strokeStyle = 'rgba(70,60,50,0.75)'; ctx.lineWidth = 0.35;
+    for (let k = -1; k <= 1; k++){ ctx.beginPath(); ctx.moveTo(-3.5, k * 0.55); ctx.lineTo(21, k * 0.4); ctx.stroke(); }
+    ctx.restore();
+  }
+  drawHallScene(ctx, ox, oy){
+    const hall = this.greatHall;
+    if (!hall) return;
+    const hx = hall.x - ox, hy = hall.y - oy;
+    if (hx < -200 || hy < -200 || hx > this.viewW + 200 || hy > this.viewH + 200) return;
+    const now = performance.now() / 1000;
+    // banjo leaning on its stand when nobody is playing
+    if (!this.banjoPlaying){
+      const st = this.banjoStand(), sx = st.x - ox, sy = st.y - oy;
+      ctx.fillStyle = 'rgba(20,14,8,0.28)'; ctx.beginPath(); ctx.ellipse(sx, sy + 9, 9, 3, 0, 0, 7); ctx.fill();
+      ctx.strokeStyle = '#3e2a18'; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.moveTo(sx - 5, sy + 9); ctx.lineTo(sx, sy - 2); ctx.lineTo(sx + 5, sy + 9); ctx.stroke();
+      this.drawBanjo(ctx, sx, sy + 3, -Math.PI / 2 + 0.18, 0.95);
+      // a gentle glint so players spot it
+      const a = 0.35 + 0.3 * Math.sin(now * 3);
+      ctx.strokeStyle = `rgba(233,196,106,${a})`; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.arc(sx, sy - 4, 15, 0, 7); ctx.stroke();
+    }
+    for (const v of (this.villagers || [])) this.drawVillager(ctx, v, ox, oy, now);
+  }
+  drawVillager(ctx, v, ox, oy, now){
+    const x = v.x - ox, y = v.y - oy;
+    if (x < -30 || y < -30 || x > this.viewW + 30 || y > this.viewH + 30) return;
+    const o = v.outfit;
+    const hop = v.dancing ? Math.abs(Math.sin(now * 7 + v.slot * 1.3)) * 3.2 : 0;
+    ctx.save(); ctx.translate(x, y);
+    ctx.fillStyle = 'rgba(20,14,8,0.26)'; ctx.beginPath(); ctx.ellipse(0, 7, 7.5 - hop * 0.5, 2.8, 0, 0, 7); ctx.fill();
+    ctx.translate(0, -hop);
+    ctx.rotate(v.heading + Math.PI / 2 + (v.dancing ? Math.sin(now * 3.5 + v.slot) * 0.35 : 0));
+    const stride = Math.sin(v.ph * (v.dancing ? 14 : 9)) * 2.6;
+    ctx.lineCap = 'round';
+    if (o.skirt){
+      // full skirt swirls while dancing
+      const flare = v.dancing ? 1.15 + 0.12 * Math.sin(now * 9 + v.slot) : 1;
+      ctx.fillStyle = o.skirt; ctx.beginPath(); ctx.ellipse(0, 3.2, 6 * flare, 5.2, 0, 0, 7); ctx.fill();
+    } else {
+      ctx.strokeStyle = o.pants; ctx.lineWidth = 2.4;
+      ctx.beginPath(); ctx.moveTo(-2, 3); ctx.lineTo(-2, 8.5 + stride); ctx.moveTo(2, 3); ctx.lineTo(2, 8.5 - stride); ctx.stroke();
+    }
+    ctx.fillStyle = o.shirt; ctx.beginPath(); ctx.ellipse(0, 0, 5, 5.6, 0, 0, 7); ctx.fill();
+    // arms: swinging high while dancing, at the sides while walking
+    ctx.strokeStyle = o.shirt; ctx.lineWidth = 2.2;
+    const up = v.dancing ? Math.sin(now * 7 + v.slot) * 2.5 : 0;
+    ctx.beginPath();
+    if (v.dancing){ ctx.moveTo(-4.5, -1); ctx.lineTo(-9, -5 + up); ctx.moveTo(4.5, -1); ctx.lineTo(9, -5 - up); }
+    else { ctx.moveTo(-4.5, -1); ctx.lineTo(-6.5, 4 - stride * 0.5); ctx.moveTo(4.5, -1); ctx.lineTo(6.5, 4 + stride * 0.5); }
+    ctx.stroke();
+    ctx.fillStyle = '#e2b98f'; ctx.beginPath(); ctx.arc(0, -5.2, 3.1, 0, 7); ctx.fill();
+    ctx.fillStyle = o.hair; ctx.beginPath(); ctx.arc(0, -5.8, 3.1, Math.PI, 0); ctx.fill();
+    if (o.hat){ ctx.fillStyle = o.hat; ctx.beginPath(); ctx.ellipse(0, -6, 4.8, 2.4, 0, 0, 7); ctx.fill(); ctx.beginPath(); ctx.arc(0, -6.6, 2.4, 0, 7); ctx.fill(); }
+    ctx.restore();
+  }
+  drawBearBanjo(ctx, bsx, bsy){
+    const now = performance.now() / 1000;
+    const strum = Math.sin(now * 13) * 0.06;
+    // held across the chest, neck pointing up and forward (bear faces left toward the dancers)
+    this.drawBanjo(ctx, bsx - 10, bsy - 2, Math.PI + 0.65 + strum, 1.15);
+    // strum flicks
+    ctx.strokeStyle = 'rgba(248,236,214,0.7)'; ctx.lineWidth = 1;
+    const k = (now * 6) % 1;
+    ctx.beginPath(); ctx.arc(bsx - 10, bsy - 2, 9 + k * 5, -0.4, 0.4); ctx.stroke();
+  }
+  drawBanjoNotes(ctx, ox, oy){
+    if (!this.banjoNotes || !this.banjoNotes.length) return;
+    ctx.save(); ctx.textAlign = 'center'; ctx.font = '700 14px Georgia, serif';
+    for (const n of this.banjoNotes){
+      const p = n.t / n.life, a = p < 0.15 ? p / 0.15 : 1 - (p - 0.15) / 0.85;
+      const x = n.x - ox + Math.sin(n.t * 4 + n.sway) * 5, y = n.y - oy - n.t * 26;
+      ctx.globalAlpha = clamp(a, 0, 1);
+      ctx.fillStyle = 'rgba(30,20,10,0.6)'; ctx.fillText(n.glyph, x + 1, y + 1);
+      ctx.fillStyle = '#f3dc8a'; ctx.fillText(n.glyph, x, y);
+    }
+    ctx.restore();
+  }
+
+  // ---- camera gear art
+  drawOldCamera(ctx, x, y, s){
+    ctx.save(); ctx.translate(x, y); ctx.scale(s, s);
+    ctx.fillStyle = 'rgba(20,14,8,0.3)'; ctx.beginPath(); ctx.ellipse(0, 7, 8, 2.4, 0, 0, 7); ctx.fill();
+    ctx.fillStyle = '#2b2622'; ctx.beginPath(); ctx.roundRect(-7, -5, 14, 10, 2); ctx.fill();          // body
+    ctx.fillStyle = '#8a6a3a'; ctx.fillRect(-7, -1.5, 14, 2.4);                                        // leather band
+    ctx.fillStyle = '#3a332c'; ctx.beginPath(); ctx.roundRect(-3, -8, 6, 3.4, 1); ctx.fill();          // viewfinder hump
+    ctx.fillStyle = '#c9ccd2'; ctx.beginPath(); ctx.arc(1, 0.5, 3.8, 0, 7); ctx.fill();                // lens ring
+    ctx.fillStyle = '#3b5566'; ctx.beginPath(); ctx.arc(1, 0.5, 2.5, 0, 7); ctx.fill();                // glass
+    ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.beginPath(); ctx.arc(0.2, -0.3, 0.8, 0, 7); ctx.fill();
+    ctx.fillStyle = '#c9ccd2'; ctx.fillRect(4.2, -6.6, 2, 1.6);                                        // shutter button
+    ctx.restore();
+  }
+  drawTeleLens(ctx, x, y, s, rot){
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot || 0); ctx.scale(s, s);
+    ctx.fillStyle = 'rgba(20,14,8,0.28)'; ctx.beginPath(); ctx.ellipse(1, 6, 9, 2.2, 0, 0, 7); ctx.fill();
+    ctx.fillStyle = '#e6e2d6'; ctx.beginPath(); ctx.roundRect(-9, -3.6, 15, 7.2, 1.6); ctx.fill();    // long barrel
+    ctx.fillStyle = '#2b2622'; ctx.fillRect(-4, -3.8, 2.2, 7.6); ctx.fillRect(0.5, -3.8, 1.2, 7.6);    // grip rings
+    ctx.fillStyle = '#2b2622'; ctx.beginPath(); ctx.roundRect(6, -4.6, 3.4, 9.2, 1.2); ctx.fill();     // front hood
+    ctx.fillStyle = '#3b5566'; ctx.beginPath(); ctx.ellipse(9.4, 0, 1.2, 3.6, 0, 0, 7); ctx.fill();    // glass
+    ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.beginPath(); ctx.ellipse(9.6, -1.2, 0.5, 1.1, 0, 0, 7); ctx.fill();
+    ctx.restore();
+  }
+
   drawCarriedNet(ctx, sx, sy){
     const now = performance.now() / 1000, bob = Math.sin(now * 3) * 1;
-    if ((this.state.netSwings || 0) > 0){
-      ctx.save();
-      ctx.translate(sx + 10, sy - 11 + bob);
-      ctx.rotate(-0.5);
-      ctx.lineCap = 'round';
-      ctx.strokeStyle = '#8a6a3a'; ctx.lineWidth = 2.4;
-      ctx.beginPath(); ctx.moveTo(0, 15); ctx.lineTo(0, -2); ctx.stroke();
-      ctx.strokeStyle = '#e2e8cf'; ctx.lineWidth = 1.8;
-      ctx.beginPath(); ctx.arc(0, -8, 6.2, 0, 7); ctx.stroke();
-      ctx.save(); ctx.beginPath(); ctx.arc(0, -8, 5.6, 0, 7); ctx.clip();
-      ctx.strokeStyle = 'rgba(210,220,190,0.75)'; ctx.lineWidth = 0.6;
-      for (let k = -6; k <= 6; k += 2){ ctx.beginPath(); ctx.moveTo(k, -15); ctx.lineTo(k, -1); ctx.stroke(); ctx.beginPath(); ctx.moveTo(-7, k - 8); ctx.lineTo(7, k - 8); ctx.stroke(); }
-      ctx.restore();
-      ctx.restore();
-    }
-    if ((this.state.bottleUses || 0) > 0){
-      ctx.save();
-      ctx.translate(sx - 11, sy - 9 + bob);
-      ctx.fillStyle = '#8a6a3a'; ctx.beginPath(); ctx.roundRect(-2.2, -8.5, 4.4, 2.4, 1); ctx.fill();
-      ctx.fillStyle = 'rgba(150,200,210,0.7)'; ctx.beginPath(); ctx.roundRect(-3.6, -6.2, 7.2, 13, 2.6); ctx.fill();
-      ctx.strokeStyle = 'rgba(210,235,240,0.9)'; ctx.lineWidth = 1.1; ctx.beginPath(); ctx.roundRect(-3.6, -6.2, 7.2, 13, 2.6); ctx.stroke();
-      ctx.fillStyle = 'rgba(120,180,195,0.7)'; ctx.beginPath(); ctx.roundRect(-3.6, 1, 7.2, 5.6, 2.6); ctx.fill();
-      ctx.fillStyle = 'rgba(255,255,255,0.55)'; ctx.fillRect(-2, -4.5, 1.1, 9);
-      ctx.restore();
-    }
+    if ((this.state.netSwings || 0) > 0) this.drawTeleLens(ctx, sx + 11, sy - 12 + bob, 1, -0.6);
+    if ((this.state.bottleUses || 0) > 0) this.drawOldCamera(ctx, sx - 12, sy - 10 + bob, 1);
     if ((this.state.books || []).length > 0 && !this.state.seriesComplete){
       ctx.save();
       ctx.translate(sx, sy + 1 + bob * 0.5);
@@ -3027,14 +3652,6 @@ class Component extends DCLogic {
     // fur sheen along the back
     ctx.fillStyle = 'rgba(122,92,60,0.35)';
     ctx.beginPath(); ctx.ellipse(-1, -11.5, 16, 3.4, -0.06, 0, 7); ctx.fill();
-    // shaggy belly fur fringe
-    ctx.strokeStyle = '#1a120b'; ctx.lineWidth = 1.1; ctx.lineCap = 'round';
-    ctx.beginPath();
-    for (let i = 0; i < 7; i++){
-      const fx = -18 + i * 5.2;
-      ctx.moveTo(fx, 7.4); ctx.lineTo(fx - 1, 10.4 + (i % 2));
-    }
-    ctx.stroke();
     // stubby tail
     ctx.fillStyle = '#221810';
     ctx.beginPath(); ctx.ellipse(-25.5, -2, 3, 2.4, -0.4, 0, 7); ctx.fill();
@@ -3080,6 +3697,7 @@ class Component extends DCLogic {
   }
 
   drawCritter(ctx, c, ox, oy){
+    if (c.resident && Math.hypot(c.x - this.bear.x, c.y - this.bear.y) > 1500) return;
     const x = c.x - ox, y = c.y - oy;
     ctx.save();
     ctx.translate(x, y);
@@ -3097,6 +3715,8 @@ class Component extends DCLogic {
       ctx.fillText('!', 0, -14);
     }
     ctx.rotate(c.heading ?? c.dir);
+    // relative size from the species' real adult length (pygmy ~0.75x ... hellbender ~2.3x)
+    if (c.sp.scale) ctx.scale(c.sp.scale, c.sp.scale);
     const spd = c.speed || 0;
     const amp = 0.35 + clamp(spd / 60, 0, 1) * 1.6;
     const LEN = 26, S = 0.62, N = 15;
@@ -3167,6 +3787,35 @@ class Component extends DCLogic {
       ctx.beginPath();
       for (let i = 1; i < N - 1; i++) i === 1 ? ctx.moveTo(spine[i][0], spine[i][1]) : ctx.lineTo(spine[i][0], spine[i][1]);
       ctx.stroke();
+    } else if (c.sp.pattern === 'banded'){
+      ctx.strokeStyle = c.sp.color2; ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      for (let t = 0.16; t <= 0.86; t += 0.12){
+        const i = Math.round(t * (N - 1)), [tx, ty] = tang(i), wd = salWidth(t) * S * 0.9;
+        ctx.moveTo(spine[i][0] - ty * wd, spine[i][1] + tx * wd); ctx.lineTo(spine[i][0] + ty * wd, spine[i][1] - tx * wd);
+      }
+      ctx.stroke();
+    } else if (c.sp.pattern === 'chevron'){
+      ctx.strokeStyle = c.sp.color2; ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      for (let t = 0.16; t <= 0.76; t += 0.1){
+        const i = Math.round(t * (N - 1)), j = Math.min(N - 1, i + 1), [tx, ty] = tang(i), wd = salWidth(t) * S * 0.6;
+        ctx.moveTo(spine[i][0] - ty * wd, spine[i][1] + tx * wd); ctx.lineTo(spine[j][0], spine[j][1]); ctx.lineTo(spine[i][0] + ty * wd, spine[i][1] - tx * wd);
+      }
+      ctx.stroke();
+    } else if (c.sp.pattern === 'zigzag'){
+      ctx.strokeStyle = c.sp.color2; ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      for (let i = 1; i < N - 3; i++){
+        const t = i / (N - 1), [tx, ty] = tang(i), off = (i % 2 ? 1 : -1) * salWidth(t) * S * 0.3;
+        i === 1 ? ctx.moveTo(spine[i][0] - ty * off, spine[i][1] + tx * off) : ctx.lineTo(spine[i][0] - ty * off, spine[i][1] + tx * off);
+      }
+      ctx.stroke();
+    } else if (c.sp.pattern === 'cheeks'){
+      ctx.fillStyle = c.sp.color2;
+      const ic = 2, [tcx, tcy] = tang(ic), wd = salWidth(ic / (N - 1)) * S * 0.62;
+      ctx.beginPath(); ctx.arc(spine[ic][0] - tcy * wd, spine[ic][1] + tcx * wd, 1.1, 0, 7); ctx.fill();
+      ctx.beginPath(); ctx.arc(spine[ic][0] + tcy * wd, spine[ic][1] - tcx * wd, 1.1, 0, 7); ctx.fill();
     } else if (c.sp.pattern === 'spotted'){
       ctx.fillStyle = c.sp.color2;
       for (let t = 0.1; t <= 0.85; t += 0.11){
@@ -3500,6 +4149,239 @@ class Component extends DCLogic {
       this._vcWarned = false; this._vcWarnT = 0; this.vcRanger = null;
     }
     this.updateCoveCars(dt);
+    this.updateTraffic(dt);
+  }
+  // ================= ROAD TRAFFIC =================
+  initTraffic(){
+    const ROUTES = { 'Newfound Gap Rd (US-441)': 4, 'Little River Rd': 4, 'Laurel Creek Rd': 2, 'Clingmans Dome Rd': 2, 'Cove Creek Rd': 2 };
+    const COLORS = ['#b6483a', '#3a5a7a', '#d8d2c4', '#4f5b46', '#7a6b3a', '#2a2a2e', '#8a8f96', '#c9a23a', '#5a3a6a'];
+    this.traffic = [];
+    let ci = 0;
+    for (const rd of (this.roads || [])){
+      const n = ROUTES[rd.name]; if (!n) continue;
+      const pts = rd.pts, cum = [0];
+      for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+      rd.cum = cum; rd.len = cum[cum.length - 1];
+      for (let k = 0; k < n; k++){
+        const dir = k % 2 === 0 ? 1 : -1;
+        const cruise = 95 + Math.random() * 30;
+        this.traffic.push({ rd, s: rd.len * ((k + 0.5) / n), dir, cruise, v: cruise, color: COLORS[ci++ % COLORS.length], honkCd: 0, brake: false, x: 0, y: 0, heading: 0 });
+      }
+    }
+  }
+  // ---- tourists who hop out of a stopped car to photograph the bear
+  updateCarRiders(car, dt, fx, fy){
+    const bear = this.bear;
+    if (car.photoCd > 0) car.photoCd -= dt;
+    car.stillT = car.v < 2 ? (car.stillT || 0) + dt : 0;
+    // now and then a car near the bear pulls over for the view
+    car.pullT = (car.pullT ?? (20 + Math.random() * 40)) - dt;
+    if (car.pullT <= 0){
+      car.pullT = 35 + Math.random() * 45;
+      if (Math.hypot(car.x - bear.x, car.y - bear.y) < 650 && !car.forBear) car.parkT = 7 + Math.random() * 4;
+    }
+    if (!car.riders) car.riders = [];
+    // once the car has been stopped a moment, 1–2 people get out on the passenger side
+    if (!car.riders.length && car.stillT > 1.1 && !(car.photoCd > 0) && (car.forBear || car.parkT > 0)){
+      const SHIRTS = ['#c8452c', '#3f7a52', '#2f6d8c', '#e2b04a', '#8a4a6d', '#f3ecd9'];
+      const n = 1 + (Math.random() < 0.55 ? 1 : 0);
+      for (let k = 0; k < n; k++){
+        const along = (k ? -6 : 5);
+        car.riders.push({
+          x: car.x - fy * (30 + k * 12) + fx * along * 2, y: car.y + fx * (30 + k * 12) + fy * along * 2,
+          doorX: car.x - fy * 7 + fx * along, doorY: car.y + fx * 7 + fy * along,
+          shirt: SHIRTS[Math.floor(Math.random() * SHIRTS.length)], flash: 0, flashCd: 0.4 + Math.random(), state: 'shoot', ph: Math.random() * 6, dropped: false
+        });
+      }
+      car.shootT = 6 + Math.random() * 4;
+    }
+    if (!car.riders.length) return;
+    car.shootT -= dt;
+    for (const t of car.riders){
+      t.ph += dt;
+      if (t.flash > 0) t.flash -= dt;
+      const d = Math.hypot(t.x - bear.x, t.y - bear.y);
+      if (t.state === 'shoot'){
+        t.flashCd -= dt;
+        if (t.flashCd <= 0){ t.flashCd = 0.9 + Math.random() * 1.6; t.flash = 0.18; if (d < 320) SFX.play('shutter'); }
+        // too close! drop everything and run for the car
+        if (d < 58){
+          t.state = 'flee'; t.yell = 1.6;
+          if (!t.dropped){
+            t.dropped = true;
+            this.netDrops.push({ x: t.x + (Math.random() - 0.5) * 10, y: t.y + 6, t: 0, kind: 'book', title: SMOKIES_BOOK });
+            SFX.play('click');
+            this.showToast('📸 The tourists bolt for their car — one drops their Park Adventure Series book “' + SMOKIES_BOOK + '”! Grab it.');
+          }
+          for (const o of car.riders) if (o.state === 'shoot'){ o.state = 'flee'; o.yell = 1.6; }
+        } else if (car.shootT <= 0) t.state = 'return';
+      }
+      if (t.state === 'flee' || t.state === 'return'){
+        if (t.yell > 0) t.yell -= dt;
+        const sp = t.state === 'flee' ? 105 : 40;
+        const dx = t.doorX - t.x, dy = t.doorY - t.y, dd = Math.hypot(dx, dy);
+        if (dd < 3) t.gone = true;
+        else { const st = Math.min(dd, sp * dt); t.x += dx / dd * st; t.y += dy / dd * st; }
+      }
+    }
+    car.riders = car.riders.filter((t) => !t.gone);
+    if (!car.riders.length){ car.photoCd = 25; car.parkT = 0; car.stillT = 0; }
+  }
+  drawCarRider(ctx, t, ox, oy){
+    const x = t.x - ox, y = t.y - oy;
+    if (x < -30 || y < -30 || x > this.viewW + 30 || y > this.viewH + 30) return;
+    const running = t.state !== 'shoot';
+    const face = running ? Math.atan2(t.doorY - t.y, t.doorX - t.x) : Math.atan2(this.bear.y - t.y, this.bear.x - t.x);
+    const stride = running ? Math.sin(t.ph * (t.state === 'flee' ? 22 : 10)) * 2.4 : 0;
+    ctx.save(); ctx.translate(x, y);
+    ctx.fillStyle = 'rgba(20,14,8,0.26)'; ctx.beginPath(); ctx.ellipse(0, 7, 6, 2.2, 0, 0, 7); ctx.fill();
+    ctx.strokeStyle = '#3b3026'; ctx.lineWidth = 2.2; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(-2, 3); ctx.lineTo(-2 - stride * 0.4, 8 + stride * 0.3); ctx.moveTo(2, 3); ctx.lineTo(2 + stride * 0.4, 8 - stride * 0.3); ctx.stroke();
+    ctx.fillStyle = t.shirt; ctx.beginPath(); ctx.ellipse(0, 0, 5, 6, 0, 0, 7); ctx.fill();
+    ctx.fillStyle = '#e2b98f'; ctx.beginPath(); ctx.arc(0, -6, 3, 0, 7); ctx.fill();
+    if (!running){
+      // camera raised toward the bear, with the flash going off
+      ctx.save(); ctx.rotate(face);
+      ctx.fillStyle = '#2a2018'; ctx.fillRect(4, -8, 5, 4);
+      ctx.fillStyle = '#5b6b76'; ctx.beginPath(); ctx.arc(9, -6, 1.6, 0, 7); ctx.fill();
+      if (t.flash > 0){
+        const fa = t.flash / 0.18;
+        const g = ctx.createRadialGradient(11, -6, 0, 11, -6, 16);
+        g.addColorStop(0, `rgba(255,255,240,${0.85 * fa})`); g.addColorStop(1, 'rgba(255,255,240,0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(11, -6, 16, 0, 7); ctx.fill();
+      }
+      ctx.restore();
+    } else {
+      // arms up, running
+      ctx.strokeStyle = t.shirt; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(-4, -1); ctx.lineTo(-7, -7 + stride); ctx.moveTo(4, -1); ctx.lineTo(7, -7 - stride); ctx.stroke();
+    }
+    ctx.restore();
+    if (t.yell > 0){
+      const yy = y - 20 + Math.sin(performance.now() / 90) * 1.2;
+      ctx.font = '800 11px LatoB, sans-serif'; ctx.textAlign = 'center';
+      const msg = 'BEAR!'; const w = ctx.measureText(msg).width;
+      ctx.fillStyle = 'rgba(250,240,220,0.96)'; ctx.strokeStyle = '#a8391f'; ctx.lineWidth = 1.3;
+      ctx.beginPath(); ctx.roundRect(x - w / 2 - 6, yy - 11, w + 12, 16, 8); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#a8391f'; ctx.fillText(msg, x, yy + 1);
+    }
+  }
+  roadPoint(rd, s){
+    const cum = rd.cum, pts = rd.pts;
+    s = clamp(s, 0, rd.len);
+    let lo = 0, hi = cum.length - 1;
+    while (hi - lo > 1){ const m = (lo + hi) >> 1; if (cum[m] <= s) lo = m; else hi = m; }
+    const a = pts[lo], b = pts[hi], seg = (cum[hi] - cum[lo]) || 1, f = (s - cum[lo]) / seg;
+    return { x: a[0] + (b[0] - a[0]) * f, y: a[1] + (b[1] - a[1]) * f, ang: Math.atan2(b[1] - a[1], b[0] - a[0]) };
+  }
+  updateTraffic(dt){
+    if (!this.traffic){ if (this.roads) this.initTraffic(); else return; }
+    const bear = this.bear;
+    if (this._carHitCd > 0) this._carHitCd -= dt;
+    for (const car of this.traffic){
+      if (car.honkCd > 0) car.honkCd -= dt;
+      const p = this.roadPoint(car.rd, car.s);
+      const heading = car.dir > 0 ? p.ang : p.ang + Math.PI;
+      const fx = Math.cos(heading), fy = Math.sin(heading);
+      // drive on the right-hand side of the road
+      car.x = p.x - fy * 3.2; car.y = p.y + fx * 3.2; car.heading = heading;
+      // look ahead: stop for a bear in the lane, and keep a gap behind slower cars
+      let target = car.cruise;
+      const bx = bear.x - car.x, by = bear.y - car.y;
+      const ahead = bx * fx + by * fy, side = Math.abs(-bx * fy + by * fx);
+      car.forBear = ahead > 0 && ahead < 110 && side < 26;
+      if (car.honkT > 0) car.honkT -= dt;
+      const bearDist = Math.hypot(bx, by);
+      if (car.forBear) target = 0;
+      // honk when the bear is in the lane ahead, or just crowding the car from any side
+      if (car.honkCd <= 0 && ((car.forBear && bearDist < 140) || bearDist < 62)){
+        car.honkCd = 2.4 + Math.random() * 1.2; car.honkT = 0.9;
+        const vol = bearDist < 62 ? 0.06 : 0.045;
+        SFX.beep(392, 0.16, 'square', vol); SFX.beep(330, 0.22, 'square', vol * 0.85, 0.17);
+        if (bearDist < 62 && !car.forBear && Math.random() < 0.5){ SFX.beep(392, 0.12, 'square', vol, 0.45); }
+        if (!this._honkTipShown){ this._honkTipShown = true; this.showToast('\uD83D\uDE97 HONK! Drivers lean on the horn when a bear gets too close \u2014 give cars some room.'); }
+      }
+      for (const o of this.traffic){
+        if (o === car || o.rd !== car.rd || o.dir !== car.dir) continue;
+        const gap = (o.s - car.s) * car.dir;
+        if (gap > 0 && gap < 46){ target = Math.min(target, gap < 30 ? 0 : o.v); }
+      }
+      // parked: passengers are out taking photos, or the car pulled over for the view
+      if (car.parkT > 0){ car.parkT -= dt; target = 0; }
+      if (car.riders && car.riders.length) target = 0;
+      // smooth braking / acceleration
+      const accel = target < car.v ? 320 : 70;
+      car.v = target < car.v ? Math.max(target, car.v - accel * dt) : Math.min(target, car.v + accel * dt);
+      car.brake = target < car.v + 1 && car.v < car.cruise - 5;
+      car.s += car.v * car.dir * dt;
+      this.updateCarRiders(car, dt, fx, fy);
+      // dead ends and park boundaries: turn around
+      if (car.s >= car.rd.len){ car.s = car.rd.len; car.dir = -1; }
+      else if (car.s <= 0){ car.s = 0; car.dir = 1; }
+      // running into a car hurts
+      const lx = bx * fx + by * fy, ly = -bx * fy + by * fx;
+      if (Math.abs(lx) < 21 && Math.abs(ly) < 14 && !(this._carHitCd > 0) && (bear.moving || car.v > 8)){
+        this._carHitCd = 1.6;
+        const away = Math.atan2(by, bx) || 0;
+        bear.x = clamp(bear.x + Math.cos(away) * 34, 16, this.WORLD_W - 16);
+        bear.y = clamp(bear.y + Math.sin(away) * 34, 16, this.WORLD_H - 16);
+        this.camera.x = bear.x; this.camera.y = bear.y;
+        this.setStaminaDelta(-15);
+        this._stTimer = 99; this.setStaminaDelta(0);   // push the new stamina to the HUD right away
+        this.shake = 11; SFX.play('miss'); SFX.beep(440, 0.12, 'square', 0.04);
+        this.burst(bear.x, bear.y - 6, 12, '#d8d2c4');
+        car.v = 0; car.honkCd = 2.5;
+        this.showToast('\uD83D\uDE97 Bang! You ran into a car \u2014 \u221215 stamina. Cars stop for bears in front of them, not beside them!');
+      }
+    }
+  }
+  drawTraffic(ctx, ox, oy){
+    if (!this.traffic) return;
+    const night = this.timePeriod() === 'night';
+    for (const car of this.traffic){
+      const x = car.x - ox, y = car.y - oy;
+      if (x < -40 || y < -40 || x > this.viewW + 40 || y > this.viewH + 40) continue;
+      ctx.save(); ctx.translate(x, y); ctx.rotate(car.heading || 0);
+      if (night){
+        const g = ctx.createLinearGradient(10, 0, 44, 0);
+        g.addColorStop(0, 'rgba(255,240,190,0.45)'); g.addColorStop(1, 'rgba(255,240,190,0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(10, -4); ctx.lineTo(44, -12); ctx.lineTo(44, 12); ctx.lineTo(10, 4); ctx.closePath(); ctx.fill();
+      }
+      ctx.fillStyle = 'rgba(20,14,8,0.3)'; ctx.beginPath(); ctx.ellipse(0, 2, 12, 5, 0, 0, 7); ctx.fill();
+      ctx.fillStyle = car.color; ctx.beginPath(); ctx.roundRect(-11, -5, 22, 10, 3); ctx.fill();
+      ctx.fillStyle = 'rgba(0,0,0,0.18)'; ctx.beginPath(); ctx.roundRect(-4, -4, 9, 8, 2); ctx.fill();
+      ctx.fillStyle = '#bcd0d8'; ctx.beginPath(); ctx.roundRect(5, -3.4, 3.4, 6.8, 1.4); ctx.fill();
+      ctx.fillStyle = '#fff6cf'; ctx.beginPath(); ctx.arc(10.5, -3, 1, 0, 7); ctx.fill(); ctx.beginPath(); ctx.arc(10.5, 3, 1, 0, 7); ctx.fill();
+      // tail lights glow bright red while braking
+      ctx.fillStyle = car.brake ? '#ff3b2a' : '#7a1e16';
+      ctx.fillRect(-11.5, -4, 1.6, 2.2); ctx.fillRect(-11.5, 1.8, 1.6, 2.2);
+      if (car.brake){ ctx.fillStyle = 'rgba(255,60,40,0.3)'; ctx.beginPath(); ctx.arc(-12, 0, 6, 0, 7); ctx.fill(); }
+      // passenger door swung open while people are out
+      if (car.riders && car.riders.length){ ctx.fillStyle = car.color; ctx.save(); ctx.translate(2, 5); ctx.rotate(0.9); ctx.fillRect(0, -1, 7, 2); ctx.restore(); }
+      ctx.restore();
+    }
+    for (const car of this.traffic) for (const t of (car.riders || [])) this.drawCarRider(ctx, t, ox, oy);
+    for (const car of this.traffic){
+      if (!(car.honkT > 0)) continue;
+      const x = car.x - ox, y = car.y - oy;
+      if (x < -40 || y < -40 || x > this.viewW + 40 || y > this.viewH + 40) continue;
+      const a = Math.min(1, car.honkT / 0.3), pop = 1 + Math.max(0, car.honkT - 0.7) * 1.6;
+      const jig = Math.sin(performance.now() / 45) * 1.4;
+      // put the bubble on the side of the car away from the bear so the bear never covers it
+      let ux = car.x - this.bear.x, uy = car.y - this.bear.y; const ul = Math.hypot(ux, uy) || 1; ux /= ul; uy /= ul;
+      const bxp = x + ux * 34, byp = y + uy * 30 - 6;
+      ctx.save(); ctx.globalAlpha = a; ctx.translate(bxp + jig, byp); ctx.scale(pop, pop);
+      ctx.font = '900 11px LatoB, sans-serif'; ctx.textAlign = 'center';
+      const msg = 'HONK!'; const w = ctx.measureText(msg).width;
+      ctx.fillStyle = 'rgba(255,236,120,0.97)'; ctx.strokeStyle = '#3a2a12'; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.roundRect(-w / 2 - 6, -10, w + 12, 16, 5); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-3, 6); ctx.lineTo(0, 11); ctx.lineTo(3, 6); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#3a2a12'; ctx.fillText(msg, 0, 2);
+      // little sound lines
+      ctx.strokeStyle = 'rgba(58,42,18,0.7)'; ctx.lineWidth = 1.3; ctx.lineCap = 'round';
+      for (const sx of [-1, 1]){ ctx.beginPath(); ctx.moveTo(sx * (w / 2 + 9), -6); ctx.lineTo(sx * (w / 2 + 14), -9); ctx.moveTo(sx * (w / 2 + 9), 1); ctx.lineTo(sx * (w / 2 + 15), 1); ctx.stroke(); }
+      ctx.restore();
+    }
   }
   updateCoveCars(dt){
     const loop = this._coveLoop; if (!loop || !this.coveCars) return;
@@ -3554,6 +4436,7 @@ class Component extends DCLogic {
   }
   drawTownEvents(ctx, ox, oy){
     const now = performance.now() / 1000;
+    this.drawTraffic(ctx, ox, oy);
     // ---- Cades Cove sightseeing cars
     for (const car of (this.coveCars || [])){
       if (car.x == null) continue;
@@ -3727,14 +4610,7 @@ class Component extends DCLogic {
       ctx.strokeStyle = '#6a4420'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(2, -4); ctx.lineTo(5, -9); ctx.stroke();
       ctx.fillStyle = '#e8a72a'; ctx.beginPath(); ctx.arc(5, -9, 1.6, 0, 7); ctx.fill();
     } else if (n.kind === 'bottle'){
-      // specimen jar
-      ctx.fillStyle = '#8a6a3a'; ctx.beginPath(); ctx.roundRect(-2.4, -9.5, 4.8, 2.6, 1); ctx.fill(); // cap
-      ctx.fillStyle = 'rgba(150,200,210,0.55)';
-      ctx.beginPath(); ctx.roundRect(-4, -7, 8, 15, 3); ctx.fill();
-      ctx.strokeStyle = 'rgba(210,235,240,0.85)'; ctx.lineWidth = 1.2;
-      ctx.beginPath(); ctx.roundRect(-4, -7, 8, 15, 3); ctx.stroke();
-      ctx.fillStyle = 'rgba(120,180,195,0.6)'; ctx.beginPath(); ctx.roundRect(-4, 2, 8, 6, 3); ctx.fill(); // liquid
-      ctx.fillStyle = 'rgba(255,255,255,0.5)'; ctx.fillRect(-2.4, -5, 1.2, 10); // glint
+      this.drawOldCamera(ctx, 0, 0, 1.15);
     } else if (n.kind === 'book'){
       ctx.save(); ctx.rotate(-0.08);
       ctx.fillStyle = '#a8391f'; ctx.beginPath(); ctx.roundRect(-6, -8, 12, 15, 1.2); ctx.fill();
@@ -3743,19 +4619,7 @@ class Component extends DCLogic {
       ctx.beginPath(); ctx.moveTo(-5, -3.5); ctx.lineTo(5, -3.5); ctx.moveTo(-5, 0); ctx.lineTo(5, 0); ctx.stroke();
       ctx.restore();
     } else {
-      // handle + hoop + mesh (net)
-      ctx.strokeStyle = '#8a6a3a'; ctx.lineWidth = 2.2; ctx.lineCap = 'round';
-      ctx.beginPath(); ctx.moveTo(0, 8); ctx.lineTo(0, 1); ctx.stroke();
-      ctx.strokeStyle = '#e2e8cf'; ctx.lineWidth = 1.8;
-      ctx.beginPath(); ctx.arc(0, -3.5, 6, 0, 7); ctx.stroke();
-      ctx.save();
-      ctx.beginPath(); ctx.arc(0, -3.5, 5.4, 0, 7); ctx.clip();
-      ctx.strokeStyle = 'rgba(220,230,200,0.7)'; ctx.lineWidth = 0.6;
-      for (let k = -6; k <= 6; k += 2){
-        ctx.beginPath(); ctx.moveTo(k, -10); ctx.lineTo(k, 3); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(-7, k - 3.5); ctx.lineTo(7, k - 3.5); ctx.stroke();
-      }
-      ctx.restore();
+      this.drawTeleLens(ctx, 0, 0, 1.15, -0.5);
     }
     ctx.restore();
   }
@@ -4289,11 +5153,34 @@ class Component extends DCLogic {
     }
   }
 
+  drawPhotoFlash(ctx){
+    if (!this._photoFlashAt) return;
+    const t = (performance.now() - this._photoFlashAt) / 1000;
+    if (t > 0.45){ this._photoFlashAt = 0; return; }
+    const vw = this.viewW || 600, vh = this.viewH || 800;
+    ctx.save(); ctx.fillStyle = `rgba(255,255,250,${(1 - t / 0.45) * 0.85})`; ctx.fillRect(0, 0, vw, vh); ctx.restore();
+  }
+  drawViewfinder(ctx, c, bsx, bsy){
+    // camera brackets framing the salamander while you focus
+    const x = c.critter.x - (this.bear.x - bsx), y = c.critter.y - (this.bear.y - bsy);
+    const pos = Math.abs(Math.sin(c.t * c.speed)), sharp = pos <= c.zone;
+    const r = 22 + (sharp ? 0 : 6 * Math.sin(c.t * 9));
+    ctx.save(); ctx.translate(x, y);
+    ctx.strokeStyle = sharp ? 'rgba(233,196,106,0.95)' : 'rgba(248,236,214,0.75)'; ctx.lineWidth = 2;
+    for (const [sx, sy] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]){
+      ctx.beginPath(); ctx.moveTo(sx * r, sy * (r - 8)); ctx.lineTo(sx * r, sy * r); ctx.lineTo(sx * (r - 8), sy * r); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.moveTo(-4, 0); ctx.lineTo(4, 0); ctx.moveTo(0, -4); ctx.lineTo(0, 4); ctx.lineWidth = 1; ctx.stroke();
+    ctx.restore();
+  }
   drawCatchBar(ctx, bsx, bsy){
+    this.drawPhotoFlash(ctx);
     const c = this.catchAnim;
     if (!c) return;
-    const W = 210, H = 22;
+    if (!c.resolved) this.drawViewfinder(ctx, c, bsx, bsy);
     const vw = this.viewW || 600, vh = this.viewH || 800;
+    const W = Math.min(340, vw - 60), H = 30;
+    c.markerTol = 4 / (W / 2);   // half the marker's width, in gauge units
     const boxTop = 26, boxBot = H + 18;               // extents of the panel above/below y0
     const topSafe = 120, botSafe = vh - 80;           // keep clear of top UI / bottom controls
     const bearNearTop = this.bear.y < 260;             // bear near the top edge of the map
@@ -4314,16 +5201,21 @@ class Component extends DCLogic {
     ctx.strokeStyle = '#e9c46a'; ctx.lineWidth = 1.5;
     ctx.beginPath(); ctx.roundRect(x0 - 10, y0 - 26, W + 20, H + 44, 10); ctx.fill(); ctx.stroke();
     ctx.fillStyle = '#f8ecd6'; ctx.font = '700 11px LatoB, sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText(c.sp.name + '  ·  press E!', cx, y0 - 10);
+    ctx.font = '700 12.5px LatoB, sans-serif';
+    { const label = '\uD83D\uDCF7 ' + c.sp.name + '  ·  press E when it\u2019s sharp!';
+      let fs = 12.5; ctx.font = '700 ' + fs + 'px LatoB, sans-serif';
+      while (ctx.measureText(label).width > W + 4 && fs > 9){ fs -= 0.5; ctx.font = '700 ' + fs + 'px LatoB, sans-serif'; }
+      ctx.fillText(label, cx, y0 - 10); }
     ctx.fillStyle = 'rgba(233,196,106,0.16)';
     ctx.beginPath(); ctx.roundRect(x0, y0, W, H, 6); ctx.fill();
     const zw = c.zone * W / 2;
     ctx.fillStyle = c.flash === 1 ? '#7bc96a' : c.flash === -1 ? '#c24a2a' : 'rgba(226,176,74,0.85)';
     ctx.beginPath(); ctx.roundRect(cx - zw, y0 + 2, zw * 2, H - 4, 4); ctx.fill();
-    const mx = cx + pos * (W / 2 - 5);
+    // the marker sweeps the same scale the zone is drawn on, so "in the green" on screen = a catch
+    const mx = cx + pos * (W / 2);
     ctx.fillStyle = '#f8ecd6';
     ctx.strokeStyle = '#2c2012'; ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.roundRect(mx - 3, y0 - 4, 6, H + 8, 3); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.roundRect(mx - 4, y0 - 5, 8, H + 10, 3); ctx.fill(); ctx.stroke();
     ctx.fillStyle = 'rgba(233,196,106,0.6)';
     ctx.fillRect(x0, y0 + H + 8, W * clamp(c.life / 5, 0, 1), 3);
     ctx.restore();
@@ -4824,10 +5716,10 @@ class Component extends DCLogic {
         ctx.save();
         ctx.translate(critter.x - ox, critter.y - oy - 18); ctx.scale(pulse, pulse);
         ctx.font = '700 11px LatoB, sans-serif'; ctx.textAlign = 'center';
-        const tw = ctx.measureText('Pounce!').width;
+        const tw = ctx.measureText('\uD83D\uDCF7 Take a photo').width;
         ctx.fillStyle = 'rgba(38,28,16,0.9)'; ctx.strokeStyle = '#e9c46a'; ctx.lineWidth = 1.2;
         ctx.beginPath(); ctx.roundRect(-tw / 2 - 8, -12, tw + 16, 18, 9); ctx.fill(); ctx.stroke();
-        ctx.fillStyle = '#f8ecd6'; ctx.fillText('Pounce!', 0, 1);
+        ctx.fillStyle = '#f8ecd6'; ctx.fillText('\uD83D\uDCF7 Take a photo', 0, 1);
         ctx.restore();
       }
     }
@@ -5023,8 +5915,12 @@ class Component extends DCLogic {
     // rival bears
     for (const r of this.rivals) this.drawRival(ctx, r, ox, oy, now);
     if (this.rivalIntro) this.drawIntroBubble(ctx, ox, oy);
+    // hollow trees to search
+    this.drawHollowTrees(ctx, ox, oy);
     // hikers on the trails
     if (this.hikers) for (const h of this.hikers) this.drawHiker(ctx, h, ox, oy);
+    // Elkmont Great Hall: banjo on its stand + dancing neighbors
+    this.drawHallScene(ctx, ox, oy);
     // dropped nets on the ground
     if (this.netDrops) for (const n of this.netDrops) this.drawNetDrop(ctx, n, ox, oy);
     // pursuing park ranger
@@ -5037,12 +5933,23 @@ class Component extends DCLogic {
     const bsx = this.bear.x - ox, bsy = this.bear.y - oy;
     this.drawBear(ctx, bsx, bsy, 1.15);
     this.drawCarriedNet(ctx, bsx, bsy);
+    if (this.banjoPlaying) this.drawBearBanjo(ctx, bsx, bsy);
+    this.drawBanjoNotes(ctx, ox, oy);
 
     // contextual E prompt
     if (this.state.started && !this.catchAnim && !this.state.discovery){
       const { critter, dist } = this.nearestCritter();
       let label = null, tx2 = 0, ty2 = 0;
-      if (critter && dist < this.pounceReach()){ label = 'Pounce!'; tx2 = critter.x - ox; ty2 = critter.y - oy - 18; }
+      if (this.nearBanjo()){
+        const st = this.banjoStand();
+        label = this.banjoPlaying ? 'Stop playing' : 'Play the banjo';
+        tx2 = st.x - ox; ty2 = st.y - oy - 30;
+      } else if (critter && dist < this.pounceReach()){ label = '\uD83D\uDCF7 Take a photo'; tx2 = critter.x - ox; ty2 = critter.y - oy - 18; }
+      else if (this.nearestHollowTree().dist < 46){
+        const ht = this.nearestHollowTree().tree;
+        label = ht.ready ? 'Search the hollow tree' : 'Hollow tree \u2014 empty for now';
+        tx2 = ht.x - ox; ty2 = ht.y - oy - 34;
+      }
       else {
         const { bush, dist: bd } = this.nearestBush();
         if (bush && bd < 34){ label = 'Eat berries'; tx2 = bush.x - ox; ty2 = bush.y - oy - 16; }
@@ -5199,6 +6106,11 @@ class Component extends DCLogic {
         mctx.fillStyle = 'rgba(233,196,106,0.95)';
         mctx.beginPath(); mctx.arc((c.x / this.WORLD_W) * 260, (c.y / this.WORLD_H) * 84, 1.8, 0, 7); mctx.fill();
       }
+      for (const t of (this.hollowTrees || [])){
+        if (!t.ready) continue;
+        mctx.fillStyle = 'rgba(200,50,42,0.95)'; mctx.strokeStyle = 'rgba(255,230,160,0.9)'; mctx.lineWidth = 0.8;
+        mctx.beginPath(); mctx.arc((t.x / this.WORLD_W) * 260, (t.y / this.WORLD_H) * 84, 2, 0, 7); mctx.fill(); mctx.stroke();
+      }
       for (const r of this.rivals){
         mctx.fillStyle = r.placatedT > 0 ? 'rgba(150,190,120,0.95)' : 'rgba(224,90,58,0.95)';
         mctx.beginPath(); mctx.arc((r.x / this.WORLD_W) * 260, (r.y / this.WORLD_H) * 84, 2.2, 0, 7); mctx.fill();
@@ -5298,6 +6210,11 @@ class Component extends DCLogic {
       weatherIcon: wIcon[this.state.weather], weatherLabel: wLabel[this.state.weather],
       berryCount: this.state.berries || 0,
       netCount: this.state.netSwings || 0,
+      hasDash: (this.state.dashBerries || 0) > 0 || !!this.state.dashing,
+      dashBg: this.state.dashing ? 'linear-gradient(135deg,#d9482f,#e9a23a)' : 'rgba(120,36,24,.82)',
+      dashLabel: this.state.dashing ? ('DASH! ' + Math.max(0, Math.ceil(this._dashT || 0)) + 's') : ((this.state.dashBerries || 0) + ' sarvisberr' + ((this.state.dashBerries || 0) === 1 ? 'y' : 'ies') + (this.state.isTouch ? ' · tap' : ' · R to dash')),
+      dashShort: this.state.dashing ? (Math.max(0, Math.ceil(this._dashT || 0)) + 's') : ('×' + (this.state.dashBerries || 0)),
+      useDash: this.useDash,
       hasNets: (this.state.netSwings || 0) > 0,
       scares: this.state.scares || 0,
       hasScares: (this.state.scares || 0) > 0 && !this.state.rangerActive,
@@ -5347,6 +6264,7 @@ class Component extends DCLogic {
       findOpen: !!this.state.findOpen,
       findIcon: this.state.findIcon || '',
       findTitle: this.state.findTitle || '',
+      findKicker: this.state.findKicker || 'FIELD GEAR RECOVERED', findBtn: this.state.findBtn || 'Take it',
       findBody: React.createElement('div', { dangerouslySetInnerHTML: { __html: this.state.findBody || '' } }),
       closeFind: this.closeFind,
       daysTaken: this.state.day === 1 ? 'a single day' : this.state.day + ' days',
