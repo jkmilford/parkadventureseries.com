@@ -1307,7 +1307,61 @@ class Component extends DCLogic {
     this.joyBaseRef = this.joyBaseRef || React.createRef();
     this.catchBtnRef = this.catchBtnRef || React.createRef();
     this.touch = { x: 0, y: 0, mag: 0 };
-    this._bootRun(() => this._afterWorldBuilt());
+    // look for a park map this device already painted (saved after the first visit); then build the world
+    let started = false;
+    const go = () => { if (started) return; started = true; this._bootRun(() => this._afterWorldBuilt()); };
+    if (window.indexedDB && window.createImageBitmap){
+      const L = window.__bootLoader; if (L) L.set(0.004);
+      this._loadBake().then((hit) => { this._bakeHit = hit; go(); }, go);
+      setTimeout(go, 5000);   // never wait long on a slow or broken storage
+    } else go();
+  }
+  // ---- saved park map: the painted world is the slowest part of loading, and it's the same every visit,
+  // so after the first load we keep a copy on the device and reuse it until the game file changes.
+  _bakeKey(){
+    if (this._bakeK) return this._bakeK;
+    let h = 2166136261;
+    try {
+      const sc = document.querySelector('script[type="text/x-dc"]'), t = sc ? sc.textContent : this.constructor.toString();
+      for (let i = 0; i < t.length; i++){ h ^= t.charCodeAt(i); h = Math.imul(h, 16777619); }
+      h ^= t.length;
+    } catch (e){}
+    return (this._bakeK = 'park1:' + (this._isCoarse() ? 'm' : 'd') + ':' + (h >>> 0).toString(36));
+  }
+  _idb(mode, fn){
+    return new Promise((res, rej) => {
+      let r; try { r = indexedDB.open('smokiesPark', 1); } catch (e){ rej(e); return; }
+      r.onupgradeneeded = () => { try { r.result.createObjectStore('b'); } catch (e){} };
+      r.onerror = () => rej(r.error);
+      r.onsuccess = () => {
+        const db = r.result; let out;
+        try { const tx = db.transaction('b', mode); out = fn(tx.objectStore('b'));
+          tx.oncomplete = () => { db.close(); res(out && out.result); };
+          tx.onerror = tx.onabort = () => { db.close(); rej(tx.error); };
+        } catch (e){ db.close(); rej(e); }
+      };
+    });
+  }
+  async _loadBake(){
+    try {
+      const rec = await this._idb('readonly', (st) => st.get('world'));
+      if (!rec || rec.key !== this._bakeKey() || !rec.world) return null;
+      const out = { world: await createImageBitmap(rec.world), relief: rec.relief, S4: rec.S4, layers: {} };
+      for (const k of ['fallHi', 'fallLo', 'winter', 'haze']) out.layers[k] = await createImageBitmap(rec.layers[k]);
+      return out;
+    } catch (e){ return null; }
+  }
+  async _saveBake(){
+    try {
+      if (this._fromCache || !this.worldCanvas || !this.seasonLayers || !window.indexedDB) return;
+      const blob = (c, type, q) => new Promise((r) => { try { c.toBlob(r, type, q); } catch (e){ r(null); } });
+      let world = await blob(this.worldCanvas, 'image/webp', 0.93);
+      if (!world || world.type !== 'image/webp') world = await blob(this.worldCanvas, 'image/jpeg', 0.93);
+      if (!world) return;
+      const layers = {};
+      for (const k of ['fallHi', 'fallLo', 'winter', 'haze']){ layers[k] = await blob(this.seasonLayers[k], 'image/png'); if (!layers[k]) return; }
+      await this._idb('readwrite', (st) => st.put({ key: this._bakeKey(), world, layers, relief: this.reliefGrid, S4: this.seasonLayers.S4 }, 'world'));
+    } catch (e){}
   }
   // Runs the world-building generator in ~50 ms slices, handing control back to the browser between them so the
   // loading bar can paint. Each yield reports progress (0..1) and sometimes a message.
@@ -1330,6 +1384,7 @@ class Component extends DCLogic {
   }
   _afterWorldBuilt(){
     window.__bear = this;
+    if (!this._fromCache) setTimeout(() => this._saveBake(), 1200);
     this.bear = { x: 1480, y: 1164, facing: 1, heading: 0, moving: false, pounce: 0 };
     this.camera = { x: 740, y: 582 };
     this.keys = new Set();
@@ -1612,11 +1667,16 @@ class Component extends DCLogic {
   }
   stopTracking = () => { SFX.play('click'); this.trackTarget = null; this.setState({ trackedId: null }); };
 
+  _isCoarse(){
+    if (this._coarseC === undefined) this._coarseC = (() => { try { return /iPad|iPhone|iPod|Android/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform)) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches); } catch (e) { return false; } })();
+    return this._coarseC;
+  }
   resize(){
     const el = this.canvasRef.current;
     if (!el) return;
     const rect = el.parentElement.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // phones: 1.5x pixel density is plenty sharp and draws ~45% fewer pixels per frame than 2x
+    const dpr = Math.min(window.devicePixelRatio || 1, this._isCoarse() ? 1.5 : 2);
     el.width = Math.round(rect.width * dpr); el.height = Math.round(rect.height * dpr);
     this._ctx = el.getContext('2d');
     this.viewW = rect.width; this.viewH = rect.height; this.dpr = dpr;
@@ -1866,21 +1926,46 @@ class Component extends DCLogic {
     const distRiver = new Float32Array(GRID_W * GRID_H);
     const distLake = new Float32Array(GRID_W * GRID_H);
     const gridRivers = rawRivers.map((r) => r.pts);
+    // Speed-up (same results): bucket the line segments so each cell only measures the ones that could matter.
+    // Every later use of these distances only cares below ~52 cells (rivers/lake) or 100 cells (the main ridge),
+    // so segments farther than that are skipped; the nearest one within range is always in the cell's bucket.
+    const BK = 16, bkw = Math.ceil(GRID_W / BK), bkh = Math.ceil(GRID_H / BK);
+    const bucketize = (lines, R) => {
+      const bk = Array.from({ length: bkw * bkh }, () => []);
+      for (const pts of lines) for (let k = 0; k < pts.length - 1; k++){
+        const a = pts[k], b = pts[k + 1];
+        const x0 = Math.max(0, Math.floor((Math.min(a[0], b[0]) - R) / BK)), x1 = Math.min(bkw - 1, Math.floor((Math.max(a[0], b[0]) + R) / BK));
+        const y0 = Math.max(0, Math.floor((Math.min(a[1], b[1]) - R) / BK)), y1 = Math.min(bkh - 1, Math.floor((Math.max(a[1], b[1]) + R) / BK));
+        for (let by = y0; by <= y1; by++) for (let bx = x0; bx <= x1; bx++) bk[by * bkw + bx].push(a, b);
+      }
+      return bk;
+    };
+    const rivBk = bucketize(gridRivers, 64), lakeBk = bucketize([this.lakeGridPts], 64), spineBk = bucketize([spine], 104);
+    const nearSeg = (bk, i, j) => { const L = bk[((j / BK) | 0) * bkw + ((i / BK) | 0)]; let m = Infinity; for (let k = 0; k < L.length; k += 2){ const a = L[k], b = L[k + 1], d = distToSeg(i, j, a[0], a[1], b[0], b[1]); if (d < m) m = d; } return m; };
+    const nearSpine = (i, j) => {
+      const L = spineBk[((j / BK) | 0) * bkw + ((i / BK) | 0)]; let best = Infinity, bestElev = 2000;
+      for (let k = 0; k < L.length; k += 2){
+        const a = L[k], b = L[k + 1], dx = b[0] - a[0], dy = b[1] - a[1], l2 = dx * dx + dy * dy;
+        let t = l2 > 0 ? ((i - a[0]) * dx + (j - a[1]) * dy) / l2 : 0; t = clamp(t, 0, 1);
+        const d = Math.hypot(i - (a[0] + dx * t), j - (a[1] + dy * t));
+        if (d < best){ best = d; bestElev = lerp(a[2], b[2], t); }
+      }
+      return { dist: best, elev: bestElev };
+    };
     for (let j = 0; j < GRID_H; j++){
       if ((j & 7) === 0) yield 0.01 + 0.08 * j / GRID_H;
       for (let i = 0; i < GRID_W; i++){
-        const { dist, elev: targetElev } = nearestOnSpine(i, j, spine);
+        const { dist, elev: targetElev } = nearSpine(i, j);
         const infl = clamp(1 - dist / 100, 0, 1);
         const shaped = Math.pow(infl, 0.72);
         let e = lerp(1300, targetElev, shaped);
         const detail = fbmLocal(noise, i, j, 0.05) * 0.6 + fbmLocal(noise2, i, j, 0.02) * 0.4;
         e += (detail - 0.5) * 720 * (0.35 + shaped);
-        let minRiverD = Infinity;
-        for (const r of gridRivers){ const d = distToPolyline(i, j, r); if (d < minRiverD) minRiverD = d; }
+        const minRiverD = nearSeg(rivBk, i, j);
         distRiver[j * GRID_W + i] = minRiverD;
         e -= Math.max(0, 52 - minRiverD) * 5.5;
         // Fontana Lake basin — pull elevation down toward the reservoir
-        const dLake = distToPolyline(i, j, this.lakeGridPts);
+        const dLake = nearSeg(lakeBk, i, j);
         distLake[j * GRID_W + i] = dLake;
         e -= Math.max(0, 30 - dLake) * 24;
         elev[j * GRID_W + i] = clamp(e, 1100, 6700);
@@ -2062,10 +2147,26 @@ class Component extends DCLogic {
     const noise = this.noiseA, noise2 = this.noiseB;
     const gw = GRID_W, gh = GRID_H;
     const world = document.createElement('canvas');
-    const coarse = (() => { try { return /iPad|iPhone|iPod|Android/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform)) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches); } catch (e) { return false; } })();
-    const area = this.WORLD_W * this.WORLD_H, wk = coarse && area > 14.5e6 ? Math.sqrt(14.5e6 / area) : 1;
+    const coarse = this._isCoarse(); this._lowMem = coarse;
+    const area = this.WORLD_W * this.WORLD_H, wk = coarse && area > 9e6 ? Math.sqrt(9e6 / area) : 1;
     world.width = Math.round(this.WORLD_W * wk); world.height = Math.round(this.WORLD_H * wk); this.worldScale = wk;
-    const w = world.getContext('2d'); w.scale(wk, wk);
+    const w = world.getContext('2d');
+    const H = this._bakeHit; this._bakeHit = null;
+    if (H && H.world.width === world.width && H.world.height === world.height && H.relief && H.relief.length === gw * gh){
+      yield { p: 0.5, msg: 'Unpacking your saved park…' };
+      w.drawImage(H.world, 0, 0); if (H.world.close) H.world.close();
+      const layers = { S4: H.S4 };
+      for (const k of ['fallHi', 'fallLo', 'winter', 'haze']){ const b = H.layers[k], c = document.createElement('canvas'); c.width = b.width; c.height = b.height; c.getContext('2d').drawImage(b, 0, 0); if (b.close) b.close(); layers[k] = c; }
+      this.seasonLayers = layers; this.reliefGrid = H.relief; this._fromCache = true;
+      yield { p: 0.95, msg: 'Opening the gates…' };
+      this.worldCanvas = world;
+      const mini0 = document.createElement('canvas'); mini0.width = 260; mini0.height = 84;
+      mini0.getContext('2d').drawImage(world, 0, 0, 260, 84);
+      this.miniCanvas = mini0;
+      return;
+    }
+    if (H){ try { H.world.close && H.world.close(); for (const k in H.layers) H.layers[k].close && H.layers[k].close(); } catch (e){} }
+    w.scale(wk, wk);
     yield* this.bakeTerrainTextureGen(w, world);
     yield { p: 0.83, msg: 'Laying out rivers and roads…' };
 
@@ -8390,11 +8491,11 @@ class Component extends DCLogic {
       const i0 = x | 0, j0 = y | 0, u = x - i0, v = y - j0, i1 = Math.min(i0 + 1, gw - 1), j1 = Math.min(j0 + 1, gh - 1);
       return (arr[j0 * gw + i0] * (1 - u) + arr[j0 * gw + i1] * u) * (1 - v) + (arr[j1 * gw + i0] * (1 - u) + arr[j1 * gw + i1] * u) * v;
     };
-    const SS = 2, TW = Math.floor(this.WORLD_W / SS), TH = Math.floor(this.WORLD_H / SS);
+    const SS = this._lowMem ? 3 : 2, TW = Math.floor(this.WORLD_W / SS), TH = Math.floor(this.WORLD_H / SS);
     const tex = document.createElement('canvas'); tex.width = TW; tex.height = TH;
     const tctx = tex.getContext('2d'), img = tctx.createImageData(TW, TH), data = img.data;
     // season / haze layers at quarter resolution
-    const S4 = 4, QW = Math.floor(this.WORLD_W / S4), QH = Math.floor(this.WORLD_H / S4);
+    const S4 = this._lowMem ? 6 : 4, QW = Math.floor(this.WORLD_W / S4), QH = Math.floor(this.WORLD_H / S4);
     const mk = () => { const c = document.createElement('canvas'); c.width = QW; c.height = QH; return c; };
     const fallHi = mk(), fallLo = mk(), winter = mk(), haze = mk();
     const fh = fallHi.getContext('2d').createImageData(QW, QH), fl = fallLo.getContext('2d').createImageData(QW, QH), wi = winter.getContext('2d').createImageData(QW, QH), hz = haze.getContext('2d').createImageData(QW, QH);
@@ -8485,6 +8586,7 @@ class Component extends DCLogic {
     this.seasonLayers = { fallHi, fallLo, winter, haze, S4 };
     w.imageSmoothingEnabled = true;
     w.drawImage(tex, 0, 0, this.WORLD_W, this.WORLD_H);
+    tex.width = tex.height = 0;   // release the temporary texture's memory now, not whenever the browser gets around to it
     this._bakeMs = performance.now() - t0;
   }
   bakeRivers(w){
@@ -8621,8 +8723,17 @@ class Component extends DCLogic {
   }
   // The season tint is composited into a full-size scene image once per change (about once a game day),
   // so each frame is a single image copy, exactly as cheap as before.
+  drawSeasonTint(ctx, ox, oy, vw, vh){
+    const L = this.seasonLayers; if (!L) return;
+    const m = this.seasonMix(); if (m.fallHi <= 0.01 && m.fallLo <= 0.01 && m.winter <= 0.01) return;
+    const S = L.S4;
+    ctx.save(); ctx.imageSmoothingEnabled = true;
+    const put = (img, a) => { if (a <= 0.01) return; ctx.globalAlpha = Math.min(1, a); ctx.drawImage(img, ox / S, oy / S, vw / S, vh / S, 0, 0, vw, vh); };
+    put(L.fallHi, m.fallHi * 0.74); put(L.fallLo, m.fallLo * 0.74); put(L.winter, m.winter * 0.95);
+    ctx.restore();
+  }
   sceneCanvas(){
-    const L = this.seasonLayers; if (!L) return this.worldCanvas;
+    const L = this.seasonLayers; if (!L || this._lowMem) return this.worldCanvas;
     const m = this.seasonMix(), key = Math.round(m.fallHi * 16) + ':' + Math.round(m.fallLo * 16) + ':' + Math.round(m.winter * 16);
     if (key === '0:0:0'){ this._sceneKey = key; return this.worldCanvas; }
     if (key === this._sceneKey && this._scene) return this._scene;
@@ -16948,7 +17059,7 @@ class Component extends DCLogic {
     const ox = camX - vw / 2 + shx, oy = camY - vh / 2 + shy;
     if (oy + vh > this.WORLD_H){ ctx.fillStyle = '#7e8448'; ctx.fillRect(0, this.WORLD_H - oy - 2, vw, vh); }
     ctx.fillStyle = '#3a4a2e'; ctx.fillRect(0, 0, vw, vh);
-    { const k = this.worldScale || 1; ctx.drawImage(this.sceneCanvas(), ox * k, oy * k, vw * k, vh * k, 0, 0, vw, vh); }
+    { const k = this.worldScale || 1; ctx.drawImage(this.sceneCanvas(), ox * k, oy * k, vw * k, vh * k, 0, 0, vw, vh); if (this._lowMem) this.drawSeasonTint(ctx, ox, oy, vw, vh); }
 
     const now = performance.now() / 1000;
     this.drawWaterShimmer(ctx, ox, oy, vw, vh, now);
