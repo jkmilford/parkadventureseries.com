@@ -25,7 +25,7 @@
     <span id="bootMsg" style="opacity:.85;">Hiking in…</span><span id="bootPct" style="opacity:.7;">0%</span>
   </div>
   <div id="bootTip" style="max-width:340px;min-height:3.2em;text-align:center;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:14px;line-height:1.45;opacity:.8;margin-top:26px;transition:opacity .4s;"></div>
-  <div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:11.5px;opacity:.55;">© 2026 Sirreel LLC. All rights reserved.</div>
+  <div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:11.5px;opacity:.55;">© 2026 Sirreel LLC. All rights reserved. · v102</div>
 </div>
 <script>
 (function(){
@@ -48,6 +48,24 @@
   function paint(){ shown = Math.max(shown, target); bar.style.width = (3 + shown * 97).toFixed(1) + '%'; pct.textContent = Math.round(shown * 100) + '%'; }
   // while the page is still downloading there's nothing to measure, so creep slowly and never look frozen
   var creep = setInterval(function(){ if (!real){ target = Math.min(0.09, target + (0.09 - target) * 0.06 + 0.001); paint(); } }, 200);
+  var lastPct = -1, lastT = Date.now(), t0 = Date.now(), dev = null;
+  function devInfo(){
+    if (dev) return dev;
+    var gpu = '', mt = '';
+    try { var c = document.createElement('canvas'), gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+      if (gl){ var x = gl.getExtension('WEBGL_debug_renderer_info'); gpu = x ? gl.getParameter(x.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER); mt = gl.getParameter(gl.MAX_TEXTURE_SIZE); } } catch (e){}
+    var ua = navigator.userAgent, m = ua.match(/Android [^;)]*;?\s*([^;)]*)/);
+    return (dev = (m ? 'Android ' + (m[1] || '') : ua.slice(0, 60)) + (gpu ? ' · ' + gpu : '') + (mt ? ' · max ' + mt : ''));
+  }
+  setInterval(function(){
+    var p = Math.round(shown * 100);
+    if (p !== lastPct){ lastPct = p; lastT = Date.now(); return; }
+    if (real && p < 100 && Date.now() - lastT > 15000){
+      clearInterval(tipT);
+      tip.style.opacity = .9;
+      tip.innerHTML = 'Still working on <b>' + msg.textContent + '</b> (' + Math.round((Date.now() - lastT) / 1000) + ' s at ' + p + '%, ' + Math.round((Date.now() - t0) / 1000) + ' s total).<br><span style="font-size:11.5px;opacity:.8">If it stays stuck, a screenshot of this helps: ' + devInfo() + ' · v102</span>';
+    }
+  }, 1000);
   window.__bootLoader = {
     set: function(p, m){ real = true; target = Math.max(target, 0.09 + 0.91 * Math.min(1, p)); if (m) msg.textContent = m; paint(); },
     done: function(){ clearInterval(creep); clearInterval(tipT); target = 1; msg.textContent = 'Ready!'; paint(); el.style.pointerEvents = 'none';
@@ -337,7 +355,7 @@ a{color:#f08a6f;} a:hover{color:#f08a6f;}
             <div sc-camel-on-click="{{ resetGame }}" style="cursor:pointer;background:transparent;color:#c9bba0;border:1.5px solid #c9b184;font-family:'LatoB',sans-serif;font-size:15px;padding:13px 26px;border-radius:26px;">Start Over</div>
           </sc-if>
         </div>
-        <div style="font-family:'LatoR',sans-serif;font-size:11px;color:#8f897d;margin-top:18px;">© 2026 Sirreel LLC. All rights reserved.</div>
+        <div style="font-family:'LatoR',sans-serif;font-size:11px;color:#8f897d;margin-top:18px;">© 2026 Sirreel LLC. All rights reserved. · v102</div>
       </div>
     </div>
   </sc-if>
@@ -1384,7 +1402,8 @@ class Component extends DCLogic {
   }
   _afterWorldBuilt(){
     window.__bear = this;
-    if (!this._fromCache) setTimeout(() => this._saveBake(), 1200);
+    if (!this._fromCache) setTimeout(() => { this._saveBake().then(() => this._releaseWorld(), () => this._releaseWorld()); }, 1200);
+    else this._releaseWorld();
     this.bear = { x: 1480, y: 1164, facing: 1, heading: 0, moving: false, pounce: 0 };
     this.camera = { x: 740, y: 582 };
     this.keys = new Set();
@@ -2142,6 +2161,31 @@ class Component extends DCLogic {
 
   bakeWorldCanvas(){ const it = this.bakeWorldGen(); while (!it.next().done){} }
   *bakeWorldGen(){
+    // Android: every canvas made while painting the park is a processor ("software") canvas. Mixing graphics-chip
+    // canvases (the 900 little tree stamps) with a processor canvas (the big map) forces a slow copy back from the
+    // graphics chip on every one of the 15,600 trees, which is what froze Android phones at 87%.
+    let soft = false; try { soft = /Android/i.test(navigator.userAgent); } catch (e){}
+    this._softBake = soft;
+    const CP = HTMLCanvasElement.prototype, origGC = CP.getContext;
+    if (soft) CP.getContext = function(type, opts){ return origGC.call(this, type, type === '2d' ? Object.assign({ willReadFrequently: true }, opts || {}) : opts); };
+    try { yield* this._bakeWorldInner(); }
+    finally { if (soft) CP.getContext = origGC; }
+    // phones: split the finished map into tiles narrow enough for any phone's graphics chip
+    if (this._lowMem){ yield { p: 0.998, msg: 'Opening the gates…' }; this._makeTiles(); }
+  }
+  _makeTiles(){
+    const W = this.worldCanvas; if (!W || !W.width) return;
+    const TW = 2048, tiles = [];
+    for (let x0 = 0; x0 < W.width; x0 += TW){
+      const cw = Math.min(TW + 2, W.width - x0), c = document.createElement('canvas');
+      c.width = cw; c.height = W.height;
+      c.getContext('2d').drawImage(W, x0, 0, cw, W.height, 0, 0, cw, W.height);
+      tiles.push({ c, x0, x1: x0 + Math.min(TW, cw), x2: x0 + cw });
+    }
+    this._tiles = tiles;
+  }
+  _releaseWorld(){ if (this._tiles && this.worldCanvas && this.worldCanvas.width){ this.worldCanvas.width = this.worldCanvas.height = 0; } }
+  *_bakeWorldInner(){
     yield { p: 0.15, msg: 'Painting the forests and ridges…' };
     const { GRID_W, GRID_H, CELL } = this;
     const noise = this.noiseA, noise2 = this.noiseB;
@@ -2153,8 +2197,7 @@ class Component extends DCLogic {
     // Android: paint the park on the processor instead of the graphics chip. Many Android graphics chips crawl
     // through the ~100,000 small shapes and clipped tree tiers (loading sat at 87% for many minutes); the
     // processor does the same drawing in seconds. The finished picture moves to a normal canvas afterward.
-    let soft = false; try { soft = /Android/i.test(navigator.userAgent); } catch (e){}
-    const w = soft ? world.getContext('2d', { willReadFrequently: true }) : world.getContext('2d');
+    const w = world.getContext('2d');
     const H = this._bakeHit; this._bakeHit = null;
     if (H && H.world.width === world.width && H.world.height === world.height && H.relief && H.relief.length === gw * gh){
       yield { p: 0.5, msg: 'Unpacking your saved park…' };
@@ -2422,20 +2465,12 @@ class Component extends DCLogic {
       }
     }
 
-    let finalWorld = world;
-    if (soft){
-      // hand the finished painting to a regular (graphics-chip) canvas so every frame draws it quickly
-      yield { p: 0.995, msg: 'Opening the gates…' };
-      finalWorld = document.createElement('canvas'); finalWorld.width = world.width; finalWorld.height = world.height;
-      finalWorld.getContext('2d').drawImage(world, 0, 0);
-    }
-    this.worldCanvas = finalWorld;
+    this.worldCanvas = world;
 
     // minimap-friendly downscale baked once
     const mini = document.createElement('canvas'); mini.width = 260; mini.height = 84;
     mini.getContext('2d').drawImage(world, 0, 0, 260, 84);
     this.miniCanvas = mini;
-    if (finalWorld !== world) world.width = world.height = 0;   // free the processor-side copy
   }
 
   drawBuildings(w){
@@ -17088,7 +17123,16 @@ class Component extends DCLogic {
     const ox = camX - vw / 2 + shx, oy = camY - vh / 2 + shy;
     if (oy + vh > this.WORLD_H){ ctx.fillStyle = '#7e8448'; ctx.fillRect(0, this.WORLD_H - oy - 2, vw, vh); }
     ctx.fillStyle = '#3a4a2e'; ctx.fillRect(0, 0, vw, vh);
-    { const k = this.worldScale || 1; ctx.drawImage(this.sceneCanvas(), ox * k, oy * k, vw * k, vh * k, 0, 0, vw, vh); if (this._lowMem) this.drawSeasonTint(ctx, ox, oy, vw, vh); }
+    { const k = this.worldScale || 1;
+      if (this._tiles){
+        const sx = ox * k, sy = oy * k, sw = vw * k, sh = vh * k;
+        for (const t of this._tiles){
+          const a = Math.max(sx, t.x0), b = Math.min(sx + sw, t.x1 + 1, t.x2);   // 1 px of overlap hides any seam
+          if (b <= a) continue;
+          ctx.drawImage(t.c, a - t.x0, sy, b - a, sh, (a - sx) / sw * vw, 0, (b - a) / sw * vw, vh);
+        }
+      } else ctx.drawImage(this.sceneCanvas(), ox * k, oy * k, vw * k, vh * k, 0, 0, vw, vh);
+      if (this._lowMem) this.drawSeasonTint(ctx, ox, oy, vw, vh); }
 
     const now = performance.now() / 1000;
     this.drawWaterShimmer(ctx, ox, oy, vw, vh, now);
