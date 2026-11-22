@@ -2150,7 +2150,11 @@ class Component extends DCLogic {
     const coarse = this._isCoarse(); this._lowMem = coarse;
     const area = this.WORLD_W * this.WORLD_H, wk = coarse && area > 9e6 ? Math.sqrt(9e6 / area) : 1;
     world.width = Math.round(this.WORLD_W * wk); world.height = Math.round(this.WORLD_H * wk); this.worldScale = wk;
-    const w = world.getContext('2d');
+    // Android: paint the park on the processor instead of the graphics chip. Many Android graphics chips crawl
+    // through the ~100,000 small shapes and clipped tree tiers (loading sat at 87% for many minutes); the
+    // processor does the same drawing in seconds. The finished picture moves to a normal canvas afterward.
+    let soft = false; try { soft = /Android/i.test(navigator.userAgent); } catch (e){}
+    const w = soft ? world.getContext('2d', { willReadFrequently: true }) : world.getContext('2d');
     const H = this._bakeHit; this._bakeHit = null;
     if (H && H.world.width === world.width && H.world.height === world.height && H.relief && H.relief.length === gw * gh){
       yield { p: 0.5, msg: 'Unpacking your saved park…' };
@@ -2418,12 +2422,20 @@ class Component extends DCLogic {
       }
     }
 
-    this.worldCanvas = world;
+    let finalWorld = world;
+    if (soft){
+      // hand the finished painting to a regular (graphics-chip) canvas so every frame draws it quickly
+      yield { p: 0.995, msg: 'Opening the gates…' };
+      finalWorld = document.createElement('canvas'); finalWorld.width = world.width; finalWorld.height = world.height;
+      finalWorld.getContext('2d').drawImage(world, 0, 0);
+    }
+    this.worldCanvas = finalWorld;
 
     // minimap-friendly downscale baked once
     const mini = document.createElement('canvas'); mini.width = 260; mini.height = 84;
     mini.getContext('2d').drawImage(world, 0, 0, 260, 84);
     this.miniCanvas = mini;
+    if (finalWorld !== world) world.width = world.height = 0;   // free the processor-side copy
   }
 
   drawBuildings(w){
@@ -5823,18 +5835,26 @@ class Component extends DCLogic {
         ctx.fillStyle = '#a4a097'; ctx.beginPath(); ctx.ellipse(x - rk.sz * 0.3, y - rk.sz * 0.3, rk.sz * 0.45, rk.sz * 0.3, rk.s, 0, 7); ctx.fill();
       }
     }
-    // the canoe and the paddling bear
+    // the canoe and its paddler (bear, fox or otter)
     const x = C.x - ox, y = C.y - oy;
     if (C.tube) this.drawTubeBear(ctx, x, y, C, now);
     else {
     this.drawCanoeHull(ctx, x, y, C.heading, '#2f6d4a', 1.25);
     ctx.save(); ctx.translate(x, y); ctx.rotate(C.heading);
+    const pk = this.state.player || 'bear';
+    if (pk !== 'bear'){
+      // fox or otter seen from above, sitting in the stern half, tail trailing over the stern
+      ctx.save(); ctx.translate(-1, 0); ctx.scale(0.5, 0.5);
+      if (pk === 'fox') this.drawFoxTop(ctx, 0, 0); else this.drawOtterTop(ctx, 0, 0);
+      ctx.restore();
+    } else {
     // bear seen from above, sitting in the stern half
     ctx.fillStyle = '#1e1612'; ctx.beginPath(); ctx.ellipse(-4, 0, 9, 8, 0, 0, 7); ctx.fill();
     ctx.fillStyle = '#2a1e18'; ctx.beginPath(); ctx.arc(5, 0, 6, 0, 7); ctx.fill();
     ctx.fillStyle = '#1e1612'; ctx.beginPath(); ctx.arc(4, -5.2, 2.4, 0, 7); ctx.arc(4, 5.2, 2.4, 0, 7); ctx.fill();
     ctx.fillStyle = '#8a6a4a'; ctx.beginPath(); ctx.ellipse(10, 0, 3, 2.6, 0, 0, 7); ctx.fill();
     ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(12.4, 0, 1.2, 0, 7); ctx.fill();
+    }
     // paddle switching sides
     const side = Math.sin(C.stroke * Math.PI) >= 0 ? 1 : -1, sweep = Math.cos(C.stroke * Math.PI * 2) * 6;
     ctx.strokeStyle = '#c9a25a'; ctx.lineWidth = 1.8; ctx.beginPath(); ctx.moveTo(-2, -side * 3); ctx.lineTo(4 + sweep, side * 13); ctx.stroke();
@@ -10477,7 +10497,7 @@ class Component extends DCLogic {
     if (n.what === 'hut'){
       if (this._tubeCarry === S.key){ this.showToast('🛟 You’ve got your tube! Walk ' + (S.key === 'deep' ? 'up the Deep Creek Trail to the put-in at Indian Creek' : 'over to the put-in at the Wye') + '.', 3500); return true; }
       if (cl){ this.showToast(cl.replace(/<\/?b>/g, ''), 4500); return true; }
-      if (!st.disguiseOn){ SFX.play('miss'); this.showToast('😳 The rental clerk drops his clipboard. “We, uh… don’t rent to bears.” (Press G for your disguise.)', 4200); return true; }
+      if (!st.disguiseOn){ SFX.play('miss'); this.showToast('😳 The rental clerk drops his clipboard. “We, uh… don’t rent to ' + this._pl().pl + '.” (Press G for your disguise.)', 4200); return true; }
       if (!st.isRanger){
         if ((st.berries || 0) < 1){ this.showToast('🫐 Tube rental is 1 berry. Go find some sarvisberries!', 3200); return true; }
         this.setState({ berries: st.berries - 1 });
@@ -10520,7 +10540,7 @@ class Component extends DCLogic {
       const P = this.riverPose(S.r, t.s), tx = P.x + P.nx * t.lat, ty = P.y + P.ny * t.lat;
       if (Math.hypot(tx - C.x, ty - C.y) < 15 && !(t.bumpCd > 0)){
         t.bumpCd = 2.5; t.tw += 2; C.spin = (Math.random() < 0.5 ? -1 : 1) * 0.9; SFX.beep(300, 0.06, 'sine', 0.03);
-        this.canoeFlash(this.state.disguiseOn ? this._rPick(['“Oops! Sorry!” Bonk.', '“Bumper tubes!” a kid yells.', '“Nice hat!” Bonk.']) : '😱 “THERE’S A BEAR IN A TUBE!”', this.state.disguiseOn ? '#ffffff' : '#f08a6f');
+        this.canoeFlash(this.state.disguiseOn ? this._rPick(['“Oops! Sorry!” Bonk.', '“Bumper tubes!” a kid yells.', '“Nice hat!” Bonk.']) : '😱 “THERE’S A ' + this._pl().n.toUpperCase() + ' IN A TUBE!”', this.state.disguiseOn ? '#ffffff' : '#f08a6f');
       }
     }
     if (C.s >= S.s1){ this.tubeEnd('done'); return true; }
@@ -10584,6 +10604,15 @@ class Component extends DCLogic {
     ctx.strokeStyle = 'rgba(230,245,252,0.4)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.ellipse(x, y, 17 + Math.sin(now * 2) * 1.5, 14, 0, 0, 7); ctx.stroke();
     this.drawTubeRing(ctx, x, y + bob, rot, '#e8c23a', 1.2);
     ctx.save(); ctx.translate(x, y + bob); ctx.rotate(rot);
+    const pk = this.state.player || 'bear';
+    if (pk !== 'bear'){
+      // fox or otter lounging in the tube, bottom sunk in the hole
+      ctx.fillStyle = 'rgba(20,40,55,0.5)'; ctx.beginPath(); ctx.arc(0, 0, 7.6, 0, 7); ctx.fill();
+      ctx.save(); ctx.translate(-1, 0); ctx.scale(0.5, 0.5);
+      if (pk === 'fox') this.drawFoxTop(ctx, 0, 0); else this.drawOtterTop(ctx, 0, 0);
+      ctx.restore(); ctx.restore();
+      return;
+    }
     // legs flopped over the tube, bottom sunk in the hole
     ctx.fillStyle = '#1e1612';
     for (const [lx, ly] of [[8, -6], [8, 6], [-9, -7], [-9, 7]]){ ctx.beginPath(); ctx.ellipse(lx * 1.25, ly * 1.25, 3.4, 2.6, Math.atan2(ly, lx), 0, 7); ctx.fill(); }
