@@ -2,6 +2,7 @@
 <html><head>
 <!-- Great Smoky Mountains Bear Game. © 2026 Sirreel LLC. All rights reserved. -->
 <meta charset="utf-8">
+<script>if(location.protocol==="http:"&&!/^(localhost|127\.|192\.168\.|10\.)/.test(location.hostname))location.replace("https:"+location.href.slice(5));</script>
 <meta name="copyright" content="© 2026 Sirreel LLC. All rights reserved.">
 <meta name="author" content="Sirreel LLC">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,7 +26,7 @@
     <span id="bootMsg" style="opacity:.85;">Hiking in…</span><span id="bootPct" style="opacity:.7;">0%</span>
   </div>
   <div id="bootTip" style="max-width:340px;min-height:3.2em;text-align:center;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:14px;line-height:1.45;opacity:.8;margin-top:26px;transition:opacity .4s;"></div>
-  <div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:11.5px;opacity:.55;">© 2026 Sirreel LLC. All rights reserved. · v102</div>
+  <div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:11.5px;opacity:.55;">© 2026 Sirreel LLC. All rights reserved. · v103</div>
 </div>
 <script>
 (function(){
@@ -63,7 +64,7 @@
     if (real && p < 100 && Date.now() - lastT > 15000){
       clearInterval(tipT);
       tip.style.opacity = .9;
-      tip.innerHTML = 'Still working on <b>' + msg.textContent + '</b> (' + Math.round((Date.now() - lastT) / 1000) + ' s at ' + p + '%, ' + Math.round((Date.now() - t0) / 1000) + ' s total).<br><span style="font-size:11.5px;opacity:.8">If it stays stuck, a screenshot of this helps: ' + devInfo() + ' · v102</span>';
+      tip.innerHTML = 'Still working on <b>' + msg.textContent + '</b> (' + Math.round((Date.now() - lastT) / 1000) + ' s at ' + p + '%, ' + Math.round((Date.now() - t0) / 1000) + ' s total).<br><span style="font-size:11.5px;opacity:.8">If it stays stuck, a screenshot of this helps: ' + devInfo() + ' · v103</span>';
     }
   }, 1000);
   window.__bootLoader = {
@@ -355,7 +356,7 @@ a{color:#f08a6f;} a:hover{color:#f08a6f;}
             <div sc-camel-on-click="{{ resetGame }}" style="cursor:pointer;background:transparent;color:#c9bba0;border:1.5px solid #c9b184;font-family:'LatoB',sans-serif;font-size:15px;padding:13px 26px;border-radius:26px;">Start Over</div>
           </sc-if>
         </div>
-        <div style="font-family:'LatoR',sans-serif;font-size:11px;color:#8f897d;margin-top:18px;">© 2026 Sirreel LLC. All rights reserved. · v102</div>
+        <div style="font-family:'LatoR',sans-serif;font-size:11px;color:#8f897d;margin-top:18px;">© 2026 Sirreel LLC. All rights reserved. · v103</div>
       </div>
     </div>
   </sc-if>
