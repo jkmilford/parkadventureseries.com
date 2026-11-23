@@ -36,7 +36,7 @@
     <span id="bootMsg" style="opacity:.85;">Hiking in…</span><span id="bootPct" style="opacity:.7;">0%</span>
   </div>
   <div id="bootTip" style="max-width:340px;min-height:3.2em;text-align:center;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:14px;line-height:1.45;opacity:.8;margin-top:26px;transition:opacity .4s;"></div>
-  <div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:11.5px;opacity:.55;">© 2026 Sirreel LLC. All rights reserved. · v109</div>
+  <div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:11.5px;opacity:.55;">© 2026 Sirreel LLC. All rights reserved. · v112</div>
 </div>
 <script>
 (function(){
@@ -74,7 +74,7 @@
     if (real && p < 100 && Date.now() - lastT > 15000){
       clearInterval(tipT);
       tip.style.opacity = .9;
-      tip.innerHTML = 'Still working on <b>' + msg.textContent + '</b> (' + Math.round((Date.now() - lastT) / 1000) + ' s at ' + p + '%, ' + Math.round((Date.now() - t0) / 1000) + ' s total).<br><span style="font-size:11.5px;opacity:.8">If it stays stuck, a screenshot of this helps: ' + devInfo() + ' · v109</span>';
+      tip.innerHTML = 'Still working on <b>' + msg.textContent + '</b> (' + Math.round((Date.now() - lastT) / 1000) + ' s at ' + p + '%, ' + Math.round((Date.now() - t0) / 1000) + ' s total).<br><span style="font-size:11.5px;opacity:.8">If it stays stuck, a screenshot of this helps: ' + devInfo() + ' · v112</span>';
     }
   }, 1000);
   window.__bootLoader = {
@@ -370,7 +370,7 @@ div:has(> .ts) > :not(.ts):not(canvas:first-child){visibility:hidden}
         </div>
         <div style="font-family:'LatoR',sans-serif;font-size:clamp(10px,1.7vh,12px);margin-top:min(1.4vh,10px);">
           <a href="https://parkadventureseries.com/smokies/matching.html" style="color:#e9c46a;opacity:.85;text-decoration:none;border-bottom:1px solid rgba(233,196,106,.4);">Play the Smokies Matching Game</a>
-          <span style="opacity:.4;"> &nbsp;·&nbsp; © 2026 Sirreel LLC. All rights reserved. · v109</span>
+          <span style="opacity:.4;"> &nbsp;·&nbsp; © 2026 Sirreel LLC. All rights reserved. · v112</span>
         </div>
       </div>
     </div>
@@ -1631,7 +1631,7 @@ class Component extends DCLogic {
         stamina: sv.stamina ?? 100, trackedId: sv.trackedId ?? null, berries: clamp(sv.berries ?? 0, 0, 10), dashBerries: clamp(sv.dashBerries ?? 0, 0, 5), introSeen: sv.introSeen ?? false, fireflyCount: clamp(sv.fireflyCount ?? 0, 0, 9),
         syncSeen: !!sv.syncSeen, caveSeen: !!sv.caveSeen, netSwings: clamp(sv.netSwings ?? 0, 0, 99), bottleUses: clamp(sv.bottleUses ?? 0, 0, 99),
         books: sv.books || [], bookDelivered: !!sv.bookDelivered, seriesComplete: !!sv.seriesComplete, salamanderBook: !!sv.salamanderBook, booksTurnedIn: !!sv.booksTurnedIn,
-        jr: sv.jr || null, juniorRanger: !!sv.juniorRanger, triviaRight: sv.triviaRight || [], postcards: sv.postcards || 0, waltGift: !!sv.waltGift, blueberryGift: !!sv.blueberryGift, lodgeKey: !!sv.lodgeKey, fat: sv.fat || 0, diveFinds: sv.diveFinds || [], pondFinds: sv.pondFinds || [], raptor: sv.raptor || null, raptorsFreed: sv.raptorsFreed || [], raptorNext: sv.raptorNext ?? null, pondLitter: sv.pondLitter || [], pondPals: sv.pondPals || [], otterPond: sv.otterPond || {}, pondLodgeSeen: !!sv.pondLodgeSeen, pondSeen: !!sv.pondSeen, diveLitter: sv.diveLitter || [], diveSeen: !!sv.diveSeen, otterDenSeen: !!sv.otterDenSeen, poach: sv.poach || 0, poachEv: sv.poachEv || [], guardian: !!sv.guardian, isRanger: !!sv.isRanger, arrests: sv.arrests || 0, drivenOut: sv.drivenOut || 0, toursGiven: sv.toursGiven || 0, tourBest: sv.tourBest || {}, tubeRuns: sv.tubeRuns || {}, climbWins: sv.climbWins || 0, climbBest: sv.climbBest || {}, digWins: sv.digWins || 0, digBest: sv.digBest || {}, diveWins: sv.diveWins || 0, diveBest: sv.diveBest || {}, trailSeen: sv.trailSeen || [], placesSeen: sv.placesSeen || [], locSeenAt: sv.locSeenAt || {}, rivalsDone: sv.rivalsDone || [], trailsDone: sv.trailsDone || [], beeDay: sv.beeDay ?? null, beeSeen: !!sv.beeSeen, disguiseKind: sv.disguiseKind || 'classic', cubs: sv.cubs || 0, batsSeen: sv.batsSeen || [], denYear: sv.denYear ?? null, ffYear: sv.ffYear ?? null, photos: sv.photos || [], hasBinocs: !!sv.hasBinocs, hasPoncho: !!sv.hasPoncho, hasBell: !!sv.hasBell, bellOn: !!sv.bellOn, riddlesDone: sv.riddlesDone || [], vcDoorSeen: !!sv.vcDoorSeen, hasDisguise: !!sv.hasDisguise, disguiseOn: !!sv.disguiseOn, hasCanoe: !!sv.hasCanoe, zipBest: sv.zipBest || 0, zipRides: sv.zipRides || 0, zipSeen: !!sv.zipSeen, hasRod: !!sv.hasRod, trout: sv.trout || { brook: 0, rainbow: 0 }, otterFish: sv.otterFish || {}, otterFishSeen: !!sv.otterFishSeen, otterLake: sv.otterLake || {}, quest: sv.quest || {}, foxPrey: sv.foxPrey || {}, carry: sv.carry || null, kitsAtDen: !!sv.kitsAtDen, bestSkips: sv.bestSkips || 0, skipSeen: !!sv.skipSeen, mammalPhotos: sv.mammalPhotos || [], fireSaves: sv.fireSaves || 0, fireSeen: !!sv.fireSeen, hasLantern: !!sv.hasLantern, lanternUses: sv.lanternUses ?? (sv.hasLantern ? 2 : 0), lanternSpent: !!sv.lanternSpent, antiques: sv.antiques || [], ghostBanished: !!sv.ghostBanished, pantryOpen: !!sv.pantryOpen, ghostMet: !!sv.ghostMet,
+        jr: sv.jr || null, juniorRanger: !!sv.juniorRanger, triviaRight: sv.triviaRight || [], postcards: sv.postcards || 0, waltGift: !!sv.waltGift, blueberryGift: !!sv.blueberryGift, lodgeKey: !!sv.lodgeKey, fat: sv.fat || 0, diveFinds: sv.diveFinds || [], pondFinds: sv.pondFinds || [], raptor: sv.raptor || null, raptorsFreed: sv.raptorsFreed || [], raptorNext: sv.raptorNext ?? null, pondLitter: sv.pondLitter || [], pondPals: sv.pondPals || [], otterPond: sv.otterPond || {}, pondLodgeSeen: !!sv.pondLodgeSeen, pondOldLodgeSeen: !!sv.pondOldLodgeSeen, otterPredSeen: !!sv.otterPredSeen, damSeen: !!sv.damSeen, pondSeen: !!sv.pondSeen, diveLitter: sv.diveLitter || [], diveSeen: !!sv.diveSeen, otterDenSeen: !!sv.otterDenSeen, poach: sv.poach || 0, poachEv: sv.poachEv || [], guardian: !!sv.guardian, isRanger: !!sv.isRanger, arrests: sv.arrests || 0, drivenOut: sv.drivenOut || 0, toursGiven: sv.toursGiven || 0, tourBest: sv.tourBest || {}, tubeRuns: sv.tubeRuns || {}, climbWins: sv.climbWins || 0, climbBest: sv.climbBest || {}, digWins: sv.digWins || 0, digBest: sv.digBest || {}, diveWins: sv.diveWins || 0, diveBest: sv.diveBest || {}, trailSeen: sv.trailSeen || [], placesSeen: sv.placesSeen || [], locSeenAt: sv.locSeenAt || {}, rivalsDone: sv.rivalsDone || [], trailsDone: sv.trailsDone || [], beeDay: sv.beeDay ?? null, beeSeen: !!sv.beeSeen, disguiseKind: sv.disguiseKind || 'classic', cubs: sv.cubs || 0, batsSeen: sv.batsSeen || [], denYear: sv.denYear ?? null, ffYear: sv.ffYear ?? null, photos: sv.photos || [], hasBinocs: !!sv.hasBinocs, hasPoncho: !!sv.hasPoncho, hasBell: !!sv.hasBell, bellOn: !!sv.bellOn, riddlesDone: sv.riddlesDone || [], vcDoorSeen: !!sv.vcDoorSeen, hasDisguise: !!sv.hasDisguise, disguiseOn: !!sv.disguiseOn, hasCanoe: !!sv.hasCanoe, zipBest: sv.zipBest || 0, zipRides: sv.zipRides || 0, zipSeen: !!sv.zipSeen, hasRod: !!sv.hasRod, trout: sv.trout || { brook: 0, rainbow: 0 }, otterFish: sv.otterFish || {}, otterFishSeen: !!sv.otterFishSeen, otterLake: sv.otterLake || {}, quest: sv.quest || {}, foxPrey: sv.foxPrey || {}, carry: sv.carry || null, kitsAtDen: !!sv.kitsAtDen, bestSkips: sv.bestSkips || 0, skipSeen: !!sv.skipSeen, mammalPhotos: sv.mammalPhotos || [], fireSaves: sv.fireSaves || 0, fireSeen: !!sv.fireSeen, hasLantern: !!sv.hasLantern, lanternUses: sv.lanternUses ?? (sv.hasLantern ? 2 : 0), lanternSpent: !!sv.lanternSpent, antiques: sv.antiques || [], ghostBanished: !!sv.ghostBanished, pantryOpen: !!sv.pantryOpen, ghostMet: !!sv.ghostMet,
         completeSeen: (sv.foundIds || []).length >= SPECIES.length
       });
       this._stAccum = sv.stamina ?? 100;
@@ -1678,7 +1678,7 @@ class Component extends DCLogic {
         stamina: Math.round(this.state.stamina),
         x: Math.round((this.inCave && this._outside ? this._outside : this.inHouse && this._outsideHouse ? this._outsideHouse : this.bear).x),
         y: Math.round((this.inCave && this._outside ? this._outside : this.inHouse && this._outsideHouse ? this._outsideHouse : this.bear).y),
-        jr: this.state.jr || null, juniorRanger: !!this.state.juniorRanger, triviaRight: this.state.triviaRight || [], postcards: this.state.postcards || 0, waltGift: !!this.state.waltGift, blueberryGift: !!this.state.blueberryGift, lodgeKey: !!this.state.lodgeKey, fat: this.state.fat || 0, diveFinds: this.state.diveFinds || [], pondFinds: this.state.pondFinds || [], raptor: this.state.raptor || null, raptorsFreed: this.state.raptorsFreed || [], raptorNext: this.state.raptorNext ?? null, pondLitter: this.state.pondLitter || [], pondPals: this.state.pondPals || [], otterPond: this.state.otterPond || {}, pondLodgeSeen: !!this.state.pondLodgeSeen, pondSeen: !!this.state.pondSeen, diveLitter: this.state.diveLitter || [], diveSeen: !!this.state.diveSeen, otterDenSeen: !!this.state.otterDenSeen, poach: this.state.poach || 0, poachEv: this.state.poachEv || [], guardian: !!this.state.guardian, isRanger: !!this.state.isRanger, arrests: this.state.arrests || 0, drivenOut: this.state.drivenOut || 0, toursGiven: this.state.toursGiven || 0, tourBest: this.state.tourBest || {}, tubeRuns: this.state.tubeRuns || {}, climbWins: this.state.climbWins || 0, climbBest: this.state.climbBest || {}, digWins: this.state.digWins || 0, digBest: this.state.digBest || {}, diveWins: this.state.diveWins || 0, diveBest: this.state.diveBest || {}, trailSeen: this.state.trailSeen || [], placesSeen: this.state.placesSeen || [], locSeenAt: this.state.locSeenAt || {}, rivalsDone: this.state.rivalsDone || [], trailsDone: this.state.trailsDone || [], beeDay: this.state.beeDay ?? null, beeSeen: !!this.state.beeSeen, disguiseKind: this.state.disguiseKind || 'classic', cubs: this.state.cubs || 0, batsSeen: this.state.batsSeen || [], denYear: this.state.denYear ?? null, ffYear: this.state.ffYear ?? null, photos: this.state.photos || [], hasBinocs: !!this.state.hasBinocs, hasPoncho: !!this.state.hasPoncho, hasBell: !!this.state.hasBell, bellOn: !!this.state.bellOn, riddlesDone: this.state.riddlesDone || [], vcDoorSeen: !!this.state.vcDoorSeen, hasDisguise: !!this.state.hasDisguise, disguiseOn: !!this.state.disguiseOn, hasCanoe: !!this.state.hasCanoe, zipBest: this.state.zipBest || 0, zipRides: this.state.zipRides || 0, zipSeen: !!this.state.zipSeen, hasRod: !!this.state.hasRod, trout: this.state.trout || { brook: 0, rainbow: 0 }, otterFish: this.state.otterFish || {}, otterFishSeen: !!this.state.otterFishSeen, otterLake: this.state.otterLake || {}, quest: this.state.quest || {}, foxPrey: this.state.foxPrey || {}, carry: this.state.carry || null, kitsAtDen: !!this.state.kitsAtDen, bestSkips: this.state.bestSkips || 0, skipSeen: !!this.state.skipSeen, mammalPhotos: this.state.mammalPhotos || [], fireSaves: this.state.fireSaves || 0, fireSeen: !!this.state.fireSeen, hasLantern: !!this.state.hasLantern, lanternUses: this.state.lanternUses || 0, lanternSpent: !!this.state.lanternSpent, antiques: this.state.antiques || [], ghostBanished: !!this.state.ghostBanished, pantryOpen: !!this.state.pantryOpen, ghostMet: !!this.state.ghostMet,
+        jr: this.state.jr || null, juniorRanger: !!this.state.juniorRanger, triviaRight: this.state.triviaRight || [], postcards: this.state.postcards || 0, waltGift: !!this.state.waltGift, blueberryGift: !!this.state.blueberryGift, lodgeKey: !!this.state.lodgeKey, fat: this.state.fat || 0, diveFinds: this.state.diveFinds || [], pondFinds: this.state.pondFinds || [], raptor: this.state.raptor || null, raptorsFreed: this.state.raptorsFreed || [], raptorNext: this.state.raptorNext ?? null, pondLitter: this.state.pondLitter || [], pondPals: this.state.pondPals || [], otterPond: this.state.otterPond || {}, pondLodgeSeen: !!this.state.pondLodgeSeen, pondOldLodgeSeen: !!this.state.pondOldLodgeSeen, otterPredSeen: !!this.state.otterPredSeen, damSeen: !!this.state.damSeen, pondSeen: !!this.state.pondSeen, diveLitter: this.state.diveLitter || [], diveSeen: !!this.state.diveSeen, otterDenSeen: !!this.state.otterDenSeen, poach: this.state.poach || 0, poachEv: this.state.poachEv || [], guardian: !!this.state.guardian, isRanger: !!this.state.isRanger, arrests: this.state.arrests || 0, drivenOut: this.state.drivenOut || 0, toursGiven: this.state.toursGiven || 0, tourBest: this.state.tourBest || {}, tubeRuns: this.state.tubeRuns || {}, climbWins: this.state.climbWins || 0, climbBest: this.state.climbBest || {}, digWins: this.state.digWins || 0, digBest: this.state.digBest || {}, diveWins: this.state.diveWins || 0, diveBest: this.state.diveBest || {}, trailSeen: this.state.trailSeen || [], placesSeen: this.state.placesSeen || [], locSeenAt: this.state.locSeenAt || {}, rivalsDone: this.state.rivalsDone || [], trailsDone: this.state.trailsDone || [], beeDay: this.state.beeDay ?? null, beeSeen: !!this.state.beeSeen, disguiseKind: this.state.disguiseKind || 'classic', cubs: this.state.cubs || 0, batsSeen: this.state.batsSeen || [], denYear: this.state.denYear ?? null, ffYear: this.state.ffYear ?? null, photos: this.state.photos || [], hasBinocs: !!this.state.hasBinocs, hasPoncho: !!this.state.hasPoncho, hasBell: !!this.state.hasBell, bellOn: !!this.state.bellOn, riddlesDone: this.state.riddlesDone || [], vcDoorSeen: !!this.state.vcDoorSeen, hasDisguise: !!this.state.hasDisguise, disguiseOn: !!this.state.disguiseOn, hasCanoe: !!this.state.hasCanoe, zipBest: this.state.zipBest || 0, zipRides: this.state.zipRides || 0, zipSeen: !!this.state.zipSeen, hasRod: !!this.state.hasRod, trout: this.state.trout || { brook: 0, rainbow: 0 }, otterFish: this.state.otterFish || {}, otterFishSeen: !!this.state.otterFishSeen, otterLake: this.state.otterLake || {}, quest: this.state.quest || {}, foxPrey: this.state.foxPrey || {}, carry: this.state.carry || null, kitsAtDen: !!this.state.kitsAtDen, bestSkips: this.state.bestSkips || 0, skipSeen: !!this.state.skipSeen, mammalPhotos: this.state.mammalPhotos || [], fireSaves: this.state.fireSaves || 0, fireSeen: !!this.state.fireSeen, hasLantern: !!this.state.hasLantern, lanternUses: this.state.lanternUses || 0, lanternSpent: !!this.state.lanternSpent, antiques: this.state.antiques || [], ghostBanished: !!this.state.ghostBanished, pantryOpen: !!this.state.pantryOpen, ghostMet: !!this.state.ghostMet,
         trackedId: this.state.trackedId, berries: this.state.berries || 0, introSeen: this.state.introSeen, dashBerries: this.state.dashBerries || 0,
         fireflyCount: this.state.fireflyCount || 0, syncSeen: !!this.state.syncSeen, caveSeen: !!this.state.caveSeen, netSwings: this.state.netSwings || 0, bottleUses: this.state.bottleUses || 0,
         books: this.state.books || [], bookDelivered: !!this.state.bookDelivered, seriesComplete: !!this.state.seriesComplete, salamanderBook: !!this.state.salamanderBook, booksTurnedIn: !!this.state.booksTurnedIn
@@ -2108,6 +2108,7 @@ class Component extends DCLogic {
       if (hab === 'floodplain' && rnd() < 0.72) continue;
       if (hab === 'seep' && rnd() < 0.5) continue;
       const tx = i * CELL + (rnd() - 0.5) * CELL * 2.4, ty = j * CELL + (rnd() - 0.5) * CELL * 2.4;
+      if (this._tailHit(tx, ty, 16)) continue;
       { const ti = Math.round(tx / CELL), tj = Math.round(ty / CELL); if (ti >= 0 && tj >= 0 && ti < GRID_W && tj < GRID_H && onRoad[tj * GRID_W + ti]) continue; }
       let r = 5 + rnd() * 5.5;
       let conifer = hab === 'spruce-fir' || (hab === 'high-forest' && rnd() < 0.6);
@@ -2341,6 +2342,7 @@ class Component extends DCLogic {
       lakePath(); w.strokeStyle = '#3f7691'; w.lineWidth = 58; w.stroke();
       lakePath(); w.strokeStyle = '#4d84a0'; w.lineWidth = 34; w.stroke();
       lakePath(); w.strokeStyle = 'rgba(107,163,189,0.65)'; w.lineWidth = 14; w.stroke();
+      this.bakeTailwater(w);
       // Fontana Dam — concrete arc at the west end of the lake
       const dx = this.lake.pts[0][0], dy = this.lake.pts[0][1];
       w.save(); w.translate(dx, dy); w.rotate(0.03);   // across the river's flow
@@ -3677,6 +3679,8 @@ class Component extends DCLogic {
     this.updateStreamFish(dt);
     this.updateQuests(dt);
     this.updateRaptors(dt);
+    this.updateOtterPredator(dt);
+    this.updateDam(dt);
     this.updateBalds(dt);
     this.updateLeConte(dt);
     this.updateFeatures(dt);
@@ -6827,6 +6831,302 @@ class Component extends DCLogic {
     return null;
   }
   // ===================== LeConte Lodge card table: Go Fish, Memory, Crazy Eights =====================
+  // ===================== FONTANA DAM RELEASES (v112): Cheoah Lake below the dam, anglers, boats, horns and strobes =====================
+  _tailBuild(){
+    if (this._tail !== undefined) return this._tail;
+    const r = (this.rivers || []).find((q) => q.name === 'Little Tennessee R.');
+    if (!r || !r.pts || r.pts.length < 3){ if (this.rivers && this.rivers.length) this._tail = null; return null; }
+    const P = r.pts, L = 560, out = [];
+    let u = 0, i = P.length - 1, next = 0;
+    while (i > 0 && u <= L){
+      const a = P[i], b = P[i - 1], seg = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1, tx = (b[0] - a[0]) / seg, ty = (b[1] - a[1]) / seg;
+      while (next <= u + seg && next <= L){
+        const t = (next - u) / seg, hw = next < 300 ? 34 : 34 - 25 * (next - 300) / 260;
+        out.push({ x: a[0] + (b[0] - a[0]) * t, y: a[1] + (b[1] - a[1]) * t, u: next, tx, ty, nx: -ty, ny: tx, hw });
+        next += 12;
+      }
+      u += seg; i--;
+    }
+    let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+    for (const p of out){ x0 = Math.min(x0, p.x); y0 = Math.min(y0, p.y); x1 = Math.max(x1, p.x); y1 = Math.max(y1, p.y); }
+    // the pier and the boat ramp sit on the south bank
+    const side = (p) => (p.ny > 0 ? 1 : -1);
+    this._tail = { pts: out, L: out.length ? out[out.length - 1].u : 0, box: [x0 - 60, y0 - 60, x1 + 60, y1 + 60], side };
+    return this._tail;
+  }
+  // nearest tail sample: { p, d, ex } where ex = distance past the water's edge (negative = in the water)
+  _tailNear(x, y){
+    const T = this._tailBuild(); if (!T) return null;
+    const B = T.box; if (x < B[0] || y < B[1] || x > B[2] || y > B[3]) return null;
+    let best = null;
+    for (const p of T.pts){ const d = Math.hypot(x - p.x, y - p.y); const ex = d - p.hw; if (!best || ex < best.ex) best = { p, d, ex }; }
+    return best;
+  }
+  _tailHit(x, y, pad){ const n = this._tailNear(x, y); return !!n && n.ex < (pad || 0); }
+  _tailPose(u, off){
+    const T = this._tailBuild(); const P = T.pts; const k = clamp(u / 12, 0, P.length - 1.001), i = Math.floor(k), f = k - i, a = P[i], b = P[i + 1] || a;
+    const x = a.x + (b.x - a.x) * f, y = a.y + (b.y - a.y) * f, nx = a.nx, ny = a.ny, s = T.side(a);
+    return { x: x + nx * s * off, y: y + ny * s * off, tx: a.tx, ty: a.ty, nx: nx * s, ny: ny * s, hw: a.hw + (b.hw - a.hw) * f };
+  }
+  bakeTailwater(w){
+    const T = this._tailBuild(); if (!T || T.pts.length < 2) return;
+    const P = T.pts;
+    w.save(); w.lineCap = 'round'; w.lineJoin = 'round';
+    for (const [wid, col] of [[86, 'rgba(70,86,52,0.6)'], [76, '#2f5b74'], [58, '#3f7691'], [34, '#4d84a0'], [14, 'rgba(107,163,189,0.65)']]){
+      w.strokeStyle = col;
+      for (let i = 0; i < P.length - 1; i++){ w.lineWidth = wid * P[i].hw / 38; w.beginPath(); w.moveTo(P[i].x, P[i].y); w.lineTo(P[i + 1].x, P[i + 1].y); w.stroke(); }
+    }
+    // the Llewellyn Branch boat ramp
+    const R = this._tailPose(250, 0), s = 1;
+    w.save(); w.translate(R.x, R.y); w.rotate(Math.atan2(R.ny, R.nx));
+    w.fillStyle = 'rgba(30,24,14,0.25)'; w.fillRect(R.hw - 8, -8, 34, 18);
+    w.fillStyle = '#a9a496'; w.fillRect(R.hw - 10, -9, 34, 18);
+    w.strokeStyle = 'rgba(80,76,66,0.6)'; w.lineWidth = 1; for (let k = R.hw - 6; k < R.hw + 22; k += 5){ w.beginPath(); w.moveTo(k, -9); w.lineTo(k, 9); w.stroke(); }
+    w.restore();
+    // label
+    const lm = this._tailPose(130, 0);
+    w.font = 'italic 700 13px LatoB, sans-serif'; w.textAlign = 'center';
+    w.strokeStyle = 'rgba(20,30,20,0.75)'; w.lineWidth = 3; w.strokeText('Cheoah Lake', lm.x, lm.y - lm.hw - 12);
+    w.fillStyle = '#bfe0ee'; w.fillText('Cheoah Lake', lm.x, lm.y - lm.hw - 12);
+    w.restore();
+  }
+  _damInit(){
+    if (this._dm) return this._dm;
+    const T = this._tailBuild(); if (!T) return null;
+    this._dm = { phase: 'calm', t: 0, next: 18, I: 0, hornT: 0, sweep: null, shown: false,
+      anglers: [{ a: 0.9, ta: 0.9, lat: -5, shirt: '#b5532e', hat: '#5a6b3a', catchT: 0, cd: 8 + Math.random() * 10 }, { a: 0.9, ta: 0.9, lat: 6, shirt: '#2f5f86', hat: '#c9b07a', catchT: 0, cd: 16 + Math.random() * 12 }],
+      boats: [{ hu: 105, ho: -9, u: 105, o: -9, col: '#8f9a9d', man: '#a63c2c', ph: 0, mv: 0 }, { hu: 335, ho: -7, u: 335, o: -7, col: '#4f6a4c', man: '#e2b04a', ph: 2, mv: 0 }] };
+    return this._dm;
+  }
+  updateDam(dt){
+    const S = this.state; if (!S.started || this.inCave || this.inHouse || this.inDome) return;
+    const D = this._damInit(); if (!D) return;
+    if (S.findOpen || S.talkOpen || S.discovery || S.journalOpen || S.mapOpen || S.riddleOpen || S.objectiveOpen || S.caveIntroOpen || S.pantryOpen || S.rangerWarnOpen) return;
+    const b = this.bear, dam = this.lake.pts[0], dDam = Math.hypot(b.x - dam[0], b.y - dam[1]), near = dDam < 900;
+    D.t += dt;
+    // people and boats go about their day
+    for (const A of D.anglers){
+      A.a += clamp(A.ta - A.a, -dt * 0.45, dt * 0.45);
+      if (D.phase === 'calm' && Math.abs(A.a - 0.9) < 0.02){ A.cd -= dt; if (A.cd <= 0){ A.catchT = 1.6; A.cd = 18 + Math.random() * 20; } }
+      if (A.catchT > 0) A.catchT -= dt;
+    }
+    for (const B of D.boats){
+      const away = D.phase !== 'calm';
+      const tu = away ? 250 + (B.hu < 200 ? -14 : 14) : B.hu, to = away ? 0 : B.ho;
+      const toOff = away ? (this._tailPose(tu, 0).hw - 9) : to;
+      const du = tu - B.u, dof = toOff - B.o, dist = Math.hypot(du, dof), step = Math.min(dist, 48 * dt);
+      if (dist > 0.5){ B.u += du / dist * step; B.o += dof / dist * step; B.mv = Math.min(1, B.mv + dt * 2); B.dir = du >= 0 ? 1 : -1; } else B.mv = Math.max(0, B.mv - dt);
+      B.ph += dt;
+    }
+    if (!this._pierToast && Math.hypot(b.x - this._tailPose(200, 0).x, b.y - this._tailPose(200, 0).y) < 160){
+      this._pierToast = true;
+      this.showToast('🎣 Anglers fish from the Llewellyn Branch pier and from boats on Cheoah Lake, just below Fontana Dam. The water comes from deep in Fontana Lake, so it stays cold for trout all year.', 6500);
+    }
+    if (D.phase === 'calm'){
+      D.I = Math.max(0, D.I - dt / 3);
+      if (near) D.next -= dt;
+      if (D.next <= 0){
+        D.phase = 'warn'; D.t = 0; D.hornT = 0;
+        for (const A of D.anglers) A.ta = -0.55;
+        if (near) this.showToast('📢 A horn blares and strobe lights flash at Fontana Dam: water is about to be released! The anglers reel in and the boats head for the ramp. Get out of the water below the dam!', 6500);
+      }
+    } else if (D.phase === 'warn'){
+      D.hornT -= dt;
+      if (D.hornT <= 0 && dDam < 1300){ D.hornT = 2.3; const v = 0.05 * Math.max(0.15, 1 - dDam / 1300); SFX.beep(116, 1.3, 'sawtooth', v); SFX.beep(174, 1.3, 'square', v * 0.35); }
+      if (D.t > 9){
+        D.phase = 'release'; D.t = 0; D.saw = near;
+        if (near && !b.swim) this.showToast('🌊 The water surges out below the dam, fast and rising. Good thing you’re on the bank!', 4500);
+      }
+    } else if (D.phase === 'release'){
+      D.I = Math.min(1, D.I + dt / 2);
+      if (near) D.saw = true;
+      if (D.t > 16){
+        D.phase = 'calm'; D.t = 0; D.next = 100 + Math.random() * 80;
+        for (const A of D.anglers) A.ta = 0.9;
+        if (D.saw && !S.damSeen){
+          this.setState({ damSeen: true });
+          this.showFind('📢', 'When the Horn Sounds, Get Out', 'Fontana Dam makes electricity by sending water from Fontana Lake through its turbines. When it starts, a huge flow pours out below the dam, and the water rises fast with little warning.<br><br>TVA dams warn people with <b>horns, strobe lights and signs</b>. The rule for anglers, boaters and swimmers: <b>when the horn sounds or the lights flash, leave the water below the dam right away</b>. And never anchor a boat below a dam.<br><br>The released water comes from deep in Fontana Lake, so it stays cold all year. That’s why <b>Cheoah Lake</b>, just below the dam, is known for big trout, and why anglers fish from the Llewellyn Branch pier.', 22000, { kicker: 'FONTANA DAM · TVA', btn: 'Got it' });
+        }
+      }
+    }
+    // the surge sweeps a swimmer down the length of Cheoah Lake
+    if (D.sweep){
+      D.sweep.u += 240 * dt;
+      const p = this._tailPose(D.sweep.u, Math.sin(D.sweep.u / 40) * 6); b.x = p.x; b.y = p.y;
+      if (D.sweep.u >= D.sweep.end){
+        D.sweep = null;
+        this._setStam(Math.max(0, (this._stAccum ?? S.stamina ?? 0) - 15));
+        this.showToast('😵 The surge tumbles you all the way down Cheoah Lake! (-15 stamina) When the horn sounds below a dam, get out of the water.', 5500);
+      }
+    } else if (D.phase === 'release' && D.I > 0.4 && b.swim && !this._canoe){
+      const n = this._tailNear(b.x, b.y);
+      if (n && n.ex < 4 && n.p.u < this._tail.L - 40){ D.sweep = { u: n.p.u, end: this._tail.L - 12 }; SFX.play('miss'); }
+    }
+    // a canoe below the dam gets shoved downstream
+    const C = this._canoe;
+    if (C && C.mode === 'river' && C.r && C.r.name === 'Little Tennessee R.' && C.r.len && D.phase === 'release' && D.I > 0.4 && (C.r.len - C.s) < this._tail.L){
+      C.s = Math.max(0, C.s - 200 * dt);
+      if (!D.canoeMsg){ D.canoeMsg = true; this.showToast('🌊 The dam release shoves your canoe downstream! When the horn sounds, paddle to shore.', 5000); }
+    } else if (D.phase === 'calm') D.canoeMsg = false;
+  }
+  drawDam(ctx, ox, oy, now){
+    const D = this._dm, T = this._tail; if (!D || !T) return;
+    const B0 = T.box; if (B0[2] - ox < -80 || B0[0] - ox > this.viewW + 80 || B0[3] - oy < -80 || B0[1] - oy > this.viewH + 80) return;
+    const dam = this.lake.pts[0];
+    ctx.save(); ctx.lineCap = 'round';
+    // release: rising, churning water
+    if (D.I > 0.01){
+      const I = D.I, P = T.pts;
+      ctx.globalAlpha = 0.2 * I; ctx.strokeStyle = '#a8dcea';
+      for (let i = 0; i < P.length - 1; i++){ ctx.lineWidth = (P[i].hw * 2 + 4) * (0.85 + 0.15 * I); ctx.beginPath(); ctx.moveTo(P[i].x - ox, P[i].y - oy); ctx.lineTo(P[i + 1].x - ox, P[i + 1].y - oy); ctx.stroke(); }
+      ctx.globalAlpha = 0.75 * I; ctx.strokeStyle = '#f2fbff'; ctx.lineWidth = 1.6;
+      for (let k = 0; k < 26; k++){
+        const u = ((k * 23 + now * 190) % (T.L - 20)), lat = Math.sin(k * 7.3) * 0.75, p = this._tailPose(u, 0), off = lat * p.hw;
+        const x = p.x + p.nx * off - ox, y = p.y + p.ny * off - oy;
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + p.tx * 12, y + p.ty * 12); ctx.stroke();
+      }
+      ctx.fillStyle = 'rgba(245,252,255,0.8)';
+      for (let k = 0; k < 16; k++){
+        const p = this._tailPose(4 + ((k * 5.7 + now * 30) % 40), 0), off = Math.sin(k * 3.1 + now * 5) * p.hw * 0.8;
+        ctx.globalAlpha = I * (0.4 + 0.4 * Math.sin(k + now * 9)); ctx.beginPath(); ctx.arc(p.x + p.nx * off - ox, p.y + p.ny * off - oy, 2.5 + (k % 3) * 1.5, 0, 7); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+    // pier
+    const pb = this._tailPose(200, 0), pierA = pb.hw + 26, pierB = pb.hw - 20;
+    ctx.save(); ctx.translate(pb.x - ox, pb.y - oy); ctx.rotate(Math.atan2(pb.ny, pb.nx));
+    ctx.fillStyle = 'rgba(20,14,8,0.3)'; ctx.fillRect(pierB + 1, -6, pierA - pierB, 15);
+    ctx.fillStyle = '#9a7a52'; ctx.fillRect(pierB, -7.5, pierA - pierB, 15);
+    ctx.strokeStyle = 'rgba(60,42,24,0.7)'; ctx.lineWidth = 1; for (let k = pierB + 3; k < pierA; k += 3.5){ ctx.beginPath(); ctx.moveTo(k, -7.5); ctx.lineTo(k, 7.5); ctx.stroke(); }
+    ctx.strokeStyle = '#6e5232'; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(pierB, -7.5); ctx.lineTo(pierA, -7.5); ctx.moveTo(pierB, 7.5); ctx.lineTo(pierA, 7.5); ctx.stroke();
+    ctx.restore();
+    // anglers on the pier
+    for (const A of D.anglers){
+      const off = pierA + (pierB - pierA) * A.a, p = this._tailPose(200 + A.lat, off), x = p.x - ox, y = p.y - oy;
+      const fishing = A.a > 0.85, wx = -p.nx, wy = -p.ny;   // toward the water
+      ctx.save(); ctx.translate(x, y); ctx.scale(1.35, 1.35); ctx.translate(-x, -y);
+      ctx.fillStyle = 'rgba(20,14,8,0.3)'; ctx.beginPath(); ctx.ellipse(x, y + 4, 5.5, 2.4, 0, 0, 7); ctx.fill();
+      // rod and line
+      const bend = A.catchT > 0 ? 6 : 0, rx = x + wx * 15 + p.tx * (A.lat > 0 ? 3 : -3), ry = y + wy * 15 - 6 + bend * 0.5;
+      ctx.strokeStyle = '#3b2e22'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(x, y - 2);
+      if (fishing) ctx.quadraticCurveTo(x + wx * 9, y + wy * 9 - 8, rx, ry); else ctx.lineTo(x - wx * 3, y - 16);
+      ctx.stroke();
+      if (fishing){
+        const bx = x + wx * 26 + p.tx * (A.lat > 0 ? 4 : -4), by = y + wy * 26 + Math.sin(now * 2.4 + A.lat) * 0.8;
+        ctx.strokeStyle = 'rgba(240,240,240,0.55)'; ctx.lineWidth = 0.6; ctx.beginPath(); ctx.moveTo(rx, ry); ctx.lineTo(bx, by); ctx.stroke();
+        ctx.fillStyle = '#e04a2a'; ctx.beginPath(); ctx.arc(bx, by, 1.6, 0, 7); ctx.fill();
+        if (A.catchT > 0){
+          // a trout comes flipping out of the water
+          const t = 1 - A.catchT / 1.6, fx = bx + (x - bx) * t, fy = by + (y - by) * t - Math.sin(t * Math.PI) * 14;
+          ctx.save(); ctx.translate(fx, fy); ctx.rotate(Math.sin(now * 20) * 0.6);
+          ctx.fillStyle = '#b7c7a8'; ctx.beginPath(); ctx.ellipse(0, 0, 4.5, 1.8, 0, 0, 7); ctx.fill();
+          ctx.fillStyle = '#d98a8a'; ctx.fillRect(-3, -0.4, 6, 0.8); ctx.restore();
+        }
+      }
+      ctx.fillStyle = A.shirt; ctx.beginPath(); ctx.ellipse(x, y, 4.2, 4.8, 0, 0, 7); ctx.fill();
+      ctx.fillStyle = '#e8c9a0'; ctx.beginPath(); ctx.arc(x, y - 4.5, 2.4, 0, 7); ctx.fill();
+      ctx.fillStyle = A.hat; ctx.beginPath(); ctx.ellipse(x, y - 5.5, 3.6, 1.6, 0, 0, 7); ctx.fill(); ctx.beginPath(); ctx.arc(x, y - 6, 2, 0, 7); ctx.fill();
+      ctx.restore();
+    }
+    // boats
+    for (const B of D.boats){
+      const p = this._tailPose(B.u, B.o), x = p.x - ox, y = p.y - oy, bob = Math.sin(B.ph * 1.6) * 0.06;
+      const ang = Math.atan2(p.ty, p.tx) + (B.dir === -1 && B.mv > 0.2 ? Math.PI : 0) + bob;
+      if (B.mv > 0.2){ ctx.strokeStyle = 'rgba(255,255,255,' + (0.4 * B.mv) + ')'; ctx.lineWidth = 1.2; const bx = x - Math.cos(ang) * 14, by = y - Math.sin(ang) * 14;
+        ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx - Math.cos(ang - 0.35) * 16, by - Math.sin(ang - 0.35) * 16); ctx.moveTo(bx, by); ctx.lineTo(bx - Math.cos(ang + 0.35) * 16, by - Math.sin(ang + 0.35) * 16); ctx.stroke(); }
+      this.drawCanoeHull(ctx, x, y, ang, B.col, 0.8);
+      ctx.save(); ctx.translate(x, y); ctx.rotate(ang);
+      ctx.fillStyle = '#2a2a2a'; ctx.fillRect(-14, -2, 3, 4);   // outboard motor
+      ctx.fillStyle = B.man; ctx.beginPath(); ctx.arc(-4, 0, 3.6, 0, 7); ctx.fill();
+      ctx.fillStyle = '#e8c9a0'; ctx.beginPath(); ctx.arc(-3, 0, 2.1, 0, 7); ctx.fill();
+      if (D.phase === 'calm' && B.mv < 0.2){ ctx.strokeStyle = '#3b2e22'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(-3, 0); ctx.lineTo(8, -15); ctx.stroke();
+        ctx.strokeStyle = 'rgba(240,240,240,0.5)'; ctx.lineWidth = 0.6; ctx.beginPath(); ctx.moveTo(8, -15); ctx.lineTo(10 + Math.sin(B.ph) * 0.8, -24); ctx.stroke(); }
+      ctx.restore();
+    }
+    // warning sign and strobes on both sides of the dam
+    const sg = this._tailPose(40, 0); const sx = sg.x + sg.nx * (sg.hw + 24) - ox, sy = sg.y + sg.ny * (sg.hw + 24) - oy;
+    const alarm = D.phase !== 'calm', blink = alarm && Math.floor(now * 4) % 2 === 0;
+    ctx.fillStyle = '#5a4a36'; ctx.fillRect(sx - 1, sy, 2, 9);
+    ctx.fillStyle = '#1d2226'; ctx.fillRect(sx - 17, sy - 9, 34, 11);
+    ctx.font = '700 7px LatoB, sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = alarm ? (blink ? '#ffcf3a' : '#a07818') : '#8fb39a';
+    ctx.fillText(alarm ? 'RELEASE' : 'TVA', sx, sy - 1.5);
+    if (alarm){
+      for (const s of [-1, 1]){
+        const lx = dam[0] - 12 - ox, ly = dam[1] + s * 50 - oy, on = Math.floor(now * 5 + (s > 0 ? 0.5 : 0)) % 2 === 0;
+        ctx.fillStyle = '#3a3a3a'; ctx.fillRect(lx - 2, ly - 2, 4, 6);
+        if (on){ const g = ctx.createRadialGradient(lx, ly, 0, lx, ly, 26); g.addColorStop(0, 'rgba(255,240,180,0.95)'); g.addColorStop(0.25, 'rgba(255,200,60,0.55)'); g.addColorStop(1, 'rgba(255,200,60,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(lx, ly, 26, 0, 7); ctx.fill(); }
+      }
+    }
+    ctx.restore();
+  }
+  // ===================== OTTER PREDATORS (v111): a bobcat or coyote may stalk an otter on land; water is the escape =====================
+  updateOtterPredator(dt){
+    const S = this.state, b = this.bear;
+    const outdoors = S.started && (S.player || 'bear') === 'otter' && !this.inCave && !this.inHouse && !this.inDome && !this._diveOpen && !this._rpOpen && !this._canoe && !this._zip && !this._ride && !S.discovery;
+    if (!outdoors){ this._oPred = null; return; }
+    // hold everything still while a card, conversation or menu is up
+    if (S.findOpen || S.talkOpen || S.discovery || S.journalOpen || S.mapOpen || S.riddleOpen || S.objectiveOpen || S.caveIntroOpen || S.pantryOpen || S.rangerWarnOpen) return;
+    const wet = !!b.swim, P = this._oPred;
+    const pups = S.cubs > 0 && !S.kitsAtDen;
+    if (!P){
+      if (wet){ this._oLand = 0; return; }
+      this._oLand = (this._oLand || 0) + dt;
+      if (this._oPredT == null) this._oPredT = 75 + Math.random() * 45;
+      const tp = this.timePeriod ? this.timePeriod() : 'day', dim = tp === 'dusk' || tp === 'night' || tp === 'dawn';
+      this._oPredT -= dt * (dim ? 1.7 : 1) * (pups ? 1.6 : 1);
+      if (this._oPredT > 0 || this._oLand < 8 || (this._qClock || 0) < 40) return;   // never in the first moments of a game
+      // somewhere on dry land a good distance off
+      for (let k = 0; k < 10; k++){
+        const a = Math.random() * Math.PI * 2, x = b.x + Math.cos(a) * 460, y = b.y + Math.sin(a) * 460;
+        if (this.isWater(x, y) || this.pondDepth(x, y) > 0 || x < 40 || y < 40 || x > this.WORLD_W - 40 || y > this.WORLD_H - 40) continue;
+        const kind = dim ? (Math.random() < 0.7 ? 'bobcat' : 'coyote') : (Math.random() < 0.5 ? 'bobcat' : 'coyote');
+        this._oPred = { kind, x, y, t: 0, ph: 0, heading: 0, wetT: 0 };
+        this.showToast('⚠️ ' + (kind === 'bobcat' ? 'A bobcat' : 'A coyote') + ' is stalking you' + (pups ? ' and your pups' : '') + '! Get to the water, fast!', 4800);
+        SFX.beep && SFX.beep(180, 0.3, 'sawtooth', 0.03);
+        return;
+      }
+      this._oPredT = 10;
+      return;
+    }
+    P.t += dt;
+    const name = P.kind === 'bobcat' ? 'bobcat' : 'coyote';
+    const done = (msg, cool) => { this._oPred = null; this._oPredT = cool + Math.random() * 40; this._oLand = 0; if (msg) this.showToast(msg, 4600); };
+    // the predator's speed is tied to the otter's own (slow) land speed, so an otter heading for water gets away
+    const walk = 262 * this.critterSpeed(false) * this.mobSpeedFactor() * (S.stamina < 18 ? 0.55 : 1);
+    const dx = b.x - P.x, dy = b.y - P.y, d = Math.hypot(dx, dy) || 1;
+    if (wet){
+      // it won't follow into the water: it paces at the edge, then gives up
+      P.wetT += dt; P.ph += dt * 2;
+      if (d > 70){ const nx = P.x + dx / d * walk * 0.5 * dt, ny = P.y + dy / d * walk * 0.5 * dt; if (!this.isWater(nx, ny) && !(this.pondDepth(nx, ny) > 0)){ P.x = nx; P.y = ny; } }
+      P.heading = Math.atan2(dy, dx);
+      if (P.wetT > 2.2){
+        const first = !this.state.otterPredSeen;
+        done('🦦 Safe! The ' + name + ' paces along the bank, then gives up. It won’t follow you into the water.', 70);
+        if (first){
+          this.setState({ otterPredSeen: true });
+          this.showFind('🦦', 'Water Is an Otter’s Safe Place', 'On land, an otter is slow and easy to corner. In the water, nothing in these mountains can catch it.<br><br>Adult river otters have few predators, but <b>bobcats and coyotes</b> sometimes catch them on land, especially young pups or an otter traveling between streams. Big birds of prey, like bald eagles, may go after pups too.<br><br>Otter families also stick together: a group of otters can drive a coyote away.<br><br><i>Tip: when you travel overland, keep water close.</i>', 16000, { kicker: 'OTTER SURVIVAL', btn: 'Stay near water' });
+        }
+      }
+      return;
+    }
+    P.wetT = 0;
+    const sp = P.t < 3 ? walk * 0.3 : walk * 0.88;
+    const nx = P.x + dx / d * sp * dt, ny = P.y + dy / d * sp * dt;
+    if (!this.isWater(nx, ny) && !(this.pondDepth(nx, ny) > 0)){ P.x = nx; P.y = ny; }
+    P.ph += dt * (P.t < 3 ? 2.4 : 6); P.heading = Math.atan2(dy, dx);
+    if (d < 22){
+      this._setStam(Math.max(0, (this._stAccum ?? S.stamina ?? 0) - 20));
+      SFX.play('miss');
+      done('😱 The ' + name + ' pounces! You twist free and scramble away' + (pups ? ', and your pups scatter, then find you again' : '') + '. (-20 stamina) Next time, head for the water sooner.', 60);
+    } else if (P.t > 26) done('🦦 The ' + name + ' loses interest and slips back into the woods.', 50);
+  }
+  drawOtterPredator(ctx, ox, oy, now){
+    const P = this._oPred; if (!P) return;
+    const x = P.x - ox, y = P.y - oy;
+    ctx.save(); ctx.translate(x, y); ctx.scale(2.1, 2.1);
+    this.drawAnimal(ctx, { x: 0, y: 0, heading: P.heading, speed: 30, ph: P.ph, state: 'flee', alertT: 0, w: { kind: P.kind } }, 0, 0);
+    ctx.restore();
+  }
   // ===================== RAPTOR RESCUE (v108): find a hurt raptor, a ranger takes it to rehab, you release it =====================
   _rpKinds(){
     return {
@@ -7316,7 +7616,7 @@ class Component extends DCLogic {
     this.setState(all ? { pondPals: met, berries: Math.min(10, (this.state.berries || 0) + 3) } : { pondPals: met });
     for (let i = 0; i < 10; i++) D.bubbles.push({ x: p.x, y: p.y, r: 1.5 + Math.random() * 2.5, vy: 30 + Math.random() * 40 });
     if (all) return this._dvCard('🦦', 'A Raft of Otters!', 'All three otters are swimming with you now, twisting and chasing each other around the pond. A group of otters in the water is called a <b>raft</b>. On land, it’s a <b>romp</b>!<br><br>River otters disappeared from the Smokies in the early 1900s. They were brought back starting in 1986, and in December 1988, <b>14 more otters were released on Little River</b>, right near here. Today they’re doing well across the park.<br><br>🏅 +3 berries', 'OTTER FRIENDS · 3/3', 'Swim together');
-    const lines = { weeds: 'An otter pops out of the weeds and chirps at you! It wants to play.', log: 'An otter was napping inside a sunken hollow log. It wiggles out and joins you!', lodge: 'An otter is circling the beaver lodge. It does a somersault and swims over to you!' };
+    const lines = { weeds: 'An otter pops out of the weeds and chirps at you! It wants to play.', log: 'An otter was napping inside a sunken hollow log. It wiggles out and joins you!', lodge: 'An otter is keeping a careful distance from the beaver lodge. It does a somersault and swims over to you!' };
     this._dvMsg('🦦 ' + (lines[p.id] || 'Another otter joins you!') + ' (' + met.length + '/3 otters)', 3800);
   }
   _pdNewt(){
@@ -7337,20 +7637,45 @@ class Component extends DCLogic {
     return this._dvCard('🦎', 'Red-spotted Newt', 'An olive-green newt with tiny <b>red spots ringed in black</b> paddles past. This is the grown-up, water-living form of the bright orange <b>red eft</b> you see walking the forest floor.<br><br>Newts spend a few years on land as efts, then return to ponds as adults. Their skin carries a toxin, so most predators leave them alone.' + extra, had ? 'POND LIFE' : 'NEW SPECIES · UNDERWATER', 'Keep exploring');
   }
   _dvCardClose(){ const D = this._dv; if (!D) return; D.card = false; D.root.querySelector('.dv-card').style.display = 'none'; D.last = performance.now(); }
-  _dvDen(){ return this._dvSite === 'pond' ? { ex: 1238, ey: 330, cx: 1330, cy: 72 } : { ex: 2392, ey: 440, cx: 2515, cy: 74 }; }
+  _pdDens(){
+    return [
+      { id: 'old', ex: 236, ey: Math.round(this._dvBed(236) - 48), cx: 140, cy: 76, out: 1, active: false, LX: 140 },
+      { id: 'beaver', ex: 1238, ey: 330, cx: 1330, cy: 72, out: -1, active: true, LX: 1330 }
+    ];
+  }
+  _dvDen(){
+    if (this._dvSite === 'pond') return (this._dv && this._dv.denSel) || this._pdDens()[0];
+    return { ex: 2392, ey: 440, cx: 2515, cy: 74, out: -1 };
+  }
   _dvAct(){
     const D = this._dv; if (!D || D.card) return;
+    if (D.pond && D.mode !== 'den'){
+      const hit = this._pdDens().find((d) => Math.hypot(D.x - d.ex, D.y - d.ey) < 52);
+      if (hit) D.denSel = hit;
+      if (hit && hit.active){
+        // a beaver family lives here: the adult slaps its tail and drives the otter off
+        D.vx = -280; D.vy = -40; D.face = -1; D.slapT = 1.6; D.denSel = null;
+        for (let i = 0; i < 14; i++) D.bubbles.push({ x: hit.ex, y: hit.ey, r: 1.5 + Math.random() * 3, vy: 40 + Math.random() * 50 });
+        SFX.play('miss');
+        if (!this.state.pondLodgeSeen){
+          this.setState({ pondLodgeSeen: true });
+          return this._dvCard('🦫', 'This Lodge Is Taken!', 'A big beaver bursts out of the entrance, hissing, and <b>slaps its tail</b> with a crack you can feel. You back off fast.<br><br>Beavers and otters have a complicated relationship. Otters love beaver ponds and often den in <b>empty</b> lodges, but an otter may eat young beavers, so beavers guard their homes. That’s one reason a beaver lodge has <b>more than one underwater exit</b>.<br><br><i>Maybe there’s an empty lodge somewhere in this pond…</i>', 'BEAVER LODGE · ' + D.pondName.toUpperCase(), 'Back off');
+        }
+        this._dvMsg('🦫 SLAP! The beaver chases you away. This lodge is taken.', 2600);
+        return;
+      }
+    }
     const den = this._dvDen();
-    if (D.mode === 'den'){ D.mode = null; D.x = den.ex - 30; D.y = den.ey; D.vx = -60; D.vy = 0; D.face = -1; SFX.play('click'); this._dvMsg(D.pond ? '🦦 You slip back out of the beaver lodge.' : '🦦 You slip back out through the underwater tunnel.', 2200); return; }
+    if (D.mode === 'den'){ const o = den.out || -1; D.mode = null; D.x = den.ex + o * 30; D.y = den.ey; D.vx = o * 60; D.vy = 0; D.face = o; SFX.play('click'); this._dvMsg(D.pond ? '🦦 You slip back out of the old lodge.' : '🦦 You slip back out through the underwater tunnel.', 2200); return; }
     if (Math.hypot(D.x - den.ex, D.y - den.ey) < 52){
       D.mode = 'den'; D.x = den.cx; D.y = den.cy; D.vx = D.vy = 0; D.face = -1; D.breath = 1;
       this._setStam(Math.min(100, (this._stAccum ?? this.state.stamina ?? 0) + 30)); SFX.play('food');
       if (D.pond){
-        if (!this.state.pondLodgeSeen){
-          this.setState({ pondLodgeSeen: true });
-          return this._dvCard('🦫', 'Inside a Beaver Lodge', 'You swim up through the lodge’s <b>underwater entrance</b> and pop out into a dry room above the water line. A beaver blinks at you from the far side.<br><br>Beavers build lodges from sticks and mud, with doors underwater so predators can’t walk in. River otters sometimes share a lodge, or move into an empty one.', 'BEAVER LODGE · ' + D.pondName.toUpperCase(), 'Say hello');
+        if (!this.state.pondOldLodgeSeen){
+          this.setState({ pondOldLodgeSeen: true });
+          return this._dvCard('🦦', 'An Empty Lodge', 'This old beaver lodge was abandoned long ago. The sticks are gray and the roof sags, but the room inside is still <b>dry, dark and safe</b>, just right for an otter.<br><br>River otters don’t build their own homes. They move into <b>empty beaver lodges</b>, old bank burrows and hollow logs near the water.', 'OTTER DEN · ' + D.pondName.toUpperCase(), 'Rest here');
         }
-        this._dvMsg('🦫 The beaver doesn’t seem to mind. You catch your breath. (+stamina) Press E to swim back out.', 3200);
+        this._dvMsg('🦦 Your cozy old lodge. You catch your breath and rest. (+stamina) Press E to swim back out.', 3200);
         return;
       }
       if (!this.state.otterDenSeen){
@@ -7365,7 +7690,7 @@ class Component extends DCLogic {
     if (D.pond){
       for (const p of D.pals) if (!p.met && near(p.x, p.y, 56)) return this._pdMeet(p);
       if (D.newt && near(D.newt.x, D.newt.y, 48)) return this._pdNewt();
-      if (D.eggs && near(250, this._dvBed(250) - 30, 56)) return this._dvCard('🫧', 'Spotted Salamander Eggs', 'Clumps of clear jelly hang from a sunken twig. Inside each one are dozens of <b>spotted salamander</b> eggs, laid in early spring.<br><br>Some egg masses turn green: a tiny alga grows inside the eggs, and the eggs and the algae help each other.', 'EARLY SPRING · ' + D.pondName.toUpperCase(), 'Leave them be');
+      if (D.eggs && near(470, this._dvBed(470) - 30, 56)) return this._dvCard('🫧', 'Spotted Salamander Eggs', 'Clumps of clear jelly hang from a sunken twig. Inside each one are dozens of <b>spotted salamander</b> eggs, laid in early spring.<br><br>Some egg masses turn green: a tiny alga grows inside the eggs, and the eggs and the algae help each other.', 'EARLY SPRING · ' + D.pondName.toUpperCase(), 'Leave them be');
     }
     for (const it of D.items){
       if (!near(it.x, it.y, 50)) continue;
@@ -7439,6 +7764,7 @@ class Component extends DCLogic {
       }
       for (const c of D.cray){ if (c.gone > 0){ c.gone -= dt; continue; } c.ph += dt * 3; c.x += c.dir * 12 * dt * (Math.sin(c.ph * 0.3) > -0.3 ? 1 : 0); if (Math.random() < dt * 0.3) c.dir *= -1; c.x = clamp(c.x, 300, D.W - 300); }
       for (const b of D.bubbles){ b.y -= b.vy * dt; b.x += Math.sin(b.y / 12) * 0.3; } D.bubbles = D.bubbles.filter((b) => b.y > 92);
+      if (D.slapT > 0) D.slapT -= dt;
       if (D.pond){
         // otters you've met follow you around in a loose, playful line; the others play near their spots
         let k = 0;
@@ -7470,7 +7796,7 @@ class Component extends DCLogic {
     R.querySelector('.dv-lt').textContent = '🗑️ Litter ' + (this.state.diveLitter || []).length + '/2';
     }
     const surf = D.y < 104;
-    R.querySelector('.dv-help').textContent = D.mode === 'den' ? (D.pond ? 'In the beaver lodge · E to swim back out' : 'In the otter den · E to swim back out') : surf ? 'At the surface · E or Climb out to leave · swim down to dive' : 'WASD / arrows (or drag) to swim · touch a fish to catch it · E to lunge, look or pick up · swim up to breathe';
+    R.querySelector('.dv-help').textContent = D.mode === 'den' ? (D.pond ? 'In the empty lodge · E to swim back out' : 'In the otter den · E to swim back out') : surf ? 'At the surface · E or Climb out to leave · swim down to dive' : 'WASD / arrows (or drag) to swim · touch a fish to catch it · E to lunge, look or pick up · swim up to breathe';
   }
   // ---- pond scenery: cattails at both ends, lily pads, a sunken log, the beaver lodge, spring egg masses
   _pdDrawScene(ctx, x0, x1, t, SURF){
@@ -7490,33 +7816,65 @@ class Component extends DCLogic {
       ctx.strokeStyle = 'rgba(30,22,12,0.5)'; ctx.lineWidth = 1.2; for (let k = -90; k < 100; k += 22){ ctx.beginPath(); ctx.moveTo(k, -14); ctx.lineTo(k + 10, 14); ctx.stroke(); }
       ctx.fillStyle = 'rgba(90,130,60,0.55)'; ctx.beginPath(); ctx.ellipse(20, -15, 60, 4, 0, 0, 7); ctx.fill(); ctx.restore(); } }
     // spotted salamander egg masses on a sunken twig (early spring)
-    if (D.eggs){ const ex = 250, by = this._dvBed(ex); if (ex > x0 - 60 && ex < x1 + 60){
+    if (D.eggs){ const ex = 470, by = this._dvBed(ex); if (ex > x0 - 60 && ex < x1 + 60){
       ctx.strokeStyle = '#4a3a26'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(ex - 30, by); ctx.lineTo(ex + 20, by - 52); ctx.stroke();
       for (const [ox, oy, r] of [[-6, -26, 10], [8, -40, 8], [-14, -12, 7]]){ ctx.fillStyle = 'rgba(190,225,200,0.38)'; ctx.beginPath(); ctx.arc(ex + ox, by + oy, r, 0, 7); ctx.fill(); ctx.fillStyle = 'rgba(30,40,30,0.6)'; for (let k = 0; k < 6; k++){ const a = k * 1.1; ctx.beginPath(); ctx.arc(ex + ox + Math.cos(a) * r * 0.5, by + oy + Math.sin(a) * r * 0.5, 1.2, 0, 7); ctx.fill(); } }
       if (Math.hypot(D.x - ex, D.y - (by - 30)) < 130){ ctx.font = '700 12px LatoB, sans-serif'; ctx.textAlign = 'center'; const lab = 'E: look closer', tw = ctx.measureText(lab).width; ctx.fillStyle = 'rgba(10,24,32,0.8)'; ctx.beginPath(); ctx.roundRect(ex - tw / 2 - 7, by - 84, tw + 14, 20, 9); ctx.fill(); ctx.fillStyle = '#f2f8fa'; ctx.fillText(lab, ex, by - 70); } } }
-    // the beaver lodge: a mound of sticks and mud rising out of the water (cutaway shows the room inside)
-    { const den = this._dvDen(), LX = 1330; if (LX > x0 - 220 && LX < x1 + 220){
-      const by = this._dvBed(LX);
-      const TOP = SURF - 64;
-      ctx.fillStyle = '#4a3a26'; ctx.beginPath(); ctx.moveTo(LX - 165, this._dvBed(LX - 165) + 4); ctx.bezierCurveTo(LX - 140, SURF - 6, LX - 90, TOP, LX, TOP); ctx.bezierCurveTo(LX + 90, TOP, LX + 140, SURF - 6, LX + 165, this._dvBed(LX + 165) + 4); ctx.lineTo(LX + 165, D.H); ctx.lineTo(LX - 165, D.H); ctx.closePath(); ctx.fill();
-      ctx.save(); ctx.clip();
-      ctx.strokeStyle = 'rgba(120,88,54,0.75)'; ctx.lineWidth = 2.4; for (let k = 0; k < 46; k++){ const xx = LX - 160 + ((k * 61) % 320), yy = TOP + 4 + ((k * 37) % 100) / 100 * (by - TOP); ctx.beginPath(); ctx.moveTo(xx - 18, yy - 4 + (k % 3) * 3); ctx.lineTo(xx + 18, yy + 4 - (k % 3) * 3); ctx.stroke(); }
-      ctx.fillStyle = 'rgba(40,60,40,0.35)'; ctx.fillRect(LX - 170, SURF + 2, 340, D.H - SURF);
-      ctx.restore();
-      // underwater entrance tunnel and the dry room above the water line
-      ctx.strokeStyle = '#1e160c'; ctx.lineCap = 'round'; ctx.lineWidth = 26; ctx.beginPath(); ctx.moveTo(den.ex, den.ey); ctx.quadraticCurveTo(LX - 30, 220, den.cx - 8, den.cy + 12); ctx.stroke();
-      ctx.strokeStyle = 'rgba(42,102,128,0.85)'; ctx.lineWidth = 18; ctx.beginPath(); ctx.moveTo(den.ex, den.ey); ctx.quadraticCurveTo(LX - 30, 220, LX - 16, SURF + 6); ctx.stroke();
-      ctx.fillStyle = '#1e160c'; ctx.beginPath(); ctx.ellipse(den.cx, den.cy, 44, 22, 0, 0, 7); ctx.fill();
-      ctx.fillStyle = '#7a6a3a'; ctx.beginPath(); ctx.ellipse(den.cx, den.cy + 13, 38, 8, 0, 0, 7); ctx.fill();
-      // the beaver inside
-      ctx.save(); ctx.translate(den.cx + 18, den.cy + 6); ctx.fillStyle = '#6a4a2c'; ctx.beginPath(); ctx.ellipse(0, 0, 15, 9, 0, 0, 7); ctx.fill(); ctx.beginPath(); ctx.ellipse(-13, -3, 7, 6, 0, 0, 7); ctx.fill();
-      ctx.fillStyle = '#3a2a1c'; ctx.beginPath(); ctx.ellipse(16, 4, 9, 3.5, 0.3, 0, 7); ctx.fill(); ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(-16, -5, 1.2, 0, 7); ctx.fill(); ctx.fillStyle = '#e8a040'; ctx.fillRect(-20, -1, 2.5, 3); ctx.restore();
-      if (D.mode !== 'den' && Math.hypot(D.x - den.ex, D.y - den.ey) < 120){ ctx.font = '700 13px LatoB, sans-serif'; ctx.textAlign = 'center'; const lab = '🦫 E: swim into the beaver lodge', tw = ctx.measureText(lab).width; ctx.fillStyle = 'rgba(10,24,32,0.85)'; ctx.beginPath(); ctx.roundRect(den.ex - tw / 2 - 8, den.ey + 22, tw + 16, 22, 10); ctx.fill(); ctx.fillStyle = '#f2f8fa'; ctx.fillText(lab, den.ex, den.ey + 38); }
-    } }
+    for (const den of this._pdDens()) this._pdLodge(ctx, den, x0, x1, SURF, t);
     // lily pads on the surface
-    for (let x = 180; x < D.W - 160; x += 90){ if (x < x0 - 30 || x > x1 + 30 || (x > 1150)) continue; const px = x + Math.sin(x) * 20;
+    for (let x = 180; x < D.W - 160; x += 90){ if (x < x0 - 30 || x > x1 + 30 || x > 1150 || x < 300) continue; const px = x + Math.sin(x) * 20;
       ctx.fillStyle = '#4f7a34'; ctx.beginPath(); ctx.ellipse(px, SURF + 1, 14, 3.6, 0, 0.25, Math.PI * 2 - 0.25); ctx.lineTo(px, SURF + 1); ctx.fill();
       if (x % 270 < 90){ ctx.fillStyle = '#f4f0e6'; ctx.beginPath(); ctx.ellipse(px + 4, SURF - 2, 4, 3, 0, 0, 7); ctx.fill(); ctx.fillStyle = '#f0d040'; ctx.beginPath(); ctx.arc(px + 4, SURF - 2.5, 1.2, 0, 7); ctx.fill(); } }
+  }
+  _pdLodge(ctx, den, x0, x1, SURF, t){
+    const D = this._dv, LX = den.LX, old = !den.active, half = old ? 135 : 165;
+    if (LX + half < x0 - 40 || LX - half > x1 + 40) return;
+    const TOP = SURF - (old ? 46 : 64);
+    const L0 = Math.max(0, LX - half), L1 = Math.min(D.W, LX + half);
+    ctx.fillStyle = old ? '#5a5248' : '#4a3a26';
+    ctx.beginPath(); ctx.moveTo(L0, this._dvBed(L0) + 4);
+    ctx.bezierCurveTo(LX - half * 0.85, SURF - 6, LX - half * 0.55, TOP + (old ? 8 : 0), LX, TOP + (old ? 6 : 0));
+    ctx.bezierCurveTo(LX + half * 0.55, TOP, LX + half * 0.85, SURF - 6, L1, this._dvBed(L1) + 4);
+    ctx.lineTo(L1, D.H); ctx.lineTo(L0, D.H); ctx.closePath(); ctx.fill();
+    ctx.save(); ctx.clip();
+    ctx.strokeStyle = old ? 'rgba(150,140,126,0.7)' : 'rgba(120,88,54,0.75)'; ctx.lineWidth = 2.4;
+    for (let k = 0; k < 40; k++){ const xx = LX - half + ((k * 61) % (half * 2)), yy = TOP + 4 + ((k * 37) % 100) / 100 * (D.H - TOP); ctx.beginPath(); ctx.moveTo(xx - 18, yy - 4 + (k % 3) * 3); ctx.lineTo(xx + 18, yy + 4 - (k % 3) * 3); ctx.stroke(); }
+    if (old){ ctx.fillStyle = 'rgba(90,130,60,0.35)'; ctx.beginPath(); ctx.ellipse(LX, TOP + 8, half * 0.5, 7, 0, 0, 7); ctx.fill(); }
+    ctx.fillStyle = 'rgba(40,60,40,0.35)'; ctx.fillRect(LX - half - 5, SURF + 2, half * 2 + 10, D.H - SURF);
+    ctx.restore();
+    // underwater entrance tunnel up to the dry room
+    const bend = old ? LX + 40 : LX - 30;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#1e160c'; ctx.lineWidth = 26; ctx.beginPath(); ctx.moveTo(den.ex, den.ey); ctx.quadraticCurveTo(bend, 220, den.cx + (old ? 8 : -8), den.cy + 12); ctx.stroke();
+    ctx.strokeStyle = 'rgba(42,102,128,0.85)'; ctx.lineWidth = 18; ctx.beginPath(); ctx.moveTo(den.ex, den.ey); ctx.quadraticCurveTo(bend, 220, den.cx + (old ? 16 : -16), SURF + 6); ctx.stroke();
+    if (den.active){
+      // a second exit on the far side
+      ctx.strokeStyle = '#1e160c'; ctx.lineWidth = 20; ctx.beginPath(); ctx.moveTo(den.cx + 24, den.cy + 14); ctx.quadraticCurveTo(LX + 34, 230, LX + 10, D.H - 40); ctx.stroke();
+      ctx.strokeStyle = 'rgba(42,102,128,0.6)'; ctx.lineWidth = 12; ctx.beginPath(); ctx.moveTo(LX + 30, SURF + 10); ctx.quadraticCurveTo(LX + 34, 230, LX + 10, D.H - 40); ctx.stroke();
+    }
+    ctx.fillStyle = '#1e160c'; ctx.beginPath(); ctx.ellipse(den.cx, den.cy, old ? 40 : 44, old ? 20 : 22, 0, 0, 7); ctx.fill();
+    ctx.fillStyle = old ? '#6a6248' : '#7a6a3a'; ctx.beginPath(); ctx.ellipse(den.cx, den.cy + 12, old ? 34 : 38, 7, 0, 0, 7); ctx.fill();
+    const slapping = den.active && D.slapT > 0;
+    if (den.active && !slapping){
+      // the beaver family at home (an adult and a kit)
+      ctx.save(); ctx.translate(den.cx + 14, den.cy + 6); ctx.fillStyle = '#6a4a2c'; ctx.beginPath(); ctx.ellipse(0, 0, 15, 9, 0, 0, 7); ctx.fill(); ctx.beginPath(); ctx.ellipse(-13, -3, 7, 6, 0, 0, 7); ctx.fill();
+      ctx.fillStyle = '#3a2a1c'; ctx.beginPath(); ctx.ellipse(16, 4, 9, 3.5, 0.3, 0, 7); ctx.fill(); ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(-16, -5, 1.2, 0, 7); ctx.fill(); ctx.fillStyle = '#e8a040'; ctx.fillRect(-20, -1, 2.5, 3); ctx.restore();
+      ctx.save(); ctx.translate(den.cx - 20, den.cy + 8); ctx.fillStyle = '#7a5634'; ctx.beginPath(); ctx.ellipse(0, 0, 8, 5, 0, 0, 7); ctx.fill(); ctx.beginPath(); ctx.ellipse(-7, -2, 4, 3.5, 0, 0, 7); ctx.fill(); ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(-9, -3, 0.9, 0, 7); ctx.fill(); ctx.restore();
+    }
+    if (slapping){
+      // the adult charges out of the door, and its tail-slap splashes at the surface
+      const k = 1 - D.slapT / 1.6, bx = den.ex - 10 - k * 60, byy = den.ey - 6 - k * 30;
+      ctx.save(); ctx.translate(bx, byy); ctx.fillStyle = '#6a4a2c'; ctx.beginPath(); ctx.ellipse(0, 0, 18, 10, -0.2, 0, 7); ctx.fill(); ctx.beginPath(); ctx.ellipse(-16, -4, 8, 7, 0, 0, 7); ctx.fill();
+      ctx.fillStyle = '#3a2a1c'; ctx.save(); ctx.translate(18, 2); ctx.rotate(Math.sin(t * 30) * 0.6); ctx.beginPath(); ctx.ellipse(10, 0, 11, 4.5, 0, 0, 7); ctx.fill(); ctx.restore();
+      ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(-20, -6, 1.3, 0, 7); ctx.fill(); ctx.restore();
+      ctx.strokeStyle = 'rgba(240,250,255,' + (0.8 * (D.slapT / 1.6)).toFixed(2) + ')'; ctx.lineWidth = 2;
+      for (let r = 0; r < 3; r++){ ctx.beginPath(); ctx.ellipse(den.ex - 30, SURF + 2, 14 + r * 14 + k * 30, 3 + r * 2, 0, 0, 7); ctx.stroke(); }
+    }
+    if (D.mode !== 'den' && Math.hypot(D.x - den.ex, D.y - den.ey) < 120){
+      ctx.font = '700 13px LatoB, sans-serif'; ctx.textAlign = 'center';
+      const lab = old ? '🦦 E: rest in the empty lodge' : '🦫 A beaver family lives here', tw = ctx.measureText(lab).width;
+      ctx.fillStyle = 'rgba(10,24,32,0.85)'; ctx.beginPath(); ctx.roundRect(den.ex - tw / 2 - 8, den.ey + 22, tw + 16, 22, 10); ctx.fill(); ctx.fillStyle = '#f2f8fa'; ctx.fillText(lab, den.ex, den.ey + 38);
+    }
   }
   _pdTurtle(ctx, f, t){
     ctx.save(); ctx.translate(f.x, f.y); ctx.scale(f.dir * 1.3, 1.3);
@@ -12265,6 +12623,7 @@ class Component extends DCLogic {
   isWater(x, y){
     if (this.inCave || this.inDome || this.inHouse) return false;
     if (this.lake && distToPolyline(x, y, this.lake.pts) < 42) return true;
+    if (this._tailHit(x, y, 0)) return true;
     for (const r of (this.rivers || [])){ if (distToPolyline(x, y, r.pts) < 9) return true; }
     return false;
   }
@@ -17839,6 +18198,8 @@ class Component extends DCLogic {
     const bsx = this.bear.x - ox, bsy = this.bear.y - oy;
     this.drawQuestWorld(ctx, ox, oy, now);
     this.drawRaptorWorld(ctx, ox, oy, now);
+    this.drawDam(ctx, ox, oy, now);
+    this.drawOtterPredator(ctx, ox, oy, now);
     this.drawStreamFish(ctx, ox, oy, now);
     if (!this._zip && !this._ride && !this._canoe){ this.drawBear(ctx, bsx, bsy, 1.15); this.drawCarriedNet(ctx, bsx, bsy); }
     this.drawQuestOverlay(ctx, vw, vh, bsx, bsy);
