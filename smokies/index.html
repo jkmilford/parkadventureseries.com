@@ -36,7 +36,7 @@
     <span id="bootMsg" style="opacity:.85;">Hiking in…</span><span id="bootPct" style="opacity:.7;">0%</span>
   </div>
   <div id="bootTip" style="max-width:340px;min-height:3.2em;text-align:center;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:14px;line-height:1.45;opacity:.8;margin-top:26px;transition:opacity .4s;"></div>
-  <div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:11.5px;opacity:.55;">© 2026 Sirreel LLC. All rights reserved. · v115</div>
+  <div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:11.5px;opacity:.55;">© 2026 Sirreel LLC. All rights reserved. · v116</div>
 </div>
 <script>
 (function(){
@@ -74,7 +74,7 @@
     if (real && p < 100 && Date.now() - lastT > 15000){
       clearInterval(tipT);
       tip.style.opacity = .9;
-      tip.innerHTML = 'Still working on <b>' + msg.textContent + '</b> (' + Math.round((Date.now() - lastT) / 1000) + ' s at ' + p + '%, ' + Math.round((Date.now() - t0) / 1000) + ' s total).<br><span style="font-size:11.5px;opacity:.8">If it stays stuck, a screenshot of this helps: ' + devInfo() + ' · v115</span>';
+      tip.innerHTML = 'Still working on <b>' + msg.textContent + '</b> (' + Math.round((Date.now() - lastT) / 1000) + ' s at ' + p + '%, ' + Math.round((Date.now() - t0) / 1000) + ' s total).<br><span style="font-size:11.5px;opacity:.8">If it stays stuck, a screenshot of this helps: ' + devInfo() + ' · v116</span>';
     }
   }, 1000);
   window.__bootLoader = {
@@ -370,7 +370,7 @@ div:has(> .ts) > :not(.ts):not(canvas:first-child){visibility:hidden}
         </div>
         <div style="font-family:'LatoR',sans-serif;font-size:clamp(10px,1.7vh,12px);margin-top:min(1.4vh,10px);">
           <a href="https://parkadventureseries.com/smokies/matching.html" style="color:#e9c46a;opacity:.85;text-decoration:none;border-bottom:1px solid rgba(233,196,106,.4);">Play the Smokies Matching Game</a>
-          <span style="opacity:.4;"> &nbsp;·&nbsp; © 2026 Sirreel LLC. All rights reserved. · v115</span>
+          <span style="opacity:.4;"> &nbsp;·&nbsp; © 2026 Sirreel LLC. All rights reserved. · v116</span>
         </div>
       </div>
     </div>
@@ -3308,7 +3308,7 @@ class Component extends DCLogic {
     // search a hollow tree for sarvisberries
     if (this.beeAction()) return;
     { const ht = this.nearestHollowTree(); if (ht.tree && ht.dist < 46){ this.searchHollowTree(ht.tree); return; } }
-    { const hs = this.nearestHouse(); if (hs.house && hs.dist < 34){ if (hs.house.key === 'vc' && !this.state.disguiseOn){ this.vcDoorBlocked(); return; } if (hs.house.lodge && !this.lodgeDoorCheck(hs.house)) return; if (hs.house.shop && !this.shopDoorCheck(hs.house)) return; this.enterHouse(hs.house); return; } }
+    { const hs = this.nearestHouse(); if (hs.house && hs.dist < 34){ if ((hs.house.key === 'vc' || hs.house.key === 'kuwohi_vc') && !this.state.disguiseOn){ this.vcDoorBlocked(); return; } if (hs.house.lodge && !this.lodgeDoorCheck(hs.house)) return; if (hs.house.shop && !this.shopDoorCheck(hs.house)) return; this.enterHouse(hs.house); return; } }
     // eat berries
     const { bush, dist: bd } = this.nearestBush();
     if (bush && bd < 34){
@@ -3626,7 +3626,9 @@ class Component extends DCLogic {
       this._pawDist += speed;
       if (this._pawDist > 17){
         this._pawDist = 0;
-        this.pawPrints.push({ x: this.bear.x, y: this.bear.y + 14, t: 0, side: (this._pawSide = !this._pawSide) });
+        // no prints in water (lakes, ponds, streams), and each print points the way you were heading
+        const wet = this.bear.swim || this.isWater(this.bear.x, this.bear.y + 14) || this.stillDepth(this.bear.x, this.bear.y + 14) > 0 || this.pondDepth(this.bear.x, this.bear.y + 14) > 0;
+        if (!wet && !this._canoe) this.pawPrints.push({ x: this.bear.x, y: this.bear.y + 14, t: 0, side: (this._pawSide = !this._pawSide), a: (mx || my) ? Math.atan2(my, mx) : (this.bear.heading ?? 0) });
         if (this.pawPrints.length > 46) this.pawPrints.shift();
         // dust kick when sprinting
         if (sprinting) this.particles.push({ x: this.bear.x - mx * 16, y: this.bear.y + 12, vx: -mx * 20, vy: -8 - Math.random() * 10, life: 0.5, t: 0, color: 'rgba(140,120,80,0.6)', size: 2.4 });
@@ -6675,6 +6677,32 @@ class Component extends DCLogic {
     }
     reply(this._rPick(['Ha, okay!', 'Interesting!', 'Well, alright then.']) + ' Ask me about <b>salamanders</b>, <b>bears</b>, the <b>weather</b>, or <b>where</b> to go. I know this park like the back of my hand.');
   }
+  // ================= KUWOHI VISITOR CONTACT STATION (v116): a little information center and park store at the Kuwohi parking area =================
+  talkKuwohiClerk(){
+    const WHO = 'ROSA · KUWOHI PARK STORE', icon = '👩‍🦳';
+    const has = (q, ...ws) => ws.some((w) => q.includes(w));
+    const book = () => this.talk(WHO, icon, 'We sure do! *pulls a copy off the kids’ shelf* <b>Great Smoky Mountains Trivia &amp; Activities</b>. Puzzles, fun facts and activities, all about the Smokies. Folks grab one for the drive back down the mountain.', [
+      { label: '📗 I’ll take one! (3 berries)', fn: () => this.vcAction({ kind: 'buybook' }) },
+      { label: 'Maybe later. Thanks!', fn: () => menu('Anything else I can help you with?') }
+    ]);
+    const typed = (raw) => {
+      const say = String(raw).slice(0, 160).trim(); if (!say) return;
+      const q = ' ' + say.toLowerCase().replace(/[^a-z0-9 ]+/g, ' ') + ' ', you = '<span style="color:#b4d68a;font-style:italic;">You: “' + this._rEsc(say) + '”</span><br>';
+      if (has(q, 'trivia', 'activit', 'book', 'puzzle')) return book();
+      if (has(q, 'tower', 'how far', 'summit', 'top', 'walk')) return menu(you + 'The tower is about a <b>half mile</b> up a steep, paved trail. Take it slow, the air is thinner up here!');
+      if (has(q, 'name', 'kuwohi', 'clingman', 'dome', 'mean')) return menu(you + '<b>Kuwohi</b> is the Cherokee name. It means <b>“mulberry place.”</b> The name was changed back from Clingmans Dome in 2024.');
+      if (has(q, 'cold', 'weather', 'jacket', 'temperature')) return menu(you + 'Bring a jacket! It’s usually a lot cooler up here than down in Gatlinburg, even in summer.');
+      if (has(q, 'map', 'hat', 'shirt', 'souvenir', 'postcard')) return menu(you + 'Maps and hats are on that wall, and the books and stuffed bears are right here by the register.');
+      return menu(you + 'Ha! I’m not sure about that one, hon. I mostly know books, maps, and how cold it gets up here.');
+    };
+    const menu = (text) => this.talk(WHO, icon, text, [
+      { label: '📗 Do you carry Great Smoky Mountains Trivia & Activities?', fn: book },
+      { label: 'How far is it to the tower?', fn: () => menu('About a <b>half mile</b> up a steep, paved trail. Take it slow, the air is thinner up here!') },
+      { label: 'Why is it called Kuwohi?', fn: () => menu('<b>Kuwohi</b> is the Cherokee name. It means <b>“mulberry place.”</b> The name was changed back from Clingmans Dome in 2024.') },
+      { label: 'Thanks, bye!', fn: () => this.closeTalk() }
+    ], typed);
+    menu('Welcome to Kuwohi! Chilly up here, isn’t it? We’ve got maps, hats, books and stuffed bears. What can I do for you? (Pick one, or type a question.)');
+  }
   // ================= LECONTE LODGE =================
   // Built around 1926 just west of Mount LeConte's summit, at 6,360 ft the highest-elevation lodge east of the
   // Mississippi. Hike-in only. No electricity for guests: kerosene lamps, propane heaters, striped wool blankets,
@@ -7632,6 +7660,68 @@ class Component extends DCLogic {
       ctx.fillStyle = K.back; ctx.beginPath(); ctx.ellipse(x + 9, y + 8, 10, 3, 0.5, 0, 7); ctx.fill();
     }
   }
+  // ---- v116: scuba divers and wild otters sharing the water with you
+  _dvNpcInit(pond){
+    if (pond) return [];
+    const n = [];
+    const add = (type, x, x0, x1, y, ymin) => n.push({ type, x, x0, x1, y, by: y, ymin, dir: Math.random() < 0.5 ? -1 : 1, sp: type === 'diver' ? 26 + Math.random() * 10 : 90 + Math.random() * 40, ph: Math.random() * 6, up: 0 });
+    add('diver', 1400, 500, 2600, 360, 140); add('diver', 3600, 2800, 4900, 470, 140);
+    add('diver', -2600, -4300, -600, 520, 410);
+    for (const x of [900, 1100, 3200]) add('otter', x, 300, 5000, 240 + Math.random() * 200, 110);
+    for (const x of [-1800, -2100]) add('otter', x, -4300, -500, 470, 390);
+    return n;
+  }
+  _dvNpcStep(dt){
+    const D = this._dv; if (!D || !D.npcs) return;
+    for (const c of D.npcs){
+      c.ph += dt;
+      if (c.type === 'otter'){
+        // playful loops, and a trip to the surface for air every so often
+        c.up -= dt;
+        if (c.up < -14 - Math.random() * 6) c.up = 2.2;
+        const S0 = this._dvSurf(c.x), tgt = c.up > 0 ? S0 + 4 : c.by + Math.sin(c.ph * 1.7) * 70;
+        c.y += clamp(tgt - c.y, -150 * dt, 150 * dt);
+        c.x += c.dir * c.sp * dt * (0.7 + 0.5 * Math.sin(c.ph * 2.3));
+      } else {
+        c.x += c.dir * c.sp * dt; c.y = c.by + Math.sin(c.ph * 0.5) * 30;
+        if (Math.random() < dt * 1.6) D.bubbles.push({ x: c.x + c.dir * 18, y: c.y - 10, r: 1.5 + Math.random() * 2.2, vy: 34 });
+      }
+      if (c.x < c.x0 || c.x > c.x1) c.dir *= -1;
+      c.y = clamp(c.y, c.ymin, this._dvBed(c.x) - 26);
+      const d = Math.hypot(D.x - c.x, D.y - c.y);
+      if (d < 110 && D.mode !== 'transit'){
+        const pk = this.state.player || 'bear';
+        if (c.type === 'diver' && !D.metDiver){ D.metDiver = true; this._dvMsg(pk === 'otter' ? '🤿 A scuba diver hangs still in the water and watches you swim by. Good diver: giving wildlife plenty of room!' : '🤿 A scuba diver gives you a puzzled double take… then a friendly thumbs-up. Nice tank!', 4800); }
+        if (c.type === 'otter' && !D.metOtter){ D.metOtter = true; this._dvMsg(pk === 'otter' ? '🦦 Another river otter twists in a loop around you, then zooms off. Otters love to play!' : '🦦 A river otter zips past in a twisting loop, then shoots up for a breath. Otters were brought back to the Smokies starting in 1986, and now they swim here too.', 5200); }
+      }
+    }
+  }
+  _dvNpcDraw(ctx, x0, x1, t){
+    const D = this._dv; if (!D || !D.npcs) return;
+    for (const c of D.npcs){
+      if (c.x < x0 - 80 || c.x > x1 + 80) continue;
+      ctx.save(); ctx.translate(c.x, c.y);
+      if (c.type === 'otter'){
+        const tilt = c.up > 0 ? -0.5 : Math.sin(c.ph * 1.7) * 0.4;
+        ctx.scale(c.dir * 1.15, 1.15); ctx.rotate(tilt); this.drawOtterSide(ctx, t * 6 + c.ph, 5, true);
+      } else {
+        // a diver seen from the side: wetsuit, tank, mask and kicking fins
+        ctx.scale(c.dir, 1);
+        const kick = Math.sin(t * 5 + c.ph) * 6;
+        ctx.strokeStyle = '#1e2a33'; ctx.lineWidth = 6; ctx.lineCap = 'round';
+        ctx.beginPath(); ctx.moveTo(-14, 2); ctx.lineTo(-34, 2 + kick); ctx.moveTo(-14, 4); ctx.lineTo(-34, 6 - kick); ctx.stroke();
+        ctx.fillStyle = '#2f7fb5'; for (const k of [kick, -kick]){ ctx.beginPath(); ctx.moveTo(-34, 2 + k); ctx.lineTo(-50, -2 + k * 1.3); ctx.lineTo(-50, 8 + k * 1.3); ctx.closePath(); ctx.fill(); }
+        ctx.fillStyle = '#1e2a33'; ctx.beginPath(); ctx.ellipse(0, 0, 20, 8, 0, 0, 7); ctx.fill();
+        ctx.fillStyle = '#e8b830'; ctx.beginPath(); ctx.roundRect(-14, -14, 26, 7, 3); ctx.fill();
+        ctx.strokeStyle = '#1e2a33'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(10, 4); ctx.lineTo(20, 12); ctx.stroke();
+        ctx.fillStyle = '#e8c9a0'; ctx.beginPath(); ctx.arc(23, -3, 6, 0, 7); ctx.fill();
+        ctx.fillStyle = '#1e2a33'; ctx.beginPath(); ctx.arc(22, -5, 6.4, Math.PI, 0); ctx.fill();
+        ctx.fillStyle = 'rgba(160,220,240,0.75)'; ctx.strokeStyle = '#111'; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.ellipse(27, -3, 3.6, 3, 0, 0, 7); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = '#d04a2a'; ctx.fillRect(-4, -2, 8, 3);
+      }
+      ctx.restore();
+    }
+  }
   // ===================== FONTANA DAM, UNDERWATER (v113): the dam wall, penstock and turbine, and Cheoah Lake on the far side =====================
   _dvSurf(x){ return (this._dv && !this._dv.pond && x < -200) ? 372 : 96; }
   _dvPath(dir){
@@ -7820,9 +7910,9 @@ class Component extends DCLogic {
       const deep = 400 + Math.sin(x / 140) * 22 + Math.sin(x / 47) * 9 + Math.sin(x / 19) * 3;
       return 112 + (deep - 112) * (edge * edge * (3 - 2 * edge));
     }
-    if (x < -380){ const e = clamp((x + 1500) / 320, 0, 1), dp = 700 + Math.sin(x / 130) * 16 + Math.sin(x / 41) * 6; return 388 + (dp - 388) * (e * e * (3 - 2 * e)); }
+    if (x < -380){ const e = clamp((x + 4500) / 320, 0, 1), dp = 700 + Math.sin(x / 130) * 16 + Math.sin(x / 41) * 6; return 388 + (dp - 388) * (e * e * (3 - 2 * e)); }
     if (x < 0) return 740;
-    const W = 2600, edge = Math.max(0, Math.min(1, (W - x) / 320));
+    const W = this._dvW || 5600, edge = Math.max(0, Math.min(1, (W - x) / 320));
     const deep = 650 + Math.sin(x / 170) * 34 + Math.sin(x / 61) * 14 + Math.sin(x / 23) * 4;
     return 112 + (deep - 112) * (edge * edge * (3 - 2 * edge));
   }
@@ -7830,6 +7920,7 @@ class Component extends DCLogic {
     if (this._diveOpen) return;
     const site0 = this._diveSite() || 'fontana', site = site0 === 'cheoah' ? 'fontana' : site0, pond = site === 'pond';
     this._dvSite = site;
+    this._dvW = pond ? 1500 : 5600;
     const scuba = (this.state.player || 'bear') !== 'otter', below = site0 === 'cheoah';
     const nearDam = !!this.lake && Math.hypot(this.bear.x - this.lake.pts[0][0], this.bear.y - this.lake.pts[0][1]) < 600;
     this._diveOpen = true; AMB.underwater(true); if (this.keys) this.keys.clear();
@@ -7854,18 +7945,18 @@ class Component extends DCLogic {
     document.body.appendChild(root);
     const cv = root.querySelector('canvas');
     const found = new Set(this.state[pond ? 'pondFinds' : 'diveFinds'] || []), litter = new Set(this.state[pond ? 'pondLitter' : 'diveLitter'] || []);
-    const items = this._dvTreasures().filter((t) => !(t.litter && litter.has(t.id))).map((t) => ({ ...t, y: this._dvBed(t.x) - 8, seen: found.has(t.id) }));
+    const items = this._dvTreasures().filter((t) => !(t.litter && litter.has(t.id))).map((t) => { const x = (!pond && t.x > 0) ? t.x * 2 : t.x; return { ...t, x, y: this._dvBed(x) - 8, seen: found.has(t.id) }; });
     const fish = [], cray = [];
     const LK = pond ? ['bluegill', 'largemouth', 'greensun', 'bluegill', 'greensun', 'bluegill'] : ['smallmouth', 'largemouth', 'walleye', 'perch', 'bluegill', 'crappie', 'cat', 'smallmouth', 'bluegill'];
-    const WD = pond ? 1500 : 2600, FX = WD - 300;
-    for (let i = 0; i < LK.length; i++) fish.push({ x: 300 + Math.random() * (FX - 300), y: 170 + Math.random() * (pond ? 160 : 380), dir: Math.random() < 0.5 ? -1 : 1, sp: 34 + Math.random() * 30, ph: Math.random() * 6, s: (LK[i] === 'bluegill' || LK[i] === 'crappie' ? 0.7 : 0.85) + Math.random() * 0.45, gone: 0, kind: LK[i] });
+    const WD = this._dvW, FX = WD - 300;
+    for (let i = 0; i < LK.length * (pond ? 1 : 2); i++) fish.push({ x: 300 + Math.random() * (FX - 300), y: 170 + Math.random() * (pond ? 160 : 380), dir: Math.random() < 0.5 ? -1 : 1, sp: 34 + Math.random() * 30, ph: Math.random() * 6, s: (LK[i % LK.length] === 'bluegill' || LK[i % LK.length] === 'crappie' ? 0.7 : 0.85) + Math.random() * 0.45, gone: 0, kind: LK[i % LK.length] });
     if (pond) fish.push({ x: 980, y: 360, dir: -1, sp: 9, ph: 0, s: 1, gone: 0, kind: 'snapper' });
     else fish.push({ x: 1200 + Math.random() * 800, y: 420 + Math.random() * 120, dir: 1, sp: 22, ph: 0, s: 2.2, gone: 0, kind: 'muskie' });
-    if (!pond) for (const k of ['rainbow', 'brown', 'rainbow', 'brown', 'rainbow']) fish.push({ x: -1350 + Math.random() * 850, y: 410 + Math.random() * 220, dir: Math.random() < 0.5 ? -1 : 1, sp: 40 + Math.random() * 26, ph: Math.random() * 6, s: 0.85 + Math.random() * 0.4, gone: 0, kind: k, x0: -1380, x1: -470, ymin: 392 });
-    for (let i = 0; i < (pond ? 3 : 4); i++){ const x = 500 + i * (pond ? 330 : 520) + Math.random() * 200; cray.push({ x, dir: Math.random() < 0.5 ? -1 : 1, ph: Math.random() * 6, gone: 0 }); }
+    if (!pond) for (const k of ['rainbow', 'brown', 'rainbow', 'brown', 'rainbow', 'brown', 'rainbow', 'brown', 'rainbow']) fish.push({ x: -4300 + Math.random() * 3800, y: 410 + Math.random() * 220, dir: Math.random() < 0.5 ? -1 : 1, sp: 40 + Math.random() * 26, ph: Math.random() * 6, s: 0.85 + Math.random() * 0.4, gone: 0, kind: k, x0: -4380, x1: -470, ymin: 392 });
+    for (let i = 0; i < (pond ? 3 : 8); i++){ const x = 500 + i * (pond ? 330 : 600) + Math.random() * 200; cray.push({ x, dir: Math.random() < 0.5 ? -1 : 1, ph: Math.random() * 6, gone: 0 }); }
     const weeds = []; for (let x = 160; x < WD - 140; x += (pond ? 26 : 38) + Math.random() * (pond ? 34 : 50)) weeds.push({ x, h: (pond ? 34 : 26) + Math.random() * (pond ? 60 : 46), ph: Math.random() * 6 });
     const rocks = []; for (let x = 140; x < WD - 120; x += 70 + Math.random() * 120) rocks.push({ x, r: 8 + Math.random() * 16 });
-    if (!pond){ for (let x = -1430; x < -470; x += 40 + Math.random() * 50) weeds.push({ x, h: 26 + Math.random() * 40, ph: Math.random() * 6 }); for (let x = -1420; x < -480; x += 80 + Math.random() * 110) rocks.push({ x, r: 8 + Math.random() * 14 }); }
+    if (!pond){ for (let x = -4430; x < -470; x += 40 + Math.random() * 50) weeds.push({ x, h: 26 + Math.random() * 40, ph: Math.random() * 6 }); for (let x = -4420; x < -480; x += 80 + Math.random() * 110) rocks.push({ x, r: 8 + Math.random() * 14 }); }
     // the pond: three wild otters to meet, an aquatic red-spotted newt, and (in early spring) spotted salamander eggs
     const pals = [], palsMet = new Set(this.state.pondPals || []);
     if (pond){
@@ -7873,7 +7964,7 @@ class Component extends DCLogic {
     }
     const doy = this.seasonDoy ? this.seasonDoy() : 150;
     this._dv = { site, pond, pondName: pond ? this._pondName() : 'Fontana Lake', pals, newt: pond ? { x: 520, y: 300, dir: 1, ph: 0, seen: false } : null, eggs: pond && doy >= 40 && doy <= 115,
-      root, cv, ctx: cv.getContext('2d'), W: WD, H: pond ? 520 : 760, x: pond ? 220 : below ? -800 : nearDam ? 300 : 1000, y: below ? 368 : 92, minX: pond ? 0 : -1460, scuba, startSide: below ? 'down' : 'up', gen: { on: true, t: 6, open: 0, spin: 1, ang: 0, bump: 0 }, vx: 0, vy: 0, face: 1, breath: 1, keys: new Set(), items, fish, cray, weeds, rocks, bubbles: [], carry: 0, cam: 0, last: performance.now(), card: false, gasp: 0, ptr: null };
+      root, cv, ctx: cv.getContext('2d'), W: WD, H: pond ? 520 : 760, x: pond ? 220 : below ? -800 : nearDam ? 300 : 1000, y: below ? 368 : 92, minX: pond ? 0 : -4460, npcs: this._dvNpcInit(pond), scuba, startSide: below ? 'down' : 'up', gen: { on: true, t: 6, open: 0, spin: 1, ang: 0, bump: 0 }, vx: 0, vy: 0, face: 1, breath: 1, keys: new Set(), items, fish, cray, weeds, rocks, bubbles: [], carry: 0, cam: 0, last: performance.now(), card: false, gasp: 0, ptr: null };
     root.addEventListener('pointerdown', (e) => {
       const b = e.target.closest('[data-a]');
       if (b){ e.preventDefault(); if (b.dataset.a === 'act') this._dvAct(); else if (b.dataset.a === 'exit') this.closeDive(); else if (b.dataset.a === 'card') this._dvCardClose(); return; }
@@ -7994,7 +8085,8 @@ class Component extends DCLogic {
   }
   _dvDen(){
     if (this._dvSite === 'pond') return (this._dv && this._dv.denSel) || this._pdDens()[0];
-    return { ex: 2392, ey: 440, cx: 2515, cy: 74, out: -1 };
+    const W = (this._dv && this._dv.W) || this._dvW || 5600;
+    return { ex: W - 208, ey: 440, cx: W - 85, cy: 74, out: -1 };
   }
   _dvAct(){
     const D = this._dv; if (!D || D.card || D.mode === 'transit') return;
@@ -8087,7 +8179,7 @@ class Component extends DCLogic {
       if (!iy && !D.scuba && D.y > this._dvSurf(D.x) + 8) D.vy -= 30 * dt;     // otters are a little buoyant
       const drag = Math.pow(0.12, dt); D.vx *= drag; D.vy *= drag;
       const sp = Math.hypot(D.vx, D.vy); if (sp > MAX){ D.vx *= MAX / sp; D.vy *= MAX / sp; }
-      const px0 = D.x; D.x = clamp(D.x + D.vx * dt, D.pond ? 40 : -1460, D.pond ? D.W - 40 : 2392);
+      const px0 = D.x; D.x = clamp(D.x + D.vx * dt, D.pond ? 40 : -4460, D.pond ? D.W - 40 : D.W - 208);
       if (!D.pond){ if (px0 >= 0 && D.x < 16){ D.x = 16; D.vx = Math.max(0, D.vx); } else if (px0 <= -420 && D.x > -436){ D.x = -436; D.vx = Math.min(0, D.vx); } }
       D.y += D.vy * dt;
       const floor = this._dvBed(D.x) - 13; if (D.y > floor){ D.y = floor; D.vy = Math.min(0, D.vy); }
@@ -8114,6 +8206,7 @@ class Component extends DCLogic {
           else this._dvCatch(f);
         }
       }
+      this._dvNpcStep(dt);
       for (const c of D.cray){ if (c.gone > 0){ c.gone -= dt; continue; } c.ph += dt * 3; c.x += c.dir * 12 * dt * (Math.sin(c.ph * 0.3) > -0.3 ? 1 : 0); if (Math.random() < dt * 0.3) c.dir *= -1; c.x = clamp(c.x, 300, D.W - 300); }
       for (const b of D.bubbles){ b.y -= b.vy * dt; b.x += Math.sin(b.y / 12) * 0.3; } D.bubbles = D.bubbles.filter((b) => b.y > this._dvSurf(b.x) - 4 && !(b.x > -426 && b.x < 4));
       if (D.slapT > 0) D.slapT -= dt;
@@ -8269,7 +8362,7 @@ class Component extends DCLogic {
     if (D.pond) this._pdDrawScene(ctx, x0, x1, t, SURF);
     else this._dvDamDraw(ctx, x0, x1, t);
     // the steep east bank with the otter den dug into it (cutaway)
-    { const den = this._dvDen(), BX = 2400;
+    { const den = this._dvDen(), BX = D.W - 200, OF = D.W - 2600;
       if (!D.pond && x1 > BX - 40){
         ctx.fillStyle = '#4a3e2c'; ctx.beginPath(); ctx.moveTo(BX, D.H); ctx.lineTo(BX, SURF + 6);
         for (let x = BX; x <= D.W + 10; x += 10) ctx.lineTo(x, SURF - Math.min(1, (x - BX) / 50) * 60 + Math.sin(x * 0.08) * 2);
@@ -8278,16 +8371,16 @@ class Component extends DCLogic {
         for (let x = BX; x <= D.W + 10; x += 10) ctx.lineTo(x, SURF - Math.min(1, (x - BX) / 50) * 60 + Math.sin(x * 0.08) * 2);
         for (let x = D.W + 10; x >= BX; x -= 10) ctx.lineTo(x, SURF - Math.min(1, (x - BX) / 50) * 60 + Math.sin(x * 0.08) * 2 + 7);
         ctx.closePath(); ctx.fill();
-        for (const tx of [2470, 2580]){ const ty = SURF - 60; ctx.fillStyle = '#4a3420'; ctx.fillRect(tx - 3, ty - 34, 6, 34); ctx.fillStyle = '#3e6a3a'; ctx.beginPath(); ctx.moveTo(tx, ty - 74); ctx.lineTo(tx - 18, ty - 30); ctx.lineTo(tx + 18, ty - 30); ctx.closePath(); ctx.fill(); }
+        for (const tx of [(2470 + OF), (2580 + OF)]){ const ty = SURF - 60; ctx.fillStyle = '#4a3420'; ctx.fillRect(tx - 3, ty - 34, 6, 34); ctx.fillStyle = '#3e6a3a'; ctx.beginPath(); ctx.moveTo(tx, ty - 74); ctx.lineTo(tx - 18, ty - 30); ctx.lineTo(tx + 18, ty - 30); ctx.closePath(); ctx.fill(); }
         // roots and stones in the cutaway
         ctx.strokeStyle = 'rgba(30,22,14,0.5)'; ctx.lineWidth = 1.2;
-        for (let k = 0; k < 7; k++){ const rx = 2420 + k * 26; ctx.beginPath(); ctx.moveTo(rx, SURF - 50); ctx.quadraticCurveTo(rx + 8, SURF - 20, rx - 4, SURF + 20 + (k % 3) * 14); ctx.stroke(); }
-        ctx.fillStyle = 'rgba(110,100,84,0.6)'; for (const [sx, sy, r] of [[2440, 300, 9], [2560, 380, 12], [2500, 520, 10], [2580, 240, 7]]){ ctx.beginPath(); ctx.ellipse(sx, sy, r, r * 0.7, 0, 0, 7); ctx.fill(); }
+        for (let k = 0; k < 7; k++){ const rx = (2420 + OF) + k * 26; ctx.beginPath(); ctx.moveTo(rx, SURF - 50); ctx.quadraticCurveTo(rx + 8, SURF - 20, rx - 4, SURF + 20 + (k % 3) * 14); ctx.stroke(); }
+        ctx.fillStyle = 'rgba(110,100,84,0.6)'; for (const [sx, sy, r] of [[(2440 + OF), 300, 9], [(2560 + OF), 380, 12], [(2500 + OF), 520, 10], [(2580 + OF), 240, 7]]){ ctx.beginPath(); ctx.ellipse(sx, sy, r, r * 0.7, 0, 0, 7); ctx.fill(); }
         // the tunnel up from the underwater entrance
         ctx.strokeStyle = '#1e1810'; ctx.lineCap = 'round'; ctx.lineWidth = 30;
-        ctx.beginPath(); ctx.moveTo(den.ex - 4, den.ey); ctx.bezierCurveTo(2470, 380, 2440, 220, 2490, 150); ctx.quadraticCurveTo(2512, 116, den.cx, den.cy + 6); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(den.ex - 4, den.ey); ctx.bezierCurveTo((2470 + OF), 380, (2440 + OF), 220, (2490 + OF), 150); ctx.quadraticCurveTo((2512 + OF), 116, den.cx, den.cy + 6); ctx.stroke();
         ctx.strokeStyle = 'rgba(42,102,128,0.85)'; ctx.lineWidth = 22;
-        ctx.beginPath(); ctx.moveTo(den.ex - 4, den.ey); ctx.bezierCurveTo(2470, 380, 2440, 220, 2490, 150); ctx.quadraticCurveTo(2500, 128, 2508, SURF + 6); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(den.ex - 4, den.ey); ctx.bezierCurveTo((2470 + OF), 380, (2440 + OF), 220, (2490 + OF), 150); ctx.quadraticCurveTo((2500 + OF), 128, (2508 + OF), SURF + 6); ctx.stroke();
         // the dry chamber, lined with leaves and grass
         ctx.fillStyle = '#1e1810'; ctx.beginPath(); ctx.ellipse(den.cx, den.cy, 46, 24, 0, 0, 7); ctx.fill();
         ctx.fillStyle = '#7a6a3a'; ctx.beginPath(); ctx.ellipse(den.cx, den.cy + 14, 40, 9, 0, 0, 7); ctx.fill();
@@ -8306,9 +8399,9 @@ class Component extends DCLogic {
     for (const fx of [1780, 1940]){ const by = this._dvBed(fx); ctx.fillStyle = '#6a6458'; ctx.fillRect(fx - 40, by - 14, 80, 8); ctx.fillRect(fx - 40, by - 30, 10, 22); ctx.fillRect(fx + 30, by - 24, 10, 16); }
     }
     // rocks and weeds
-    for (const r of D.rocks){ if (r.x < x0 - 40 || r.x > x1 + 40 || (!D.pond && r.x > 2385)) continue; const by = this._dvBed(r.x); ctx.fillStyle = '#5a5448'; ctx.beginPath(); ctx.ellipse(r.x, by - r.r * 0.35, r.r, r.r * 0.6, 0, 0, 7); ctx.fill(); ctx.fillStyle = 'rgba(255,255,255,0.06)'; ctx.beginPath(); ctx.ellipse(r.x - r.r * 0.3, by - r.r * 0.6, r.r * 0.5, r.r * 0.22, 0, 0, 7); ctx.fill(); }
+    for (const r of D.rocks){ if (r.x < x0 - 40 || r.x > x1 + 40 || (!D.pond && r.x > D.W - 215)) continue; const by = this._dvBed(r.x); ctx.fillStyle = '#5a5448'; ctx.beginPath(); ctx.ellipse(r.x, by - r.r * 0.35, r.r, r.r * 0.6, 0, 0, 7); ctx.fill(); ctx.fillStyle = 'rgba(255,255,255,0.06)'; ctx.beginPath(); ctx.ellipse(r.x - r.r * 0.3, by - r.r * 0.6, r.r * 0.5, r.r * 0.22, 0, 0, 7); ctx.fill(); }
     ctx.strokeStyle = '#3e6a3a'; ctx.lineWidth = 3; ctx.lineCap = 'round';
-    for (const w of D.weeds){ if (w.x < x0 - 40 || w.x > x1 + 40 || (!D.pond && w.x > 2385)) continue; const by = this._dvBed(w.x); ctx.beginPath(); ctx.moveTo(w.x, by); ctx.quadraticCurveTo(w.x + Math.sin(t + w.ph) * 10, by - w.h * 0.5, w.x + Math.sin(t * 1.2 + w.ph) * 14, by - w.h); ctx.stroke(); }
+    for (const w of D.weeds){ if (w.x < x0 - 40 || w.x > x1 + 40 || (!D.pond && w.x > D.W - 215)) continue; const by = this._dvBed(w.x); ctx.beginPath(); ctx.moveTo(w.x, by); ctx.quadraticCurveTo(w.x + Math.sin(t + w.ph) * 10, by - w.h * 0.5, w.x + Math.sin(t * 1.2 + w.ph) * 14, by - w.h); ctx.stroke(); }
     // landmarks that go with the treasures
     if (!D.pond){
     { const cx = 640, by = this._dvBed(cx); ctx.fillStyle = '#7a6e5e'; ctx.fillRect(cx - 22, by - 150, 44, 150); ctx.strokeStyle = 'rgba(70,60,50,0.55)'; ctx.lineWidth = 1; for (let yy = by - 150; yy < by; yy += 14) for (let xx = cx - 22 + ((yy / 14) % 2 ? 0 : 11); xx < cx + 22; xx += 22) ctx.strokeRect(xx, yy, 22, 14); ctx.fillStyle = '#5a5044'; ctx.fillRect(cx - 28, by - 156, 56, 10); }
@@ -8372,6 +8465,7 @@ class Component extends DCLogic {
       }
     }
     // the otter, swimming
+    this._dvNpcDraw(ctx, x0, x1, t);
     { const vx = D.mode === 'transit' ? D.tvx : D.vx, vy = D.mode === 'transit' ? D.tvy : D.vy;
       const tilt = clamp(Math.atan2(vy, Math.abs(vx) + 30), -0.9, 0.9), sp = Math.hypot(vx, vy), gait = t * (4 + sp / 25);
       const inDen = D.mode === 'den', pk = this.state.player || 'bear';
@@ -8392,7 +8486,7 @@ class Component extends DCLogic {
       ctx.strokeStyle = 'rgba(240,252,255,0.8)'; ctx.lineWidth = 1.5; ctx.beginPath();
       for (let x = a; x <= xb; x += 10) x === a ? ctx.moveTo(x, S + Math.sin(x * 0.05 + t * 2) * 2.2) : ctx.lineTo(x, S + Math.sin(x * 0.05 + t * 2) * 2.2); ctx.stroke(); };
     if (D.pond) surfLine(Math.floor(x0 / 10) * 10, Math.min(x1 + 10, D.W), SURF);
-    else { surfLine(Math.max(x0, 4), Math.min(x1 + 10, 2400), SURF); surfLine(x0, Math.min(x1, -426), 372); }
+    else { surfLine(Math.max(x0, 4), Math.min(x1 + 10, D.W - 200), SURF); surfLine(x0, Math.min(x1, -426), 372); }
     // deeper water is darker near the bottom of the screen
     ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
@@ -9093,6 +9187,9 @@ class Component extends DCLogic {
       mk('Cable Mill', 69.2, 121.5, 11, 9, 'log', { wall: '#7a5a3a' })
     ];
     for (const b of this.cadesHistoric) this.buildings.push(b);
+    // v116: the Kuwohi Visitor Contact Station, by the parking area below the tower
+    this.kuwohiVC = mk('Kuwohi Visitor Contact Station', 344, 89.6, 30, 18, 'board', { wall: '#b8ab8a', roof: '#4a4a40', front: 'south' });
+    this.buildings.push(this.kuwohiVC);
   }
   // ---------- lazily placed things that need the terrain grid ----------
   initFeatures(){
@@ -15715,6 +15812,27 @@ class Component extends DCLogic {
         front: [['tiny', 'The log room']],
         items: [{ kind: 'note', slot: 'wall', name: 'old family Bible', icon: '\uD83D\uDCD6', title: 'The Olivers', body: '<b>John and Lucretia Oliver</b> and their little daughter, Polly, came to Cades Cove in <b>1818</b>, the first Euro-American family to settle here. The Cherokee had lived in this land for thousands of years and still had a settlement nearby.' },
           { kind: 'note', slot: 'floor', prop: 'table', name: 'notched logs', icon: '\uD83E\uDEB5', title: 'The Second Cabin', body: 'The Olivers’ first cabin stood a few dozen yards away and is long gone. They built this one in the <b>1820s</b>, and it’s the oldest log home in the cove. The family kept it for more than 100 years, until the national park was created.' }] })); }
+    { const kb = this.kuwohiVC;
+      if (kb) list.push(mk({
+        key: 'kuwohi_vc', cabObj: kb, door: { x: kb.x, y: kb.y + kb.h / 2 + 8 }, name: 'Kuwohi Visitor Contact Station', short: 'the Kuwohi visitor center', w: 900, h: 620, bright: true,
+        kicker: 'KUWOHI', outMsg: 'Back out into the cool air at the Kuwohi parking area.',
+        intro: '🏔️ The little visitor contact station at the Kuwohi parking area: an information counter and a park store full of maps, hats and books. The tower is a steep half mile up the trail. Press E to talk to Rosa at the register.',
+        wallTone: '#5a6a58', floor: '#9a8a6e',
+        rooms: [{ x: 20, y: 20, w: 860, h: 580, name: 'Information & park store' }], doors: [], exitRoom: 0, exitX: 450,
+        furn: [
+          { t: 'window', x: 140, y: 36, w: 60 }, { t: 'window', x: 640, y: 36, w: 60 },
+          { t: 'bookshelf', x: 60, y: 30, w: 130 }, { t: 'bookshelf', x: 720, y: 30, w: 130 },
+          { t: 'shirtshelf', x: 330, y: 40, w: 104, h: 40 }, { t: 'trailmap', x: 470, y: 40, w: 58, h: 40 },
+          { t: 'booktable', x: 160, y: 300, w: 120, h: 60, solid: true },
+          { t: 'plush', x: 620, y: 330, w: 70, h: 30 },
+          { t: 'counter', x: 380, y: 210, w: 150, h: 40, solid: true, register: true, sign: 'PARK STORE' }
+        ],
+        items: [
+          { kind: 'kvc_clerk', x: 455, y: 300, r: 100 },
+          { kind: 'note', x: 500, y: 130, r: 70, name: 'trail map', icon: '🗺️', title: 'The Kuwohi Trail', body: 'From the parking area, a steep, paved trail climbs about a <b>half mile</b> to the observation tower on the summit of Kuwohi, <b>6,643 feet</b> up, the highest point in the park. Take your time: the air is thinner up here.' },
+          { kind: 'note', x: 220, y: 420, r: 80, name: 'book table', icon: '📚', title: 'The Book Table', body: 'Field guides, trail maps, picture books… and a stack of <b>Great Smoky Mountains Trivia &amp; Activities</b> right in the middle. Ask Rosa at the register!' }
+        ]
+      })); }
     for (const d of this.lodgeHouseDefs(mk)) list.push(d);
     for (const d of this.shopHouseDefs(mk)) list.push(d);
     this._houseDefs = list;
@@ -16666,6 +16784,7 @@ class Component extends DCLogic {
     // the haint glows through the dark
     if (H.key === 'clubhouse_up') this.drawClubPeople(ctx, ox, oy, now);
     if (H.key === 'vc') this.drawVCPeople(ctx, ox, oy, now);
+    if (H.key === 'kuwohi_vc'){ const bob = Math.sin(now * 3) * 2; ctx.save(); ctx.translate(455 - ox, 196 - oy); ctx.scale(2.7, 2.7); this.drawVillager(ctx, { x: 0, y: 0, slot: 1, ph: 0, heading: Math.PI / 2, outfit: { shirt: '#3f6b3a', skirt: '#4a4a3a', pants: null, hat: null, hair: '#d8d8d0' } }, 0, 0, now); ctx.restore(); ctx.fillStyle = 'rgba(43,44,48,0.92)'; ctx.strokeStyle = '#6aa84f'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.roundRect(442 - ox, 140 - oy + bob, 26, 18, 7); ctx.fill(); ctx.stroke(); ctx.font = '12px sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = '#fff'; ctx.fillText('💬', 455 - ox, 153 - oy + bob); ctx.fillStyle = '#e2ddd3'; ctx.font = '700 11px LatoB, sans-serif'; ctx.fillText('Rosa', 455 - ox, 168 - oy); }
     if (H.lodge){ this.drawLodgePeople(ctx, ox, oy, now); this.lodgeTint(ctx, ox, oy, now, vw, vh); }
     if (H.shop) this.drawShopPeople(ctx, ox, oy, now);
     if (H.key === 'clubhouse'){
@@ -16939,6 +17058,7 @@ class Component extends DCLogic {
     if (it.kind === 'desk2') return '\uD83D\uDCAC Talk to Ranger Marcus (trivia)';
     if (it.kind === 'visitor') return '\uD83D\uDCAC Talk to ' + it.name;
     if (it.kind === 'shop') return '\uD83D\uDCAC Talk to Dot at the register (buy the book)';
+    if (it.kind === 'kvc_clerk') return '💬 Talk to Rosa at the register';
     return null;
   }
   vcAction(it){
@@ -16953,6 +17073,7 @@ class Component extends DCLogic {
     if (it.kind === 'desk2'){ this.talkMarcus(); return true; }
     if (it.kind === 'visitor'){ this.talkVisitor(it); return true; }
     if (it.kind === 'shop'){ this.talkClerk(); return true; }
+    if (it.kind === 'kvc_clerk'){ this.talkKuwohiClerk(); return true; }
     if (it.kind === 'buybook'){
       const link = '<a href="https://amzn.to/4wJeXJo" target="_blank" rel="noopener" style="display:inline-block;margin-top:12px;background:#e8791b;color:#fff;text-decoration:none;font-family:LatoB,sans-serif;padding:9px 18px;border-radius:20px;">Get the real book on Amazon</a>';
       const price = 3, b = this.state.berries || 0;
@@ -18524,11 +18645,14 @@ class Component extends DCLogic {
       const a = clamp(1 - p.t / 7, 0, 1) * 0.22;
       if (a <= 0) continue;
       ctx.fillStyle = `rgba(30,22,10,${a})`;
-      const px = p.x - ox + (p.side ? 5 : -5), py = p.y - oy;
+      // rotate so the toes point along the direction of travel; left and right prints sit either side of the path
+      ctx.save(); ctx.translate(p.x - ox, p.y - oy); ctx.rotate((p.a ?? -Math.PI / 2) + Math.PI / 2);
+      const px = p.side ? 5 : -5, py = 0;
       ctx.beginPath(); ctx.ellipse(px, py, 3.2, 4.2, 0, 0, 7); ctx.fill();
       ctx.beginPath(); ctx.ellipse(px - 2.4, py - 4.6, 1.1, 1.5, 0, 0, 7); ctx.fill();
       ctx.beginPath(); ctx.ellipse(px, py - 5.2, 1.1, 1.5, 0, 0, 7); ctx.fill();
       ctx.beginPath(); ctx.ellipse(px + 2.4, py - 4.6, 1.1, 1.5, 0, 0, 7); ctx.fill();
+      ctx.restore();
     }
 
     this.drawBaldBlooms(ctx, ox, oy, vw, vh);
