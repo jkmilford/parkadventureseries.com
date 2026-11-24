@@ -36,7 +36,7 @@
     <span id="bootMsg" style="opacity:.85;">Hiking in…</span><span id="bootPct" style="opacity:.7;">0%</span>
   </div>
   <div id="bootTip" style="max-width:340px;min-height:3.2em;text-align:center;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:14px;line-height:1.45;opacity:.8;margin-top:26px;transition:opacity .4s;"></div>
-  <div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:11.5px;opacity:.55;">© 2026 Sirreel LLC. All rights reserved. · v116</div>
+  <div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:11.5px;opacity:.55;">© 2026 Sirreel LLC. All rights reserved. · v118</div>
 </div>
 <script>
 (function(){
@@ -74,7 +74,7 @@
     if (real && p < 100 && Date.now() - lastT > 15000){
       clearInterval(tipT);
       tip.style.opacity = .9;
-      tip.innerHTML = 'Still working on <b>' + msg.textContent + '</b> (' + Math.round((Date.now() - lastT) / 1000) + ' s at ' + p + '%, ' + Math.round((Date.now() - t0) / 1000) + ' s total).<br><span style="font-size:11.5px;opacity:.8">If it stays stuck, a screenshot of this helps: ' + devInfo() + ' · v116</span>';
+      tip.innerHTML = 'Still working on <b>' + msg.textContent + '</b> (' + Math.round((Date.now() - lastT) / 1000) + ' s at ' + p + '%, ' + Math.round((Date.now() - t0) / 1000) + ' s total).<br><span style="font-size:11.5px;opacity:.8">If it stays stuck, a screenshot of this helps: ' + devInfo() + ' · v118</span>';
     }
   }, 1000);
   window.__bootLoader = {
@@ -370,7 +370,7 @@ div:has(> .ts) > :not(.ts):not(canvas:first-child){visibility:hidden}
         </div>
         <div style="font-family:'LatoR',sans-serif;font-size:clamp(10px,1.7vh,12px);margin-top:min(1.4vh,10px);">
           <a href="https://parkadventureseries.com/smokies/matching.html" style="color:#e9c46a;opacity:.85;text-decoration:none;border-bottom:1px solid rgba(233,196,106,.4);">Play the Smokies Matching Game</a>
-          <span style="opacity:.4;"> &nbsp;·&nbsp; © 2026 Sirreel LLC. All rights reserved. · v116</span>
+          <span style="opacity:.4;"> &nbsp;·&nbsp; © 2026 Sirreel LLC. All rights reserved. · v118</span>
         </div>
       </div>
     </div>
@@ -1444,7 +1444,7 @@ class Component extends DCLogic {
       { name: 'Cataloochee Boar', hx: 575 * CELL, hy: 142 * CELL, hr: 130 },
       { name: 'Elkmont Old-Timer', hx: 180 * CELL, hy: 40 * CELL, hr: 110 },
       { name: 'Fontana Drifter', hx: 262 * CELL, hy: 178 * CELL, hr: 130 }
-    ].map((r) => ({
+    ].map((r) => { const [hx, hy] = this._dryNudge(r.hx, r.hy); return { ...r, hx, hy }; }).map((r) => ({
       ...r, x: r.hx, y: r.hy, heading: Math.random() * 6.28, speed: 0, dir: 0,
       wt: 0, ph: Math.random() * 10, placatedT: 0, hitCd: 0, growlCd: 0, state: 'wander'
     }));
@@ -1631,7 +1631,7 @@ class Component extends DCLogic {
         stamina: sv.stamina ?? 100, trackedId: sv.trackedId ?? null, berries: clamp(sv.berries ?? 0, 0, 10), dashBerries: clamp(sv.dashBerries ?? 0, 0, 5), introSeen: sv.introSeen ?? false, fireflyCount: clamp(sv.fireflyCount ?? 0, 0, 9),
         syncSeen: !!sv.syncSeen, caveSeen: !!sv.caveSeen, netSwings: clamp(sv.netSwings ?? 0, 0, 99), bottleUses: clamp(sv.bottleUses ?? 0, 0, 99),
         books: sv.books || [], bookDelivered: !!sv.bookDelivered, seriesComplete: !!sv.seriesComplete, salamanderBook: !!sv.salamanderBook, booksTurnedIn: !!sv.booksTurnedIn,
-        jr: sv.jr || null, juniorRanger: !!sv.juniorRanger, triviaRight: sv.triviaRight || [], postcards: sv.postcards || 0, waltGift: !!sv.waltGift, blueberryGift: !!sv.blueberryGift, lodgeKey: !!sv.lodgeKey, fat: sv.fat || 0, diveFinds: sv.diveFinds || [], pondFinds: sv.pondFinds || [], raptor: sv.raptor || null, raptorsFreed: sv.raptorsFreed || [], raptorNext: sv.raptorNext ?? null, pondLitter: sv.pondLitter || [], pondPals: sv.pondPals || [], otterPond: sv.otterPond || {}, pondLodgeSeen: !!sv.pondLodgeSeen, pondOldLodgeSeen: !!sv.pondOldLodgeSeen, otterPredSeen: !!sv.otterPredSeen, damSeen: !!sv.damSeen, scubaSeen: !!sv.scubaSeen, damInsideSeen: !!sv.damInsideSeen, relicsSeen: sv.relicsSeen || [], mineStep: sv.mineStep || 0, artifactTalk: !!sv.artifactTalk, ffShowSeen: sv.ffShowSeen || 0, bearSwimSeen: !!sv.bearSwimSeen, pondSeen: !!sv.pondSeen, diveLitter: sv.diveLitter || [], diveSeen: !!sv.diveSeen, otterDenSeen: !!sv.otterDenSeen, poach: sv.poach || 0, poachEv: sv.poachEv || [], guardian: !!sv.guardian, isRanger: !!sv.isRanger, arrests: sv.arrests || 0, drivenOut: sv.drivenOut || 0, toursGiven: sv.toursGiven || 0, tourBest: sv.tourBest || {}, tubeRuns: sv.tubeRuns || {}, climbWins: sv.climbWins || 0, climbBest: sv.climbBest || {}, digWins: sv.digWins || 0, digBest: sv.digBest || {}, diveWins: sv.diveWins || 0, diveBest: sv.diveBest || {}, trailSeen: sv.trailSeen || [], placesSeen: sv.placesSeen || [], locSeenAt: sv.locSeenAt || {}, rivalsDone: sv.rivalsDone || [], trailsDone: sv.trailsDone || [], beeDay: sv.beeDay ?? null, beeSeen: !!sv.beeSeen, disguiseKind: sv.disguiseKind || 'classic', cubs: sv.cubs || 0, batsSeen: sv.batsSeen || [], denYear: sv.denYear ?? null, ffYear: sv.ffYear ?? null, photos: sv.photos || [], hasBinocs: !!sv.hasBinocs, hasPoncho: !!sv.hasPoncho, hasBell: !!sv.hasBell, bellOn: !!sv.bellOn, riddlesDone: sv.riddlesDone || [], vcDoorSeen: !!sv.vcDoorSeen, hasDisguise: !!sv.hasDisguise, disguiseOn: !!sv.disguiseOn, hasCanoe: !!sv.hasCanoe, zipBest: sv.zipBest || 0, zipRides: sv.zipRides || 0, zipSeen: !!sv.zipSeen, hasRod: !!sv.hasRod, trout: sv.trout || { brook: 0, rainbow: 0 }, otterFish: sv.otterFish || {}, otterFishSeen: !!sv.otterFishSeen, otterLake: sv.otterLake || {}, quest: sv.quest || {}, foxPrey: sv.foxPrey || {}, carry: sv.carry || null, kitsAtDen: !!sv.kitsAtDen, bestSkips: sv.bestSkips || 0, skipSeen: !!sv.skipSeen, mammalPhotos: sv.mammalPhotos || [], fireSaves: sv.fireSaves || 0, fireSeen: !!sv.fireSeen, hasLantern: !!sv.hasLantern, lanternUses: sv.lanternUses ?? (sv.hasLantern ? 2 : 0), lanternSpent: !!sv.lanternSpent, antiques: sv.antiques || [], ghostBanished: !!sv.ghostBanished, pantryOpen: !!sv.pantryOpen, ghostMet: !!sv.ghostMet,
+        jr: sv.jr || null, juniorRanger: !!sv.juniorRanger, triviaRight: sv.triviaRight || [], postcards: sv.postcards || 0, waltGift: !!sv.waltGift, blueberryGift: !!sv.blueberryGift, lodgeKey: !!sv.lodgeKey, fat: sv.fat || 0, diveFinds: sv.diveFinds || [], pondFinds: sv.pondFinds || [], raptor: sv.raptor || null, raptorsFreed: sv.raptorsFreed || [], raptorNext: sv.raptorNext ?? null, pondLitter: sv.pondLitter || [], pondPals: sv.pondPals || [], otterPond: sv.otterPond || {}, pondLodgeSeen: !!sv.pondLodgeSeen, pondOldLodgeSeen: !!sv.pondOldLodgeSeen, otterPredSeen: !!sv.otterPredSeen, damSeen: !!sv.damSeen, scubaSeen: !!sv.scubaSeen, damInsideSeen: !!sv.damInsideSeen, relicsSeen: sv.relicsSeen || [], mineStep: sv.mineStep || 0, artifactTalk: !!sv.artifactTalk, ffShowSeen: sv.ffShowSeen || 0, bearSwimSeen: !!sv.bearSwimSeen, caveGateSeen: !!sv.caveGateSeen, pondSeen: !!sv.pondSeen, diveLitter: sv.diveLitter || [], diveSeen: !!sv.diveSeen, otterDenSeen: !!sv.otterDenSeen, poach: sv.poach || 0, poachEv: sv.poachEv || [], guardian: !!sv.guardian, isRanger: !!sv.isRanger, arrests: sv.arrests || 0, drivenOut: sv.drivenOut || 0, toursGiven: sv.toursGiven || 0, tourBest: sv.tourBest || {}, tubeRuns: sv.tubeRuns || {}, climbWins: sv.climbWins || 0, climbBest: sv.climbBest || {}, digWins: sv.digWins || 0, digBest: sv.digBest || {}, diveWins: sv.diveWins || 0, diveBest: sv.diveBest || {}, trailSeen: sv.trailSeen || [], placesSeen: sv.placesSeen || [], locSeenAt: sv.locSeenAt || {}, rivalsDone: sv.rivalsDone || [], trailsDone: sv.trailsDone || [], beeDay: sv.beeDay ?? null, beeSeen: !!sv.beeSeen, disguiseKind: sv.disguiseKind || 'classic', cubs: sv.cubs || 0, batsSeen: sv.batsSeen || [], denYear: sv.denYear ?? null, ffYear: sv.ffYear ?? null, photos: sv.photos || [], hasBinocs: !!sv.hasBinocs, hasPoncho: !!sv.hasPoncho, hasBell: !!sv.hasBell, bellOn: !!sv.bellOn, riddlesDone: sv.riddlesDone || [], vcDoorSeen: !!sv.vcDoorSeen, hasDisguise: !!sv.hasDisguise, disguiseOn: !!sv.disguiseOn, hasCanoe: !!sv.hasCanoe, zipBest: sv.zipBest || 0, zipRides: sv.zipRides || 0, zipSeen: !!sv.zipSeen, hasRod: !!sv.hasRod, trout: sv.trout || { brook: 0, rainbow: 0 }, otterFish: sv.otterFish || {}, otterFishSeen: !!sv.otterFishSeen, otterLake: sv.otterLake || {}, quest: sv.quest || {}, foxPrey: sv.foxPrey || {}, carry: sv.carry || null, kitsAtDen: !!sv.kitsAtDen, bestSkips: sv.bestSkips || 0, skipSeen: !!sv.skipSeen, mammalPhotos: sv.mammalPhotos || [], fireSaves: sv.fireSaves || 0, fireSeen: !!sv.fireSeen, hasLantern: !!sv.hasLantern, lanternUses: sv.lanternUses ?? (sv.hasLantern ? 2 : 0), lanternSpent: !!sv.lanternSpent, antiques: sv.antiques || [], ghostBanished: !!sv.ghostBanished, pantryOpen: !!sv.pantryOpen, ghostMet: !!sv.ghostMet,
         completeSeen: (sv.foundIds || []).length >= SPECIES.length
       });
       this._stAccum = sv.stamina ?? 100;
@@ -1678,7 +1678,7 @@ class Component extends DCLogic {
         stamina: Math.round(this.state.stamina),
         x: Math.round((this.inCave && this._outside ? this._outside : this.inHouse && this._outsideHouse ? this._outsideHouse : this.bear).x),
         y: Math.round((this.inCave && this._outside ? this._outside : this.inHouse && this._outsideHouse ? this._outsideHouse : this.bear).y),
-        jr: this.state.jr || null, juniorRanger: !!this.state.juniorRanger, triviaRight: this.state.triviaRight || [], postcards: this.state.postcards || 0, waltGift: !!this.state.waltGift, blueberryGift: !!this.state.blueberryGift, lodgeKey: !!this.state.lodgeKey, fat: this.state.fat || 0, diveFinds: this.state.diveFinds || [], pondFinds: this.state.pondFinds || [], raptor: this.state.raptor || null, raptorsFreed: this.state.raptorsFreed || [], raptorNext: this.state.raptorNext ?? null, pondLitter: this.state.pondLitter || [], pondPals: this.state.pondPals || [], otterPond: this.state.otterPond || {}, pondLodgeSeen: !!this.state.pondLodgeSeen, pondOldLodgeSeen: !!this.state.pondOldLodgeSeen, otterPredSeen: !!this.state.otterPredSeen, damSeen: !!this.state.damSeen, scubaSeen: !!this.state.scubaSeen, damInsideSeen: !!this.state.damInsideSeen, relicsSeen: this.state.relicsSeen || [], mineStep: this.state.mineStep || 0, artifactTalk: !!this.state.artifactTalk, ffShowSeen: this.state.ffShowSeen || 0, bearSwimSeen: !!this.state.bearSwimSeen, pondSeen: !!this.state.pondSeen, diveLitter: this.state.diveLitter || [], diveSeen: !!this.state.diveSeen, otterDenSeen: !!this.state.otterDenSeen, poach: this.state.poach || 0, poachEv: this.state.poachEv || [], guardian: !!this.state.guardian, isRanger: !!this.state.isRanger, arrests: this.state.arrests || 0, drivenOut: this.state.drivenOut || 0, toursGiven: this.state.toursGiven || 0, tourBest: this.state.tourBest || {}, tubeRuns: this.state.tubeRuns || {}, climbWins: this.state.climbWins || 0, climbBest: this.state.climbBest || {}, digWins: this.state.digWins || 0, digBest: this.state.digBest || {}, diveWins: this.state.diveWins || 0, diveBest: this.state.diveBest || {}, trailSeen: this.state.trailSeen || [], placesSeen: this.state.placesSeen || [], locSeenAt: this.state.locSeenAt || {}, rivalsDone: this.state.rivalsDone || [], trailsDone: this.state.trailsDone || [], beeDay: this.state.beeDay ?? null, beeSeen: !!this.state.beeSeen, disguiseKind: this.state.disguiseKind || 'classic', cubs: this.state.cubs || 0, batsSeen: this.state.batsSeen || [], denYear: this.state.denYear ?? null, ffYear: this.state.ffYear ?? null, photos: this.state.photos || [], hasBinocs: !!this.state.hasBinocs, hasPoncho: !!this.state.hasPoncho, hasBell: !!this.state.hasBell, bellOn: !!this.state.bellOn, riddlesDone: this.state.riddlesDone || [], vcDoorSeen: !!this.state.vcDoorSeen, hasDisguise: !!this.state.hasDisguise, disguiseOn: !!this.state.disguiseOn, hasCanoe: !!this.state.hasCanoe, zipBest: this.state.zipBest || 0, zipRides: this.state.zipRides || 0, zipSeen: !!this.state.zipSeen, hasRod: !!this.state.hasRod, trout: this.state.trout || { brook: 0, rainbow: 0 }, otterFish: this.state.otterFish || {}, otterFishSeen: !!this.state.otterFishSeen, otterLake: this.state.otterLake || {}, quest: this.state.quest || {}, foxPrey: this.state.foxPrey || {}, carry: this.state.carry || null, kitsAtDen: !!this.state.kitsAtDen, bestSkips: this.state.bestSkips || 0, skipSeen: !!this.state.skipSeen, mammalPhotos: this.state.mammalPhotos || [], fireSaves: this.state.fireSaves || 0, fireSeen: !!this.state.fireSeen, hasLantern: !!this.state.hasLantern, lanternUses: this.state.lanternUses || 0, lanternSpent: !!this.state.lanternSpent, antiques: this.state.antiques || [], ghostBanished: !!this.state.ghostBanished, pantryOpen: !!this.state.pantryOpen, ghostMet: !!this.state.ghostMet,
+        jr: this.state.jr || null, juniorRanger: !!this.state.juniorRanger, triviaRight: this.state.triviaRight || [], postcards: this.state.postcards || 0, waltGift: !!this.state.waltGift, blueberryGift: !!this.state.blueberryGift, lodgeKey: !!this.state.lodgeKey, fat: this.state.fat || 0, diveFinds: this.state.diveFinds || [], pondFinds: this.state.pondFinds || [], raptor: this.state.raptor || null, raptorsFreed: this.state.raptorsFreed || [], raptorNext: this.state.raptorNext ?? null, pondLitter: this.state.pondLitter || [], pondPals: this.state.pondPals || [], otterPond: this.state.otterPond || {}, pondLodgeSeen: !!this.state.pondLodgeSeen, pondOldLodgeSeen: !!this.state.pondOldLodgeSeen, otterPredSeen: !!this.state.otterPredSeen, damSeen: !!this.state.damSeen, scubaSeen: !!this.state.scubaSeen, damInsideSeen: !!this.state.damInsideSeen, relicsSeen: this.state.relicsSeen || [], mineStep: this.state.mineStep || 0, artifactTalk: !!this.state.artifactTalk, ffShowSeen: this.state.ffShowSeen || 0, bearSwimSeen: !!this.state.bearSwimSeen, caveGateSeen: !!this.state.caveGateSeen, pondSeen: !!this.state.pondSeen, diveLitter: this.state.diveLitter || [], diveSeen: !!this.state.diveSeen, otterDenSeen: !!this.state.otterDenSeen, poach: this.state.poach || 0, poachEv: this.state.poachEv || [], guardian: !!this.state.guardian, isRanger: !!this.state.isRanger, arrests: this.state.arrests || 0, drivenOut: this.state.drivenOut || 0, toursGiven: this.state.toursGiven || 0, tourBest: this.state.tourBest || {}, tubeRuns: this.state.tubeRuns || {}, climbWins: this.state.climbWins || 0, climbBest: this.state.climbBest || {}, digWins: this.state.digWins || 0, digBest: this.state.digBest || {}, diveWins: this.state.diveWins || 0, diveBest: this.state.diveBest || {}, trailSeen: this.state.trailSeen || [], placesSeen: this.state.placesSeen || [], locSeenAt: this.state.locSeenAt || {}, rivalsDone: this.state.rivalsDone || [], trailsDone: this.state.trailsDone || [], beeDay: this.state.beeDay ?? null, beeSeen: !!this.state.beeSeen, disguiseKind: this.state.disguiseKind || 'classic', cubs: this.state.cubs || 0, batsSeen: this.state.batsSeen || [], denYear: this.state.denYear ?? null, ffYear: this.state.ffYear ?? null, photos: this.state.photos || [], hasBinocs: !!this.state.hasBinocs, hasPoncho: !!this.state.hasPoncho, hasBell: !!this.state.hasBell, bellOn: !!this.state.bellOn, riddlesDone: this.state.riddlesDone || [], vcDoorSeen: !!this.state.vcDoorSeen, hasDisguise: !!this.state.hasDisguise, disguiseOn: !!this.state.disguiseOn, hasCanoe: !!this.state.hasCanoe, zipBest: this.state.zipBest || 0, zipRides: this.state.zipRides || 0, zipSeen: !!this.state.zipSeen, hasRod: !!this.state.hasRod, trout: this.state.trout || { brook: 0, rainbow: 0 }, otterFish: this.state.otterFish || {}, otterFishSeen: !!this.state.otterFishSeen, otterLake: this.state.otterLake || {}, quest: this.state.quest || {}, foxPrey: this.state.foxPrey || {}, carry: this.state.carry || null, kitsAtDen: !!this.state.kitsAtDen, bestSkips: this.state.bestSkips || 0, skipSeen: !!this.state.skipSeen, mammalPhotos: this.state.mammalPhotos || [], fireSaves: this.state.fireSaves || 0, fireSeen: !!this.state.fireSeen, hasLantern: !!this.state.hasLantern, lanternUses: this.state.lanternUses || 0, lanternSpent: !!this.state.lanternSpent, antiques: this.state.antiques || [], ghostBanished: !!this.state.ghostBanished, pantryOpen: !!this.state.pantryOpen, ghostMet: !!this.state.ghostMet,
         trackedId: this.state.trackedId, berries: this.state.berries || 0, introSeen: this.state.introSeen, dashBerries: this.state.dashBerries || 0,
         fireflyCount: this.state.fireflyCount || 0, syncSeen: !!this.state.syncSeen, caveSeen: !!this.state.caveSeen, netSwings: this.state.netSwings || 0, bottleUses: this.state.bottleUses || 0,
         books: this.state.books || [], bookDelivered: !!this.state.bookDelivered, seriesComplete: !!this.state.seriesComplete, salamanderBook: !!this.state.salamanderBook, booksTurnedIn: !!this.state.booksTurnedIn
@@ -1782,6 +1782,7 @@ class Component extends DCLogic {
       { name: 'Laurel Creek Rd', pts: [[162, 44], [138, 58], [120, 80], [108, 98], [95, 114]] },
       { name: 'Forge Creek Rd', pts: [[100, 129.4], [97.4, 133.2], [94.6, 137]] },
       { name: 'Cades Cove Loop', pts: [[95, 114], [110, 108], [118, 116], [112, 126], [95, 130], [78, 126], [72, 116], [80, 108], [95, 114]] },
+      { name: 'Rich Mountain Rd', gravel: true, oneway: true, pts: [[90, 111.9], [90.5, 104], [93, 98], [89.5, 92], [96, 86.5], [97, 80], [94.5, 74], [97.5, 66], [101, 58], [106, 50]] },
       { name: 'Cove Creek Rd', pts: [[640, 118], [618, 124], [598, 132], [575, 138]] },
       // downtown Gatlinburg (v68): the Parkway down the middle of the strip, its run south to the park, and River Road along the river
       { name: 'The Parkway', pts: [[274, 9], [288, 9], [302, 9], [316, 9], [330, 9]] },
@@ -1792,7 +1793,7 @@ class Component extends DCLogic {
       // Elkmont Campground: a loop off the Elkmont road, between Daisy Town and Little River
       { name: 'Elkmont Campground', pts: [[262.2, 55.5], [258.5, 55.6], [255.2, 55.8], [251, 56], [247.4, 57.3], [246.6, 60.2], [248.8, 62.4], [252.8, 62.8], [255.3, 60.6], [255.6, 57.6], [255.2, 55.8], [258.5, 55.6], [262.2, 55.5]] }
     ];
-    for (const r of rawRoads) for (const p of r.pts) p[1] += NPAD; this.roads = rawRoads.map((r) => ({ name: r.name, pts: catmullRom(r.pts.map((p) => [p[0] * CELL, p[1] * CELL]), 10) }));
+    for (const r of rawRoads) for (const p of r.pts) p[1] += NPAD; this.roads = rawRoads.map((r) => ({ name: r.name, gravel: !!r.gravel, oneway: !!r.oneway, pts: catmullRom(r.pts.map((p) => [p[0] * CELL, p[1] * CELL]), 10) }));
     // slow sightseeing cars looping Cades Cove, stopping to photograph wildlife
     const loop = this.roads.find((r) => r.name === 'Cades Cove Loop');
     this.coveCars = [];
@@ -2414,6 +2415,14 @@ class Component extends DCLogic {
       w.beginPath(); rd.pts.forEach((p, i) => i ? w.lineTo(p[0], p[1]) : w.moveTo(p[0], p[1]));
       // asphalt: a soft shoulder, the dark-gray pavement with white edge lines, and a yellow center line
       w.lineCap = 'round'; w.lineJoin = 'round';
+      if (rd.gravel){
+        // a narrow gravel road: tan surface, two worn wheel tracks, no paint, and little one-way arrows
+        w.strokeStyle = 'rgba(40,36,30,0.35)'; w.lineWidth = 14; w.stroke();
+        w.strokeStyle = '#a99a7a'; w.lineWidth = 10.5; w.stroke();
+        w.strokeStyle = 'rgba(120,104,78,0.55)'; w.lineWidth = 1.6; w.setLineDash([6, 4]); w.stroke(); w.setLineDash([]);
+        if (rd.oneway){ w.fillStyle = 'rgba(255,255,255,0.75)'; for (let i = 6; i < rd.pts.length - 2; i += 9){ const a = rd.pts[i], b = rd.pts[i + 1], ang = Math.atan2(b[1] - a[1], b[0] - a[0]); w.save(); w.translate(a[0], a[1]); w.rotate(ang); w.beginPath(); w.moveTo(4, 0); w.lineTo(-2.5, -2.6); w.lineTo(-2.5, 2.6); w.closePath(); w.fill(); w.restore(); } }
+        continue;
+      }
       w.strokeStyle = 'rgba(40,36,30,0.45)'; w.lineWidth = major ? 20 : 17.5; w.stroke();          // gravel shoulder / shadow
       w.strokeStyle = '#d9d6cc'; w.lineWidth = major ? 16 : 14; w.stroke();                       // white edge lines
       w.strokeStyle = major ? '#4f5154' : '#57595c'; w.lineWidth = major ? 14.2 : 12.4; w.stroke();  // pavement
@@ -2982,8 +2991,9 @@ class Component extends DCLogic {
       r.heading += dh * Math.min(1, (r.state === 'chase' ? 5 : 2.2) * dt);
       r.speed = lerp(r.speed, tSp, Math.min(1, dt * 4));
       r.ph += dt * (2 + r.speed * 0.05);
-      r.x = clamp(r.x + Math.cos(r.heading) * r.speed * dt, 20, this.WORLD_W - 20);
-      r.y = clamp(r.y + Math.sin(r.heading) * r.speed * dt, 20, this.WORLD_H - 20);
+      // rival bears stay on land: at the water's edge they stop (and pace) instead of following you in
+      { const nx = clamp(r.x + Math.cos(r.heading) * r.speed * dt, 20, this.WORLD_W - 20), ny = clamp(r.y + Math.sin(r.heading) * r.speed * dt, 20, this.WORLD_H - 20);
+        if (!this._dryStep(r, nx, ny)){ if (!this._dryStep(r, nx, r.y) && !this._dryStep(r, r.x, ny)){ r.speed *= 0.5; if (r.state !== 'chase'){ r.dir = r.heading + Math.PI; r.wt = 1.5; } } } }
     }
     if (this.rivalIntro){
       this.rivalIntro.t -= dt;
@@ -2992,10 +3002,14 @@ class Component extends DCLogic {
     }
   }
 
+  _wetness(x, y){ return (this.isWater(x, y) ? 10 : 0) + this.stillDepth(x, y); }
+  // move a walker (hiker, rival bear) only onto dry ground, or toward drier ground if it's somehow already wet
+  _dryStep(o, nx, ny){ const w1 = this._wetness(nx, ny); if (w1 <= 0 || w1 < this._wetness(o.x, o.y)){ o.x = nx; o.y = ny; return true; } return false; }
+  _dryNudge(x, y){ if (this._wetness(x, y) <= 0) return [x, y]; for (let r = 20; r < 400; r += 20) for (let a = 0; a < 6.28; a += 0.4){ const nx = x + Math.cos(a) * r, ny = y + Math.sin(a) * r; if (this._wetness(nx, ny) <= 0) return [nx, ny]; } return [x, y]; }
   makeHikers(){
     const CELL = this.CELL;
     const spots = [[150, 60], [212, 150], [430, 92], [300, 118], [498, 150]];
-    const hikers = spots.map((s) => this.newHiker(s[0] * CELL + (Math.random() - 0.5) * 90, s[1] * CELL + (Math.random() - 0.5) * 90, false));
+    const hikers = spots.map((s) => { const [x, y] = this._dryNudge(s[0] * CELL + (Math.random() - 0.5) * 90, s[1] * CELL + (Math.random() - 0.5) * 90); return this.newHiker(x, y, false); });
     // every other hiker carries gear — a net OR a bottle — to drop once
     hikers.forEach((h, i) => { if (i % 2 === 0) h.item = Math.random() < 0.5 ? 'net' : 'bottle'; });
     // one hiker carries a copy of the park's trivia book — deliver it to the visitor center
@@ -3116,7 +3130,8 @@ class Component extends DCLogic {
         const e = this.inCave.entrance;
         if (h.flee > 0 && Math.hypot(h.x - e[0], h.y - e[1]) < 40){ h._gone = true; }
       } else {
-        h.x = clamp(nx, 20, this.WORLD_W - 20); h.y = clamp(ny, 20, this.WORLD_H - 20);
+        // hikers stay out of the water: turn around at the shore
+        if (!this._dryStep(h, clamp(nx, 20, this.WORLD_W - 20), clamp(ny, 20, this.WORLD_H - 20))){ h.dir = h.heading + Math.PI + (Math.random() - 0.5); h.heading = h.dir; h.wt = 1.2; h.speed *= 0.3; }
       }
       h.ph += dt;
     }
@@ -3685,6 +3700,7 @@ class Component extends DCLogic {
     this.updateRaptors(dt);
     this.updateOtterPredator(dt);
     this.updateDam(dt);
+    this.updateLakeBoats(dt);
     this._relicInit();
     this.updateBalds(dt);
     this.updateLeConte(dt);
@@ -6901,13 +6917,17 @@ class Component extends DCLogic {
     if (st >= 2 && Math.hypot(R.mine3.x - b.x, R.mine3.y - b.y) < (r || 60)) return 'mine3';
     return null; }
   relicLabel(){
+    { const rm = this._richSign(); if (rm && Math.hypot(rm.x - this.bear.x, rm.y - this.bear.y) < 60) return '🪧 Read the Rich Mountain Road sign'; }
     const k = this._relicNear(); if (!k) return null;
     if (k === 'mine1') return '🏚️ Look at the old homesite';
     if (k === 'mine2') return '🌾 Look around Porters Flat';
     if (k === 'mine3') return '🕳️ Look in the old hole';
     return this._relicDefs()[k].label;
   }
+  _richSign(){ if (this._rms !== undefined) return this._rms; const r = (this.roads || []).find((q) => q.name === 'Rich Mountain Rd'); if (!r) return null; const p = r.pts[3], q = r.pts[4], L = Math.hypot(q[0] - p[0], q[1] - p[1]) || 1; this._rms = { x: p[0] + (q[1] - p[1]) / L * 22, y: p[1] - (q[0] - p[0]) / L * 22 }; return this._rms; }
   relicAction(){
+    { const rm = this._richSign(); if (rm && Math.hypot(rm.x - this.bear.x, rm.y - this.bear.y) < 60){ SFX.play('click');
+      this.showFind('🪧', 'Rich Mountain Road', 'This narrow <b>gravel road</b> climbs north out of Cades Cove, over <b>Rich Mountain</b> to the park boundary at Rich Mountain Gap, then down toward Townsend. It’s about <b>7 miles</b> long and <b>one way</b>: you can drive out of the cove on it, but not in.<br><br>It’s <b>closed in winter</b>, and RVs and trailers aren’t allowed. A little way up, there’s a famous view back down over Cades Cove and the <b>Primitive Baptist Church</b>.<br><br>The road is said to follow an old Indian trail into the cove, and settlers turned it into a road back in the 1820s.', 16000, { kicker: 'CADES COVE', btn: 'Got it' }); return true; } }
     const k = this._relicNear(); if (!k) return false;
     const S = this.state;
     if (k === 'cadillac' || k === 'fords' || k === 'engine'){
@@ -6940,7 +6960,13 @@ class Component extends DCLogic {
     return false;
   }
   drawRelics(ctx, ox, oy, now){
-    const R = this._relics; if (!R || this.inCave || this.inHouse || this.inDome) return;
+    if (this.inCave || this.inHouse || this.inDome) return;
+    { const rm = this._richSign(); if (rm){ const x = rm.x - ox, y = rm.y - oy; if (x > -60 && x < this.viewW + 60 && y > -60 && y < this.viewH + 60){
+      ctx.fillStyle = 'rgba(20,14,8,0.3)'; ctx.beginPath(); ctx.ellipse(x, y + 2, 14, 4, 0, 0, 7); ctx.fill();
+      ctx.fillStyle = '#5a4128'; ctx.fillRect(x - 9, y - 18, 2.5, 20); ctx.fillRect(x + 6.5, y - 18, 2.5, 20);
+      ctx.fillStyle = '#5b3a24'; ctx.beginPath(); ctx.roundRect(x - 16, y - 34, 32, 18, 3); ctx.fill(); ctx.strokeStyle = '#e9c46a'; ctx.lineWidth = 0.8; ctx.stroke();
+      ctx.fillStyle = '#f3ecd9'; ctx.font = '700 5.2px LatoB, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('RICH MOUNTAIN', x, y - 27); ctx.fillText('ROAD · ONE WAY', x, y - 20.5); } } }
+    const R = this._relics; if (!R) return;
     const vw = this.viewW, vh = this.viewH, S = this.state, st = S.mineStep || 0, seen = S.relicsSeen || [];
     const vis = (p) => p.x - ox > -120 && p.x - ox < vw + 120 && p.y - oy > -120 && p.y - oy < vh + 120;
     const shadow = (x, y, w, h) => { ctx.fillStyle = 'rgba(20,14,8,0.3)'; ctx.beginPath(); ctx.ellipse(x, y, w, h, 0, 0, 7); ctx.fill(); };
@@ -7042,6 +7068,68 @@ class Component extends DCLogic {
     this.talk(WHO, icon, 'Ha! Folks love the legend of <b>Perry Shults’s lost mine</b> in Greenbrier. The story goes that he found silver back in the 1800s and never told a soul where. Nobody has ever found it.' + (st >= 3 ? '<br><br>But I hear you already followed that legend to the end. Nice detective work!' : '<br><br>Want to see where the story starts? Look for an <b>old chimney in Greenbrier</b>, east of Gatlinburg.') + '<br><br>And you can still find real relics on the trails: an old <b>Cadillac</b> off the Middle Prong Trail, old <b>Fords</b> on the Lakeshore Trail by Fontana Dam, and a <b>steam engine</b> upside down in Injun Creek.', [
       { label: 'I’ll go look!', fn: () => back('Have fun out there, and leave it all just how you find it!') }
     ]);
+  }
+  // ===================== FONTANA LAKE FISHING BOATS (v117): boats cruise the lake, stop, and reel in fish =====================
+  _lbInit(){
+    if (this._lb || !this.lake) return;
+    const P = this.lake.pts, cum = [0];
+    for (let i = 1; i < P.length; i++) cum.push(cum[i - 1] + Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]));
+    const L = cum[cum.length - 1], s0 = 380, s1 = L - 120;
+    const cols = ['#8f9a9d', '#4f6a4c', '#b04a3a', '#2f5f86', '#d8d0bc', '#7a8a6a', '#a0743a'], men = ['#a63c2c', '#e2b04a', '#3f6b3a', '#f2f2ee', '#2f5f86', '#d06a2a', '#5a3a6a'];
+    const boats = [];
+    for (let i = 0; i < 7; i++) boats.push({ s: s0 + (s1 - s0) * (i + Math.random() * 0.6) / 7, off: (Math.random() - 0.5) * 34, dir: Math.random() < 0.5 ? -1 : 1, sp: 40 + Math.random() * 25, state: Math.random() < 0.5 ? 'fish' : 'cruise', t: Math.random() * 10, col: cols[i], man: men[i], catchT: 0, cd: 4 + Math.random() * 8, ph: Math.random() * 6, mv: 0 });
+    this._lb = { P, cum, L, s0, s1, boats };
+  }
+  _lbPose(s, off){
+    const B = this._lb, P = B.P, cum = B.cum; let lo = 0, hi = cum.length - 1;
+    while (hi - lo > 1){ const m = (lo + hi) >> 1; if (cum[m] <= s) lo = m; else hi = m; }
+    const a = P[lo], b = P[hi], seg = (cum[hi] - cum[lo]) || 1, f = (s - cum[lo]) / seg, tx = (b[0] - a[0]) / seg, ty = (b[1] - a[1]) / seg;
+    return { x: a[0] + (b[0] - a[0]) * f - ty * off, y: a[1] + (b[1] - a[1]) * f + tx * off, ang: Math.atan2(ty, tx) };
+  }
+  updateLakeBoats(dt){
+    this._lbInit(); const B = this._lb; if (!B) return;
+    for (const b of B.boats){
+      b.t -= dt; b.ph += dt;
+      if (b.state === 'cruise'){
+        b.s += b.dir * b.sp * dt; b.mv = Math.min(1, b.mv + dt);
+        if (b.s < B.s0 || b.s > B.s1){ b.dir *= -1; b.s = clamp(b.s, B.s0, B.s1); }
+        b.off += (Math.sin(b.ph * 0.4) * 22 - b.off) * dt * 0.3;
+        if (b.t <= 0){ b.state = 'fish'; b.t = 14 + Math.random() * 16; b.cd = 3 + Math.random() * 5; }
+      } else {
+        b.mv = Math.max(0, b.mv - dt * 0.8); b.s += b.dir * 3 * dt * Math.sin(b.ph * 0.3);   // drifting
+        b.cd -= dt; if (b.cd <= 0){ b.catchT = 1.6; b.cd = 6 + Math.random() * 9; }
+        if (b.t <= 0){ b.state = 'cruise'; b.t = 8 + Math.random() * 10; if (Math.random() < 0.4) b.dir *= -1; }
+      }
+      if (b.catchT > 0) b.catchT -= dt;
+    }
+  }
+  drawLakeBoats(ctx, ox, oy, now){
+    const B = this._lb; if (!B || this.inCave || this.inHouse || this.inDome) return;
+    const vw = this.viewW, vh = this.viewH;
+    for (const b of B.boats){
+      const p = this._lbPose(b.s, b.off), x = p.x - ox, y = p.y - oy;
+      if (x < -80 || x > vw + 80 || y < -80 || y > vh + 80) continue;
+      const ang = p.ang + (b.dir < 0 ? Math.PI : 0) + Math.sin(b.ph * 1.6) * 0.04;
+      if (b.mv > 0.2){ ctx.strokeStyle = 'rgba(255,255,255,' + (0.45 * b.mv).toFixed(2) + ')'; ctx.lineWidth = 1.3; const bx = x - Math.cos(ang) * 16, by = y - Math.sin(ang) * 16;
+        ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx - Math.cos(ang - 0.35) * 22, by - Math.sin(ang - 0.35) * 22); ctx.moveTo(bx, by); ctx.lineTo(bx - Math.cos(ang + 0.35) * 22, by - Math.sin(ang + 0.35) * 22); ctx.stroke(); }
+      else { ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.lineWidth = 1; const r = 20 + (now * 6 % 8); ctx.beginPath(); ctx.ellipse(x, y, r, r * 0.45, ang, 0, 7); ctx.stroke(); }
+      this.drawCanoeHull(ctx, x, y, ang, b.col, 0.9);
+      ctx.save(); ctx.translate(x, y); ctx.rotate(ang);
+      ctx.fillStyle = '#2a2a2a'; ctx.fillRect(-17, -2.5, 4, 5);
+      ctx.fillStyle = b.man; ctx.beginPath(); ctx.arc(-5, 0, 4, 0, 7); ctx.fill();
+      ctx.fillStyle = '#e8c9a0'; ctx.beginPath(); ctx.arc(-4, 0, 2.3, 0, 7); ctx.fill();
+      if (b.state === 'fish'){
+        const bend = b.catchT > 0 ? 5 : 0;
+        ctx.strokeStyle = '#3b2e22'; ctx.lineWidth = 1.1; ctx.beginPath(); ctx.moveTo(-4, 0); ctx.quadraticCurveTo(4, -10 + bend, 10, -18 + bend); ctx.stroke();
+        const fx = 13 + Math.sin(b.ph) * 0.8, fy = -30;
+        ctx.strokeStyle = 'rgba(240,240,240,0.55)'; ctx.lineWidth = 0.6; ctx.beginPath(); ctx.moveTo(10, -18 + bend); ctx.lineTo(fx, fy); ctx.stroke();
+        ctx.fillStyle = '#e04a2a'; ctx.beginPath(); ctx.arc(fx, fy, 1.6, 0, 7); ctx.fill();
+        if (b.catchT > 0){ const t = 1 - b.catchT / 1.6, cx = fx + (-4 - fx) * t, cy = fy + (0 - fy) * t - Math.sin(t * Math.PI) * 14;
+          ctx.save(); ctx.translate(cx, cy); ctx.rotate(Math.sin(now * 20) * 0.6); ctx.fillStyle = '#9fae8a'; ctx.beginPath(); ctx.ellipse(0, 0, 5, 2, 0, 0, 7); ctx.fill(); ctx.fillStyle = '#5a6a3a'; ctx.beginPath(); ctx.moveTo(-5, 0); ctx.lineTo(-8, -2.5); ctx.lineTo(-8, 2.5); ctx.closePath(); ctx.fill(); ctx.restore();
+          if (b.catchT > 1.4){ ctx.strokeStyle = 'rgba(255,255,255,0.6)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(fx, fy, 6 * (1.6 - b.catchT) * 10, 0, 7); ctx.stroke(); } }
+      }
+      ctx.restore();
+    }
   }
   // ===================== FONTANA DAM RELEASES (v112): Cheoah Lake below the dam, anglers, boats, horns and strobes =====================
   _tailBuild(){
@@ -8466,6 +8554,11 @@ class Component extends DCLogic {
     }
     // the otter, swimming
     this._dvNpcDraw(ctx, x0, x1, t);
+    if (!D.pond) for (let k = 0; k < 3; k++){ const bx = 600 + k * 1700 + Math.sin(t * 0.05 + k * 2) * 500; if (bx < x0 - 90 || bx > x1 + 90) continue; const S0 = 96;
+      ctx.fillStyle = 'rgba(20,30,40,0.55)'; ctx.beginPath(); ctx.moveTo(bx - 52, S0 - 2); ctx.lineTo(bx + 52, S0 - 2); ctx.lineTo(bx + 42, S0 + 10); ctx.lineTo(bx - 48, S0 + 10); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = 'rgba(20,30,40,0.6)'; ctx.fillRect(bx - 60, S0 - 4, 7, 26);
+      ctx.strokeStyle = 'rgba(240,240,240,0.45)'; ctx.lineWidth = 0.8; ctx.beginPath(); ctx.moveTo(bx + 30, S0); ctx.lineTo(bx + 36 + Math.sin(t + k) * 4, S0 + 120 + k * 40); ctx.stroke();
+      ctx.fillStyle = '#c8c8b8'; ctx.beginPath(); ctx.ellipse(bx + 36 + Math.sin(t + k) * 4, S0 + 122 + k * 40, 1.6, 3, 0, 0, 7); ctx.fill(); }
     { const vx = D.mode === 'transit' ? D.tvx : D.vx, vy = D.mode === 'transit' ? D.tvy : D.vy;
       const tilt = clamp(Math.atan2(vy, Math.abs(vx) + 30), -0.9, 0.9), sp = Math.hypot(vx, vy), gait = t * (4 + sp / 25);
       const inDen = D.mode === 'den', pk = this.state.player || 'bear';
@@ -15102,9 +15195,18 @@ class Component extends DCLogic {
       if (Math.hypot(this.bear.x - e[0], this.bear.y - e[1]) < 42) this.exitCave();
     } else {
       for (const cv of this.CAVES){
-        if (Math.hypot(this.bear.x - cv.x, this.bear.y - cv.y) < cv.mr * this.CELL * 0.6){ this.enterCave(cv); break; }
+        if (Math.hypot(this.bear.x - cv.x, this.bear.y - cv.y) < cv.mr * this.CELL * 0.6){ if (!this.state.isRanger){ this.caveGate(cv); break; } this.enterCave(cv); break; }
       }
     }
+  }
+  // v118: the park's caves are closed to the public (to protect bats from white-nose syndrome). Only rangers go in.
+  caveGate(cv){
+    const r = cv.mr * this.CELL * 0.6 + 8, a = Math.atan2(this.bear.y - cv.y, this.bear.x - cv.x) || Math.PI / 2;
+    this.bear.x = cv.x + Math.cos(a) * r; this.bear.y = cv.y + Math.sin(a) * r;
+    if (!this.state.caveGateSeen){
+      this.setState({ caveGateSeen: true }); SFX.play('miss');
+      this.showFind('🦇', 'Cave Closed: Rangers Only', 'A locked gate blocks the entrance. In 2009 the park <b>closed all of its caves</b> to the public to protect bats from <b>white-nose syndrome</b>, a deadly fungal disease. Visitors can carry the fungus in on their clothes and gear.<br><br>The Smokies are home to <b>eleven kinds of bats</b>, including the endangered <b>Indiana bat</b>.<br><br><b>In this game, only park rangers can explore caves.</b> Put on your tourist disguise and ask <b>Ranger Ellie</b> at Sugarlands about becoming a ranger. Pass her exam and the caves are yours to explore!', 18000, { kicker: cv.name.toUpperCase() + ' · CLOSED TO PROTECT BATS', btn: 'Got it' });
+    } else if (!(this._caveGateT > performance.now())){ this._caveGateT = performance.now() + 8000; this.showToast('🔒 ' + cv.name + ' is closed to protect the bats. Only park rangers can go in. (Pass Ranger Ellie’s exam at Sugarlands.)', 4500); }
   }
   enterCave(cv){
     this._outside = { x: this.bear.x, y: this.bear.y };
@@ -18740,6 +18842,7 @@ class Component extends DCLogic {
     this.drawQuestWorld(ctx, ox, oy, now);
     this.drawRaptorWorld(ctx, ox, oy, now);
     this.drawDam(ctx, ox, oy, now);
+    this.drawLakeBoats(ctx, ox, oy, now);
     this.drawRelics(ctx, ox, oy, now);
     this.drawOtterPredator(ctx, ox, oy, now);
     this.drawStreamFish(ctx, ox, oy, now);
